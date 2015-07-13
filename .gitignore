@@ -1,0 +1,12 @@
+target
+build
+# Packege Files #
+*.jar
+*.war
+*.ear
+.classpath
+.project
+.settings
+rebel.xml
+.DS_Store
+log4j.properties

@@ -1,0 +1,30 @@
+@mixin ait-theme-common{
+	
+	.ait-content{
+		height: 100%;
+		//position: relative;
+	}
+	.main-content{
+		height: 92% !important;
+		overflow: hidden;
+		z-index:0;
+	}
+	.ait-content-nav{
+		background-color: #000064;
+		color: white;
+		width: 100%;
+	}
+	.ait-content-form{
+	z-index:0 !important;
+	}
+	.ait-error-bar{
+		z-index:1 !important;
+		display: block;
+		float: left;	
+		position: fixed;
+		bottom: 5%;
+		width: 83.333%;
+		padding: 10px;
+		display: inline-block;		
+	}
+}

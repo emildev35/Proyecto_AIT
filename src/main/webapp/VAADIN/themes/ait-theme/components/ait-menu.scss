@@ -1,0 +1,141 @@
+@mixin ait-dashboard-menu{
+ /* .v-ui[width-range~="801px-"] {
+	   .valo-menu {
+	     @include animation(valo-animate-in-slide-right 700ms 700ms backwards);
+	   }
+	
+	   .valo-menu-title {
+	     background: transparent;
+	     @include box-shadow(none);
+	     border-bottom: none;
+	   }
+	 }*/
+	 
+	.ait-bar{
+		background-color: #d9d9ff;
+		display: inline-block;
+		height: 8% !important;
+		
+		
+	}
+	.ait-bar-clock{
+		float: right;
+		color: black;
+		height: 60px;
+	}
+	/*
+	.valo-menu-visible{
+		visibility: hidden;
+		display: none;
+	}*/
+	.ait-bar-logo{
+		width: 150px;
+	}
+	.v-ui[width-range~="801px-"] {
+	    .valo-menu {
+	      @include animation(valo-animate-in-slide-right 700ms 700ms backwards);
+	    }
+
+  	}
+	.ait-bar[width-range~="0-750px"]{
+		.v-button-ait-menu-toggle{
+				visibility: visible;
+				display: inline-block;
+		}
+		.ait-bar .v-image{
+			width: 80px !important;
+		}
+		.ait-bar-logo{
+		width: 80px;
+		}
+	}
+	
+	.ait-bar-main{
+		width: 100%;
+		padding: 5px;
+	}
+	
+	.v-button-ait-menu-toggle{
+			visibility: hidden;
+			display: none;
+	}
+	
+	.ait-bar-navitagion{
+		margin-right: 25%;
+		margin-left: 25%;
+		display: inline-block;
+		&[width-range~="0-750px"]{
+			//visibility: hidden;
+			//display: none;
+			display: inline-block;
+			margin-right: 15%;
+			margin-left: 15%;
+		}
+	}
+	.ait-menu{
+		witdh : 100%;
+		background-color: #ededff;
+		color:black;
+		/*&[width-range~="0-750px"]{
+			visibility: hidden;
+			display: none;
+		}*/
+	}
+	.ait-menu-full{position: absolute;
+		height: 100%;
+		background-color: #ededff;
+		visibility: visible !important;
+		display : block;
+		overflow: scroll;
+	}
+	.ait-menu-items{
+		witdh : 100%;
+		color: black;
+		font-weight: bolder;		
+	}
+	.valo-menu-title{
+		witdh : 100%;
+	}
+	
+	.main-content{
+		height: 100%;
+		overflow: scroll;
+	}
+	
+	.valo-menu{
+		height: 100%;
+		background-image: none;
+	}
+	/*
+	.v-verticallayout-main-view .v-slot{
+	  height: 80% !important;
+	}
+	.v-slot .v-slot-ait-menu-full{
+	  width: 20% !important;
+	}
+	.v-slot .v-slot-ait-content{
+	 width: 80% !important;ait-menu-full
+	}*/
+	/*
+	.v-horizontallayout-main-content .v-expand .v-slot{
+	  width: 20% !important;
+	}
+	.ait-content .v-slot{
+	 width: auto !important;
+	}
+	
+	.v-horizontallayout-main-content .v-expand .v-slot .valo-menu{
+	  width: 20% !important;
+	  overflow: scroll;	
+	}
+	.v-horizontallayout-main-content .v-expand .v-slot-ait-content{
+	  width: 80% !important;
+	  
+	}
+	
+	.v-slot v-slot-main-content{
+		height: 80% !important;
+	}*/
+
+	
+}

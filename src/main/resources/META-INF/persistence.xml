@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="AIT-Seguridad">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>ait.sistemas.proyecto.seguridad.data.model.Arbol_menus</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.Log_Auditoria</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.pk.Log_AuditoriaPK</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.Log_Errore</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.pk.Log_ErrorePK</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.OpcionesXPerfil</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.pk.OpcionesXPerfilPK</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.Perfil</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.Permiso</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.pk.PermisoPK</class>
+		<class>ait.sistemas.proyecto.seguridad.data.model.Usuario</class>
+		<properties>
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Seguridad" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
+			<property name="eclipselink.cache.shared.default" value="false"/>
+		</properties>
+	</persistence-unit>
+</persistence>
