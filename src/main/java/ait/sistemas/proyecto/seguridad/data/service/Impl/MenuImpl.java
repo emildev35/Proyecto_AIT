@@ -355,4 +355,12 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		List<Arbol_menus> result = query.getResultList();
 		return result;
 	}
+	public int CountItemSubmenu(long identificador){
+		Query query = this.em
+				.createNativeQuery("exec Estr_Count_Items_Submenu"
+						+ " @Identificador=?1");
+		query.setParameter(1, identificador);
+		int result = (Integer)query.getSingleResult();
+		return result;
+	}
 }

@@ -17,7 +17,7 @@ import ait.sistemas.proyecto.seguridad.component.report.TableBuilder;
 public class ReportPdf {
 	 // Page configuration
     private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-    private static final float MARGIN = 20;
+    private static final float MARGIN = 30;
     private static final boolean IS_LANDSCAPE = false;
 
     // Font configuration
@@ -35,10 +35,10 @@ public class ReportPdf {
 
     private static Table createContent(String[][] data) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("ID", 40));
-        columns.add(new Column("COD", 40));
+        columns.add(new Column("ID", 35));
+        columns.add(new Column("COD", 35));
         columns.add(new Column("NOMBRE DEL MENU", 230));
-        columns.add(new Column("NIVEL", 40));
+        columns.add(new Column("NIVEL", 35));
         columns.add(new Column("PROGRAMA", 230));
  
         String[][] content = data;

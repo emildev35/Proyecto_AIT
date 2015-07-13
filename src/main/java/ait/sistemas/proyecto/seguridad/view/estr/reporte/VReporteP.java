@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.seguridad.view.estr.reporte;
 
 import java.io.IOException;
+import java.util.List;
 
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
@@ -29,7 +30,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener{
 	
 	private Button btn_imprimir;
 	private FormReporte frmReporte;
-	
+	private String [][] data;
+	int r=0;
 	private final MenuImpl menuiml = new MenuImpl();
 	
 	public VReporteP() {
@@ -82,22 +84,35 @@ public class VReporteP extends VerticalLayout implements View, ClickListener{
 		// TODO Auto-generated method stub
 		
 	}
-
-	public String[][] getData() {
-		String[][] result = new String[100][5];
-		int r = 0;
-		for (Arbol_menus menu : menuiml.getallMenu((long) 1)) {
+	public void buildrow(List<Arbol_menus> lista, int nivel){
+		String preNombre = "";
+		for (int i = 1; i < nivel; i++) {
+			preNombre += "-- ";
+		}
+		for (Arbol_menus menu : lista) {
 			String[] row = { 
 					String.valueOf(menu.getAME_Id_Identificador()),
 					String.valueOf(menu.getAME_Id_Menus()),
-					menu.getAME_Nombre(),
-					"1",
+					preNombre + menu.getAME_Nombre(),
+					String.valueOf(this.r),
 					menu.getAME_Programa()};
-			result[r] = row;
-			r++;
+			this.data[this.r] = row;
+			this.r++;
+			List<Arbol_menus> hijos = this.menuiml.getallMenu(menu.getAME_Id_Identificador());
+			if(hijos.size() > 0){
+				buildrow(hijos,(nivel + 1));
+			}
+			
 		}
-		return result;
 	}
+	public String[][] getData() {
+		int rowNumber = this.menuiml.CountItemSubmenu((long)this.frmReporte.cbSusSistema.getValue());
+		this.data = new String[rowNumber][5];
+		this.r = 0;
+		buildrow(this.menuiml.getallMenu((long)this.frmReporte.cbSusSistema.getValue()), 1);
+		return data;
+	}
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		// TODO Auto-generated method stub
