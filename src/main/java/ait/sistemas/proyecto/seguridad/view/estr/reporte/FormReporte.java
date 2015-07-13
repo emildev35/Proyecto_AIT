@@ -30,7 +30,7 @@ public class FormReporte extends GridLayout{
 		setMargin(true);
 		setSpacing(true);
 		
-		this.cbSusSistema = new ComboBox("Elija Sub Sistema");
+		this.cbSusSistema = new ComboBox("Elija Sub-Sistema");
 		
 		pitmSubSistema.addItemProperty("subsistema", new ObjectProperty<Long>((long)1));
 		
