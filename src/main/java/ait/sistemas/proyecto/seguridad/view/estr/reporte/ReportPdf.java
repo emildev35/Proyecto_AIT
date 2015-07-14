@@ -17,12 +17,12 @@ import ait.sistemas.proyecto.seguridad.component.report.TableBuilder;
 public class ReportPdf {
 	 // Page configuration
     private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-    private static final float MARGIN = 30;
+    private static final float MARGIN = 60;
     private static final boolean IS_LANDSCAPE = false;
 
     // Font configuration
-    private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-    private static final float FONT_SIZE = 11;
+    private static final PDFont TEXT_FONT = PDType1Font.COURIER;
+    private static final float FONT_SIZE = 12;
 
     // Table configuration
     private static final float ROW_HEIGHT = 15;
@@ -30,16 +30,16 @@ public class ReportPdf {
     
     public void getPdf(String[][] data) throws IOException{
         PDDocument report = new  PDFTableGenerator().generatePDF(createContent(data));
-        report.save("Ejemplo-de-Tabla.pdf");
+
     }
 
     private static Table createContent(String[][] data) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("ID", 35));
+        columns.add(new Column("ID", 35));	
         columns.add(new Column("COD", 35));
         columns.add(new Column("NOMBRE DEL MENU", 230));
-        columns.add(new Column("NIVEL", 35));
-        columns.add(new Column("PROGRAMA", 230));
+        columns.add(new Column("NIVEL", 40));
+        columns.add(new Column("NOMBRE DEL PROGRAMA", 180));
  
         String[][] content = data;
 

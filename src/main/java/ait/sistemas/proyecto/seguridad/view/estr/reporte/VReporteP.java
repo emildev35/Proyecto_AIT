@@ -87,7 +87,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener{
 	public void buildrow(List<Arbol_menus> lista, int nivel){
 		String preNombre = "";
 		for (int i = 1; i < nivel; i++) {
-			preNombre += "-- ";
+			preNombre += "--";
 		}
 		for (Arbol_menus menu : lista) {
 			String[] row = { 
