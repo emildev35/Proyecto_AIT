@@ -164,8 +164,6 @@ public class PDFTableGenerator {
 			PDPage page, Table table) throws IOException {
 		PDPageContentStream contentStream = new PDPageContentStream(doc, page,
 				false, false);
-		// User transformation matrix to change the reference when drawing.
-		// This is necessary for the landscape position to draw correctly
 		if (table.isLandscape()) {
 			contentStream.concatenate2CTM(0, 1, -1, 0, table.getPageSize()
 					.getWidth(), 0);
@@ -199,7 +197,6 @@ public class PDFTableGenerator {
 		nextTextY = table.isLandscape() ? table.getPageSize().getWidth()
 				- table.getMargin() : table.getPageSize().getHeight()
 				- table.getMargin();
-//	
 //		String basepath = VaadinService.getCurrent().getBaseDirectory()
 //				.getAbsolutePath();
 //
@@ -213,20 +210,44 @@ public class PDFTableGenerator {
 //		contentStream.drawImage(pdImage, 20, 20, pdImage.getWidth() * scale,
 //				pdImage.getHeight() * scale);
 
+		
+		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-
-		nextTextY += table.getRowHeight();
-		contentStream.showText("Dependencia : XXXXXXXX");
-		nextTextX += table.
-		contentStream.showText("Fecha : XXXXXXXX");
-		nextTextX += table.getRowHeight();
-		contentStream.showText("Hora : XXXXXXXX");
-		contentStream.showText("Unidad : XXXXXXXX");
-		contentStream.showText("Usuario : XXXXXXXX");
-		contentStream.showText("Titulo : XXXXXXXX");
-		contentStream.showText("Subtitulo : XXXXXXXX");
+	
+		contentStream.showText("Dependencia : XXXXXXXX" + String.valueOf(nextTextX) +" - y:"+ String.valueOf(nextTextY));
+		
 		contentStream.endText();
+		
+		nextTextX += 500;
+		
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX + 500, nextTextY);
+		contentStream.showText("Fecha : XXXXXXXX");
+		contentStream.endText();
+		
+		
+/*
+
+		contentStream.showText("Hora : XXXXXXXX");
+		
+		nextTextY -= table.getRowHeight();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText("Unidad : XXXXXXXX");
+	
+		nextTextY -= table.getRowHeight();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText("Usuario : XXXXXXXX");
+		
+		nextTextY = table.getRowHeight();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);		
+		contentStream.showText("Titulo : XXXXXXXX");
+	
+		nextTextY -= table.getRowHeight();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText("Subtitulo : XXXXXXXX");
+	
+		contentStream.endText();*/
 
 	}
 }
