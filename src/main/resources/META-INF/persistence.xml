@@ -15,6 +15,7 @@
 		<class>ait.sistemas.proyecto.seguridad.data.model.Permiso</class>
 		<class>ait.sistemas.proyecto.seguridad.data.model.pk.PermisoPK</class>
 		<class>ait.sistemas.proyecto.seguridad.data.model.Usuario</class>
+		<class>ait.sistemas.proyecto.seguridad.component.FullMenu</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"

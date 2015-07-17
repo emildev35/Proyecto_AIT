@@ -21,21 +21,20 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VReporteP.ID)
-public class VReporteP extends VerticalLayout implements View, ClickListener{
-	
+@CDIView(value = VReporteP.ID)
+public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 	public static final String ID = "/seg/estr/reporte";
-	
+
 	private Button btn_imprimir;
 	private FormReporte frmReporte;
-	private String [][] data;
-	int r=0;
+	private String[][] data;
+	int r = 0;
 	private final MenuImpl menuiml = new MenuImpl();
-	
+
 	public VReporteP() {
-		
+
 		this.frmReporte = new FormReporte();
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -49,7 +48,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener{
 		this.btn_imprimir.addStyleName("ait-buttons-btn");
 		this.btn_imprimir.addClickListener(this);
 		buttonContent.addStyleName("ait-buttons");
-		
+
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
@@ -82,46 +81,50 @@ public class VReporteP extends VerticalLayout implements View, ClickListener{
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	public void buildrow(List<Arbol_menus> lista, int nivel){
+
+	public void buildrow(List<Arbol_menus> lista, int nivel) {
 		String preNombre = "";
 		for (int i = 1; i < nivel; i++) {
-			preNombre += "--";
+			preNombre += "  ";
 		}
 		for (Arbol_menus menu : lista) {
-			String[] row = { 
-					String.valueOf(menu.getAME_Id_Identificador()),
+			String[] row = { String.valueOf(menu.getAME_Id_Identificador()),
 					String.valueOf(menu.getAME_Id_Menus()),
-					preNombre + menu.getAME_Nombre(),
-					String.valueOf(this.r),
-					menu.getAME_Programa()};
+					preNombre + menu.getAME_Nombre(), String.valueOf(this.r),
+					menu.getAME_Programa() };
 			this.data[this.r] = row;
 			this.r++;
-			List<Arbol_menus> hijos = this.menuiml.getallMenu(menu.getAME_Id_Identificador());
-			if(hijos.size() > 0){
-				buildrow(hijos,(nivel + 1));
+			List<Arbol_menus> hijos = this.menuiml.getallMenu(menu
+					.getAME_Id_Identificador());
+			if (hijos.size() > 0) {
+				buildrow(hijos, (nivel + 1));
 			}
-			
+
 		}
 	}
+
 	public String[][] getData() {
-		//int rowNumber = this.menuiml.CountItemSubmenu((long)this.frmReporte.cbSusSistema.getValue());
-		this.data = new String[50][5];
+		int rowNumber = this.menuiml
+				.CountItemSubmenu((long) this.frmReporte.cbSusSistema
+						.getValue());
+		this.data = new String[rowNumber][5];
 		this.r = 0;
-		buildrow(this.menuiml.getallMenu((long)this.frmReporte.cbSusSistema.getValue()), 1);
+		buildrow(this.menuiml.getallMenu((long) this.frmReporte.cbSusSistema
+				.getValue()), 1);
 		return data;
 	}
-	
+
 	@Override
 	public void buttonClick(ClickEvent event) {
-		// TODO Auto-generated method stub
 		ReportPdf reporte = new ReportPdf();
 		try {
-			reporte.getPdf(getData());
+			reporte.getPdf(getData(), this.frmReporte.cbSusSistema
+					.getItemCaption(this.frmReporte.cbSusSistema.getValue()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

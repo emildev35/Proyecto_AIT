@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.seguridad.data.service.Impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -85,8 +86,28 @@ public class PerfilImpl implements Dao<Perfil> {
 
 	@Override
 	public int delete(Perfil table) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+	/**
+	 * Este Método se encarga de realizar el registro en la base de datos
+	 * @param id_perfil		Long - Identifcador del Perfil
+	 * @param permisos		List<Long> - Lista de lo Identificadores
+	 * @return
+	 */
+	public int otortgarPermisos(int id_perfil, List<Long> permisos){
+		int result = 0;
+		for (Long menu_id : permisos) {
+			String strQuery = String.format("EXEC Estr_OpcionxPerfil_I "
+					+ "@PRF_Id_perfil=?1, "
+					+ "@AME_Identificador=?2, "
+					+ "@Fecha_Registro=?3");
+			Query query = this.em.createNativeQuery(strQuery, Perfil.class);
+			query.setParameter(1, id_perfil);
+			query.setParameter(1, menu_id);
+			query.setParameter(1, new java.sql.Date(new Date().getTime()));
+			result = (Integer)query.getSingleResult();
+		}
+		return result;
 	}
 
 }

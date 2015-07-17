@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.seguridad.component.report;
+package ait.sistemas.proyecto.common.report;
 
 public class Column {
 	

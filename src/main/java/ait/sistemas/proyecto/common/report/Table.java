@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.seguridad.component.report;
+package ait.sistemas.proyecto.common.report;
 
 import java.util.List;
 
@@ -12,18 +12,72 @@ public class Table {
     private PDRectangle pageSize;
     private boolean isLandscape;
     private float rowHeight;
-
+    
+    private int headerSize;
     // font attributes
     private PDFont textFont;
+    private PDFont headerFont;
+    private PDFont footerFont;
+    private PDFont titleFont;
+    private PDFont subtitleFont;
     private float fontSize;
-
+    private float fontSizeheader;
+    private float fontSizefooter;
+    private float fontSizetitle;
+    private float fontSizesubtitle;
     // Content attributes
     private Integer numberOfRows;
     private List<Column> columns;
     private String[][] content;
     private float cellMargin;
 
-    public Table() {
+    private String usuario;
+    private String unidad;
+    private String dependencia;
+    private String title;
+    private String subtitle;
+    
+    public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
+	}
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSubtitle() {
+		return subtitle;
+	}
+
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
+
+	public Table() {
     }
 
     public Integer getNumberOfColumns() {
@@ -133,4 +187,76 @@ public class Table {
     public void setLandscape(boolean isLandscape) {
         this.isLandscape = isLandscape;
     }
+    public int getHeaderSize() {
+		return headerSize;
+	}
+    public void setHeaderSize(int headerSize) {
+		this.headerSize = headerSize;
+	}
+
+	public PDFont getHeaderFont() {
+		return headerFont;
+	}
+
+	public void setHeaderFont(PDFont headerFont) {
+		this.headerFont = headerFont;
+	}
+
+	public PDFont getFooterFont() {
+		return footerFont;
+	}
+
+	public void setFooterFont(PDFont footerFont) {
+		this.footerFont = footerFont;
+	}
+
+	public PDFont getTitleFont() {
+		return titleFont;
+	}
+
+	public void setTitleFont(PDFont titleFont) {
+		this.titleFont = titleFont;
+	}
+
+	public PDFont getSubtitleFont() {
+		return subtitleFont;
+	}
+
+	public void setSubtitleFont(PDFont subtitleFont) {
+		this.subtitleFont = subtitleFont;
+	}
+
+	public float getFontSizeheader() {
+		return fontSizeheader;
+	}
+
+	public void setFontSizeheader(float fontSizeheader) {
+		this.fontSizeheader = fontSizeheader;
+	}
+
+	public float getFontSizefooter() {
+		return fontSizefooter;
+	}
+
+	public void setFontSizefooter(float fontSizefooter) {
+		this.fontSizefooter = fontSizefooter;
+	}
+
+	public float getFontSizetitle() {
+		return fontSizetitle;
+	}
+
+	public void setFontSizetitle(float fontSizetitle) {
+		this.fontSizetitle = fontSizetitle;
+	}
+
+	public float getFontSizesubtitle() {
+		return fontSizesubtitle;
+	}
+
+	public void setFontSizesubtitle(float fontSizesubtitle) {
+		this.fontSizesubtitle = fontSizesubtitle;
+	}
+	
+    
 }

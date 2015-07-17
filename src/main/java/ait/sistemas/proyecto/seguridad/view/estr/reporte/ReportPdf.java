@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import ait.sistemas.proyecto.seguridad.component.report.Column;
-import ait.sistemas.proyecto.seguridad.component.report.PDFTableGenerator;
-import ait.sistemas.proyecto.seguridad.component.report.Table;
-import ait.sistemas.proyecto.seguridad.component.report.TableBuilder;
+import ait.sistemas.proyecto.common.report.Column;
+import ait.sistemas.proyecto.common.report.PDFTableGenerator;
+import ait.sistemas.proyecto.common.report.Table;
+import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	 // Page configuration
@@ -20,20 +19,49 @@ public class ReportPdf {
     private static final float MARGIN = 60;
     private static final boolean IS_LANDSCAPE = false;
 
-    // Font configuration
-    private static final PDFont TEXT_FONT = PDType1Font.COURIER;
+    // Font for textFont
+    private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
     private static final float FONT_SIZE = 12;
-
-    // Table configuration
+    
+    /**
+     * Font for footer report
+     */
+    private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
+    private static final float FOOTER_FONT_SIZE = 10;
+    
+    /**
+     * Font for footer report
+     */
+    private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
+    private static final float HEADER_FONT_SIZE = 10;
+    
+    /**
+     * Font for footer report
+     */
+    private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
+    private static final float TITLE_FONT_SIZE = 16;
+    
+    /**
+     * Font for footer report
+     */
+    private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
+    private static final float SUBTITLE_FONT_SIZE = 11;
+    
     private static final float ROW_HEIGHT = 15;
     private static final float CELL_MARGIN = 2;
     
-    public void getPdf(String[][] data) throws IOException{
-        PDDocument report = new  PDFTableGenerator().generatePDF(createContent(data));
-
+    private static final int HEADER_SIZE = 5;
+    
+    private static final String SAVE_PATH = "Documentos/InformeMenus.pdf";
+    
+    
+    public boolean getPdf(String[][] data, String subsistema) throws IOException{
+    	
+        return new PDFTableGenerator().generatePDF(createContent(data, subsistema), SAVE_PATH);
+        
     }
 
-    private static Table createContent(String[][] data) {
+    private static Table createContent(String[][] data, String subsistema) {
         List<Column> columns = new ArrayList<Column>();
         columns.add(new Column("ID", 35));	
         columns.add(new Column("COD", 35));
@@ -57,6 +85,20 @@ public class ReportPdf {
             .setLandscape(IS_LANDSCAPE)
             .setTextFont(TEXT_FONT)
             .setFontSize(FONT_SIZE)
+            .setHeaderFont(HEADER_FONT)
+            .setFontSizeHeader(HEADER_FONT_SIZE)
+            .setFooterFont(FOOTER_FONT)
+            .setFontSizeFooter(FOOTER_FONT_SIZE)
+            .setTitleFont(TITLE_FONT)
+            .setFontSizeTitle(TITLE_FONT_SIZE)
+            .setSubTitleFont(SUBTITLE_FONT)
+            .setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
+            .setHeaderSize(HEADER_SIZE)
+            .setUnidad("XXXXXX")
+            .setDependencia("XXXXX")
+            .setUsuario("XXXXXX")
+            .setTitle("Reporte de Estructura del Sistema")
+            .setSubTitle("Reporte del SubSistema : " + subsistema)
             .build();
         return table;
     }   

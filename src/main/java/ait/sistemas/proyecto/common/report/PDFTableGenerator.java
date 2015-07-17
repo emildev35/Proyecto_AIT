@@ -1,7 +1,10 @@
-package ait.sistemas.proyecto.seguridad.component.report;
+package ait.sistemas.proyecto.common.report;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -12,19 +15,23 @@ public class PDFTableGenerator {
 
 	private PDDocument doc;
 
+	private int intNumberPages = 5;
+
 	// Generates document from Table object
-	public PDDocument generatePDF(Table table) throws IOException {
+	public boolean generatePDF(Table table, String savePath) throws IOException {
+		boolean result = false;
 		doc = null;
 		try {
 			doc = new PDDocument();
 			drawTable(doc, table);
-			doc.save("Documentos/documento.pdf");
+			doc.save(savePath);
+			result = true;
 		} finally {
 			if (doc != null) {
 				doc.close();
 			}
 		}
-		return doc;
+		return result;
 	}
 
 	// Configures basic setup for the table and draws it page by page
@@ -33,8 +40,9 @@ public class PDFTableGenerator {
 		Integer rowsPerPage = new Double(Math.floor(table.getHeight()
 				/ table.getRowHeight())).intValue() - 1;
 		Integer numberOfPages = new Double(Math.ceil((table.getNumberOfRows()
-				.floatValue() + 8) / rowsPerPage)).intValue();
-
+				.floatValue() + table.getHeaderSize()) / rowsPerPage))
+				.intValue();
+		this.intNumberPages = numberOfPages;
 		// Generate each page, get the content and draw it
 		for (int pageCount = 0; pageCount < numberOfPages; pageCount++) {
 			PDPage page = generatePage(doc, table);
@@ -59,10 +67,12 @@ public class PDFTableGenerator {
 
 		if (pageCount == 0) {
 			tableTopY = table.isLandscape() ? table.getPageSize().getWidth()
-					- table.getMargin() - (table.getRowHeight() * 8) : table
+					- table.getMargin()
+					- (table.getRowHeight() * table.getHeaderSize()) : table
 					.getPageSize().getHeight()
 					- table.getMargin()
-					- table.getRowHeight() - (table.getRowHeight() * 8);
+					- table.getRowHeight()
+					- (table.getRowHeight() * table.getHeaderSize());
 
 		}
 		// Draws grid and borders
@@ -96,7 +106,7 @@ public class PDFTableGenerator {
 			writeHeader(contentStream, nextTextX, nextTextY, table);
 		}
 		// Se dibuja el footer
-		writeFooter(contentStream, nextTextX, nextTextY, table);
+		writeFooter(contentStream, nextTextX, nextTextY, table, pageCount);
 		contentStream.close();
 	}
 
@@ -104,6 +114,7 @@ public class PDFTableGenerator {
 	private void writeContentLine(String[] lineContent,
 			PDPageContentStream contentStream, float nextTextX,
 			float nextTextY, Table table) throws IOException {
+		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		for (int i = 0; i < table.getNumberOfColumns(); i++) {
 			String text = lineContent[i];
 			contentStream.beginText();
@@ -119,18 +130,24 @@ public class PDFTableGenerator {
 			throws IOException {
 		// Draw row lines
 		float nextY = tableTopY;
-		for (int i = 0; i <= currentPageContent.length + 1; i++) {
+		
+		//Modificado para solo el tititulo para grilla completa modificar por
+		//for (int i = 0; i <= currentPageContent.length + 1; i++) {
+		for (int i = 0; i <= 1; i++) {
 			contentStream.drawLine(table.getMargin(), nextY, table.getMargin()
 					+ table.getWidth(), nextY);
 			nextY -= table.getRowHeight();
 		}
 
-		// Draw column lines
-		final float tableYLength = table.getRowHeight()
-				+ (table.getRowHeight() * currentPageContent.length);
-		final float tableBottomY = tableTopY - tableYLength;
+		// Modificado solo pra el titulo para grilla modificar por
+		// final float tableYLength = table.getRowHeight() + (table.getRowHeight() * currentPageContent.length);
+		// final float tableBottomY = tableTopY - tableYLength;
+		final float tableBottomY = tableTopY - table.getRowHeight();
+		
 		float nextX = table.getMargin();
-		for (int i = 0; i < table.getNumberOfColumns(); i++) {
+		
+		//Modificado para solo el tititulo para grilla completa modificar por
+		for (int i = 0; i < table.getNumberOfColumns(); i++) {	
 			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
 			nextX += table.getColumns().get(i).getWidth();
 		}
@@ -144,7 +161,8 @@ public class PDFTableGenerator {
 		int endRange = (pageCount * rowsPerPage) + rowsPerPage;
 
 		if (pageCount == 0) {
-			endRange = (pageCount * rowsPerPage) - 8 + rowsPerPage;
+			endRange = (pageCount * rowsPerPage) - table.getHeaderSize()
+					+ rowsPerPage;
 		}
 		if (endRange > table.getNumberOfRows()) {
 			endRange = table.getNumberOfRows();
@@ -173,7 +191,10 @@ public class PDFTableGenerator {
 	}
 
 	private void writeFooter(PDPageContentStream contentStream,
-			float nextTextX, float nextTextY, Table table) throws IOException {
+			float nextTextX, float nextTextY, Table table, int pagecount)
+			throws IOException {
+
+		contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
 
 		nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
 		nextTextY -= (table.getRowHeight() * 2.5);
@@ -184,9 +205,11 @@ public class PDFTableGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
-		nextTextY += table.getRowHeight();
-		nextTextX += table.getColumns().get(0).getWidth();
-		contentStream.showText("Pagina 1 de 1");
+		nextTextY += table.getRowHeight() - table.getMargin();
+		nextTextX += table.getWidth();
+		String footertext = String.format("Página %d de %d", (pagecount + 1),
+				this.intNumberPages);
+		contentStream.showText(footertext);
 		contentStream.endText();
 
 	}
@@ -194,60 +217,77 @@ public class PDFTableGenerator {
 	private void writeHeader(PDPageContentStream contentStream,
 			float nextTextX, float nextTextY, Table table) throws IOException {
 
+		contentStream.setFont(table.getHeaderFont(), table.getFontSizeheader());
+
+		float nextTextXCopy = nextTextX;
 		nextTextY = table.isLandscape() ? table.getPageSize().getWidth()
 				- table.getMargin() : table.getPageSize().getHeight()
 				- table.getMargin();
-//		String basepath = VaadinService.getCurrent().getBaseDirectory()
-//				.getAbsolutePath();
-//
-//		final Logger logger =
-//		          Logger.getLogger(VReporteP.class.getName());
-//		
-//		logger.log(Level.SEVERE, basepath);
-//		PDImageXObject pdImage = PDImageXObject.createFromFile(basepath
-//				+ "/VAADIN/ait-theme/logos/Logo_AIT.png", this.doc);
-//		float scale = 1f;
-//		contentStream.drawImage(pdImage, 20, 20, pdImage.getWidth() * scale,
-//				pdImage.getHeight() * scale);
 
-		
-		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-	
-		contentStream.showText("Dependencia : XXXXXXXX" + String.valueOf(nextTextX) +" - y:"+ String.valueOf(nextTextY));
-		
-		contentStream.endText();
-		
-		nextTextX += 500;
-		
-		contentStream.beginText();
-		contentStream.moveTextPositionByAmount(nextTextX + 500, nextTextY);
-		contentStream.showText("Fecha : XXXXXXXX");
-		contentStream.endText();
-		
-		
-/*
 
-		contentStream.showText("Hora : XXXXXXXX");
+		contentStream.showText("Dependencia : " + table.getDependencia());
+
+		contentStream.endText();
+
+		Date date = new Date();
+		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha = fechaHora.format(date);
+ 
 		
-		nextTextY -= table.getRowHeight();
+		nextTextX += 400;
+
+		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Unidad : XXXXXXXX");
-	
+		contentStream.showText("Fecha : " + fecha);
+		contentStream.endText();
+
+		nextTextX = nextTextXCopy;
 		nextTextY -= table.getRowHeight();
+		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Usuario : XXXXXXXX");
+		contentStream.showText("Unidad : " + table.getUnidad());
+		contentStream.endText();
+
+
+		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
+		String strhora = hora.format(date);
 		
-		nextTextY = table.getRowHeight();
-		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);		
-		contentStream.showText("Titulo : XXXXXXXX");
-	
-		nextTextY -= table.getRowHeight();
+		nextTextX += 400;
+
+		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Subtitulo : XXXXXXXX");
-	
-		contentStream.endText();*/
+		contentStream.showText("Hora : " + strhora);
+		contentStream.endText();
+
+		nextTextX = nextTextXCopy;
+		nextTextY -= table.getRowHeight();
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText("Usuario : " + table.getUsuario());
+		contentStream.endText();
+
+		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
+		nextTextY -= table.getRowHeight();
+		contentStream.beginText();
+		long text_width = (long) ((table.getTitleFont().getStringWidth(
+				table.getTitle()) / 1000.0f) * table.getFontSizetitle());
+		contentStream.moveTextPositionByAmount((table.getWidth() / 2)
+				- (text_width / 2) + (table.getMargin() / 2), nextTextY);
+		contentStream.showText(table.getTitle());
+		contentStream.endText();
+
+		contentStream.setFont(table.getSubtitleFont(),
+				table.getFontSizesubtitle());
+		nextTextY -= table.getRowHeight();
+		contentStream.beginText();
+		long sub_width = (long) ((table.getSubtitleFont().getStringWidth(
+				table.getSubtitle()) / 1000.0f) * table.getFontSizesubtitle());
+		contentStream.moveTextPositionByAmount((table.getWidth() / 2)
+				- (sub_width / 2) + (table.getMargin() / 2), nextTextY);
+		contentStream.showText(table.getSubtitle());
+		contentStream.endText();
 
 	}
 }

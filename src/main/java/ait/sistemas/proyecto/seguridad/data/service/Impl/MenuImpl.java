@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import ait.sistemas.proyecto.seguridad.component.FullMenu;
 import ait.sistemas.proyecto.seguridad.data.dao.Dao;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
@@ -48,6 +49,7 @@ public class MenuImpl implements Dao<Arbol_menus> {
 	}
 	@SuppressWarnings("unchecked")
 	public List<Arbol_menus> getallMenu() {
+		
 		Query query = em.createNativeQuery("EXEC  Estr_Menu_Q", Arbol_menus.class);
 		List<Arbol_menus> resultlist = query.getResultList();
 		return resultlist;
@@ -361,6 +363,23 @@ public class MenuImpl implements Dao<Arbol_menus> {
 						+ " @Identificador=?1");
 		query.setParameter(1, identificador);
 		int result = (Integer)query.getSingleResult();
+		return result;
+	}
+	
+	public boolean isProgram(long identificador){
+		Query query = this.em
+				.createNativeQuery("exec estr_isProgram"
+						+ " @Identificador=?1");
+		query.setParameter(1, identificador);
+		int result = (Integer)query.getSingleResult();
+		return (result>0)?true:false;
+	}
+	public FullMenu getFullData(long identificador){
+		Query query = this.em
+				.createNativeQuery("EXEC estr_getMenuFullData "
+						+ "@Identificador=?1", "full-menu");
+		query.setParameter(1, identificador);
+		FullMenu result = (FullMenu)query.getSingleResult();
 		return result;
 	}
 }
