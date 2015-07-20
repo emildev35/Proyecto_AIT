@@ -1,6 +1,6 @@
 package ait.sistemas.proyecto.seguridad.data.service.Impl;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import ait.sistemas.proyecto.seguridad.component.FullMenu;
 import ait.sistemas.proyecto.seguridad.data.dao.Dao;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 
@@ -28,6 +29,7 @@ public class PerfilImpl implements Dao<Perfil> {
 		result += (int) query.getSingleResult();
 		return result;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Perfil> getall() {
@@ -70,7 +72,7 @@ public class PerfilImpl implements Dao<Perfil> {
 		return result;
 
 	}
-	
+
 	@Override
 	public Perfil update(Perfil table) {
 		String strQuery = String.format("EXEC Usua_Perfil_U "
@@ -88,25 +90,31 @@ public class PerfilImpl implements Dao<Perfil> {
 	public int delete(Perfil table) {
 		return 0;
 	}
+
 	/**
 	 * Este Método se encarga de realizar el registro en la base de datos
-	 * @param id_perfil		Long - Identifcador del Perfil
-	 * @param permisos		List<Long> - Lista de lo Identificadores
+	 * 
+	 * @param id_perfil
+	 *            Long - Identifcador del Perfil
+	 * @param permisos
+	 *            List<Long> - Lista de lo Identificadores
 	 * @return
 	 */
-	public int otortgarPermisos(int id_perfil, List<Long> permisos){
+	public int otortgarPermisos(int id_perfil, List<FullMenu> permisos,
+			Date fechaRegistro) {
 		int result = 0;
-		for (Long menu_id : permisos) {
-			String strQuery = String.format("EXEC Estr_OpcionxPerfil_I "
-					+ "@PRF_Id_perfil=?1, "
-					+ "@AME_Identificador=?2, "
-					+ "@Fecha_Registro=?3");
-			Query query = this.em.createNativeQuery(strQuery, Perfil.class);
+		for (FullMenu menu_identicador : permisos) {
+			String strQueryOtorgarPermiso = String
+					.format("EXEC Estr_OpcionxPerfil_I "
+							+ "@PRF_Id_perfil=?1, " + "@AME_Identificador=?2, "
+							+ "@Fecha_Registro=?3");
+			Query query = this.em.createNativeQuery(strQueryOtorgarPermiso);
+			// query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 			query.setParameter(1, id_perfil);
-			query.setParameter(1, menu_id);
-			query.setParameter(1, new java.sql.Date(new Date().getTime()));
-			result = (Integer)query.getSingleResult();
-		}
+			query.setParameter(2, menu_identicador.getIdentificador());
+			query.setParameter(3, fechaRegistro);
+			result += (Integer) query.getSingleResult();
+		}	
 		return result;
 	}
 

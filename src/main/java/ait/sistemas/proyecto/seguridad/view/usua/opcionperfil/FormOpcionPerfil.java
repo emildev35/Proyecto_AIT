@@ -3,6 +3,8 @@ package ait.sistemas.proyecto.seguridad.view.usua.opcionperfil;
 import java.util.ArrayList;
 import java.util.List;
 
+import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.FullMenu;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
@@ -11,7 +13,14 @@ import ait.sistemas.proyecto.seguridad.data.service.Impl.PerfilImpl;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.EmptyValueException;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.ObjectProperty;
+import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
@@ -28,6 +37,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 	private ComboBox cbSubMenu;
 	private ComboBox cbOpcion;
 	
+	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	private final MenuImpl menuimpl = new MenuImpl();
 	private final PerfilImpl perfilimpl = new PerfilImpl();
 	
@@ -35,6 +45,8 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 	
 	public GridOpcionPerfil gridOpcionPerfil;
 	
+	final PropertysetItem pitmOpcionPerfil = new PropertysetItem();
+	private FieldGroup binderOpcionPerfil;
 	
 	public FormOpcionPerfil() {
 		super(4, 2);
@@ -53,10 +65,31 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		this.cbOpcion.addValueChangeListener(this);
 		
 		cbPerfil.setInputPrompt("Seleccione un Perfil");
+		cbPerfil.setRequired(true);
+		cbPerfil.addValidator(new NullValidator("", false));
 		cbSubSistema.setInputPrompt("Seleccione un SubSistema");
+		cbSubSistema.setRequired(true);
+		cbSubSistema.addValidator(new NullValidator("", false));
 		cbMenu.setInputPrompt("Seleccione un Menu");
 		cbSubMenu.setInputPrompt("Seleccione un Sub Menu");
 		cbOpcion.setInputPrompt("Seleccione una Opcion");
+		
+		
+		pitmOpcionPerfil.addItemProperty("perfil", new ObjectProperty<Integer>(0));
+		pitmOpcionPerfil.addItemProperty("subSistema", new ObjectProperty<Long>((long)0));
+		pitmOpcionPerfil.addItemProperty("menu", new ObjectProperty<Long>((long)0));
+		pitmOpcionPerfil.addItemProperty("subMenu", new ObjectProperty<Long>((long)0));
+		pitmOpcionPerfil.addItemProperty("opcion", new ObjectProperty<Long>((long)0));
+	
+		
+		this.binderOpcionPerfil = new FieldGroup(this.pitmOpcionPerfil);
+		
+		binderOpcionPerfil.bind(this.cbPerfil, "perfil");
+		binderOpcionPerfil.bind(this.cbSubSistema, "subSistema");
+		binderOpcionPerfil.bind(this.cbMenu, "menu");
+		binderOpcionPerfil.bind(this.cbSubMenu, "subMenu");
+		binderOpcionPerfil.bind(this.cbOpcion, "opcion");
+
 		
 		setWidth("100%");
 		this.cbPerfil.setWidth("90%");
@@ -65,6 +98,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		this.cbSubMenu.setWidth("90%");
 		this.cbOpcion.setWidth("90%");
 
+	
 		fillcbPerfil();
 		fillcbSubSistema();
 		buildForm();
@@ -73,7 +107,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 	}
 
 	private void buildForm() {
-		
+		this.binderOpcionPerfil.clear();
 		addComponent(this.cbPerfil, 0, 0, 1, 0);
 		addComponent(this.cbSubSistema, 0, 1);
 		addComponent(this.cbMenu, 1, 1);
@@ -86,7 +120,6 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		BeanItemContainer<FullMenu> beanOpcionPerfil = new BeanItemContainer<FullMenu>(FullMenu.class);
 		beanOpcionPerfil.addAll(this.fullmenus);
 		this.gridOpcionPerfil.setContainerDataSource(beanOpcionPerfil);
-		Notification.show(this.gridOpcionPerfil.getColumns().get(0).getPropertyId().toString());
 		this.gridOpcionPerfil.setColumnOrder("identificador", "subSistema", "menu", "subMenu", "opcion");
 		this.gridOpcionPerfil.getColumn("identificador").setExpandRatio(1);
 		this.gridOpcionPerfil.getColumn("subSistema").setExpandRatio(3);
@@ -186,12 +219,8 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		}catch(Exception e){}
 	}
 
-	public List<Long> getListMenu() {
-		List<Long> result = new ArrayList<Long>();
-		for (FullMenu fullMenu: this.fullmenus) {
-			result.add(fullMenu.getIdentificador());
-		}
-		return result;
+	public List<FullMenu> getListMenu() {
+		return this.fullmenus;
 	}
 
 	public int getIdPerfil() {	
@@ -203,5 +232,27 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		buildGrid();
 		buildForm();
 	}	
+	public List<BarMessage> getMensajes() {
+		return mensajes;
+	}
+	public boolean validate(){
+		try{
+			this.binderOpcionPerfil.commit();
+			this.mensajes.add(new BarMessage("Fomulario", Messages.SUCCESS_MESSAGE, "success"));
+			return true;
+		}catch(CommitException e){
+			try {
+				this.cbPerfil.validate();
+			}catch(EmptyValueException ex){
+				this.mensajes.add(new BarMessage(cbPerfil.getCaption(), "Campo no debe ser Vacio"));
+			}
+			try {
+				this.cbSubSistema.validate();
+			}catch(EmptyValueException ex){
+				this.mensajes.add(new BarMessage(cbSubSistema.getCaption(), "Campo no debe ser Vacio"));
+			}	
+			return false;
+		}		
+	}
 
 }

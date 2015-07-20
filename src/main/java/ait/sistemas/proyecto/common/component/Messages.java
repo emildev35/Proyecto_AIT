@@ -12,7 +12,12 @@ public class Messages {
 	 */
 	public static final String NOT_SUCCESS_MESSAGE = "Operacion sin Exito";
 	
-	
+	/**
+	 * Mensaje utilzado para presentar errores relacionados con la deṕendecias de objetivos
+	 * dentro de la base de datos
+	 * @param elemento
+	 * @return
+	 */
 	public static final String FOREIGN_RELATION_ERROR(String elemento)
 	{return String.format("Verifique las Dependecias del " + elemento );};
 	

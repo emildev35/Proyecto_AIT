@@ -109,6 +109,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		int rowNumber = this.menuiml
 				.CountItemSubmenu((long) this.frmReporte.cbSusSistema
 						.getValue());
+		rowNumber = (rowNumber<0)?0:rowNumber;
 		this.data = new String[rowNumber][5];
 		this.r = 0;
 		buildrow(this.menuiml.getallMenu((long) this.frmReporte.cbSusSistema

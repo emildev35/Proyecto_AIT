@@ -16,10 +16,18 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 public class ReportPdf {
 	 // Page configuration
     private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
+    /**
+     * Escala 30:1 1cm = 30
+     */
     private static final float MARGIN = 60;
+    /**
+     * false Orientacion Vertical true Horizontal
+     */
     private static final boolean IS_LANDSCAPE = false;
 
-    // Font for textFont
+    /**
+     * Fuente el Texto
+     */
     private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
     private static final float FONT_SIZE = 12;
     
@@ -30,28 +38,39 @@ public class ReportPdf {
     private static final float FOOTER_FONT_SIZE = 10;
     
     /**
-     * Font for footer report
+     * Font for header report
      */
     private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
     private static final float HEADER_FONT_SIZE = 10;
     
     /**
-     * Font for footer report
+     * Font for title report
      */
     private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
     private static final float TITLE_FONT_SIZE = 16;
     
     /**
-     * Font for footer report
+     * Font for subtitle report
      */
     private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
     private static final float SUBTITLE_FONT_SIZE = 11;
     
+    /**
+     * Distancia en entre las lineas de texto
+     */
     private static final float ROW_HEIGHT = 15;
+    /**
+     * Distancia entre las lineas
+     */
     private static final float CELL_MARGIN = 2;
-    
+    /**
+     * Tamaño del header expesado en alto de las filas de la tabla
+     */
     private static final int HEADER_SIZE = 5;
     
+    /**
+     * Ruta donde se guardara el reporte
+     */
     private static final String SAVE_PATH = "Documentos/InformeMenus.pdf";
     
     
@@ -62,12 +81,15 @@ public class ReportPdf {
     }
 
     private static Table createContent(String[][] data, String subsistema) {
-        List<Column> columns = new ArrayList<Column>();
+        /**
+         * La suma del ancho de las colmunas debe rondar 400
+         */
+    	List<Column> columns = new ArrayList<Column>();
         columns.add(new Column("ID", 35));	
         columns.add(new Column("COD", 35));
         columns.add(new Column("NOMBRE DEL MENU", 230));
         columns.add(new Column("NIVEL", 40));
-        columns.add(new Column("NOMBRE DEL PROGRAMA", 180));
+        columns.add(new Column("PROGRAMA", 180));
  
         String[][] content = data;
 
