@@ -2,11 +2,16 @@ package ait.sistemas.proyecto.seguridad.view.usua.usuario;
 
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.cdi.CDIView;
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -23,21 +28,27 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VUsuarioA.ID)
-public class VUsuarioA extends VerticalLayout implements View, ClickListener {
+@CDIView(value = VUsuarioB.ID)
+public class VUsuarioB extends VerticalLayout implements View, ClickListener,
+		SelectionListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/seg/usua/usuario/a";
+	public static final String ID = "/seg/usua/usuario/b";
 
-	private Button btn_submit = new Button("Agregar");
+	private Button btn_submit = new Button("Eliminar");
 	private Button btn_limpiar = new Button("Limpiar");
 	private CssLayout hl_errores = new CssLayout();
 	private FormUsuario frmUsuario;
 	private UsuarioImpl usuarioimpl = new UsuarioImpl();
 	private GridUsuario grid_usuario = new GridUsuario();
 
-	public VUsuarioA() {
+	public VUsuarioB() {
 		this.frmUsuario = new FormUsuario();
+		this.frmUsuario.cbPersonal.setEnabled(false);
+		this.frmUsuario.txtCI.setEnabled(false);
+		this.frmUsuario.txtIdenticadorUsuario.setEnabled(false);
+
+		this.grid_usuario.addSelectionListener(this);
 
 		addComponent(buildNavBar());
 		addComponent(builFormContent());
@@ -49,14 +60,13 @@ public class VUsuarioA extends VerticalLayout implements View, ClickListener {
 		final VerticalLayout vlfrmContent = new VerticalLayout();
 		vlfrmContent.setMargin(true);
 		Panel pnfrmOpcionPerfil = new Panel(
-				"Formulario de Registro de Usuarios");
+				"Formulario de Elminacion de Usuarios");
 		pnfrmOpcionPerfil.setContent(this.frmUsuario);
 
 		Panel pngridOpcionPerfil = new Panel("Grid de Usuarios");
 		pngridOpcionPerfil.setContent(this.grid_usuario);
-
-		vlfrmContent.addComponent(pnfrmOpcionPerfil);
 		vlfrmContent.addComponent(pngridOpcionPerfil);
+		vlfrmContent.addComponent(pnfrmOpcionPerfil);
 		return vlfrmContent;
 	}
 
@@ -105,24 +115,55 @@ public class VUsuarioA extends VerticalLayout implements View, ClickListener {
 
 	}
 
+	public void eliminar() {
+
+		try {
+			this.usuarioimpl.delete(this.frmUsuario.getDataUsuario()
+					.getUSU_Id_Usuario());
+			Notification.show(Messages.SUCCESS_MESSAGE);
+			this.grid_usuario.update();
+			this.frmUsuario.cbPersonal.removeAllItems();
+			this.frmUsuario.clear();
+		} catch (Exception e) {
+			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+		}
+
+	}
+
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_submit) {
-			if (this.frmUsuario.validate()) {
-				if (this.usuarioimpl.add(this.frmUsuario.getDataUsuario()) != null) {
-					Notification.show(Messages.SUCCESS_MESSAGE);
-					this.grid_usuario.update();
-					this.frmUsuario.clear();
-				} else {
-					Notification.show(Messages.NOT_SUCCESS_MESSAGE,
-							Type.ERROR_MESSAGE);
-				}
+			if (this.frmUsuario.cbPersonal.getValue() != null) {
+				ConfirmDialog
+						.show(getUI(),
+								("Eliminar " + this.frmUsuario.cbPersonal
+										.getValue().toString()),
+								(Messages
+										.CONFIRM_DIALOG_DELETE_MESSAGE(this.frmUsuario.cbPersonal
+												.getValue().toString())), "Si",
+								"No", this);
+
+				buildMessages(this.frmUsuario.getMessages());
 			}
-			buildMessages(this.frmUsuario.getMessages());
 		}
 		if (event.getButton() == this.btn_limpiar) {
 			this.frmUsuario.clear();
 		}
 
+	}
+
+	@Override
+	public void select(SelectionEvent event) {
+		if (this.grid_usuario.getSelectedRow() != null) {
+			this.frmUsuario.setDataUsuario((UsuarioGridModel) this.grid_usuario
+					.getSelectedRow());
+		}
+	}
+
+	@Override
+	public void onClose(ConfirmDialog dialog) {
+		if (dialog.isConfirmed()) {
+			eliminar();
+		}
 	}
 }

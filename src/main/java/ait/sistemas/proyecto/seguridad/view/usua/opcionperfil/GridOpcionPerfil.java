@@ -2,7 +2,7 @@ package ait.sistemas.proyecto.seguridad.view.usua.opcionperfil;
 
 import java.util.List;
 
-import ait.sistemas.proyecto.seguridad.component.FullMenu;
+import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Grid;

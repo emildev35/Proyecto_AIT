@@ -5,7 +5,7 @@ import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
-import ait.sistemas.proyecto.seguridad.component.FullMenu;
+import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
@@ -49,6 +49,8 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 	public FormOpcionPerfil() {
 		super(4, 2);
 		setMargin(true);
+		setWidth("100%");
+		
 		this.cbPerfil = new ComboBox("Perfil");
 		this.cbSubSistema = new ComboBox("Sub-Sistema");
 		this.cbMenu = new ComboBox("Menu");
@@ -89,7 +91,6 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		binderOpcionPerfil.bind(this.cbOpcion, "opcion");
 
 		
-		setWidth("100%");
 		this.cbPerfil.setWidth("90%");
 		this.cbSubSistema.setWidth("90%");
 		this.cbMenu.setWidth("90%");

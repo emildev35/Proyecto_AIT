@@ -83,6 +83,7 @@
 		<class>ait.sistemas.proyecto.seguridad.data.model.pk.PermisoPK</class>
 		<class>ait.sistemas.proyecto.seguridad.data.model.Usuario</class>
 		<class>ait.sistemas.proyecto.seguridad.component.FullMenu</class>
+		<class>ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />

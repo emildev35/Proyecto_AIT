@@ -25,6 +25,9 @@ public class Messages {
 	public static final String STRING_LENGTH_MESSAGE(int min, int max)
 	{return String.format("La longitud de caracteres debe ser menor a %d y superior a %d", min, max);};
 	
+	public static final String CONFIRM_DIALOG_DELETE_MESSAGE(String value)
+	{return String.format("Esta Uds. seguro de eliminar el registro %s", value);};
+	
 	public static final String EMPTY_MESSAGE = "EL campo no debe estar Vacio";
 	/**
 	 * Este Mensaje se utilizara cuando el usuario desee eliminar un registro

@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.seguridad.component;
+package ait.sistemas.proyecto.seguridad.component.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
