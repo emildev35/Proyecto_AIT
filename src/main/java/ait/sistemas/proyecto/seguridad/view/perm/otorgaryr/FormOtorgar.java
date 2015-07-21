@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.seguridad.view.usua.opcionperfil;
+package ait.sistemas.proyecto.seguridad.view.perm.otorgaryr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.PerfilImpl;
+import ait.sistemas.proyecto.seguridad.view.usua.opcionperfil.GridOpcionPerfil;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -25,7 +26,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 
-public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
+public class FormOtorgar extends GridLayout implements ValueChangeListener{
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +47,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 	final PropertysetItem pitmOpcionPerfil = new PropertysetItem();
 	private FieldGroup binderOpcionPerfil;
 	
-	public FormOpcionPerfil() {
+	public FormOtorgar() {
 		super(4, 2);
 		setMargin(true);
 		setWidth("100%");

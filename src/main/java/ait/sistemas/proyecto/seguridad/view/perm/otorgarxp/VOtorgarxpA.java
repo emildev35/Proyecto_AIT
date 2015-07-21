@@ -1,17 +1,12 @@
-package ait.sistemas.proyecto.seguridad.view.usua.usuario;
+package ait.sistemas.proyecto.seguridad.view.perm.otorgarxp;
 
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
-import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.event.SelectionEvent;
-import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -28,28 +23,20 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VUsuarioB.ID)
-public class VUsuarioB extends VerticalLayout implements View, ClickListener,
-		SelectionListener, org.vaadin.dialogs.ConfirmDialog.Listener {
+@CDIView(value = VOtorgarxpA.ID)
+public class VOtorgarxpA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/seg/usua/usuario/b";
+	public static final String ID = "/seg/perm/oporgarxp";
 
-	private Button btn_submit = new Button("Eliminar");
+	private Button btn_submit = new Button("Asignar");
 	private Button btn_limpiar = new Button("Limpiar");
 	private CssLayout hl_errores = new CssLayout();
-	private FormUsuario frmUsuario;
+
+	private FormOtorgarxp frm_otorgar = new FormOtorgarxp();
 	private UsuarioImpl usuarioimpl = new UsuarioImpl();
-	private GridUsuario grid_usuario = new GridUsuario();
 
-	public VUsuarioB() {
-		this.frmUsuario = new FormUsuario();
-		this.frmUsuario.cbPersonal.setEnabled(false);
-		this.frmUsuario.txtCI.setEnabled(false);
-		this.frmUsuario.txtIdenticadorUsuario.setEnabled(false);
-
-		this.grid_usuario.addSelectionListener(this);
-
+	public VOtorgarxpA() {
 		addComponent(buildNavBar());
 		addComponent(builFormContent());
 		addComponent(buildButtonBar());
@@ -59,14 +46,11 @@ public class VUsuarioB extends VerticalLayout implements View, ClickListener,
 
 		final VerticalLayout vlfrmContent = new VerticalLayout();
 		vlfrmContent.setMargin(true);
-		Panel pnfrmOpcionPerfil = new Panel(
-				"Formulario de Elminacion de Usuarios");
-		pnfrmOpcionPerfil.setContent(this.frmUsuario);
+		Panel pnfrmOtorgar = new Panel("Formulario para Otorgar Perfiles");
+		pnfrmOtorgar.setContent(this.frm_otorgar);
 
-		Panel pngridOpcionPerfil = new Panel("Grid de Usuarios");
-		pngridOpcionPerfil.setContent(this.grid_usuario);
-		vlfrmContent.addComponent(pngridOpcionPerfil);
-		vlfrmContent.addComponent(pnfrmOpcionPerfil);
+		vlfrmContent.addComponent(pnfrmOtorgar);
+		Responsive.makeResponsive(vlfrmContent);
 		return vlfrmContent;
 	}
 
@@ -115,54 +99,26 @@ public class VUsuarioB extends VerticalLayout implements View, ClickListener,
 
 	}
 
-	public void eliminar() {
-		try {
-			this.usuarioimpl.delete(this.frmUsuario.getDataUsuario()
-					.getUSU_Id_Usuario());
-			Notification.show(Messages.SUCCESS_MESSAGE);
-			this.grid_usuario.update();
-			this.frmUsuario.cbPersonal.removeAllItems();
-			this.frmUsuario.clear();
-		} catch (Exception e) {
-			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-		}
-
-	}
-
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_submit) {
-			if (this.frmUsuario.cbPersonal.getValue() != null) {
-				ConfirmDialog
-						.show(getUI(),
-								("Eliminar " + this.frmUsuario.cbPersonal
-										.getValue().toString()),
-								(Messages
-										.CONFIRM_DIALOG_DELETE_MESSAGE(this.frmUsuario.cbPersonal
-												.getValue().toString())), "Si",
-								"No", this);
-
-				buildMessages(this.frmUsuario.getMessages());
+			if (this.frm_otorgar.validate()) {
+				if (this.usuarioimpl.agregarPermisos(
+						this.frm_otorgar.getPerfil(),
+						this.frm_otorgar.getUsuario(),
+						this.frm_otorgar.getPermisos()) > 0) {
+					Notification.show(Messages.SUCCESS_MESSAGE);
+					this.frm_otorgar.clear();
+				} else {
+					Notification.show(Messages.NOT_SUCCESS_MESSAGE,
+							Type.ERROR_MESSAGE);
+				}
 			}
+			buildMessages(this.frm_otorgar.getMessages());
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			this.frmUsuario.clear();
+			this.frm_otorgar.clear();
 		}
 
-	}
-
-	@Override
-	public void select(SelectionEvent event) {
-		if (this.grid_usuario.getSelectedRow() != null) {
-			this.frmUsuario.setDataUsuario((UsuarioGridModel) this.grid_usuario
-					.getSelectedRow());
-		}
-	}
-
-	@Override
-	public void onClose(ConfirmDialog dialog) {
-		if (dialog.isConfirmed()) {
-			eliminar();
-		}
 	}
 }

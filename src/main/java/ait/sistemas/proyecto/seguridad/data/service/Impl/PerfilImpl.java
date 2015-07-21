@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.seguridad.data.service.Impl;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
+import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
 import ait.sistemas.proyecto.seguridad.data.dao.Dao;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 
@@ -116,6 +118,15 @@ public class PerfilImpl implements Dao<Perfil> {
 			result += (Integer) query.getSingleResult();
 		}	
 		return result;
+	}
+
+	public List<PermisoPerfil> getPermisos(int id_perfil) {
+		String strQuery = String.format("EXEC Usua_OpcionesXPerfil_Q  "
+				+ "@Id_Perfil=?1");
+		Query query = this.em.createNativeQuery(strQuery, "permiso-perfil");
+		query.setParameter(1, id_perfil);
+		List<PermisoPerfil> resultlist = query.getResultList();
+		return resultlist;
 	}
 
 }
