@@ -8,8 +8,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
+import ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario;
 import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.model.Usuario;
 
@@ -101,4 +105,59 @@ public class UsuarioImpl implements Dao<Usuario> {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<PermisosUsuario> listarPermisos(String usuario, long menu) {
+		String str_list_permisos = "EXEC Perm_Listar_Permisos_Q "
+				+ "@Id_Usuario=?1, " + "@Id_Menu=?2";
+		Query query = this.em.createNativeQuery(str_list_permisos,
+				"permiso-usuario").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, usuario);
+		query.setParameter(2, menu);
+		List<PermisosUsuario> result = query.getResultList();
+		return result;
+	}
+
+	/**
+	 * Este Metodo se encarga de agregar y modificar permisos en la base de
+	 * datos para ello elimina de manera temporal todos los permisos de un
+	 * usuario espesifico, posterior a ello realiza la insersion de los nuevos
+	 * permisos.
+	 * 
+	 * @param usuario          Identificador del Usuario
+	 * @param permisos         Lista de permisos que seran asignados
+	 * @param id_padre         El Identificador del Menu padre
+	 * @param fechaRegistro    	Fecha de Registro
+	 * @return	integer
+	 */
+	public int otortgarPermisos(String usuario, List<PermisosUsuario> permisos,
+			long id_padre, java.sql.Date fechaRegistro) {
+
+		int result = 0;
+		String str_quitar_permisos = "EXEC Perm_QuitarPermiso_P "
+				+ "@Identificador=?1, " + "@Id_Usuario=?2, "
+				+ "@Fecha_Registro=?3";
+
+		Query query = this.em.createNativeQuery(str_quitar_permisos);
+		query.setParameter(1, id_padre);
+		query.setParameter(2, usuario);
+		query.setParameter(3, fechaRegistro);
+		result += (Integer) query.getSingleResult();
+
+		if (permisos.size() > 0) {
+			String str_agregar_permisos = "EXEC Perm_AgregarPermiso_P "
+					+ "@Identificador=?1, " + "@Id_Usuario=?2, "
+					+ "@Fecha_Registro=?3";
+
+			for (PermisosUsuario permisosUsuario : permisos) {
+				Query query_agregar = this.em
+						.createNativeQuery(str_agregar_permisos);
+				query_agregar.setParameter(1,
+						permisosUsuario.getIdentificador());
+				query_agregar.setParameter(2, usuario);
+				query_agregar.setParameter(3, fechaRegistro);
+				result += (Integer) query_agregar.getSingleResult();
+			}
+		}
+		return result;
+	}
 }

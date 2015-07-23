@@ -80,6 +80,7 @@ public class FormOtorgarxp extends GridLayout implements ValueChangeListener {
 	public void fillcbUsuario() {
 		this.cb_funcionario.setInputPrompt("Seleccione un Usuario");
 		this.cb_funcionario.removeAllItems();
+		this.cb_funcionario.setNullSelectionAllowed(false);
 		for (UsuarioGridModel usuario : usuarioimpl.getGridData()) {
 			this.cb_funcionario.addItem(usuario.getId());
 			this.cb_funcionario.setItemCaption(usuario.getId(),
@@ -91,6 +92,7 @@ public class FormOtorgarxp extends GridLayout implements ValueChangeListener {
 	public void fillcbPerfil() {
 		this.cb_perfiles.setInputPrompt("Seleccione un Usuario");
 		this.cb_perfiles.removeAllItems();
+		this.cb_perfiles.setNullSelectionAllowed(false);
 		for (Perfil perfil : perfilimpl.getall()) {
 			this.cb_perfiles.addItem(perfil.getPRF_Id_Perfil());
 			this.cb_perfiles.setItemCaption(perfil.getPRF_Id_Perfil(),

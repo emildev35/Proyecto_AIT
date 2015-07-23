@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.common.component;
 
+
 public class Messages {
 	/**
 	 * Este Mensaje se utilizara cuando un accion de registro en base de datos
@@ -33,4 +34,8 @@ public class Messages {
 	 * Este Mensaje se utilizara cuando el usuario desee eliminar un registro
 	 */
 	public static final String CONFIRM_DELETE_MESSAGE = "Esta Uds. seguro de eliminar el registro";
+
+	public static String FILL_FIRST(String caption) {
+		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
+	}
 }

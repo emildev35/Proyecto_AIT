@@ -5,12 +5,11 @@ import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
-import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
+import ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario;
+import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
-import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
-import ait.sistemas.proyecto.seguridad.data.service.Impl.PerfilImpl;
-import ait.sistemas.proyecto.seguridad.view.usua.opcionperfil.GridOpcionPerfil;
+import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -21,120 +20,135 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
 
-public class FormOtorgar extends GridLayout implements ValueChangeListener{
+public class FormOtorgar extends GridLayout implements ValueChangeListener,
+		SelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private ComboBox cbPerfil;
+	private ComboBox cb_usuario;
 	private ComboBox cbSubSistema;
 	private ComboBox cbMenu;
-	private ComboBox cbSubMenu;
-	private ComboBox cbOpcion;
-	
+	private ComboBox cb_subMenu;
+
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	private final MenuImpl menuimpl = new MenuImpl();
-	private final PerfilImpl perfilimpl = new PerfilImpl();
+	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
+
+	private long id_padre;
 	
-	public List<FullMenu> fullmenus;
-	
-	public GridOpcionPerfil gridOpcionPerfil;
-	
+	public List<PermisosUsuario> permisos_usuario = new ArrayList<PermisosUsuario>();
+
+	public Grid grid_otorgar = new Grid();
+
 	final PropertysetItem pitmOpcionPerfil = new PropertysetItem();
-	private FieldGroup binderOpcionPerfil;
-	
+	private FieldGroup binderOtorgar;
+
 	public FormOtorgar() {
-		super(4, 2);
+		super(3, 2);
 		setMargin(true);
 		setWidth("100%");
-		
-		this.cbPerfil = new ComboBox("Perfil");
+
+		this.cb_usuario = new ComboBox("Usuario");
 		this.cbSubSistema = new ComboBox("Sub-Sistema");
 		this.cbMenu = new ComboBox("Menu");
-		this.cbSubMenu = new ComboBox("Sub-Menu");
-		this.cbOpcion = new ComboBox("Opcion");
-		this.fullmenus = new ArrayList<FullMenu>();
-		this.gridOpcionPerfil = new GridOpcionPerfil();
-		
-		this.cbSubSistema.addValueChangeListener(this);
-		this.cbMenu.addValueChangeListener(this);
-		this.cbSubMenu.addValueChangeListener(this);
-		this.cbOpcion.addValueChangeListener(this);
-		
-		cbPerfil.setInputPrompt("Seleccione un Perfil");
-		cbPerfil.setRequired(true);
-		cbPerfil.addValidator(new NullValidator("", false));
-		cbSubSistema.setInputPrompt("Seleccione un SubSistema");
-		cbSubSistema.setRequired(true);
-		cbSubSistema.addValidator(new NullValidator("", false));
-		cbMenu.setInputPrompt("Seleccione un Menu");
-		cbSubMenu.setInputPrompt("Seleccione un Sub Menu");
-		cbOpcion.setInputPrompt("Seleccione una Opcion");
-		
-		
-		pitmOpcionPerfil.addItemProperty("perfil", new ObjectProperty<Integer>(0));
-		pitmOpcionPerfil.addItemProperty("subSistema", new ObjectProperty<Long>((long)0));
-		pitmOpcionPerfil.addItemProperty("menu", new ObjectProperty<Long>((long)0));
-		pitmOpcionPerfil.addItemProperty("subMenu", new ObjectProperty<Long>((long)0));
-		pitmOpcionPerfil.addItemProperty("opcion", new ObjectProperty<Long>((long)0));
-	
-		
-		this.binderOpcionPerfil = new FieldGroup(this.pitmOpcionPerfil);
-		
-		binderOpcionPerfil.bind(this.cbPerfil, "perfil");
-		binderOpcionPerfil.bind(this.cbSubSistema, "subSistema");
-		binderOpcionPerfil.bind(this.cbMenu, "menu");
-		binderOpcionPerfil.bind(this.cbSubMenu, "subMenu");
-		binderOpcionPerfil.bind(this.cbOpcion, "opcion");
+		this.cb_subMenu = new ComboBox("Sub-Menu");
+		this.permisos_usuario = new ArrayList<PermisosUsuario>();
 
-		
-		this.cbPerfil.setWidth("90%");
+		cb_usuario.setInputPrompt("Seleccione un Usuario ");
+		cb_usuario.setRequired(true);
+		cb_usuario.addValidator(new NullValidator("", false));
+		cbSubSistema.setInputPrompt("Seleccione un SubSistema");
+		cbMenu.setInputPrompt("Seleccione un Menu");
+		cb_subMenu.setInputPrompt("Seleccione un Sub Menu");
+
+		pitmOpcionPerfil.addItemProperty("usuario",
+				new ObjectProperty<UsuarioGridModel>(new UsuarioGridModel()));
+		pitmOpcionPerfil.addItemProperty("subSistema",
+				new ObjectProperty<Long>((long) 0));
+		pitmOpcionPerfil.addItemProperty("menu", new ObjectProperty<Long>(
+				(long) 0));
+		pitmOpcionPerfil.addItemProperty("subMenu", new ObjectProperty<Long>(
+				(long) 0));
+
+		this.binderOtorgar = new FieldGroup(this.pitmOpcionPerfil);
+
+		binderOtorgar.bind(this.cb_usuario, "usuario");
+		binderOtorgar.bind(this.cbSubSistema, "subSistema");
+		binderOtorgar.bind(this.cbMenu, "menu");
+		binderOtorgar.bind(this.cb_subMenu, "subMenu");
+
+		this.cb_usuario.setWidth("90%");
 		this.cbSubSistema.setWidth("90%");
 		this.cbMenu.setWidth("90%");
-		this.cbSubMenu.setWidth("90%");
-		this.cbOpcion.setWidth("90%");
+		this.cb_subMenu.setWidth("90%");
+		this.grid_otorgar.setWidth("100%");
 
-	
-		fillcbPerfil();
+		this.cb_usuario.addValueChangeListener(this);
+		this.cbSubSistema.addValueChangeListener(this);
+		this.cbMenu.addValueChangeListener(this);
+		this.cb_subMenu.addValueChangeListener(this);
+		
+		fillcb_usuario();
 		fillcbSubSistema();
 		buildForm();
-		buildGrid();
 		Responsive.makeResponsive(this);
 	}
 
 	private void buildForm() {
-		this.binderOpcionPerfil.clear();
-		addComponent(this.cbPerfil, 0, 0, 1, 0);
+		
+		this.binderOtorgar.clear();
+		
+		addComponent(this.cb_usuario, 0, 0, 1, 0);
 		addComponent(this.cbSubSistema, 0, 1);
 		addComponent(this.cbMenu, 1, 1);
-		addComponent(this.cbSubMenu, 2, 1);
-		addComponent(this.cbOpcion, 3, 1);
-	}
-	
-	private void buildGrid() {
-		this.gridOpcionPerfil.setWidth("100%");
-		BeanItemContainer<FullMenu> beanOpcionPerfil = new BeanItemContainer<FullMenu>(FullMenu.class);
-		beanOpcionPerfil.addAll(this.fullmenus);
-		this.gridOpcionPerfil.setContainerDataSource(beanOpcionPerfil);
-		this.gridOpcionPerfil.setColumnOrder("identificador", "subSistema", "menu", "subMenu", "opcion");
-		this.gridOpcionPerfil.getColumn("identificador").setExpandRatio(1);
-		this.gridOpcionPerfil.getColumn("subSistema").setExpandRatio(3);
-		this.gridOpcionPerfil.getColumn("menu").setExpandRatio(3);
-		this.gridOpcionPerfil.getColumn("subMenu").setExpandRatio(3);
-		this.gridOpcionPerfil.getColumn("opcion").setExpandRatio(3);
+		addComponent(this.cb_subMenu, 2, 1);
 	}
 
-	private void fillcbPerfil() {
-		cbPerfil.removeAllItems();
-		cbPerfil.setNullSelectionAllowed(false);
-		for (Perfil perfil : perfilimpl.getall() )
-		{
-			cbPerfil.addItem(perfil.getPRF_Id_Perfil());
-			cbPerfil.setItemCaption(perfil.getPRF_Id_Perfil(), perfil.getPRF_Nombre_Perfil());
+	private void buildGrid(String usuario, long menu) {
+		this.grid_otorgar.removeSelectionListener(this);
+		this.grid_otorgar.removeAllColumns();
+		this.grid_otorgar.setSelectionMode(SelectionMode.NONE);
+		this.permisos_usuario = (List<PermisosUsuario>) usuarioimpl.listarPermisos(usuario, menu);
+		if (permisos_usuario.size() > 0) {
+
+			BeanItemContainer<PermisosUsuario> bean_otorgar = new BeanItemContainer<PermisosUsuario>(
+					PermisosUsuario.class, permisos_usuario);
+			this.grid_otorgar.setContainerDataSource(bean_otorgar);
+			this.grid_otorgar.setSelectionMode(SelectionMode.MULTI);
+			for (PermisosUsuario item : permisos_usuario) {
+				if (item.getCheck() == 1) {
+					this.grid_otorgar.select(item);
+				}
+			}
+			this.grid_otorgar.removeColumn("check");
+			this.grid_otorgar.removeColumn("id_usuario");
+			this.grid_otorgar.setContainerDataSource(bean_otorgar);
+			this.grid_otorgar.setColumnOrder("identificador", "subSistema",
+					"menu", "subMenu", "opcion");
+			this.grid_otorgar.getColumn("identificador").setExpandRatio(1);
+			this.grid_otorgar.getColumn("subSistema").setExpandRatio(3);
+			this.grid_otorgar.getColumn("menu").setExpandRatio(3);
+			this.grid_otorgar.getColumn("subMenu").setExpandRatio(3);
+			this.grid_otorgar.getColumn("opcion").setExpandRatio(3);
+			this.grid_otorgar.addSelectionListener(this);
+		}
+	}
+
+	private void fillcb_usuario() {
+		cb_usuario.removeAllItems();
+		cb_usuario.setNullSelectionAllowed(false);
+		for (UsuarioGridModel usuario : usuarioimpl.getGridData()) {
+			cb_usuario.addItem(usuario);
+			cb_usuario.setItemCaption(usuario, usuario.getFullName());
 		}
 	}
 
@@ -142,15 +156,18 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener{
 		cbSubSistema.removeAllItems();
 		cbSubSistema.setNullSelectionAllowed(false);
 
-		for (Arbol_menus menu : menuimpl.getallSubsistema())
-		{
-			if(menu.getAME_Programa() == null || menu.getAME_Programa().equals("")){
-				cbSubSistema.addItem(menu.getAME_Id_Identificador() );
-				cbSubSistema.setItemCaption(menu.getAME_Id_Identificador(), menu.getAME_Nombre());
-			}else{
-				cbSubSistema.addItem(menu.getAME_Id_Identificador() );
-				cbSubSistema.setItemCaption(menu.getAME_Id_Identificador(), menu.getAME_Nombre());
-				cbSubSistema.setItemIcon(menu.getAME_Id_Identificador(), FontAwesome.WINDOWS);
+		for (Arbol_menus menu : menuimpl.getallSubsistema()) {
+			if (menu.getAME_Programa() == null
+					|| menu.getAME_Programa().equals("")) {
+				cbSubSistema.addItem(menu.getAME_Id_Identificador());
+				cbSubSistema.setItemCaption(menu.getAME_Id_Identificador(),
+						menu.getAME_Nombre());
+			} else {
+				cbSubSistema.addItem(menu.getAME_Id_Identificador());
+				cbSubSistema.setItemCaption(menu.getAME_Id_Identificador(),
+						menu.getAME_Nombre());
+				cbSubSistema.setItemIcon(menu.getAME_Id_Identificador(),
+						FontAwesome.WINDOWS);
 			}
 		}
 	}
@@ -158,101 +175,139 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener{
 	private void fillcbMenu(long subSistema) {
 		cbMenu.removeAllItems();
 		cbMenu.setNullSelectionAllowed(false);
-		for (Arbol_menus menu : menuimpl.getallMenu(subSistema))
-		{
-			if(menu.getAME_Programa() == null || menu.getAME_Programa().equals("")){
+		for (Arbol_menus menu : menuimpl.getallMenu(subSistema)) {
+			if (menu.getAME_Programa() == null
+					|| menu.getAME_Programa().equals("")) {
 				cbMenu.addItem(menu.getAME_Id_Identificador());
-				cbMenu.setItemCaption(menu.getAME_Id_Identificador(), menu.getAME_Nombre());
-			}else{
+				cbMenu.setItemCaption(menu.getAME_Id_Identificador(),
+						menu.getAME_Nombre());
+			} else {
 				cbMenu.addItem(menu.getAME_Id_Identificador());
-				cbMenu.setItemCaption(menu.getAME_Id_Identificador(), menu.getAME_Nombre());
-				cbMenu.setItemIcon(menu.getAME_Id_Identificador(), FontAwesome.WINDOWS);
+				cbMenu.setItemCaption(menu.getAME_Id_Identificador(),
+						menu.getAME_Nombre());
+				cbMenu.setItemIcon(menu.getAME_Id_Identificador(),
+						FontAwesome.WINDOWS);
 			}
 		}
 	}
-	private void fillcbSubMenu(long menu) {
-		cbSubMenu.removeAllItems();
-		cbSubMenu.setNullSelectionAllowed(false);
-		for (Arbol_menus omenu : menuimpl.getallMenu(menu))
-		{
-			if(omenu.getAME_Programa() == null || omenu.getAME_Programa().equals("")){
-				cbSubMenu.addItem(omenu.getAME_Id_Identificador());
-				cbSubMenu.setItemCaption(omenu.getAME_Id_Identificador(), omenu.getAME_Nombre());
-			}else{
-				cbSubMenu.addItem(omenu.getAME_Id_Identificador());
-				cbSubMenu.setItemCaption(omenu.getAME_Id_Identificador(), omenu.getAME_Nombre());
-				cbSubMenu.setItemIcon(omenu.getAME_Id_Identificador(), FontAwesome.WINDOWS);
+
+	private void fillcb_subMenu(long menu) {
+		cb_subMenu.removeAllItems();
+		cb_subMenu.setNullSelectionAllowed(false);
+		for (Arbol_menus omenu : menuimpl.getallMenu(menu)) {
+			if (omenu.getAME_Programa() == null
+					|| omenu.getAME_Programa().equals("")) {
+				cb_subMenu.addItem(omenu.getAME_Id_Identificador());
+				cb_subMenu.setItemCaption(omenu.getAME_Id_Identificador(),
+						omenu.getAME_Nombre());
+			} else {
+				cb_subMenu.addItem(omenu.getAME_Id_Identificador());
+				cb_subMenu.setItemCaption(omenu.getAME_Id_Identificador(),
+						omenu.getAME_Nombre());
+				cb_subMenu.setItemIcon(omenu.getAME_Id_Identificador(),
+						FontAwesome.WINDOWS);
 			}
 		}
 	}
-	private void fillcbOpcion(long subMenu) {
-		cbOpcion.removeAllItems();
-		cbOpcion.setNullSelectionAllowed(false);
-		cbOpcion.setInputPrompt("Seleccione una Opcion");
-		for (Arbol_menus menu : menuimpl.getallMenu(subMenu))
-		{	
-			cbOpcion.addItem(menu.getAME_Id_Identificador());
-			cbOpcion.setItemCaption(menu.getAME_Id_Identificador(), menu.getAME_Nombre());
-			cbOpcion.setItemIcon(menu.getAME_Id_Identificador(), FontAwesome.WINDOWS);
-		}
-	}
-	
+
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		try{
-		if(event.getProperty().getValue() == this.cbSubSistema.getValue() && this.cbSubSistema.getValue() != null ){
-			cbOpcion.removeAllItems();
-			cbSubMenu.removeAllItems();
-			fillcbMenu((long)this.cbSubSistema.getValue());
+		if (this.cb_usuario.getValue() != null) {
+			this.cb_subMenu.setEnabled(true);
+			this.cbSubSistema.setEnabled(true);
+			this.cbMenu.setEnabled(true);
+			try {
+				UsuarioGridModel usuario = (UsuarioGridModel) this.cb_usuario
+						.getValue();
+				if (event.getProperty().getValue() == this.cbSubSistema
+						.getValue() && this.cbSubSistema.getValue() != null) {
+					cb_subMenu.removeAllItems();
+					fillcbMenu((long) this.cbSubSistema.getValue());
+				}
+				if (event.getProperty().getValue() == this.cbMenu.getValue()
+						&& this.cbMenu.getValue() != null) {
+					fillcb_subMenu((long) this.cbMenu.getValue());
+				}
+				if (event.getProperty().getValue() == this.cb_subMenu
+						.getValue() && this.cbSubSistema.getValue() != null) {
+
+				}
+
+				if (this.cbSubSistema.getValue() == null) {
+					buildGrid(usuario.getId(), 0);
+					this.id_padre = 0;
+				} else {
+					buildGrid(usuario.getId(), ((long) event.getProperty().getValue()));
+					this.id_padre = (long)event.getProperty().getValue();
+				}
+
+			} catch (Exception e) {
+
+			}
+		} else {
+			this.cb_subMenu.setEnabled(false);
+			this.cbSubSistema.setEnabled(false);
+			this.cbMenu.setEnabled(false);
 		}
-		if(event.getProperty().getValue() == this.cbMenu.getValue() && this.cbMenu.getValue() != null ){
-			cbOpcion.removeAllItems();
-			fillcbSubMenu((long)this.cbMenu.getValue());
-		}
-		if(event.getProperty().getValue() == this.cbSubMenu.getValue() && this.cbSubSistema.getValue() != null ){
-			fillcbOpcion((long)this.cbSubMenu.getValue());
-		}
-		if(event.getProperty().getValue() != null && menuimpl.isProgram((long)event.getProperty().getValue())){	
-			this.fullmenus.add(menuimpl.getFullData((long)event.getProperty().getValue()));	
-			buildGrid();
-		}
-		}catch(Exception e){}
 	}
 
-	public List<FullMenu> getListMenu() {
-		return this.fullmenus;
+	public List<PermisosUsuario> getListMenu() {
+		return this.permisos_usuario;
 	}
 
-	public int getIdPerfil() {	
-		return (Integer)this.cbPerfil.getValue();
+	public int getIdPerfil() {
+		return (Integer) this.cb_usuario.getValue();
 	}
-
+	public long getIdPadre(){
+		return this.id_padre;
+	}
 	public void clean() {
-		this.fullmenus.clear();
-		buildGrid();
+		this.permisos_usuario.clear();
 		buildForm();
-	}	
+	}
+
 	public List<BarMessage> getMensajes() {
 		return mensajes;
 	}
-	public boolean validate(){
-		try{
-			this.binderOpcionPerfil.commit();
-			this.mensajes.add(new BarMessage("Fomulario", Messages.SUCCESS_MESSAGE, "success"));
+
+	public boolean validate() {
+		try {
+			this.binderOtorgar.commit();
+			this.mensajes.add(new BarMessage("Fomulario",
+					Messages.SUCCESS_MESSAGE, "success"));
 			return true;
-		}catch(CommitException e){
+		} catch (CommitException e) {
 			try {
-				this.cbPerfil.validate();
-			}catch(EmptyValueException ex){
-				this.mensajes.add(new BarMessage(cbPerfil.getCaption(), Messages.EMPTY_MESSAGE));
+				this.cb_usuario.validate();
+			} catch (EmptyValueException ex) {
+				this.mensajes.add(new BarMessage(cb_usuario.getCaption(),
+						Messages.EMPTY_MESSAGE));
 			}
-			try {
-				this.cbSubSistema.validate();
-			}catch(EmptyValueException ex){
-				this.mensajes.add(new BarMessage(cbSubSistema.getCaption(),  Messages.EMPTY_MESSAGE));
-			}	
 			return false;
-		}		
+		}
+	}
+
+	@Override
+	public void select(SelectionEvent event) {
+
+	}
+
+	public List<PermisosUsuario> getPermisos() {
+		List<PermisosUsuario> result = new ArrayList<PermisosUsuario>();
+		for (Object item : grid_otorgar.getSelectedRows()) {
+			PermisosUsuario permiso = (PermisosUsuario) item;
+			result.add(permiso);
+		}
+		return result;
+	}
+
+	public String getUsuario() {
+		return ((UsuarioGridModel) this.cb_usuario.getValue()).getId();
+
+	}
+
+	public void clearMessages() {
+		this.mensajes = new ArrayList<BarMessage>();
 	}
 
 }

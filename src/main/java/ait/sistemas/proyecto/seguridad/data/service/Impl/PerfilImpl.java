@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
 import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
+import ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario;
 import ait.sistemas.proyecto.seguridad.data.dao.Dao;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 
