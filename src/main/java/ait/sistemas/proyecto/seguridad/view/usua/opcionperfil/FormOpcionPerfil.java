@@ -29,7 +29,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 
 	private static final long serialVersionUID = 1L;
 
-	private ComboBox cb_usuarios;
+	private ComboBox cb_perfiles;
 	private ComboBox cbSubSistema;
 	private ComboBox cbMenu;
 	private ComboBox cbSubMenu;
@@ -51,7 +51,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		setMargin(true);
 		setWidth("100%");
 		
-		this.cb_usuarios = new ComboBox("Perfil");
+		this.cb_perfiles = new ComboBox("Perfil");
 		this.cbSubSistema = new ComboBox("Sub-Sistema");
 		this.cbMenu = new ComboBox("Menu");
 		this.cbSubMenu = new ComboBox("Sub-Menu");
@@ -64,9 +64,9 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		this.cbSubMenu.addValueChangeListener(this);
 		this.cbOpcion.addValueChangeListener(this);
 		
-		cb_usuarios.setInputPrompt("Seleccione un Perfil");
-		cb_usuarios.setRequired(true);
-		cb_usuarios.addValidator(new NullValidator("", false));
+		cb_perfiles.setInputPrompt("Seleccione un Perfil");
+		cb_perfiles.setRequired(true);
+		cb_perfiles.addValidator(new NullValidator("", false));
 		cbSubSistema.setInputPrompt("Seleccione un SubSistema");
 		cbSubSistema.setRequired(true);
 		cbSubSistema.addValidator(new NullValidator("", false));
@@ -84,21 +84,21 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		
 		this.binderOpcionPerfil = new FieldGroup(this.pitmOpcionPerfil);
 		
-		binderOpcionPerfil.bind(this.cb_usuarios, "perfil");
+		binderOpcionPerfil.bind(this.cb_perfiles, "perfil");
 		binderOpcionPerfil.bind(this.cbSubSistema, "subSistema");
 		binderOpcionPerfil.bind(this.cbMenu, "menu");
 		binderOpcionPerfil.bind(this.cbSubMenu, "subMenu");
 		binderOpcionPerfil.bind(this.cbOpcion, "opcion");
 
 		
-		this.cb_usuarios.setWidth("90%");
+		this.cb_perfiles.setWidth("90%");
 		this.cbSubSistema.setWidth("90%");
 		this.cbMenu.setWidth("90%");
 		this.cbSubMenu.setWidth("90%");
 		this.cbOpcion.setWidth("90%");
 
 	
-		fillcb_usuarios();
+		fillcb_perfiles();
 		fillcbSubSistema();
 		buildForm();
 		buildGrid();
@@ -107,7 +107,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 
 	private void buildForm() {
 		this.binderOpcionPerfil.clear();
-		addComponent(this.cb_usuarios, 0, 0, 1, 0);
+		addComponent(this.cb_perfiles, 0, 0, 1, 0);
 		addComponent(this.cbSubSistema, 0, 1);
 		addComponent(this.cbMenu, 1, 1);
 		addComponent(this.cbSubMenu, 2, 1);
@@ -127,13 +127,13 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 		this.gridOpcionPerfil.getColumn("opcion").setExpandRatio(3);
 	}
 
-	private void fillcb_usuarios() {
-		cb_usuarios.removeAllItems();
-		cb_usuarios.setNullSelectionAllowed(false);
+	private void fillcb_perfiles() {
+		cb_perfiles.removeAllItems();
+		cb_perfiles.setNullSelectionAllowed(false);
 		for (Perfil perfil : perfilimpl.getall() )
 		{
-			cb_usuarios.addItem(perfil.getPRF_Id_Perfil());
-			cb_usuarios.setItemCaption(perfil.getPRF_Id_Perfil(), perfil.getPRF_Nombre_Perfil());
+			cb_perfiles.addItem(perfil.getPRF_Id_Perfil());
+			cb_perfiles.setItemCaption(perfil.getPRF_Id_Perfil(), perfil.getPRF_Nombre_Perfil());
 		}
 	}
 
@@ -223,7 +223,7 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 	}
 
 	public int getIdPerfil() {	
-		return (Integer)this.cb_usuarios.getValue();
+		return (Integer)this.cb_perfiles.getValue();
 	}
 
 	public void clean() {
@@ -241,9 +241,9 @@ public class FormOpcionPerfil extends GridLayout implements ValueChangeListener{
 			return true;
 		}catch(CommitException e){
 			try {
-				this.cb_usuarios.validate();
+				this.cb_perfiles.validate();
 			}catch(EmptyValueException ex){
-				this.mensajes.add(new BarMessage(cb_usuarios.getCaption(), Messages.EMPTY_MESSAGE));
+				this.mensajes.add(new BarMessage(cb_perfiles.getCaption(), Messages.EMPTY_MESSAGE));
 			}
 			try {
 				this.cbSubSistema.validate();

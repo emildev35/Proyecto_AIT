@@ -38,4 +38,7 @@ public class Messages {
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}
+	public static String MANY_CONFIRM_DELETE_MESSAGE(int element, String caption) {
+		return String.format("Esta Uds. seguro de eliminar los %d %s", element, caption);
+	}
 }

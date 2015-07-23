@@ -17,8 +17,10 @@ public class GridOpcionPerfil extends Grid {
 
 	}
 	public void update(List<FullMenu> datasource){
+		setSelectionMode(SelectionMode.NONE);
 		this.gridPerfilPermisos.removeAllItems();
 		this.gridPerfilPermisos.addAll(datasource);
 		setContainerDataSource(this.gridPerfilPermisos);
+		setSelectionMode(SelectionMode.MULTI);
 	}
 }

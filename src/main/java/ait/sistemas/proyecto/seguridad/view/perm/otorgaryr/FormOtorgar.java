@@ -296,7 +296,7 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener,
 		List<PermisosUsuario> result = new ArrayList<PermisosUsuario>();
 		for (Object item : grid_otorgar.getSelectedRows()) {
 			PermisosUsuario permiso = (PermisosUsuario) item;
-			result.add(permiso);
+			result.add(permiso);	
 		}
 		return result;
 	}

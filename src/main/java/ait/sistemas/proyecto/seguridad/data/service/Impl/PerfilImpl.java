@@ -1,7 +1,6 @@
 package ait.sistemas.proyecto.seguridad.data.service.Impl;
 
 import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,7 +10,6 @@ import javax.persistence.Query;
 
 import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
 import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
-import ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario;
 import ait.sistemas.proyecto.seguridad.data.dao.Dao;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 
@@ -121,6 +119,7 @@ public class PerfilImpl implements Dao<Perfil> {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<PermisoPerfil> getPermisos(int id_perfil) {
 		String strQuery = String.format("EXEC Usua_OpcionesXPerfil_Q  "
 				+ "@Id_Perfil=?1");
@@ -128,6 +127,20 @@ public class PerfilImpl implements Dao<Perfil> {
 		query.setParameter(1, id_perfil);
 		List<PermisoPerfil> resultlist = query.getResultList();
 		return resultlist;
+	}
+
+	public int elminarPermisos(List<PermisoPerfil> listMenu) {
+		int result = 0;
+		String strQueryQuitarPermiso = String
+				.format("EXEC Estr_OpcionesXPerfil_D"
+						+ " @Id_perfil=?1, " + "@Identificador=?2");
+		for (PermisoPerfil menu_identicador : listMenu) {
+			Query query = this.em.createNativeQuery(strQueryQuitarPermiso);
+			query.setParameter(1, menu_identicador.getId_perfil());
+			query.setParameter(2, menu_identicador.getIdentificador());
+			result += (Integer) query.getSingleResult();
+		}	
+		return result;
 	}
 
 }
