@@ -12,8 +12,10 @@ import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
+import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
 import ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.model.Usuario;
 
@@ -104,7 +106,13 @@ public class UsuarioImpl implements Dao<Usuario> {
 		}
 		return result;
 	}
-
+	/**
+	 * Metodo encarga de propocionar un lista con los datos de los permisos
+	 * registrados para un usuario dentro de un menu
+	 * @param usuario	Usuario
+	 * @param menu		Identificador del Menu
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<PermisosUsuario> listarPermisos(String usuario, long menu) {
 		String str_list_permisos = "EXEC Perm_Listar_Permisos_Q "
@@ -159,5 +167,27 @@ public class UsuarioImpl implements Dao<Usuario> {
 			}
 		}
 		return result;
+	}
+	
+	public int isNewUser(String id_usuario){
+		String str_new_user = "EXEC Usua_IsNewUser_P @Id_Usuario=?1";
+		Query query = this.em.createNativeQuery(str_new_user)
+				.setParameter(1, id_usuario);
+		return (Integer)query.getSingleResult();
+	}
+
+	public int addPassword(String usuario, String password) {
+		String str_add_Password = "EXEC Perm_AddPassword @Id_Usuario=?1, @Password=?2";
+		password = Auth.hash(password);
+		Query query = this.em.createNativeQuery(str_add_Password).
+				setParameter(1, usuario).setParameter(2, password);
+		return (Integer)query.getSingleResult();
+	}
+
+	public SessionModel login(String usuario, String password) {
+		String str_find_user = "EXEC Usua_FindUser_P @Id_Usuario=?1, @Password=?2";
+		Query query = this.em.createNativeQuery(str_find_user, "session-usuario").
+				setParameter(1, usuario).setParameter(2, password);
+		return (SessionModel)query.getSingleResult();
 	}
 }

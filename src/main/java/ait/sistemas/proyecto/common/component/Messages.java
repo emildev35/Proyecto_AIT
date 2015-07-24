@@ -34,6 +34,10 @@ public class Messages {
 	 * Este Mensaje se utilizara cuando el usuario desee eliminar un registro
 	 */
 	public static final String CONFIRM_DELETE_MESSAGE = "Esta Uds. seguro de eliminar el registro";
+	public static final String PASSWORD_MESSAGE = "La constraseña debe contener como minimo un digito,"
+			+ " un caracter en minuscula, uno en mayuscula,"
+			+ " un caracter especial y contar con una longitud minima de 8 caracteres y una maxima de 15";
+	public static final String ERROR_EQUALS_PASSWORD = "Las contraseñas no son iguales";
 
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);

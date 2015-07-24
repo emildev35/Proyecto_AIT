@@ -1,9 +1,12 @@
-package ait.sistemas.proyecto.seguridad.view.perm.otorgaryr;
+package ait.sistemas.proyecto.seguridad.view.login;
 
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.seguridad.component.Auth;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.cdi.CDIView;
@@ -19,46 +22,39 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VOtorgaryR.ID)
-public class VOtorgaryR extends VerticalLayout implements View, ClickListener {
+@CDIView(value = VLoginP.ID)
+public class VLoginP extends VerticalLayout implements View, ClickListener {
 
+	public static final String ID = "/seg/login";
 	private static final long serialVersionUID = 1L;
 
-	public static final String ID = "/seg/perm/otorgaryr";
-
-	private FormOtorgar frm_otorgar;
-	private Button btn_submit;
-	private Button btn_limpiar;
+	private LoginForm frm_login = new LoginForm();
+	private Button btn_submit = new Button("Login");
+	private Button btn_limpiar = new Button("Limpiar");
 	private CssLayout hl_errores = new CssLayout();
+
 	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
-
-	public VOtorgaryR() {
-		this.frm_otorgar = new FormOtorgar();
-		this.btn_submit = new Button("Guardar");
-		this.btn_limpiar = new Button("Limpiar");
-
+	
+	
+	public VLoginP() {
+		setWidth("100%");
+		this.btn_submit.addClickListener(this);
+		
 		addComponent(buildNavBar());
-		addComponent(builFormContent());
 		addComponent(buildButtonBar());
+		addComponent(buildForm());
 	}
 
-	private Component builFormContent() {
-		final VerticalLayout vlfrmContent = new VerticalLayout();
-		vlfrmContent.setMargin(true);
-
-		Panel pnfrmOpcionPerfil = new Panel("Formulario de Permisos");
-		pnfrmOpcionPerfil.setContent(this.frm_otorgar);
-
-		Panel pngridOpcionPerfil = new Panel("Grid de Opciones");
-		pngridOpcionPerfil.setContent(this.frm_otorgar.grid_otorgar);
-
-		vlfrmContent.addComponent(pnfrmOpcionPerfil);
-		vlfrmContent.addComponent(pngridOpcionPerfil);
-		return vlfrmContent;
+	private Component buildForm() {
+		final VerticalLayout vl_content = new VerticalLayout();
+		vl_content.setMargin(true);
+		Panel pn_frm = new Panel();
+		pn_frm.setContent(this.frm_login);
+		vl_content.addComponent(pn_frm);
+		return vl_content;
 	}
 
 	private Component buildNavBar() {
@@ -66,9 +62,7 @@ public class VOtorgaryR extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
-		nav.addComponent(new Label("Permisos » "));
-		nav.addComponent(new Label(
-				"<strong>Otorgar y Revocar Permisos</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Login</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -86,11 +80,6 @@ public class VOtorgaryR extends VerticalLayout implements View, ClickListener {
 		return buttonContent;
 	}
 
-	@Override
-	public void enter(ViewChangeEvent event) {
-
-	}
-
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
@@ -105,20 +94,31 @@ public class VOtorgaryR extends VerticalLayout implements View, ClickListener {
 	}
 
 	@Override
+	public void enter(ViewChangeEvent event) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_submit) {
-			if (this.frm_otorgar.validate()) {
-				java.sql.Date fechaRegistro = new java.sql.Date(
-						new Date().getTime());
-				try {
-					usuarioimpl.otortgarPermisos(this.frm_otorgar.getUsuario(),
-							this.frm_otorgar.getPermisos(),this.frm_otorgar.getIdPadre(), fechaRegistro);
-				} catch (Exception e) {
-					Notification.show(e.getMessage(), Type.ERROR_MESSAGE);
+			if (this.frm_login.validate()) {
+				if (this.frm_login.isNew()) {
+					this.usuarioimpl.addPassword(this.frm_login.getUsuario(), this.frm_login.getPassword());
+				}else{
+					SessionModel result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
+					if(result!=null){
+						Notification.show("Encontrado");
+						getUI().getSession().setAttribute("username", this.frm_login.getUsuario());
+					}else{
+						Notification.show("PasswordNoValido");
+					}
 				}
 			}
-			buildMessages(this.frm_otorgar.getMensajes());
-			this.frm_otorgar.clearMessages();
+			buildMessages(this.frm_login.getMessages());
+		}
+		if(event.getButton()==this.btn_limpiar){
+			Notification.show(getUI().getSession().getAttribute("username").toString());
 		}
 	}
 }
