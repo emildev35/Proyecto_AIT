@@ -18,7 +18,6 @@ public class MainView extends CssLayout {
 
 	@SuppressWarnings("unused")
 	public MainView(Component mainContent) {
-		// TODO Auto-generated constructor stub
 		setSizeFull();
 		//addStyleName("main-view");
 		addComponent(new BarDash());

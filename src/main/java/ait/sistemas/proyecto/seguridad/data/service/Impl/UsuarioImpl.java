@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.seguridad.data.service.Impl;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
 import ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.model.Usuario;
 
 public class UsuarioImpl implements Dao<Usuario> {
@@ -189,5 +191,19 @@ public class UsuarioImpl implements Dao<Usuario> {
 		Query query = this.em.createNativeQuery(str_find_user, "session-usuario").
 				setParameter(1, usuario).setParameter(2, password);
 		return (SessionModel)query.getSingleResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Arbol_menus> getMenus(String usuario) {
+		List<Arbol_menus> result = new ArrayList<Arbol_menus>();
+		String str_get_menus = "EXEC PER_GetPermisos_P @Id_Usuario=?1";
+		try{
+		Query query = this.em.createNativeQuery(str_get_menus, Arbol_menus.class).
+				setParameter(1, usuario);
+		List<Arbol_menus> resultList = (List<Arbol_menus>)query.getResultList();
+		result =  resultList;}
+		catch (Exception e) {
+		}
+		return result;
 	}
 }

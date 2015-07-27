@@ -22,10 +22,19 @@ public class Messages {
 	public static final String FOREIGN_RELATION_ERROR(String elemento)
 	{return String.format("Verifique las Dependecias del " + elemento );};
 	
-	
+	/**
+	 * Mensaje Validadcion de StringLength	
+	 * @param min
+	 * @param max
+	 * @return	String
+	 */
 	public static final String STRING_LENGTH_MESSAGE(int min, int max)
 	{return String.format("La longitud de caracteres debe ser menor a %d y superior a %d", min, max);};
-	
+	/**
+	 * Mensaje Confirmacion en el dialogo
+	 * @param value
+	 * @return
+	 */
 	public static final String CONFIRM_DIALOG_DELETE_MESSAGE(String value)
 	{return String.format("Esta Uds. seguro de eliminar el registro %s", value);};
 	
@@ -38,6 +47,7 @@ public class Messages {
 			+ " un caracter en minuscula, uno en mayuscula,"
 			+ " un caracter especial y contar con una longitud minima de 8 caracteres y una maxima de 15";
 	public static final String ERROR_EQUALS_PASSWORD = "Las contraseñas no son iguales";
+	public static final String LOGIN_ERROR = "Login Incorrecto";
 
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);

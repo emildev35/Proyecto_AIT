@@ -2,11 +2,13 @@ package ait.sistemas.proyecto.common.component;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
-import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
+import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -20,6 +22,7 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Tree;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 
@@ -31,7 +34,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author franzemil
  *
  */
-public class MenuDash extends CustomComponent implements ItemClickListener{
+public class MenuDash extends CustomComponent implements Serializable, ItemClickListener{
 	
 	/**
 	 * 
@@ -45,13 +48,13 @@ public class MenuDash extends CustomComponent implements ItemClickListener{
 
     private Tree Treemenu;
     private List<Arbol_menus> menuelements;
-	private MenuImpl menuimpl;
+	private UsuarioImpl usuarioimpl;
 	
 	public MenuDash() {
 		// TODO Auto-generated constructor stub
 			
 		this.Treemenu = new Tree();	
-		this.menuimpl = new MenuImpl(); 
+		this.usuarioimpl = new UsuarioImpl(); 
 		this.menuelements = new ArrayList<Arbol_menus>();
 		ObtenerDatos();
 		Treemenu.addItemClickListener(this);
@@ -72,7 +75,6 @@ public class MenuDash extends CustomComponent implements ItemClickListener{
 
 
 	private Component builMenuItems() {
-		// TODO Auto-generated method stub
 		VerticalLayout menuContent = new VerticalLayout();
 		//menuContent.setMargin(true);
 		menuContent.addStyleName("ait-menu-items");
@@ -93,8 +95,10 @@ public class MenuDash extends CustomComponent implements ItemClickListener{
 
 		final MenuBar settings = new MenuBar();
 	    settings.addStyleName("user-menu");
+	    
+	    String usuario = ((SessionModel)UI.getCurrent().getSession().getAttribute("user")).getFull_name();
 		settingsItem = settings.addItem("", new ThemeResource("img/profile-pic-300px.jpg"), null);    
-		settingsItem.setText("Franz Emil Eulate Chacolla");
+		settingsItem.setText(usuario);
         settingsItem.addItem("Cerrar Session", new Command() {
 		    @Override
 		    public void menuSelected(final MenuItem selectedItem) {
@@ -121,7 +125,10 @@ public class MenuDash extends CustomComponent implements ItemClickListener{
 
 	
 	public void ObtenerDatos(){
-        for (Arbol_menus menu : this.menuimpl.getall()){
+		
+		String usuario = ((SessionModel)UI.getCurrent().getSession().getAttribute("user")).getId();
+		
+        for (Arbol_menus menu : this.usuarioimpl.getMenus(usuario)){
         	this.menuelements.add(menu);
         	ObtenerTodos(menu);
         }

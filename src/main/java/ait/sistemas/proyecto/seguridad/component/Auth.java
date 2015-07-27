@@ -39,4 +39,8 @@ public class Auth {
 		final UsuarioImpl usuarioimpl = new UsuarioImpl();
 		return usuarioimpl.login(usuario, password);
 	}
+	public static  SessionModel getDefaultUser(){
+		final UsuarioImpl usuario = new UsuarioImpl();
+		return usuario.login("ANONIMO", "0000");
+	}
 }

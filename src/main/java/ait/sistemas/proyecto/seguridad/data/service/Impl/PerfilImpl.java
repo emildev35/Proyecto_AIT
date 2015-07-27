@@ -119,7 +119,7 @@ public class PerfilImpl implements Dao<Perfil> {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")	
 	public List<PermisoPerfil> getPermisos(int id_perfil) {
 		String strQuery = String.format("EXEC Usua_OpcionesXPerfil_Q  "
 				+ "@Id_Perfil=?1");

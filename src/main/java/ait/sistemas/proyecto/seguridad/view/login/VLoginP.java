@@ -5,6 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.view.HomeView;
+import ait.sistemas.proyecto.common.view.MainView;
 import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
@@ -22,6 +25,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -109,16 +113,18 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 					SessionModel result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
 					if(result!=null){
 						Notification.show("Encontrado");
-						getUI().getSession().setAttribute("username", this.frm_login.getUsuario());
+						getUI().getSession().setAttribute("user", result);
+						getUI().getPage().reload();
+						getUI().getNavigator().navigateTo(HomeView.URL);
 					}else{
-						Notification.show("PasswordNoValido");
+						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 					}
 				}
 			}
 			buildMessages(this.frm_login.getMessages());
 		}
 		if(event.getButton()==this.btn_limpiar){
-			Notification.show(getUI().getSession().getAttribute("username").toString());
+			Notification.show(((SessionModel)getUI().getSession().getAttribute("user")).getId());
 		}
 	}
 }

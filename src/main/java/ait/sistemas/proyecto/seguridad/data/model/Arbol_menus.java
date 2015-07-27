@@ -37,6 +37,8 @@ public class Arbol_menus implements Serializable {
 
 	private short AME_Nivel;
 
+	private int AME_Propiedad;
+
 	private String AME_Nombre;
 
 	private short AME_Orden;
@@ -58,6 +60,14 @@ public class Arbol_menus implements Serializable {
 
 	public long getAME_Id_Identificador() {
 		return this.AME_Id_Identificador;
+	}
+	
+	public int getAME_Propiedad() {
+		return AME_Propiedad;
+	}
+	
+	public void setAME_Propiedad(int aME_Propiedad) {
+		AME_Propiedad = aME_Propiedad;
 	}
 
 	public void setAME_Id_Identificador(long AME_Id_Identificador) {

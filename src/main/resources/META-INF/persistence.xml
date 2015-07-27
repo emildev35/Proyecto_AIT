@@ -10,19 +10,19 @@
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Personal</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Ubicaciones_Fisica</class>
-		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>	
-		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>	
-			
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>
+
 		<properties>
-		
+
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=RecursosHumanos" />
+				value="jdbc:sqlserver://192.168.1.10;databaseName=RecursosHumanos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
-			<property name="eclipselink.cache.shared.default" value="false"/>
+			<property name="eclipselink.cache.shared.default" value="false" />
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="AIT-Activos">
@@ -61,12 +61,12 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos" />
+				value="jdbc:sqlserver://192.168.1.10;databaseName=Activos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
-			<property name="eclipselink.cache.shared.default" value="false"/>
+			<property name="eclipselink.cache.shared.default" value="false" />
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="AIT-Seguridad">
@@ -91,7 +91,7 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Seguridad" />
+				value="jdbc:sqlserver://192.168.1.10;databaseName=Seguridad" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
