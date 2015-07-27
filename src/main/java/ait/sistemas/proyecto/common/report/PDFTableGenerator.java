@@ -119,7 +119,7 @@ public class PDFTableGenerator {
 			String text = lineContent[i];
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.drawString(text != null ? text : "");
+			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
 			nextTextX += table.getColumns().get(i).getWidth();
 		}

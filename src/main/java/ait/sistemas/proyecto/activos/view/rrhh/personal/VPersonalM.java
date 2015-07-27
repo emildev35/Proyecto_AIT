@@ -94,8 +94,10 @@ public class VPersonalM extends VerticalLayout implements View, ClickListener, S
 	}
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_modificar.setStyleName("ait-buttons-btn");
 		buttonContent.addComponent(this.btn_modificar);
+		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
@@ -139,7 +141,7 @@ public class VPersonalM extends VerticalLayout implements View, ClickListener, S
 			this.frm_personal.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			
+			frm_personal.update();
 		}	
 	}
 	

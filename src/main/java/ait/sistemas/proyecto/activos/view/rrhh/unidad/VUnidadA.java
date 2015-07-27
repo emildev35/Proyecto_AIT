@@ -4,6 +4,7 @@ import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
@@ -13,12 +14,15 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+
 
 @CDIView(value = VUnidadA.ID)
 public class VUnidadA extends VerticalLayout implements View, ClickListener {
@@ -52,9 +56,10 @@ public class VUnidadA extends VerticalLayout implements View, ClickListener {
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addStyleName("ait-buttons");
-
+		this.btn_agregar.setStyleName("ait-buttons-btn");
 		buttonContent.addComponent(this.btn_agregar);
+		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
 	}
@@ -117,8 +122,9 @@ public class VUnidadA extends VerticalLayout implements View, ClickListener {
 				grid_unidad.update();
 				this.frm_unidad.update();
 				this.frm_unidad.updateId();
+				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
-				
+				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
 			buildMessages(this.frm_unidad.getMensajes());
 			this.frm_unidad.clearMessages();

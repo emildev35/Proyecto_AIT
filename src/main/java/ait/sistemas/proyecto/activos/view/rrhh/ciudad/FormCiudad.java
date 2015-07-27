@@ -17,14 +17,18 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.navigator.View;
 import com.vaadin.server.Responsive;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 public class FormCiudad extends GridLayout {
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_ciudad;
-	private TextField txt_nombre_ciudad;
+	public TextField txt_nombre_ciudad;
 	private TextField txt_sigla_ciudad;
 	private List<BarMessage> mensajes;
 
@@ -44,13 +48,10 @@ public class FormCiudad extends GridLayout {
 		this.txt_nombre_ciudad = new TextField("Nombre de la Ciudad: ");
 		this.txt_sigla_ciudad = new TextField("Sigla de la Ciudad: ");
 		this.mensajes = new ArrayList<BarMessage>();
-
-		pitm_Ciudad
-				.addItemProperty("id_ciudad", new ObjectProperty<Integer>(0));
-		pitm_Ciudad.addItemProperty("nombre_ciudad",
-				new ObjectProperty<String>(""));
-		pitm_Ciudad.addItemProperty("sigla_ciudad", new ObjectProperty<String>(
-				""));
+		
+		pitm_Ciudad.addItemProperty("id_ciudad", new ObjectProperty<Integer>(0));
+		pitm_Ciudad.addItemProperty("nombre_ciudad", new ObjectProperty<String>(""));
+		pitm_Ciudad.addItemProperty("sigla_ciudad", new ObjectProperty<String>(""));
 
 		this.binder_Ciudad = new FieldGroup(this.pitm_Ciudad);
 
@@ -59,14 +60,11 @@ public class FormCiudad extends GridLayout {
 		binder_Ciudad.bind(this.txt_sigla_ciudad, "sigla_ciudad");
 
 		this.txt_nombre_ciudad.setRequired(true);
-		this.txt_nombre_ciudad
-				.addValidator(new NullValidator("No Nulo", false));
-		this.txt_nombre_ciudad.addValidator(new StringLengthValidator(Messages
-				.STRING_LENGTH_MESSAGE(3, 15), 3, 15, false));
+		this.txt_nombre_ciudad.addValidator(new NullValidator("No Nulo", false));
+		this.txt_nombre_ciudad.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 15), 3,15,false));
 		this.txt_sigla_ciudad.setRequired(true);
 		this.txt_sigla_ciudad.addValidator(new NullValidator("No Nulo", false));
-		this.txt_sigla_ciudad.addValidator(new StringLengthValidator(Messages
-				.STRING_LENGTH_MESSAGE(2, 5), 2, 5, false));
+		this.txt_sigla_ciudad.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(2, 5), 2,5,false));
 		this.txt_id_ciudad.setEnabled(false);
 
 		txt_id_ciudad.setWidth("90%");
@@ -77,71 +75,59 @@ public class FormCiudad extends GridLayout {
 		buildContent();
 		Responsive.makeResponsive(this);
 	}
-
 	private void buildContent() {
 		setColumnExpandRatio(0, 1);
 		setColumnExpandRatio(1, 1);
 		setColumnExpandRatio(2, 1);
-		addComponent(this.txt_id_ciudad, 0, 1);
-		addComponent(this.txt_nombre_ciudad, 1, 1);
-		addComponent(this.txt_sigla_ciudad, 2, 1);
+		addComponent(this.txt_id_ciudad, 0,1);
+		addComponent(this.txt_nombre_ciudad, 1,1);
+		addComponent(this.txt_sigla_ciudad, 2,1);
 
 	}
-
-	public void update() {
+	
+	public void update(){
 		binder_Ciudad.clear();
-
+		
 	}
-
-	public void updateId() {
+	public void updateId(){
 		this.txt_id_ciudad.setValue(ciudad_impl.generateId() + "");
 	}
-
-	public void enabled() {
+	public void enabled(){
 		this.txt_nombre_ciudad.setEnabled(false);
 		this.txt_sigla_ciudad.setEnabled(false);
 	}
-
+	
 	public List<BarMessage> getMensajes() {
 		return mensajes;
 	}
-
-	public void clearMessages() {
+	public void clearMessages(){
 		this.mensajes = new ArrayList<BarMessage>();
 	}
+	public boolean validate(){
 
-	public boolean validate() {
-
-		try {
+		try{
 			this.binder_Ciudad.commit();
-			this.mensajes.add(new BarMessage("Formulario",
-					Messages.SUCCESS_MESSAGE, "success"));
+			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
 			return true;
-		} catch (CommitException e) {
+		}catch(CommitException e){
 			try {
 				this.txt_nombre_ciudad.validate();
-			} catch (EmptyValueException ex) {
-				this.mensajes
-						.add(new BarMessage(txt_nombre_ciudad.getCaption(),
-								Messages.EMPTY_MESSAGE));
-			} catch (InvalidValueException ex) {
-				this.mensajes.add(new BarMessage(
-						txt_nombre_ciudad.getCaption(), ex.getMessage()));
+			}catch(EmptyValueException ex){
+				this.mensajes.add(new BarMessage(txt_nombre_ciudad.getCaption(), Messages.EMPTY_MESSAGE));
+			}catch (InvalidValueException ex) {
+				this.mensajes.add(new BarMessage(txt_nombre_ciudad.getCaption(), ex.getMessage()));
 			}
 			try {
 				this.txt_sigla_ciudad.validate();
-			} catch (EmptyValueException ex) {
-				this.mensajes.add(new BarMessage(txt_sigla_ciudad.getCaption(),
-						Messages.EMPTY_MESSAGE));
-			} catch (InvalidValueException ex) {
-				this.mensajes.add(new BarMessage(txt_sigla_ciudad.getCaption(),
-						ex.getMessage()));
+			}catch(EmptyValueException ex){
+				this.mensajes.add(new BarMessage(txt_sigla_ciudad.getCaption(), Messages.EMPTY_MESSAGE));
+			}catch (InvalidValueException ex) {
+				this.mensajes.add(new BarMessage(txt_sigla_ciudad.getCaption(), ex.getMessage()));
 			}
 			return false;
-		}
+		}		
 	}
-
-	public Ciudade getData() {
+	public Ciudade getData(){
 		Ciudade resul = new Ciudade();
 		resul.setCIU_Ciudad(Short.parseShort(this.txt_id_ciudad.getValue()));
 		resul.setCIU_Nombre_Ciudad(this.txt_nombre_ciudad.getValue());
@@ -150,12 +136,10 @@ public class FormCiudad extends GridLayout {
 		resul.setCIU_Fecha_Registro(new java.sql.Date(lnMilis));
 		return resul;
 	}
-
-	public void setData(Ciudade data) {
+	public void setData(Ciudade data){	
 		this.txt_id_ciudad.setValue(String.valueOf(data.getCIU_Ciudad()));
-		this.txt_nombre_ciudad.setValue(String.valueOf(data
-				.getCIU_Nombre_Ciudad()));
+		this.txt_nombre_ciudad.setValue(String.valueOf(data.getCIU_Nombre_Ciudad()));
 		this.txt_sigla_ciudad.setValue(String.valueOf(data.getCIU_Sigla()));
-
+				
 	}
 }

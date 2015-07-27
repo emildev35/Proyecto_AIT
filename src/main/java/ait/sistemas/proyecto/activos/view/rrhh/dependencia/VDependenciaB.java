@@ -10,7 +10,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -32,7 +31,8 @@ import com.vaadin.ui.VerticalLayout;
 
 @CDIView(value = VDependenciaB.URL)
 public class VDependenciaB extends VerticalLayout implements View,
-		SelectionListener, ClickListener, org.vaadin.dialogs.ConfirmDialog.Listener {
+		SelectionListener, ClickListener,
+		org.vaadin.dialogs.ConfirmDialog.Listener {
 
 	private static final long serialVersionUID = 1L;
 	public static final String URL = "/act/rrhh/dependencia/b";
@@ -43,48 +43,49 @@ public class VDependenciaB extends VerticalLayout implements View,
 	private Button btn_eliminar;
 	private FormDependencia frm_dependencia;
 	private CssLayout hl_errores;
-	
+
 	final PropertysetItem pitmDependencia = new PropertysetItem();
-	private FieldGroup binderDependencia;
 
 	public VDependenciaB() {
 
-		this.frm_dependencia= new FormDependencia();
-		this.btn_limpiar= new Button("Limpiar");
-		this.btn_eliminar= new Button("Eliminar");
+		this.frm_dependencia = new FormDependencia();
+		this.btn_limpiar = new Button("Limpiar");
+		this.btn_eliminar = new Button("Eliminar");
 		this.btn_eliminar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
 		this.grid_dependencia = new GridDependencia();
 		this.hl_errores = new CssLayout();
-		
+
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		buildGrid();
 		Responsive.makeResponsive(this);
 	}
+
 	private void buildGrid() {
 		this.grid_dependencia.addSelectionListener(this);
 	}
+
 	private Component buildFormContent() {
 
 		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true	);				
-				
+		// formContent.setSpacing(true );
+
 		Panel frmPanel = new Panel();
 		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario Ciudad");
+		frmPanel.setCaption("Datos a eliminar");
 		frmPanel.setContent(this.frm_dependencia);
 		this.frm_dependencia.enabled();
-		formContent.setMargin(true);
+		// formContent.setMargin(true);
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Grid Ciudad");
+		gridPanel.setCaption("Dependencias Registradas");
 		gridPanel.setContent(this.grid_dependencia);
-		formContent.setMargin(true);
+		// formContent.setMargin(true);
 		formContent.addComponent(gridPanel);
 		formContent.addComponent(frmPanel);
-		
+
 		this.frm_dependencia.update();
 		Responsive.makeResponsive(formContent);
 		return formContent;
@@ -121,53 +122,61 @@ public class VDependenciaB extends VerticalLayout implements View,
 	@Override
 	public void select(SelectionEvent event) {
 
-		if ((Dependencia)this.grid_dependencia.getSelectedRow() != null) {
-			this.frm_dependencia.setData((Dependencia)this.grid_dependencia.getSelectedRow());	
+		if ((Dependencia) this.grid_dependencia.getSelectedRow() != null) {
+			this.frm_dependencia.setData((Dependencia) this.grid_dependencia
+					.getSelectedRow());
 		}
 	}
-	private void  eliminar() {
+
+	private void eliminar() {
 		try {
-		this.dependencia_impl.deletes(this.frm_dependencia.getData().getDEP_Dependencia());
-		this.frm_dependencia.update();
-		this.grid_dependencia.update();
-		Notification.show(Messages.SUCCESS_MESSAGE);
-	} catch (Exception e) {
-		Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-	}
+			this.dependencia_impl.deletes(this.frm_dependencia.getData()
+					.getDEP_Dependencia());
+			this.frm_dependencia.update();
+			this.grid_dependencia.update();
+			Notification.show(Messages.SUCCESS_MESSAGE);
+		} catch (Exception e) {
+			Notification.show(Messages.FOREIGN_RELATION_ERROR(frm_dependencia.txt_nombre_dependencia
+									.getValue()), Type.ERROR_MESSAGE);
+		}
 		buildMessages(this.frm_dependencia.getMensajes());
 		this.frm_dependencia.clearMessages();
 	}
+
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_eliminar) {
 
-			ConfirmDialog.show(getUI(),"", Messages.CONFIRM_DELETE_MESSAGE, "SI", "NO", this); 
+			ConfirmDialog.show(getUI(), "", Messages.CONFIRM_DELETE_MESSAGE,
+					"SI", "NO", this);
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			binderDependencia.clear();
+			frm_dependencia.update();
 		}
 	}
+
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
-		
+
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(new Label(barMessage.getComponetName()+":"+barMessage.getErrorName()));
+			Label lbError = new Label(new Label(barMessage.getComponetName()
+					+ ":" + barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-	
+
 	}
+
 	@Override
 	public void onClose(ConfirmDialog dialog) {
 		// TODO Auto-generated method stub
-		if(dialog.isConfirmed()){
+		if (dialog.isConfirmed()) {
 			eliminar();
-		}else{
-			
+		} else {
+
 		}
 	}
 
 }
-

@@ -29,7 +29,7 @@ public class GridCiudad extends Grid{
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
 		
-		removeColumn("TMV_Fecha_Registro");	
+		removeColumn("CIU_Fecha_Registro");	
 		
 		setWidth("100%");
 

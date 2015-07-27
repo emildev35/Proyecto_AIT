@@ -1,8 +1,11 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -17,7 +20,7 @@ public class Organismo_Financiador implements Serializable {
 	@Id
 	private short ORF_Organismo_Financiador;
 
-	private Time ORF_Fecha_Registro;
+	private Date ORF_Fecha_Registro;
 
 	private String ORF_Nombre_Organismo_Financiador;
 
@@ -32,11 +35,11 @@ public class Organismo_Financiador implements Serializable {
 		this.ORF_Organismo_Financiador = ORF_Organismo_Financiador;
 	}
 
-	public Time getORF_Fecha_Registro() {
+	public Date getORF_Fecha_Registro() {
 		return this.ORF_Fecha_Registro;
 	}
 
-	public void setORF_Fecha_Registro(Time ORF_Fecha_Registro) {
+	public void setORF_Fecha_Registro(Date ORF_Fecha_Registro) {
 		this.ORF_Fecha_Registro = ORF_Fecha_Registro;
 	}
 

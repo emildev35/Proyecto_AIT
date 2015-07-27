@@ -151,7 +151,8 @@ public class VCiudadB extends VerticalLayout implements View,
 		this.grid_ciudad.update();
 		Notification.show(Messages.SUCCESS_MESSAGE);
 	} catch (Exception e) {
-		Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+		Notification.show(Messages.FOREIGN_RELATION_ERROR(frm_ciudad.txt_nombre_ciudad
+				.getValue()), Type.ERROR_MESSAGE);
 	}
 		buildMessages(this.frm_ciudad.getMensajes());
 		this.frm_ciudad.clearMessages();
@@ -163,7 +164,7 @@ public class VCiudadB extends VerticalLayout implements View,
 			ConfirmDialog.show(getUI(),"", Messages.CONFIRM_DELETE_MESSAGE, "SI", "NO", this); 
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			binderCiudad.clear();
+			this.frm_ciudad.update();
 		}
 	}
 	private void buildMessages(List<BarMessage> mensages) {

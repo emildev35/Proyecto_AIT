@@ -69,11 +69,12 @@ import com.vaadin.ui.VerticalLayout;
 			formContent.addComponent(frmPanel);
 			Panel gridPanel = new Panel();
 			gridPanel.setWidth("100%");
-			gridPanel.setCaption("Tipos de Movimientos Registradas");
+			gridPanel.setCaption("Tipos de Movimientos Registrados");
 			gridPanel.setContent(this.grid_tiposmov);
 			formContent.setMargin(true);
 			formContent.addComponent(gridPanel);
 			formContent.addComponent(frmPanel);
+			this.frm_tiposmov.update();
 			Responsive.makeResponsive(formContent);
 			return formContent;
 			
@@ -91,8 +92,10 @@ import com.vaadin.ui.VerticalLayout;
 		}
 		private Component buildButtonBar() {
 			CssLayout buttonContent = new CssLayout();
-			buttonContent.addStyleName("ait-buttons");
+			this.btn_modificar.setStyleName("ait-buttons-btn");
 			buttonContent.addComponent(this.btn_modificar);
+			this.btn_limpiar.setStyleName("ait-buttons-btn");
+			buttonContent.addStyleName("ait-buttons");
 			buttonContent.addComponent(this.btn_limpiar);
 			Responsive.makeResponsive(buttonContent);
 			return buttonContent;
@@ -135,7 +138,7 @@ import com.vaadin.ui.VerticalLayout;
 				this.frm_tiposmov.clearMessages();
 			}
 			if (event.getButton() == this.btn_limpiar) {
-				
+				frm_tiposmov.update();
 			}	
 		}
 		

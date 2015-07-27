@@ -1,12 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.Auxiliares_ContablePK;
-
-import java.sql.Time;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -19,30 +19,37 @@ import java.sql.Time;
 public class Auxiliares_Contable implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	@Id
-	private Auxiliares_ContablePK id;
+	private String AUC_Grupo_Contable;
 
-	private Time AUC_Fecha_Registro;
+	@Id
+	private String AUC_Auxiliar_Contable;
+
+	private Date AUC_Fecha_Registro;
 
 	private String AUC_Nombre_Auxiliar_Contable;
 
 	public Auxiliares_Contable() {
 	}
 
-	public Auxiliares_ContablePK getId() {
-		return this.id;
+	public String getAUC_Grupo_Contable() {
+		return this.AUC_Grupo_Contable;
+	}
+	public void setAUC_Grupo_Contable(String AUC_Grupo_Contable) {
+		this.AUC_Grupo_Contable = AUC_Grupo_Contable;
+	}
+	public String getAUC_Auxiliar_Contable() {
+		return this.AUC_Auxiliar_Contable;
+	}
+	public void setAUC_Auxiliar_Contable(String AUC_Auxiliar_Contable) {
+		this.AUC_Auxiliar_Contable = AUC_Auxiliar_Contable;
 	}
 
-	public void setId(Auxiliares_ContablePK id) {
-		this.id = id;
-	}
 
-	public Time getAUC_Fecha_Registro() {
+	public Date getAUC_Fecha_Registro() {
 		return this.AUC_Fecha_Registro;
 	}
 
-	public void setAUC_Fecha_Registro(Time AUC_Fecha_Registro) {
+	public void setAUC_Fecha_Registro(Date AUC_Fecha_Registro) {
 		this.AUC_Fecha_Registro = AUC_Fecha_Registro;
 	}
 

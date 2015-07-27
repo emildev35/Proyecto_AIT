@@ -8,7 +8,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -41,8 +40,6 @@ public class VCiudadM extends VerticalLayout implements View,
 	private Button btn_limpiar;
 	private CssLayout hl_errores;
 	
-	final PropertysetItem pitmCiudad = new PropertysetItem();
-
 	public VCiudadM() {
 
 		frm_ciudad= new FormCiudad();
@@ -58,7 +55,6 @@ public class VCiudadM extends VerticalLayout implements View,
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
-		Responsive.makeResponsive(this);
 	}
 		
 	private Component buildFormContent() {
@@ -68,18 +64,19 @@ public class VCiudadM extends VerticalLayout implements View,
 		
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Grid Ciudad");
+		gridPanel.setCaption("Datos a modificar");
 		gridPanel.setContent(this.grid_ciudad);
 		formContent.setMargin(true);
 				
 		Panel frmPanel = new Panel();
 		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario Ciudad");
+		frmPanel.setCaption("Ciudades registradas");
 		frmPanel.setContent(this.frm_ciudad);
 		formContent.setMargin(true);
 		
 		formContent.addComponent(gridPanel);
 		formContent.addComponent(frmPanel);
+		this.frm_ciudad.update();
 		Responsive.makeResponsive(formContent);
 		return formContent;
 	}
@@ -99,10 +96,12 @@ public class VCiudadM extends VerticalLayout implements View,
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addStyleName("ait-buttons");
-
+		this.btn_modificar.setStyleName("ait-buttons-btn");
 		buttonContent.addComponent(this.btn_modificar);
+		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
+		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
 
@@ -148,7 +147,6 @@ public class VCiudadM extends VerticalLayout implements View,
 		}
 		if (event.getButton() == this.btn_limpiar) {
 			this.frm_ciudad.update();
-			this.frm_ciudad.updateId();
 		}
 	}
 

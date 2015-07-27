@@ -1,12 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.ProveedorePK;
-
-import java.sql.Time;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -19,31 +19,39 @@ import java.sql.Time;
 public class Proveedore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
+	private short PRV_Dependencia;
+
 	@Id
-	private ProveedorePK id;
+	private String PRV_NIT;
 
 	private String PRV_Celular_Contacto;
 
 	private String PRV_Domicilio;
 
-	private Time PRV_Fecha_Registro;
+	private Date PRV_Fecha_Registro;
 
-	private String PRV_Nombre_Proveedor;
+	private String PRV_Nombre;
 
-	private String PRV_Nombre_Representante;
+	private String PRV_Nombre_Contacto;
 
 	private String PRV_Telefono;
+	
+	private Short PRV_Ciudad;
 
 	public Proveedore() {
 	}
 
-	public ProveedorePK getId() {
-		return this.id;
+	public short getPRV_Dependencia() {
+		return this.PRV_Dependencia;
 	}
-
-	public void setId(ProveedorePK id) {
-		this.id = id;
+	public void setPRV_Dependencia(short PRV_Dependencia) {
+		this.PRV_Dependencia = PRV_Dependencia;
+	}
+	public String getPRV_NIT() {
+		return this.PRV_NIT;
+	}
+	public void setPRV_NIT(String PRV_NIT) {
+		this.PRV_NIT = PRV_NIT;
 	}
 
 	public String getPRV_Celular_Contacto() {
@@ -62,28 +70,28 @@ public class Proveedore implements Serializable {
 		this.PRV_Domicilio = PRV_Domicilio;
 	}
 
-	public Time getPRV_Fecha_Registro() {
+	public Date getPRV_Fecha_Registro() {
 		return this.PRV_Fecha_Registro;
 	}
 
-	public void setPRV_Fecha_Registro(Time PRV_Fecha_Registro) {
+	public void setPRV_Fecha_Registro(Date PRV_Fecha_Registro) {
 		this.PRV_Fecha_Registro = PRV_Fecha_Registro;
 	}
 
-	public String getPRV_Nombre_Proveedor() {
-		return this.PRV_Nombre_Proveedor;
+	public String getPRV_Nombre() {
+		return this.PRV_Nombre;
 	}
 
-	public void setPRV_Nombre_Proveedor(String PRV_Nombre_Proveedor) {
-		this.PRV_Nombre_Proveedor = PRV_Nombre_Proveedor;
+	public void setPRV_Nombre(String PRV_Nombre) {
+		this.PRV_Nombre = PRV_Nombre;
 	}
 
-	public String getPRV_Nombre_Representante() {
-		return this.PRV_Nombre_Representante;
+	public String getPRV_Nombre_Contacto() {
+		return this.PRV_Nombre_Contacto;
 	}
 
-	public void setPRV_Nombre_Representante(String PRV_Nombre_Representante) {
-		this.PRV_Nombre_Representante = PRV_Nombre_Representante;
+	public void setPRV_Nombre_Contacto(String PRV_Nombre_Contacto) {
+		this.PRV_Nombre_Contacto = PRV_Nombre_Contacto;
 	}
 
 	public String getPRV_Telefono() {
@@ -92,6 +100,12 @@ public class Proveedore implements Serializable {
 
 	public void setPRV_Telefono(String PRV_Telefono) {
 		this.PRV_Telefono = PRV_Telefono;
+	}
+	public Short getPRV_Ciudad() {
+		return PRV_Ciudad;
+	}
+	public void setPRV_Ciudad(Short pRV_Ciudad) {
+		PRV_Ciudad = pRV_Ciudad;
 	}
 
 }

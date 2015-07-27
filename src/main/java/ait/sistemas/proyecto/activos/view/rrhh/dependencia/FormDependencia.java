@@ -28,11 +28,11 @@ import com.vaadin.ui.TextField;
 public class FormDependencia extends GridLayout implements ValueChangeListener{
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_dependencia;
-	private TextField txt_nombre_dependencia;
+	public TextField txt_nombre_dependencia;
 	public ComboBox cb_sigla_ciudad;
-	private TextField txt_domicilio;
-	private TextField txt_pagina;
-	private TextField txt_telefono;
+	public TextField txt_domicilio;
+	public TextField txt_pagina;
+	public TextField txt_telefono;
 	private List<BarMessage> mensajes;
 
 	private DependenciaImpl dependencia_impl = new DependenciaImpl();
@@ -50,7 +50,6 @@ public class FormDependencia extends GridLayout implements ValueChangeListener{
 		this.txt_id_dependencia = new TextField("Id. Dependencia:");
 		this.txt_nombre_dependencia = new TextField("Nombre Motivo de Dependencia: ");
 		this.cb_sigla_ciudad = new ComboBox("Sigla de la Ciudad:");
-		this.cb_sigla_ciudad.addValueChangeListener(this);
 		this.txt_domicilio = new TextField("Domicilio: ");
 		this.txt_pagina = new TextField("Pagina Web: ");
 		this.txt_telefono = new TextField("Telefono: ");
@@ -71,7 +70,8 @@ public class FormDependencia extends GridLayout implements ValueChangeListener{
 		binder_Dependencia.bind(this.txt_domicilio, "domicilio");
 		binder_Dependencia.bind(this.txt_pagina, "pagina_web");
 		binder_Dependencia.bind(this.txt_telefono, "telefono");
-
+		binder_Dependencia.clear();
+		
 		this.txt_nombre_dependencia.setRequired(true);
 		this.txt_nombre_dependencia.addValidator(new NullValidator("No Nulo", false));
 		this.txt_nombre_dependencia.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3,50,false));
@@ -86,9 +86,8 @@ public class FormDependencia extends GridLayout implements ValueChangeListener{
 		this.txt_telefono.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(6, 15), 6,15,false));
 		this.txt_id_dependencia.setEnabled(false);
 		this.cb_sigla_ciudad.setRequired(true);
-		this.cb_sigla_ciudad.select((long)1);
-		
-		
+		this.cb_sigla_ciudad.addValidator(new NullValidator("No Nulo", false));
+
 		txt_id_dependencia.setWidth("90%");
 		txt_nombre_dependencia.setWidth("90%");
 		cb_sigla_ciudad.setWidth("90%");
@@ -109,31 +108,28 @@ public class FormDependencia extends GridLayout implements ValueChangeListener{
 			cb_sigla_ciudad.addItem(sigla.getCIU_Ciudad());
 			cb_sigla_ciudad.setItemCaption(sigla.getCIU_Ciudad(), sigla.getCIU_Sigla());
 		}
-		cb_sigla_ciudad.select(1);
 	}
 	private void buildContent() {
-		setColumnExpandRatio(0, 1);
-		setColumnExpandRatio(2, 0);
+		setColumnExpandRatio(0, 0.5f);
+		setColumnExpandRatio(1, 2);
+		setColumnExpandRatio(1, 2);
+		setColumnExpandRatio(1, 2);
 		setColumnExpandRatio(2, 1);
-		setColumnExpandRatio(2, 2);
-		setColumnExpandRatio(3, 0);
-		setColumnExpandRatio(3, 1);
-		addComponent(this.txt_id_dependencia, 0,1);
-		addComponent(this.txt_nombre_dependencia, 2,0);
-		addComponent(this.txt_domicilio, 2,1);
-		addComponent(this.txt_pagina, 2,2);
-		addComponent(this.cb_sigla_ciudad, 3,0);
-		addComponent(this.txt_telefono, 3,1);
+		setColumnExpandRatio(2, 1);
+		addComponent(this.txt_id_dependencia, 0,0);
+		addComponent(this.txt_nombre_dependencia, 1,0);
+		addComponent(this.txt_domicilio, 1,1);
+		addComponent(this.txt_pagina, 1,2);
+		addComponent(this.cb_sigla_ciudad, 2,0);
+		addComponent(this.txt_telefono, 2,1);
 
 	}
 	
 	public void update(){
 		binder_Dependencia.clear();
-		this.cb_sigla_ciudad.setValue((long)1);
 	}
 	public void updateId(){
 		this.txt_id_dependencia.setValue(dependencia_impl.generateId() + "");
-		//this.txt_id_menu.setValue(this.menuimpl.generateMenuId((int)(long)this.cbSubsistema.getValue()));
 	}
 	public void enabled(){
 		this.txt_nombre_dependencia.setEnabled(false);

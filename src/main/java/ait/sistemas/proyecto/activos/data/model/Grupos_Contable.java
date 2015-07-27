@@ -1,9 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Time;
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -19,9 +22,9 @@ public class Grupos_Contable implements Serializable {
 	@Id
 	private String GRC_Grupo_Contable;
 
-	private BigDecimal GRC_Coeficiente;
+	private Double GRC_Coeficiente;
 
-	private Time GRC_Fecha_Registro;
+	private Date GRC_Fecha_Registro;
 
 	private String GRC_Nombre_Grupo_Contable;
 
@@ -40,19 +43,19 @@ public class Grupos_Contable implements Serializable {
 		this.GRC_Grupo_Contable = GRC_Grupo_Contable;
 	}
 
-	public BigDecimal getGRC_Coeficiente() {
+	public Double getGRC_Coeficiente() {
 		return this.GRC_Coeficiente;
 	}
 
-	public void setGRC_Coeficiente(BigDecimal GRC_Coeficiente) {
+	public void setGRC_Coeficiente(Double GRC_Coeficiente) {
 		this.GRC_Coeficiente = GRC_Coeficiente;
 	}
 
-	public Time getGRC_Fecha_Registro() {
+	public Date getGRC_Fecha_Registro() {
 		return this.GRC_Fecha_Registro;
 	}
 
-	public void setGRC_Fecha_Registro(Time GRC_Fecha_Registro) {
+	public void setGRC_Fecha_Registro(Date GRC_Fecha_Registro) {
 		this.GRC_Fecha_Registro = GRC_Fecha_Registro;
 	}
 

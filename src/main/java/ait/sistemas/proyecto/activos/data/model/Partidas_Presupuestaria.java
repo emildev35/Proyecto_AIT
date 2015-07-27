@@ -1,8 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -18,7 +22,7 @@ public class Partidas_Presupuestaria implements Serializable {
 	@Id
 	private int PAP_Partida;
 
-	private Time PAP_Fecha_Registro;
+	private Date PAP_Fecha_Registro;
 
 	private String PAP_Nombre_Partida;
 
@@ -33,11 +37,11 @@ public class Partidas_Presupuestaria implements Serializable {
 		this.PAP_Partida = PAP_Partida;
 	}
 
-	public Time getPAP_Fecha_Registro() {
+	public Date getPAP_Fecha_Registro() {
 		return this.PAP_Fecha_Registro;
 	}
 
-	public void setPAP_Fecha_Registro(Time PAP_Fecha_Registro) {
+	public void setPAP_Fecha_Registro(Date PAP_Fecha_Registro) {
 		this.PAP_Fecha_Registro = PAP_Fecha_Registro;
 	}
 

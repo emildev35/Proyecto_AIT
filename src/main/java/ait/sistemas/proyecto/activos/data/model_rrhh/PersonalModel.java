@@ -8,22 +8,30 @@ import javax.persistence.FieldResult;
 import javax.persistence.Id;
 import javax.persistence.SqlResultSetMapping;
 
-@SqlResultSetMapping(name = "archive-map-p", entities = { @EntityResult(entityClass = PersonalModel.class, fields = {
-		@FieldResult(name = "PER_CI_Empleado", column = "PER_CI_Empleado"),
-		@FieldResult(name = "PER_Apellido_Materno", column = "PER_Apellido_Materno"),
-		@FieldResult(name = "PER_Apellido_Paterno", column = "PER_Apellido_Paterno"),
-		@FieldResult(name = "PER_Dependencia_ID", column = "PER_Dependencia_ID"),
-		@FieldResult(name = "PER_Dependencia", column = "PER_Dependencia"),
-		@FieldResult(name = "PER_Fecha_Registro", column = "PER_Fecha_Registro"),
-		@FieldResult(name = "PER_No_Interno", column = "PER_No_Interno"),
-		@FieldResult(name = "PER_No_Telefono_Oficina", column = "PER_No_Telefono_Oficina"),
-		@FieldResult(name = "PER_Nombres", column = "PER_Nombres"),
-		@FieldResult(name = "PER_Unidad_Organizacional_ID", column = "PER_Unidad_Organizacional_ID"),
-		@FieldResult(name = "PER_Unidad_Organizacional", column = "PER_Unidad_Organizacional")
-
-}) })
+@SqlResultSetMapping(
+		  name="archive-map-p",
+		  entities={
+		    @EntityResult(
+		      entityClass=PersonalModel.class,
+		      fields={
+		        @FieldResult(name="PER_CI_Empleado", column="PER_CI_Empleado"),
+		        @FieldResult(name="PER_Apellido_Materno", column="PER_Apellido_Materno"),
+		        @FieldResult(name="PER_Apellido_Paterno", column="PER_Apellido_Paterno"),
+		        @FieldResult(name="PER_Dependencia_ID", column="PER_Dependencia_ID"),
+		        @FieldResult(name="PER_Dependencia", column="PER_Dependencia"),
+		        @FieldResult(name="PER_Fecha_Registro", column="PER_Fecha_Registro"),
+		        @FieldResult(name="PER_No_Interno", column="PER_No_Interno"),
+		        @FieldResult(name="PER_No_Telefono_Oficina", column="PER_No_Telefono_Oficina"),
+		        @FieldResult(name="PER_Nombres", column="PER_Nombres"),
+		        @FieldResult(name="PER_Unidad_Organizacional_ID", column="PER_Unidad_Organizacional_ID"),
+		        @FieldResult(name="PER_Unidad_Organizacional", column="PER_Unidad_Organizacional")
+		
+		      }
+		    )
+		  }
+		)
 @Entity
-public class PersonalModel {
+public class PersonalModel  {
 
 	@Id
 	private String PER_CI_Empleado;
@@ -33,7 +41,6 @@ public class PersonalModel {
 	private String PER_Apellido_Paterno;
 
 	private short PER_Dependencia_ID;
-	
 	private String PER_Dependencia;
 
 	private Date PER_Fecha_Registro;
@@ -74,15 +81,14 @@ public class PersonalModel {
 	public short getPER_Dependencia_ID() {
 		return this.PER_Dependencia_ID;
 	}
-
+	
 	public void setPER_Dependencia_ID(short PER_Dependencia_ID) {
 		this.PER_Dependencia_ID = PER_Dependencia_ID;
 	}
-
 	public String getPER_Dependencia() {
 		return PER_Dependencia;
 	}
-
+	
 	public void setPER_Dependencia(String pER_Dependencia) {
 		PER_Dependencia = pER_Dependencia;
 	}
@@ -123,17 +129,16 @@ public class PersonalModel {
 		return this.PER_Unidad_Organizacional_ID;
 	}
 
-	public void setPER_Unidad_Organizacional_ID(
-			short PER_Unidad_Organizacional_ID) {
+	public void setPER_Unidad_Organizacional_ID(short PER_Unidad_Organizacional_ID) {
 		this.PER_Unidad_Organizacional_ID = PER_Unidad_Organizacional_ID;
 	}
-
+	
 	public String getPER_Unidad_Organizacional() {
 		return PER_Unidad_Organizacional;
 	}
-
 	public void setPER_Unidad_Organizacional(String pER_Unidad_Organizacional) {
 		PER_Unidad_Organizacional = pER_Unidad_Organizacional;
 	}
+	
 
 }

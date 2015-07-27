@@ -1,7 +1,10 @@
 package ait.sistemas.proyecto.activos.data.model_rrhh;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import java.sql.Date;
 import java.sql.Time;
 
 
@@ -22,7 +25,7 @@ public class Inmueble implements Serializable {
 
 	private String INM_Domicilio_Inmueble;
 
-	private Time INM_Fecha_Registro;
+	private Date INM_Fecha_Registro;
 
 	private String INM_Nombre_Inmueble;
 
@@ -53,11 +56,11 @@ public class Inmueble implements Serializable {
 		this.INM_Domicilio_Inmueble = INM_Domicilio_Inmueble;
 	}
 
-	public Time getINM_Fecha_Registro() {
+	public Date getINM_Fecha_Registro() {
 		return this.INM_Fecha_Registro;
 	}
 
-	public void setINM_Fecha_Registro(Time INM_Fecha_Registro) {
+	public void setINM_Fecha_Registro(Date INM_Fecha_Registro) {
 		this.INM_Fecha_Registro = INM_Fecha_Registro;
 	}
 

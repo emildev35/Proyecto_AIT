@@ -1,12 +1,11 @@
 package ait.sistemas.proyecto.activos.data.model_rrhh;
 
 import java.io.Serializable;
-import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import java.sql.Date;
+import java.sql.Time;
 
 
 /**

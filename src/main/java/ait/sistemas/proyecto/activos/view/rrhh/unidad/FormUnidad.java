@@ -25,13 +25,12 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 
 public class FormUnidad extends GridLayout implements ValueChangeListener{
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_unidad;
-	private TextField txt_nombre_unidad;
+	public TextField txt_nombre_unidad;
 	public ComboBox cb_dependencia;
 
 	private List<BarMessage> mensajes;
@@ -148,7 +147,6 @@ public class FormUnidad extends GridLayout implements ValueChangeListener{
 		resul.setUNO_Unidad_Organizacional(Short.parseShort(this.txt_id_unidad.getValue()));
 		resul.setUNO_Nombre_Unidad_Organizacional(this.txt_nombre_unidad.getValue());
 		resul.setUNO_Dependencia((Short)this.cb_dependencia.getValue());
-		Notification.show(String.valueOf((Short)this.cb_dependencia.getValue()));
 		long lnMilis = new Date().getTime();
 		resul.setUNO_Fecha_Registro(new java.sql.Date(lnMilis));
 		return resul;

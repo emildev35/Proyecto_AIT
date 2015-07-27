@@ -10,14 +10,13 @@
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Personal</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Ubicaciones_Fisica</class>
-		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>
-		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>
-
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>	
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>	
 		<properties>
 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.1.10;databaseName=RecursosHumanos" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=RecursosHumanos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
@@ -31,6 +30,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.ActivosPK</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Autorizacione</class>
 		<class>ait.sistemas.proyecto.activos.data.model.AutorizacionePK</class>
+		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_ContablePK</class>
 		<class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class>
@@ -45,12 +45,14 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Documentos_RespaldoPK</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Grupos_Contable</class>
+		<class>ait.sistemas.proyecto.activos.data.model.GruposContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Inmueble</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Organismo_Financiador</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Personal</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Proveedore</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ProveedorePK</class>
+		<class>ait.sistemas.proyecto.activos.data.model.ProveedoresModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_Activo</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_Autorizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_AutorizacionPK</class>
@@ -60,8 +62,8 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Unidades_OrganizacionalePK</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.1.10;databaseName=Activos" />
+					<property name="javax.persistence.jdbc.url"
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
@@ -91,7 +93,7 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.1.10;databaseName=Seguridad" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Seguridad" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />

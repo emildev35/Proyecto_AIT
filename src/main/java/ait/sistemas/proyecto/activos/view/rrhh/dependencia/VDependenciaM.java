@@ -8,7 +8,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -38,18 +37,16 @@ public class VDependenciaM extends VerticalLayout implements View, ClickListener
 	private FormDependencia frm_dependencia;
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
-	private Button btn_agregar;
+	private Button btn_modificar;
 	private GridDependencia grid_dependencia;
 	private final DependenciaImpl dependencia_impl = new DependenciaImpl();
-	
-	final PropertysetItem pitmDependencia = new PropertysetItem();
 	
 	public VDependenciaM() {
 		
 		this.frm_dependencia= new FormDependencia();
 		this.btn_limpiar= new Button("Limpiar");
-		this.btn_agregar= new Button("Agregar");
-		this.btn_agregar.addClickListener(this);
+		this.btn_modificar= new Button("Modificar");
+		this.btn_modificar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
 	
 		this.grid_dependencia = new GridDependencia();
@@ -63,20 +60,21 @@ public class VDependenciaM extends VerticalLayout implements View, ClickListener
 	private Component buildFormContent() {
 		
 		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true	);
+	//	formContent.setSpacing(true	);
 		Panel frmPanel = new Panel();
 		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario Dependencia");
+		frmPanel.setCaption("Datos a modificar");
 		frmPanel.setContent(this.frm_dependencia);
-		formContent.setMargin(true);
+	//	formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Grid Dependencia");
+		gridPanel.setCaption("Dependencias Registradas");
 		gridPanel.setContent(this.grid_dependencia);
-		formContent.setMargin(true);
+	//	formContent.setMargin(true);
 		formContent.addComponent(gridPanel);
 		formContent.addComponent(frmPanel);
+		frm_dependencia.update();
 		Responsive.makeResponsive(formContent);
 		return formContent;
 		
@@ -94,11 +92,12 @@ public class VDependenciaM extends VerticalLayout implements View, ClickListener
 	}
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
+		this.btn_modificar.setStyleName("ait-buttons-btn");
+		buttonContent.addComponent(this.btn_modificar);
+		this.btn_limpiar.setStyleName("ait-buttons-btn");
 		buttonContent.addStyleName("ait-buttons");
-		buttonContent.addComponent(this.btn_agregar);
 		buttonContent.addComponent(this.btn_limpiar);
-		Responsive.makeResponsive(buttonContent);
-		return buttonContent;
+		Responsive.makeResponsive(buttonContent);		return buttonContent;
 	}
 	@Override
 	public void enter(ViewChangeEvent event) {
@@ -126,7 +125,7 @@ public class VDependenciaM extends VerticalLayout implements View, ClickListener
 	}
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_agregar) {
+		if (event.getButton() == this.btn_modificar) {
 			if(this.frm_dependencia.validate()){
 				this.dependencia_impl.update(this.frm_dependencia.getData());
 				this.frm_dependencia.update();
@@ -139,7 +138,7 @@ public class VDependenciaM extends VerticalLayout implements View, ClickListener
 			this.frm_dependencia.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			
+			frm_dependencia.update();
 		}	
 	}
 	

@@ -10,7 +10,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -31,6 +30,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 @CDIView(value = VUnidadB.URL)
+
 public class VUnidadB extends VerticalLayout implements View,
 		SelectionListener, ClickListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
@@ -45,7 +45,6 @@ public class VUnidadB extends VerticalLayout implements View,
 	private CssLayout hl_errores;
 	
 	final PropertysetItem pitmUnidad = new PropertysetItem();
-	private FieldGroup binderUnidad;
 
 	public VUnidadB() {
 
@@ -132,7 +131,8 @@ public class VUnidadB extends VerticalLayout implements View,
 		this.grid_unidad.update();
 		Notification.show(Messages.SUCCESS_MESSAGE);
 	} catch (Exception e) {
-		Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+		Notification.show(Messages.FOREIGN_RELATION_ERROR(frm_unidad.txt_nombre_unidad
+				.getValue()), Type.ERROR_MESSAGE);
 	}
 		buildMessages(this.frm_unidad.getMensajes());
 		this.frm_unidad.clearMessages();
@@ -144,7 +144,7 @@ public class VUnidadB extends VerticalLayout implements View,
 			ConfirmDialog.show(getUI(),"", Messages.CONFIRM_DELETE_MESSAGE, "SI", "NO", this); 
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			binderUnidad.clear();
+			frm_unidad.update();
 		}
 	}
 	private void buildMessages(List<BarMessage> mensages) {

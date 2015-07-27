@@ -12,7 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
-@SuppressWarnings("unchecked")
+
 public class CiudadImpl implements Dao<Ciudade> {
 
 	private EntityManagerFactory emf;
@@ -29,7 +29,6 @@ public class CiudadImpl implements Dao<Ciudade> {
 		result += (Short)query.getSingleResult();
 		return result;
 	}
-
 
 	@Override
 	public List<Ciudade> getall() {
@@ -72,17 +71,10 @@ public class CiudadImpl implements Dao<Ciudade> {
 	}
 	public int deletes(int id_ciudad) {
 		String strQuery = String.format("EXEC Rrhh_Ciudad_D "
-				+ "@CIU_Ciudad=?1", Integer.class);
-		Query query = this.em.createNativeQuery(strQuery, Ciudade.class);
+				+ "@CIU_Ciudad=?1");
+		Query query = this.em.createNativeQuery(strQuery);
 		query.setParameter(1, (id_ciudad));
-	try{
-		int result = (Integer)query.getSingleResult();
-			return result;
-		} catch (Exception e) {
-			return 0;
-
-		}
-		
+		return (Integer)query.getSingleResult();
 	}
 	@Override
 	public Ciudade update(Ciudade table) {

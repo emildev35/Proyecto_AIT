@@ -10,7 +10,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -45,7 +44,6 @@ public class VPersonalB extends VerticalLayout implements View,
 	private CssLayout hl_errores;
 	
 	final PropertysetItem pitmDependencia = new PropertysetItem();
-	private FieldGroup binderDependencia;
 
 	public VPersonalB() {
 
@@ -132,7 +130,8 @@ public class VPersonalB extends VerticalLayout implements View,
 		this.grid_personal.update();
 		Notification.show(Messages.SUCCESS_MESSAGE);
 	} catch (Exception e) {
-		Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+		Notification.show(Messages.FOREIGN_RELATION_ERROR(frm_personal.txt_nombres
+				.getValue()), Type.ERROR_MESSAGE);
 	}
 		buildMessages(this.frm_personal.getMensajes());
 		this.frm_personal.clearMessages();
@@ -144,7 +143,7 @@ public class VPersonalB extends VerticalLayout implements View,
 			ConfirmDialog.show(getUI(),"", Messages.CONFIRM_DELETE_MESSAGE, "SI", "NO", this); 
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			binderDependencia.clear();
+			frm_personal.update();
 		}
 	}
 	private void buildMessages(List<BarMessage> mensages) {

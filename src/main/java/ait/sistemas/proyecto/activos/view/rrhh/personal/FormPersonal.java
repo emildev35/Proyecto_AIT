@@ -31,7 +31,7 @@ import com.vaadin.ui.TextField;
 public class FormPersonal extends GridLayout implements ValueChangeListener{
 	private static final long serialVersionUID = 1L;
 	private TextField txt_ci_personal;
-	private TextField txt_nombres;
+	public TextField txt_nombres;
 	private TextField txt_ap_paterno;
 	private TextField txt_ap_materno;
 	private TextField txt_telefono;

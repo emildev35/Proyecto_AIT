@@ -13,8 +13,6 @@ import org.eclipse.persistence.config.QueryHints;
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale;
-
-@SuppressWarnings("unchecked")
 public class UnidadImpl implements Dao<Unidades_Organizacionale> {
 
 	private EntityManagerFactory emf;
