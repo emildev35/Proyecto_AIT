@@ -8,29 +8,27 @@ import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import javax.persistence.Id;
 import javax.persistence.SqlResultSetMapping;
-@SqlResultSetMapping(
-		  name="archive-map-inmueble",
-		  entities={
-		    @EntityResult(
-		      entityClass=InmuebleModel.class,
-		      fields={
-		        @FieldResult(name="INM_Inmueble", column="INM_Inmueble"),
-		        @FieldResult(name="INM_Ciudad_ID", column="INM_Ciudad_ID"),
-		        @FieldResult(name="INM_Ciudad", column="INM_Ciudad"),
-		        @FieldResult(name="INM_Domicilio_Inmueble", column="INM_Domicilio_Inmueble"),
-		        @FieldResult(name="INM_Fecha_Registro", column="INM_Fecha_Registro"),
-		        @FieldResult(name="INM_Nombre_Inmueble", column="INM_Nombre_Inmueble")
-		
-		      }
-		    )
-		  }
-		)
+
+@SqlResultSetMapping(name = "archive-map-inmueble", entities = { @EntityResult(entityClass = InmuebleModel.class, fields = {
+		@FieldResult(name = "INM_Inmueble", column = "INM_Inmueble"),
+		@FieldResult(name = "INM_Dependencia_ID", column = "INM_Dependencia_ID"),
+		@FieldResult(name = "INM_Dependencia", column = "INM_Dependencia"),
+		@FieldResult(name = "INM_Ciudad_ID", column = "INM_Ciudad_ID"),
+		@FieldResult(name = "INM_Ciudad", column = "INM_Ciudad"),
+		@FieldResult(name = "INM_Domicilio_Inmueble", column = "INM_Domicilio_Inmueble"),
+		@FieldResult(name = "INM_Fecha_Registro", column = "INM_Fecha_Registro"),
+		@FieldResult(name = "INM_Nombre_Inmueble", column = "INM_Nombre_Inmueble")
+
+}) })
 @Entity
 public class InmuebleModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private short INM_Inmueble;
+
+	private short INM_Dependencia_ID;
+	private String INM_Dependencia;
 
 	private short INM_Ciudad_ID;
 	private String INM_Ciudad;
@@ -50,6 +48,22 @@ public class InmuebleModel implements Serializable {
 
 	public void setINM_Inmueble(short INM_Inmueble) {
 		this.INM_Inmueble = INM_Inmueble;
+	}
+
+	public short getINM_Dependencia_ID() {
+		return INM_Dependencia_ID;
+	}
+
+	public void setINM_Dependencia_ID(short iNM_Dependencia_ID) {
+		INM_Dependencia_ID = iNM_Dependencia_ID;
+	}
+
+	public String getINM_Dependencia() {
+		return INM_Dependencia;
+	}
+
+	public void setINM_Dependencia(String iNM_Dependencia) {
+		INM_Dependencia = iNM_Dependencia;
 	}
 
 	public short getINM_Ciudad_ID() {

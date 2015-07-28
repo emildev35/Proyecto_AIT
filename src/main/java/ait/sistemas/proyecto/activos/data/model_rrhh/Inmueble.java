@@ -22,6 +22,7 @@ public class Inmueble implements Serializable {
 	@Id
 	private short INM_Inmueble;
 
+	private short INM_Dependencia;
 	private short INM_Ciudad;
 
 	private String INM_Domicilio_Inmueble;
@@ -39,6 +40,12 @@ public class Inmueble implements Serializable {
 
 	public void setINM_Inmueble(short INM_Inmueble) {
 		this.INM_Inmueble = INM_Inmueble;
+	}
+	public short getINM_Dependencia() {
+		return INM_Dependencia;
+	}
+	public void setINM_Dependencia(short iNM_Dependencia) {
+		INM_Dependencia = iNM_Dependencia;
 	}
 
 	public short getINM_Ciudad() {

@@ -11,6 +11,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -26,6 +27,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 public class FormInmueble extends GridLayout implements ValueChangeListener{
 	private static final long serialVersionUID = 1L;
@@ -159,6 +161,11 @@ public class FormInmueble extends GridLayout implements ValueChangeListener{
 	}
 	public Inmueble getData(){
 		Inmueble resul = new Inmueble();
+		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
+		
+		 short dependencia = dependencia_impl.getdependencia_ID(usuario.getDependecia());
+		
+		resul.setINM_Dependencia(dependencia);
 		resul.setINM_Inmueble(Short.parseShort(this.txt_id_inmueble.getValue()));
 		resul.setINM_Nombre_Inmueble(this.txt_nombre_inmueble.getValue());
 		resul.setINM_Domicilio_Inmueble(this.txt_domicilio.getValue());
