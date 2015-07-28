@@ -15,6 +15,7 @@ import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.PasswordField;
 
+
 public class ChangePasswordForm extends GridLayout {
 	
 	private static final long serialVersionUID = 1L;
