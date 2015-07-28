@@ -12,7 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Inmueble;
-
+@SuppressWarnings("unchecked")
 public class InmuebleImpl implements Dao<Inmueble> {
 
 	private EntityManagerFactory emf;

@@ -12,7 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model.Tipos_Activo;
-
+@SuppressWarnings("unchecked")
 public class TiposactImpl implements Dao<Tipos_Activo> {
 
 	private EntityManagerFactory emf;

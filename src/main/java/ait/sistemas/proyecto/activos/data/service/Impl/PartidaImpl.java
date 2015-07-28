@@ -12,7 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
-
+@SuppressWarnings("unchecked")
 	public class PartidaImpl implements Dao<Partidas_Presupuestaria> {
 
 		private EntityManagerFactory emf;

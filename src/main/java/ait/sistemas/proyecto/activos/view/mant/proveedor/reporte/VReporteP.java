@@ -2,7 +2,9 @@ package ait.sistemas.proyecto.activos.view.mant.proveedor.reporte;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
@@ -115,9 +117,19 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		
 		List<ProveedoresModel> lista = proveedor_impl.getalls();
 		
+		int [][] datas = proveedor_impl.getProvedoreCuidad();
 		this.data = new String[lista.size()][7];
 		this.r = 0;
+		int puntero = 0;
+		short cuidad_id;
+		Map<Short, Integer> dic_cuidades = new HashMap<Short, Integer>();
+		
 		for (ProveedoresModel proveedor : lista) {
+			short cuidad_actual = proveedor.getPRV_Ciudad_ID();
+			cuidad_id = proveedor.getPRV_Ciudad_ID();
+			dic_cuidades.put(cuidad_id, puntero);
+			
+			
 			String[] row = { 
 					proveedor.getPRV_NIT(), 
 					proveedor.getPRV_Nombre(),
@@ -152,7 +164,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			try {
 				short a=90;
 				if ( (Short) this.frmReporte.cb_Ciudad.getValue() == a){
-					reporte.getPdfT(getDataT());
+					int [][] datas = proveedor_impl.getProvedoreCuidad();
+					reporte.getPdfMulti(datas);
 				}
 				else{
 				reporte.getPdf(getData(), this.frmReporte.cb_Ciudad.getItemCaption(this.frmReporte.cb_Ciudad.getValue()),this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));

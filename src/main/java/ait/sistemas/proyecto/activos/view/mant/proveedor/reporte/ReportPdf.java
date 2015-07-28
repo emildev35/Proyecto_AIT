@@ -8,7 +8,10 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
 import ait.sistemas.proyecto.common.report.Column;
+import ait.sistemas.proyecto.common.report.PDFMultiTableGenerator;
 import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
@@ -52,15 +55,49 @@ public class ReportPdf {
     
     private static final int HEADER_SIZE = 5;
     
-    static String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Proveedor.pdf";
+   
+    static String SAVE_PATH = "Informe-Proveedor.pdf";
     
-    
+    final ProveedorImpl provedorimpl = new ProveedorImpl();
     public boolean getPdf(String[][] data, String strCiudad,String strDependencia) throws IOException{
     	
  
         return new PDFTableGenerator().generatePDF(createContent(data, strCiudad, strDependencia), SAVE_PATH);
         
     }
+    
+    public boolean getPdfMulti(int[][] map) throws IOException{
+    	
+    	Table[] tablas = new Table[map.length];
+    	int rtable = 0;
+    	String strCiudad="",strDependencia="";
+    	for (int i = 0; i < map.length; i++) {
+    		String[][] str_table = new String[map[i][1]][7];
+    		int r = 0;
+    		for (ProveedoresModel proveedor : provedorimpl.getByCiudad(map[i][0])) {
+    			strCiudad = proveedor.getPRV_Ciudad();
+    			strDependencia = proveedor.getPRV_Dependencia();
+    			String[] row = { 
+    					proveedor.getPRV_NIT(), 
+    					proveedor.getPRV_Nombre(),
+    					proveedor.getPRV_Ciudad(),
+    					proveedor.getPRV_Domicilio(),
+    					proveedor.getPRV_Telefono(),
+    					proveedor.getPRV_Celular_Contacto(),
+    					proveedor.getPRV_Nombre_Contacto()
+    			};
+    			str_table[r] = row;
+    			r++;
+			}
+    		tablas[rtable] = createContent(str_table, strCiudad, strDependencia);
+    		rtable++;
+		}
+    	
+    		
+        return new PDFMultiTableGenerator().generatePDF(tablas, SAVE_PATH);
+        
+    }
+    
     public boolean getPdfT(String[][] data) throws IOException{
     	
     	
@@ -68,6 +105,8 @@ public class ReportPdf {
     	
     }
 
+    
+    
     private static Table createContent(String[][] data, String strCiudad , String strDependencia) {
         List<Column> columns = new ArrayList<Column>();
         columns.add(new Column("NIT", 60));	

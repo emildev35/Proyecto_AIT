@@ -12,7 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
-
+@SuppressWarnings("unchecked")
 	public class OrganismoImpl implements Dao<Organismo_Financiador> {
 
 		private EntityManagerFactory emf;

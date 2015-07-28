@@ -13,7 +13,7 @@ import org.eclipse.persistence.config.QueryHints;
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Personal;
 import ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel;
-
+@SuppressWarnings("unchecked")
 public class PersonalImpl implements Dao<Personal> {
 
 	private EntityManagerFactory emf;

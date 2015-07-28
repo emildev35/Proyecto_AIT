@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,7 @@ import org.eclipse.persistence.config.QueryHints;
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model.Proveedore;
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
-
+@SuppressWarnings("unchecked")
 public class ProveedorImpl implements Dao<Proveedore> {
 
 	private EntityManagerFactory emf;
@@ -37,7 +38,7 @@ public class ProveedorImpl implements Dao<Proveedore> {
 	
 	public List<ProveedoresModel> getallreporte(Short id_ciudad,Short id_dependencia) {
 		this.em.getEntityManagerFactory().getCache().evict(ProveedoresModel.class);
-		Query query = em.createNativeQuery("exec Mant_Proveedor_Dependencia_Ciudad "
+		Query query = em.createNativeQuery("exec Mant_Proveedor_Dependencia_Ciudad_Q "
 				+ "@PRV_Dependencia=?1,"
 				+ "@PRV_Ciudad=?2", "archive-map-proveedor").setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_dependencia);
@@ -45,6 +46,7 @@ public class ProveedorImpl implements Dao<Proveedore> {
 		List<ProveedoresModel> resultlist = query.getResultList();		
 		return resultlist;
 	}
+	
 	
 	@Override
 	public Proveedore getone(long id) {
@@ -118,6 +120,29 @@ public class ProveedorImpl implements Dao<Proveedore> {
 		query.setParameter(8, table.getPRV_Nombre_Contacto());
 		query.setParameter(9, table.getPRV_Fecha_Registro());
 		Proveedore result = (Proveedore) query.getSingleResult();
+		return result;
+	}
+	
+	public int[][] getProvedoreCuidad(){
+		String str_proveedorexcuidad = "EXEC Proveedores_X_Ciudad";
+		Query query = this.em.createNativeQuery(str_proveedorexcuidad);
+		Collection<Collection<Object>> data = query.getResultList();
+		int[][] result = new int[data.size()][2];
+		int row=0;
+		for (Object item : data) {
+			Object[] fila = ((Object[])item);
+			for (int i = 0; i < fila.length; i++) {
+				result[row][i] = (Integer)fila[i];
+			}
+			row++;
+		}
+		return result;
+	}
+	public List<ProveedoresModel> getByCiudad(int id_ciudad){
+		String str_get_by_ciudad = "EXEC Mant_Proveedor_Ciudad @PRV_Ciudad=?1";
+		Query query = this.em.createNativeQuery(str_get_by_ciudad, "archive-map-proveedor")
+				.setParameter(1, id_ciudad);
+		List<ProveedoresModel> result = query.getResultList();
 		return result;
 	}
 

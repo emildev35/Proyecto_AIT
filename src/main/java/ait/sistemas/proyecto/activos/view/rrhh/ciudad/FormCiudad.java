@@ -17,13 +17,9 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.navigator.View;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 
 public class FormCiudad extends GridLayout {
 	private static final long serialVersionUID = 1L;

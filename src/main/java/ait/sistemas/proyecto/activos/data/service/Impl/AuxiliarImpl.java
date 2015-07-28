@@ -13,6 +13,7 @@ import org.eclipse.persistence.config.QueryHints;
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable;
+@SuppressWarnings("unchecked")
 public class AuxiliarImpl implements Dao<Auxiliares_Contable> {
 
 	private EntityManagerFactory emf;
@@ -22,6 +23,7 @@ public class AuxiliarImpl implements Dao<Auxiliares_Contable> {
 		this.emf = Persistence.createEntityManagerFactory("AIT-Activos");
 		this.em = emf.createEntityManager();
 	}
+
 
 	public List<AuxiliaresContablesModel> getalls() {
 		this.em.getEntityManagerFactory().getCache().evict(AuxiliaresContablesModel.class);

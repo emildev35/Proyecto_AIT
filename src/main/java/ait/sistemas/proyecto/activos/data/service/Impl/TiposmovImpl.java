@@ -12,7 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model.Tipos_Movimiento;
-
+@SuppressWarnings("unchecked")
 	public class TiposmovImpl implements Dao<Tipos_Movimiento> {
 
 		private EntityManagerFactory emf;
