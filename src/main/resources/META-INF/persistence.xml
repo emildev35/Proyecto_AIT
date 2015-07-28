@@ -7,6 +7,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Inmueble</class>
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Personal</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Ubicaciones_Fisica</class>

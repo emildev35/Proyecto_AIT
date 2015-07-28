@@ -66,7 +66,7 @@ public class ProveedorImpl implements Dao<Proveedore> {
 				+ "@PRV_Nombre_Contacto=?8, "
 				+ "@PRV_Fecha_Registro=?9");
 		Query query = this.em.createNativeQuery(strQuery,Proveedore.class);
-		query.setParameter(1, 2);
+		query.setParameter(1, table.getPRV_Dependencia());
 		query.setParameter(2, table.getPRV_NIT());
 		query.setParameter(3, table.getPRV_Nombre());
 		query.setParameter(4, table.getPRV_Ciudad());
@@ -93,7 +93,7 @@ public class ProveedorImpl implements Dao<Proveedore> {
 	Query query = em.createNativeQuery("Mant_Proveedor_D "
 			+ "@PRV_Dependencia=?1, "
 			+ "@PRV_NIT=?2");
-	query.setParameter(1, 2);
+	query.setParameter(1, id_dependencia);
 	query.setParameter(2, NIT);
 	return (Integer)query.getSingleResult();	
 	}
@@ -110,7 +110,7 @@ public class ProveedorImpl implements Dao<Proveedore> {
 				+ "@PRV_Nombre_Contacto=?8, "
 				+ "@PRV_Fecha_Registro=?9");
 		Query query = this.em.createNativeQuery(strQuery,Proveedore.class);
-		query.setParameter(1, 2);
+		query.setParameter(1, table.getPRV_Dependencia());
 		query.setParameter(2, table.getPRV_NIT());
 		query.setParameter(3, table.getPRV_Nombre());
 		query.setParameter(4, table.getPRV_Ciudad());

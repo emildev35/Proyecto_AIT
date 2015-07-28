@@ -8,8 +8,10 @@ import ait.sistemas.proyecto.activos.data.model.Proveedore;
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
 import ait.sistemas.proyecto.activos.data.service.Impl.CiudadImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -26,6 +28,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 public class FormProveedor extends GridLayout implements ValueChangeListener{
 	private static final long serialVersionUID = 1L;
@@ -39,6 +42,7 @@ public class FormProveedor extends GridLayout implements ValueChangeListener{
 	private List<BarMessage> mensajes;
 
 	private CiudadImpl ciudad_impl = new CiudadImpl();
+	DependenciaImpl dependencia_impl = new DependenciaImpl();
 	private PropertysetItem pitm_Proveedor = new PropertysetItem();
 	private FieldGroup binder_Proveedor;
 
@@ -221,6 +225,11 @@ public class FormProveedor extends GridLayout implements ValueChangeListener{
 	}
 	public Proveedore getData(){
 		Proveedore resul = new Proveedore();
+		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
+		
+		 short dependencia = dependencia_impl.getdependencia_ID(usuario.getDependecia());
+		
+		resul.setPRV_Dependencia(dependencia);
 		resul.setPRV_Ciudad((short)this.cb_ciudad.getValue());
 		resul.setPRV_NIT(this.txt_NIT.getValue());
 		resul.setPRV_Nombre(this.txt_nombre_proveedor.getValue());

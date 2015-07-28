@@ -12,6 +12,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.data.dao.Dao;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Inmueble;
+import ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel;
 @SuppressWarnings("unchecked")
 public class InmuebleImpl implements Dao<Inmueble> {
 
@@ -32,11 +33,15 @@ public class InmuebleImpl implements Dao<Inmueble> {
 
 	@Override
 	public List<Inmueble> getall() {
-		Query query = em.createNativeQuery("Rrhh_Inmueble_Q ", Inmueble.class).setHint(QueryHints.REFRESH, HintValues.TRUE);
-		List<Inmueble> resultlist = query.getResultList();		
+		
+		return null;
+	}
+	public List<InmuebleModel> getalls() {
+		this.em.getEntityManagerFactory().getCache().evict(InmuebleModel.class);
+		Query query = em.createNativeQuery("exec Rrhh_Inmueble_Q", "archive-map-inmueble").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<InmuebleModel> resultlist = query.getResultList();		
 		return resultlist;
 	}
-
 	@Override
 	public Inmueble getone(long id) {
 		// TODO Auto-generated method stub

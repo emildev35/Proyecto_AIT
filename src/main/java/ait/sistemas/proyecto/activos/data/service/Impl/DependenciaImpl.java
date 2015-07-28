@@ -52,6 +52,14 @@ public class DependenciaImpl implements Dao<Dependencia> {
 		List<Dependencia> resultlist = query.getResultList();
 		return resultlist;
 	}
+	public short getdependencia_ID(String dependencia) {
+		//this.em.getEntityManagerFactory().getCache().evict(Dependencia.class);
+		Query query = em.createNativeQuery("exec Rrhh_Dependencia_ID " + "@DEP_NOMBRE_Dependencia=?1");
+		query.setParameter(1, dependencia);
+		return (short) query.getSingleResult();
+//		short resultlist = (Short)query.getSingleResult();
+//		return resultlist;
+	}
 	
 	public List<Ciudade> getallsigla() {
 		Query query = em.createNativeQuery("exec Rrhh_Ciudad_Q", Ciudade.class);
