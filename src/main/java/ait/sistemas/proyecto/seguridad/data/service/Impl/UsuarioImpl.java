@@ -207,10 +207,11 @@ public class UsuarioImpl implements Dao<Usuario> {
 	}
 	
 	public boolean changePassword(String id_usuario, String password) {
+		password = Auth.hash(password);
 		String str_query = "EXEC Perm_ChangePassword_P @Id_Usuario=?1, @New_Password=?2";
 		Query query = this.em.createNativeQuery(str_query);
 		query.setParameter(1, id_usuario);
-		query.setParameter(1, password);
+		query.setParameter(2, password);
 		int result = (Integer) query.getSingleResult();
 		return (result > 0) ? true : false;
 	}
