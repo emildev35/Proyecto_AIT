@@ -29,7 +29,7 @@ public class ChangePasswordForm extends GridLayout {
 	public ChangePasswordForm() {
 		super(1, 2);
 		setWidth("100%");
-		this.pitm_reset_password.addItemProperty("usuario", new ObjectProperty<String>(""));
+		this.pitm_reset_password.addItemProperty("password", new ObjectProperty<String>(""));
 		this.pitm_reset_password.addItemProperty("password_confirm", new ObjectProperty<String>(""));
 		this.binder_reset_password = new FieldGroup(pitm_reset_password);
 		this.binder_reset_password.bind(this.pwd_password, "password");
