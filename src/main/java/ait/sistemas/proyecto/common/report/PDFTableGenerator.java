@@ -10,6 +10,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
+
+import com.vaadin.ui.UI;
+
 @SuppressWarnings("deprecation")
 public class PDFTableGenerator {
 
@@ -216,6 +220,7 @@ public class PDFTableGenerator {
 
 	private void writeHeader(PDPageContentStream contentStream,
 			float nextTextX, float nextTextY, Table table) throws IOException {
+		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 
 		contentStream.setFont(table.getHeaderFont(), table.getFontSizeheader());
 
@@ -227,7 +232,7 @@ public class PDFTableGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
-		contentStream.showText("Dependencia : " + table.getDependencia());
+		contentStream.showText("Dependencia : " + usuario.getDependecia());
 
 		contentStream.endText();
 
@@ -247,7 +252,7 @@ public class PDFTableGenerator {
 		nextTextY -= table.getRowHeight();
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Unidad : " + table.getUnidad());
+		contentStream.showText("Unidad : " + usuario.getUnidad());
 		contentStream.endText();
 
 
@@ -265,7 +270,7 @@ public class PDFTableGenerator {
 		nextTextY -= table.getRowHeight();
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Usuario : " + table.getUsuario());
+		contentStream.showText("Usuario : " + usuario.getFull_name());
 		contentStream.endText();
 
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
