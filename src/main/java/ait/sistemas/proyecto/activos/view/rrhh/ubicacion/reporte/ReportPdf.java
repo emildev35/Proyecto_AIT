@@ -52,7 +52,7 @@ public class ReportPdf {
     
     private static final int HEADER_SIZE = 5;
     
-    static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Inmuelbe.pdf";
+    static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Ubicacion-Fisica.pdf";
     
     
     public boolean getPdf(String[][] data) throws IOException{
@@ -64,9 +64,8 @@ public class ReportPdf {
     private static Table createContent(String[][] data) {
         List<Column> columns = new ArrayList<Column>();
         columns.add(new Column("Codigo", 60));	
-        columns.add(new Column("Nombre del Inmueble", 200));
-        columns.add(new Column("Ciudad", 60));
-        columns.add(new Column("Domicilio", 150));
+        columns.add(new Column("Nombre de la Ubicacion Fisica", 200));
+        columns.add(new Column("Inmueble", 180));
         
  
         String[][] content = data;
@@ -97,7 +96,7 @@ public class ReportPdf {
             .setUnidad("XXXXXX")
             .setDependencia("XXXXX")
             .setUsuario("XXXXXX")
-            .setTitle("INMUEBLES")
+            .setTitle("UBICACION FISICA")
             .setSubTitle("")
             .build();
         return table;
