@@ -41,7 +41,6 @@ public class GridUbicacion extends Grid{
 		
 		
 		removeColumn("UBF_Fecha_Registro");	
-		removeColumn("UBF_Dependencia_ID");	
 		removeColumn("UBF_Dependencia");	
 		removeColumn("UBF_Inmueble_ID");	
 		

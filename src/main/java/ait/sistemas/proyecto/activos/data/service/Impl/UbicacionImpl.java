@@ -23,10 +23,11 @@ public class UbicacionImpl implements Dao<Ubicaciones_Fisica> {
 		this.emf = Persistence.createEntityManagerFactory("AIT-RecursosHumanos");
 		this.em = emf.createEntityManager();
 	}
-	public int generateId() {
+	public int generateId(short id_dependencia) {
 		int result = 1;
-		Query query = this.em.createNativeQuery("exec Rrhh_Ubicacion_MAX");
-		result += (Integer)query.getSingleResult();
+		Query query = this.em.createNativeQuery("exec Rrhh_Ubicacion_MAX @UBF_Dependencia=?1");
+		query.setParameter(1, id_dependencia);
+		result += (Short)query.getSingleResult();
 		return result;
 	}
 	@Override
@@ -80,10 +81,12 @@ public class UbicacionImpl implements Dao<Ubicaciones_Fisica> {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	public int deletes(int id_ubicacion) {
+	public int deletes(short id_dependencia ,int id_ubicacion) {
 	Query query = em.createNativeQuery("Rrhh_Ubicacion_D "
-			+ "@UBF_Ubicacion_Fisica=?1 ");
-	query.setParameter(1, id_ubicacion);
+			+ "@UBF_Dependencia=?1, "
+			+ "@UBF_Ubicacion_Fisica=?2");
+	query.setParameter(1, id_dependencia);
+	query.setParameter(2, id_ubicacion);
 	return (Integer)query.getSingleResult();	
 	}
 	@Override

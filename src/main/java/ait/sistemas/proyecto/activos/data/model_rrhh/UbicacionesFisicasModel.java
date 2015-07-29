@@ -11,7 +11,6 @@ import javax.persistence.SqlResultSetMapping;
 
 @SqlResultSetMapping(name = "archive-map-UF", entities = { @EntityResult(entityClass = UbicacionesFisicasModel.class, fields = {
 		@FieldResult(name = "UBF_Ubicacion_Fisica", column = "UBF_Ubicacion_Fisica"),
-		@FieldResult(name = "UBF_Dependencia_ID", column = "UBF_Dependencia_ID"),
 		@FieldResult(name = "UBF_Dependencia", column = "UBF_Dependencia"),
 		@FieldResult(name = "UBF_Fecha_Registro", column = "UBF_Fecha_Registro"),
 		@FieldResult(name = "UBF_Inmueble_ID", column = "UBF_Inmueble_ID"),
@@ -27,8 +26,7 @@ public class UbicacionesFisicasModel implements Serializable {
 	@Id
 	private int UBF_Ubicacion_Fisica;
 
-	private short UBF_Dependencia_ID;
-	private String UBF_Dependencia;
+	private short UBF_Dependencia;
 
 	private Date UBF_Fecha_Registro;
 
@@ -48,19 +46,11 @@ public class UbicacionesFisicasModel implements Serializable {
 		this.UBF_Ubicacion_Fisica = UBF_Ubicacion_Fisica;
 	}
 
-	public short getUBF_Dependencia_ID() {
-		return UBF_Dependencia_ID;
-	}
-
-	public void setUBF_Dependencia_ID(short uBF_Dependencia_ID) {
-		UBF_Dependencia_ID = uBF_Dependencia_ID;
-	}
-
-	public String getUBF_Dependencia() {
+	public short getUBF_Dependencia() {
 		return this.UBF_Dependencia;
 	}
 
-	public void setUBF_Dependencia(String UBF_Dependencia) {
+	public void setUBF_Dependencia(short UBF_Dependencia) {
 		this.UBF_Dependencia = UBF_Dependencia;
 	}
 

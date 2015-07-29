@@ -2,7 +2,7 @@ package ait.sistemas.proyecto.activos.view.rrhh.ubicacion;
 
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -14,12 +14,12 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -28,24 +28,24 @@ import com.vaadin.ui.VerticalLayout;
 public class VUbicacionA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/unidad/a";
+	public static final String ID = "/act/rrhh/ubicacion/a";
 	
-	private FormUbicacion frm_unidad;
+	private FormUbicacion frm_ubicacion;
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
 	private Button btn_agregar;
-	private GridUbicacion grid_unidad;
-	private final UnidadImpl unidad_impl = new UnidadImpl();
+	private GridUbicacion grid_ubicacion;
+	private final UbicacionImpl ubicacion_impl = new UbicacionImpl();
 	
 
 	public VUbicacionA() {
-		frm_unidad= new FormUbicacion();
+		frm_ubicacion= new FormUbicacion();
 		this.btn_limpiar= new Button("Limpiar");
 		this.btn_agregar= new Button("Agregar");
 		this.btn_agregar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
 
-		this.grid_unidad = new GridUbicacion();
+		this.grid_ubicacion = new GridUbicacion();
 		this.hl_errores = new CssLayout();
 		
 		addComponent(buildNavBar());
@@ -71,13 +71,13 @@ public class VUbicacionA extends VerticalLayout implements View, ClickListener {
 		Panel frmPanel = new Panel();
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Datos a registrar");
-		frmPanel.setContent(this.frm_unidad);
+		frmPanel.setContent(this.frm_ubicacion);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Dependencias registradas");
-		gridPanel.setContent(this.grid_unidad);
+		gridPanel.setCaption("Ubicaciones Fisicas registradas");
+		gridPanel.setContent(this.grid_ubicacion);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		formContent.addComponent(gridPanel);
@@ -91,7 +91,7 @@ public class VUbicacionA extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Recursos Humanos>>"));
-		nav.addComponent(new Label("Unidad Organizacional>>"));
+		nav.addComponent(new Label("Ubicacion Fisica>>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -117,21 +117,22 @@ public class VUbicacionA extends VerticalLayout implements View, ClickListener {
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
-			if(this.frm_unidad.validate()){
-				this.unidad_impl.add(this.frm_unidad.getData());
-				grid_unidad.update();
-				this.frm_unidad.update();
-				this.frm_unidad.updateId();
+			if(this.frm_ubicacion.validate()){
+				
+				this.ubicacion_impl.add(this.frm_ubicacion.getData());
+				grid_ubicacion.update();
+				this.frm_ubicacion.update();
+				this.frm_ubicacion.updateId();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
-			buildMessages(this.frm_unidad.getMensajes());
-			this.frm_unidad.clearMessages();
+			buildMessages(this.frm_ubicacion.getMensajes());
+			this.frm_ubicacion.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			this.frm_unidad.update();
-			this.frm_unidad.updateId();
+			this.frm_ubicacion.update();
+			this.frm_ubicacion.updateId();
 		}
 	}
 	

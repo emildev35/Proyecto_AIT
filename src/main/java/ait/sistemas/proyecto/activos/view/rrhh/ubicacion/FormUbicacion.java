@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel;
+import ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ubicaciones_Fisica;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
@@ -101,8 +102,8 @@ public class FormUbicacion extends GridLayout implements ValueChangeListener{
 		setColumnExpandRatio(1, 2);
 		setColumnExpandRatio(2, 2);
 		addComponent(this.txt_id_ubicacion, 0,0);
-		addComponent(this.cb_inmueble, 1,0);
-		addComponent(this.txt_nombre_ubicacion, 2,0);
+		addComponent(this.txt_nombre_ubicacion, 1,0);
+		addComponent(this.cb_inmueble, 2,0);
 
 	}
 	
@@ -110,7 +111,9 @@ public class FormUbicacion extends GridLayout implements ValueChangeListener{
 		binder_Ubicacion.clear();
 	}
 	public void updateId(){
-		this.txt_id_ubicacion.setValue(ubicacion_impl.generateId() + "");
+		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
+		 short dependencia = dependencia_impl.getdependencia_ID(usuario.getDependecia());
+		this.txt_id_ubicacion.setValue(ubicacion_impl.generateId(dependencia) + "");
 	}
 	public void enabled(){
 		this.txt_nombre_ubicacion.setEnabled(false);
@@ -151,7 +154,6 @@ public class FormUbicacion extends GridLayout implements ValueChangeListener{
 	public Ubicaciones_Fisica getData(){
 		Ubicaciones_Fisica resul = new Ubicaciones_Fisica();
 		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
-		
 		 short dependencia = dependencia_impl.getdependencia_ID(usuario.getDependecia());
 		resul.setUBF_Dependencia(dependencia);
 		resul.setUBF_Ubicacion_Fisica(Integer.parseInt(this.txt_id_ubicacion.getValue()));
@@ -161,10 +163,10 @@ public class FormUbicacion extends GridLayout implements ValueChangeListener{
 		resul.setUBF_Fecha_Registro(new java.sql.Date(lnMilis));
 		return resul;
 	}
-	public void setData(Ubicaciones_Fisica data){	
+	public void setData(UbicacionesFisicasModel data){	
 		this.txt_id_ubicacion.setValue(String.valueOf(data.getUBF_Ubicacion_Fisica()));
 		this.txt_nombre_ubicacion.setValue(String.valueOf(data.getUBF_Nombre_Ubicacion_Fisica()));
-		this.cb_inmueble.setValue((Short)data.getUBF_Inmueble());
+		this.cb_inmueble.setValue((Short)data.getUBF_Inmueble_ID());
 				
 	}
 	@Override

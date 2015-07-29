@@ -2,8 +2,8 @@ package ait.sistemas.proyecto.activos.view.rrhh.ubicacion;
 
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel;
-import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
+import ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -31,26 +31,26 @@ import com.vaadin.ui.VerticalLayout;
 public class VUbicacionM extends VerticalLayout implements View, ClickListener, SelectionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/unidad/m";
+	public static final String ID = "/act/rrhh/ubicacion/m";
 	
-	private FormUbicacion frm_unidad;
+	private FormUbicacion frm_ubicacion;
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
 	private Button btn_modificar;
-	private GridUbicacion grid_unidad;
-	private final UnidadImpl unidad_impl = new UnidadImpl();
+	private GridUbicacion grid_ubicacion;
+	private final UbicacionImpl ubicacion_impl = new UbicacionImpl();
 	
 	
 	public VUbicacionM() {
 		
-		this.frm_unidad= new FormUbicacion();
+		this.frm_ubicacion= new FormUbicacion();
 		this.btn_limpiar= new Button("Limpiar");
 		this.btn_modificar= new Button("Modificar");
 		this.btn_modificar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
 	
-		this.grid_unidad = new GridUbicacion();
-		this.grid_unidad.addSelectionListener(this);
+		this.grid_ubicacion = new GridUbicacion();
+		this.grid_ubicacion.addSelectionListener(this);
 		this.hl_errores = new CssLayout();
 		
 		addComponent(buildNavBar());
@@ -64,13 +64,13 @@ public class VUbicacionM extends VerticalLayout implements View, ClickListener, 
 		Panel frmPanel = new Panel();
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Datos a modificar");
-		frmPanel.setContent(this.frm_unidad);
+		frmPanel.setContent(this.frm_ubicacion);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Unidades Organizacionales Registradas");
-		gridPanel.setContent(this.grid_unidad);
+		gridPanel.setCaption("Ubicaciones Fisicas Registradas");
+		gridPanel.setContent(this.grid_ubicacion);
 		formContent.setMargin(true);
 		formContent.addComponent(gridPanel);
 		formContent.addComponent(frmPanel);
@@ -84,7 +84,7 @@ public class VUbicacionM extends VerticalLayout implements View, ClickListener, 
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Recursos Humanos>>"));
-		nav.addComponent(new Label("Unidades Organizacionales>>"));
+		nav.addComponent(new Label("Ubicaciones Fisicas>>"));
 		nav.addComponent(new Label("<strong>Modificar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -118,26 +118,26 @@ public class VUbicacionM extends VerticalLayout implements View, ClickListener, 
 	@Override
 	public void select(SelectionEvent event) {
 
-		if ((UnidadesOrganizacionalesModel)this.grid_unidad.getSelectedRow() != null) {
-			this.frm_unidad.setData((UnidadesOrganizacionalesModel)this.grid_unidad.getSelectedRow());	
+		if ((UbicacionesFisicasModel)this.grid_ubicacion.getSelectedRow() != null) {
+			this.frm_ubicacion.setData((UbicacionesFisicasModel)this.grid_ubicacion.getSelectedRow());	
 		}		
 	}
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_modificar) {
-			if(this.frm_unidad.validate()){
-				this.unidad_impl.update(this.frm_unidad.getData());
-				this.frm_unidad.update();
-				this.grid_unidad.update();
+			if(this.frm_ubicacion.validate()){
+				this.ubicacion_impl.update(this.frm_ubicacion.getData());
+				this.frm_ubicacion.update();
+				this.grid_ubicacion.update();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
-			buildMessages(this.frm_unidad.getMensajes());
-			this.frm_unidad.clearMessages();
+			buildMessages(this.frm_ubicacion.getMensajes());
+			this.frm_ubicacion.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			frm_unidad.update();
+			frm_ubicacion.update();
 		}	
 	}
 	

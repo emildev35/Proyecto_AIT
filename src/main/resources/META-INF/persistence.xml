@@ -11,6 +11,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Personal</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Ubicaciones_Fisica</class>
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>	
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>	
 		<properties>
