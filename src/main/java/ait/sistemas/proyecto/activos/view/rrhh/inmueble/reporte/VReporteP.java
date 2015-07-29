@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
-import ait.sistemas.proyecto.activos.data.model_rrhh.Inmueble;
 import ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
@@ -27,6 +26,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -40,6 +40,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 	private String[][] data;
 	int r = 0;
 	private final InmuebleImpl inmueble_impl = new InmuebleImpl();
+	private DependenciaImpl dependencia_impl = new DependenciaImpl();
 	private CssLayout hl_errores = new CssLayout();
 
 	public VReporteP() {
@@ -48,7 +49,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		List<BarMessage> mensajes = new ArrayList<BarMessage>();
-		mensajes.add(new BarMessage("","Pulsar el Boton Imprimir para generar el reporte", "success"));
+		mensajes.add(new BarMessage("",
+				"Pulsar el Boton Imprimir para generar el reporte", "success"));
 		buildMessages(mensajes);
 	}
 
@@ -62,7 +64,6 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
-
 
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
@@ -82,35 +83,40 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	}
 
-
 	public String[][] getData() {
-		List<InmuebleModel> result = this.inmueble_impl.getalls();
-		
+		SessionModel usuario = (SessionModel) UI.getCurrent().getSession()
+				.getAttribute("user");
+
+		short dependencia = dependencia_impl.getdependencia_ID(usuario
+				.getDependecia());
+		List<InmuebleModel> result = this.inmueble_impl.getalls(dependencia);
+
 		this.data = new String[result.size()][5];
 		this.r = 0;
-		for(InmuebleModel row_mov : result){
-			String[] row = {String.valueOf(row_mov.getINM_Inmueble()),
-					row_mov.getINM_Nombre_Inmueble(),
-					row_mov.getINM_Ciudad(),
-					row_mov.getINM_Domicilio_Inmueble()
-			};
+		for (InmuebleModel row_mov : result) {
+			String[] row = { String.valueOf(row_mov.getINM_Inmueble()),
+					row_mov.getINM_Nombre_Inmueble(), row_mov.getINM_Ciudad(),
+					row_mov.getINM_Domicilio_Inmueble() };
 			this.data[r] = row;
 			this.r++;
 		}
 		return data;
 	}
+
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
 
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(barMessage.getComponetName() + barMessage.getErrorName());
+			Label lbError = new Label(barMessage.getComponetName()
+					+ barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
 
 	}
+
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();

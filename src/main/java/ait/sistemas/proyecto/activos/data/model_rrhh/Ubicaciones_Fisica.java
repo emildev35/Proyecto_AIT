@@ -1,8 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model_rrhh;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -20,7 +24,7 @@ public class Ubicaciones_Fisica implements Serializable {
 
 	private short UBF_Dependencia;
 
-	private Time UBF_Fecha_Registro;
+	private Date UBF_Fecha_Registro;
 
 	private short UBF_Inmueble;
 
@@ -45,11 +49,11 @@ public class Ubicaciones_Fisica implements Serializable {
 		this.UBF_Dependencia = UBF_Dependencia;
 	}
 
-	public Time getUBF_Fecha_Registro() {
+	public Date getUBF_Fecha_Registro() {
 		return this.UBF_Fecha_Registro;
 	}
 
-	public void setUBF_Fecha_Registro(Time UBF_Fecha_Registro) {
+	public void setUBF_Fecha_Registro(Date UBF_Fecha_Registro) {
 		this.UBF_Fecha_Registro = UBF_Fecha_Registro;
 	}
 
