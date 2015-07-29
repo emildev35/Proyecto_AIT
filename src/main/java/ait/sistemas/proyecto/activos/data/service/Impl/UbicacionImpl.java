@@ -27,7 +27,7 @@ public class UbicacionImpl implements Dao<Ubicaciones_Fisica> {
 		int result = 1;
 		Query query = this.em.createNativeQuery("exec Rrhh_Ubicacion_MAX @UBF_Dependencia=?1");
 		query.setParameter(1, id_dependencia);
-		result += (Short)query.getSingleResult();
+		result += (Integer)query.getSingleResult();
 		return result;
 	}
 	@Override

@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel;
+import ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
@@ -34,12 +34,12 @@ import com.vaadin.ui.Window;
 public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/inmueble/reporte";
+	public static final String ID = "/act/rrhh/ubicacion/reporte";
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final InmuebleImpl inmueble_impl = new InmuebleImpl();
+	private final UbicacionImpl ubicacion_impl = new UbicacionImpl();
 	private DependenciaImpl dependencia_impl = new DependenciaImpl();
 	private CssLayout hl_errores = new CssLayout();
 
@@ -71,7 +71,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Recursos Humanos » "));
-		nav.addComponent(new Label("Inmueble » "));
+		nav.addComponent(new Label("Ubicacion Fisica » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -89,14 +89,14 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 		short dependencia = dependencia_impl.getdependencia_ID(usuario
 				.getDependecia());
-		List<InmuebleModel> result = this.inmueble_impl.getalls(dependencia);
+		List<UbicacionesFisicasModel> result = this.ubicacion_impl.getalls(dependencia);
 
 		this.data = new String[result.size()][5];
 		this.r = 0;
-		for (InmuebleModel row_mov : result) {
-			String[] row = { String.valueOf(row_mov.getINM_Inmueble()),
-					row_mov.getINM_Nombre_Inmueble(), row_mov.getINM_Ciudad(),
-					row_mov.getINM_Domicilio_Inmueble() };
+		for (UbicacionesFisicasModel row_mov : result) {
+			String[] row = { String.valueOf(row_mov.getUBF_Ubicacion_Fisica()),
+					row_mov.getUBF_Nombre_Ubicacion_Fisica(), 
+					row_mov.getUBF_Inmueble() };
 			this.data[r] = row;
 			this.r++;
 		}
@@ -132,7 +132,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Inmuebles");
+			Window subWindow = new Window("Reporte Ubicacion Fisica");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);
