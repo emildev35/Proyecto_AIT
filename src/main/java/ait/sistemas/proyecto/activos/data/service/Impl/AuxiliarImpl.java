@@ -31,6 +31,12 @@ public class AuxiliarImpl implements Dao<Auxiliares_Contable> {
 		List<AuxiliaresContablesModel> resultlist = query.getResultList();		
 		return resultlist;
 	}
+	/**
+	 * Metodo que Retorna un lista de Auxliares contables que un Grupo contable
+	 * en espesifico
+	 * @param id_grupo
+	 * @return
+	 */
 	public List<AuxiliaresContablesModel> getreporte(String id_grupo) {
 		Query query = em.createNativeQuery("Para_Auxiliar_Grupo "
 				+ "@AUC_Grupo_Contable=?1 ", AuxiliaresContablesModel.class);

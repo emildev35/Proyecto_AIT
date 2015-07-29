@@ -11,6 +11,7 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "id", column = "id"),
 	@FieldResult(name = "full_name", column = "full_name"),
 	@FieldResult(name = "dependecia", column = "dependencia"),
+	@FieldResult(name = "id_dependecia", column = "id_dependencia"),
 	@FieldResult(name = "unidad", column = "unidad_organizacional")}) })
 @Entity
 public class SessionModel {
@@ -19,6 +20,7 @@ public class SessionModel {
 	private String id;
 	private String full_name;
 	private String dependecia;
+	private short id_dependecia;
 	private String unidad_organizacional;
 	
 	public SessionModel() {
@@ -55,6 +57,12 @@ public class SessionModel {
 	}
 	public void setUnidad(String unidad) {
 		this.unidad_organizacional = unidad;
+	}
+	public void setId_dependecia(short id_dependecia) {
+		this.id_dependecia = id_dependecia;
+	}
+	public short getId_dependecia() {
+		return id_dependecia;
 	}
 	
 	

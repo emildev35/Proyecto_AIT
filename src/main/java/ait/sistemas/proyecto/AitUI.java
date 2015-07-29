@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto;
 
+import java.sql.SQLException;
+
 import javax.inject.Inject;
 import javax.jms.Session;
 
@@ -41,9 +43,19 @@ public class AitUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
-		if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
+		//Comentado para motivo de pruebas
+		/*if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
 			SessionModel result = Auth.getDefaultUser();
 			getUI().getSession().setAttribute("user", result);
+		}*/
+		if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
+		SessionModel result;
+		try {
+			result = Auth.login("KI-VASQ-IM", "3Enero199$");
+			getUI().getSession().setAttribute("user", result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		}
 		CssLayout layout = new CssLayout();
 		setContent(new MainView(layout));
