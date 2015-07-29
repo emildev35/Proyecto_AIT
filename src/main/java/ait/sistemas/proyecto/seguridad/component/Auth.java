@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
@@ -26,15 +27,13 @@ public class Auth {
 	}
 	
 	public static String encryptPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-
 	    MessageDigest crypt = MessageDigest.getInstance("SHA-1");
 	    crypt.reset();	
 	    crypt.update(password.getBytes("UTF-8"));
-
 	    return new BigInteger(1, crypt.digest()).toString(16);
 	}
 
-	public static SessionModel login(String usuario, String password) {
+	public static SessionModel login(String usuario, String password) throws SQLException {
 		password = Auth.hash(password);
 		final UsuarioImpl usuarioimpl = new UsuarioImpl();
 		return usuarioimpl.login(usuario, password);

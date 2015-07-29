@@ -1,13 +1,11 @@
 package ait.sistemas.proyecto.seguridad.view.login;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.HomeView;
-import ait.sistemas.proyecto.common.view.MainView;
 import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
@@ -110,14 +108,19 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 				if (this.frm_login.isNew()) {
 					this.usuarioimpl.addPassword(this.frm_login.getUsuario(), this.frm_login.getPassword());
 				}else{
-					SessionModel result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
-					if(result!=null){
-						Notification.show("Encontrado");
-						getUI().getSession().setAttribute("user", result);
-						getUI().getPage().reload();
-						getUI().getNavigator().navigateTo(HomeView.URL);
-					}else{
+					SessionModel result;
+					try {
+						result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
+						if(result!=null){
+							Notification.show("Encontrado");
+							getUI().getSession().setAttribute("user", result);
+							getUI().getPage().reload();
+							getUI().getNavigator().navigateTo(HomeView.URL);
+						}else{
+						}
+					} catch (SQLException e) {
 						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
+						e.printStackTrace();
 					}
 				}
 			}

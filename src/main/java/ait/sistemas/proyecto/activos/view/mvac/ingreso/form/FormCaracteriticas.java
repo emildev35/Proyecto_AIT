@@ -79,5 +79,6 @@ public class FormCaracteriticas extends GridLayout {
 		addComponent(this.txt_vcto_contrato_mantenimientno, 3, 6, 5, 6);
 		
 		addComponent(this.frm_imagen, 6, 0, 6, 6);
+		
 	}
 }

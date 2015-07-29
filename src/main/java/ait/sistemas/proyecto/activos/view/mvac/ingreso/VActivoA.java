@@ -9,20 +9,22 @@ import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
 @CDIView(value=VActivoA.ID)
 public class VActivoA extends VerticalLayout implements View{
 
-
 	private static final long serialVersionUID = 1L;
 	public static final String ID = "/mvac/ingreso/a";
 	
-	private FormDatosGenerales frm_datos_generales = new FormDatosGenerales();
+	private FormDatosGenerales frm_datos_generales = new FormDatosGenerales(this);
 	private FormCaracteriticas frm_caracteristicas = new FormCaracteriticas();
 	private FormComponentes frm_componentes = new FormComponentes();
 	private FormDocumentos frm_documentos = new FormDocumentos();
+	
+	private CssLayout mensages;
 	
 	public VActivoA() {
 		setWidth("100%");
@@ -31,10 +33,22 @@ public class VActivoA extends VerticalLayout implements View{
 	
 	private Component buildFormContent() {
 		final TabSheet tbs_form = new TabSheet();
-		tbs_form.addTab(frm_datos_generales, "Datos Generales");
-		tbs_form.addTab(frm_caracteristicas, "Caracteristicas");
-		tbs_form.addTab(frm_componentes, "Componentes");
-		tbs_form.addTab(frm_documentos, "Documentos");
+		
+		VerticalLayout vl_generales = new VerticalLayout();
+		vl_generales.addComponents(this.frm_datos_generales, this.frm_datos_generales.buildButtonBar());
+		tbs_form.addTab(vl_generales, "Datos Generales");
+		
+		VerticalLayout vl_caracteristicas = new VerticalLayout();
+		vl_caracteristicas.addComponents(this.frm_caracteristicas, this.frm_componentes.buildButtonBar());
+		tbs_form.addTab(vl_caracteristicas, "Caracteristicas");
+		
+		VerticalLayout vl_componentes = new VerticalLayout();
+		vl_componentes.addComponents(this.frm_componentes, this.frm_componentes.buildButtonBar());
+		tbs_form.addTab(vl_componentes, "Componentes");
+		
+		VerticalLayout vl_documentos = new VerticalLayout();
+		vl_documentos.addComponents(this.frm_documentos, this.frm_componentes.buildButtonBar());
+		tbs_form.addTab(vl_documentos, "Documentos");
 		return tbs_form;
 	}
 	@Override

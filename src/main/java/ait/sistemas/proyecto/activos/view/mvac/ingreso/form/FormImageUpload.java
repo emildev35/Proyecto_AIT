@@ -14,14 +14,16 @@ public class FormImageUpload extends VerticalLayout {
 	Embedded image = new Embedded();
 	ImageUploader reciver = new ImageUploader();
 	Upload upload = new Upload("Seleccione una Imagen", reciver);
-
-	
 	
 	public FormImageUpload() {
 		upload.addSucceededListener(reciver);
+		upload.setButtonCaption("Cargar Imagen");
 		addComponent(upload);
 		addComponent(reciver.getImage());
 		Responsive.makeResponsive(this);
 	}
 	
+	public String getFile() {
+		return reciver.file.getAbsolutePath();
+	}
 }
