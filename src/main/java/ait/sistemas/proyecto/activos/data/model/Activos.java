@@ -1,13 +1,13 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.ActivosPK;
-
 import java.math.BigDecimal;
-import java.sql.Time;
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -15,35 +15,37 @@ import java.sql.Time;
  * 
  */
 @Entity
+@Table(name="Activos")
 @NamedQuery(name="Activos.findAll", query="SELECT a FROM Activos a")
 public class Activos implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
+	private short ACT_Dependencia;
+	
 	@Id
-	private ActivosPK id;
+	private String ACT_Codigo_Activo;
 
 	private String ACT_Auxiliar_Contable;
 
 	private String ACT_CI_Empleado_Asignado;
 
-	private Time ACT_Fecha_Asignacion;
+	private Date ACT_Fecha_Asignacion;
 
-	private Time ACT_Fecha_Baja;
+	private Date ACT_Fecha_Baja;
 
-	private Time ACT_Fecha_Comodato;
+	private Date ACT_Fecha_Comodato;
 
-	private Time ACT_Fecha_Compra;
+	private Date ACT_Fecha_Compra;
 
-	private Time ACT_Fecha_Incorporacion;
+	private Date ACT_Fecha_Incorporacion;
 
-	private Time ACT_Fecha_Registro;
+	private Date ACT_Fecha_Registro;
 
-	private Time ACT_Fecha_Vencimiento_Garantia;
+	private Date ACT_Fecha_Vencimiento_Garantia;
 
-	private Time ACT_Fecha_Vencimiento_Mantenimiento;
+	private Date ACT_Fecha_Vencimiento_Mantenimiento;
 
-	private Time ACT_Fecha_Vencimiento_Seguro;
+	private Date ACT_Fecha_Vencimiento_Seguro;
 
 	private int ACT_Fuente_Financiamiento;
 
@@ -71,7 +73,7 @@ public class Activos implements Serializable {
 
 	private short ACT_Organismo_Financiador;
 
-	private int ACT_Proveedor;
+	private int ACT_NIT_Proveedor;
 
 	private short ACT_Tipo_Activo;
 
@@ -88,12 +90,17 @@ public class Activos implements Serializable {
 	public Activos() {
 	}
 
-	public ActivosPK getId() {
-		return this.id;
+	public short getACT_Dependencia() {
+		return this.ACT_Dependencia;
 	}
-
-	public void setId(ActivosPK id) {
-		this.id = id;
+	public void setACT_Dependencia(short ACT_Dependencia) {
+		this.ACT_Dependencia = ACT_Dependencia;
+	}
+	public String getACT_Codigo_Activo() {
+		return this.ACT_Codigo_Activo;
+	}
+	public void setACT_Codigo_Activo(String ACT_Codigo_Activo) {
+		this.ACT_Codigo_Activo = ACT_Codigo_Activo;
 	}
 
 	public String getACT_Auxiliar_Contable() {
@@ -112,75 +119,75 @@ public class Activos implements Serializable {
 		this.ACT_CI_Empleado_Asignado = ACT_CI_Empleado_Asignado;
 	}
 
-	public Time getACT_Fecha_Asignacion() {
+	public Date getACT_Fecha_Asignacion() {
 		return this.ACT_Fecha_Asignacion;
 	}
 
-	public void setACT_Fecha_Asignacion(Time ACT_Fecha_Asignacion) {
+	public void setACT_Fecha_Asignacion(Date ACT_Fecha_Asignacion) {
 		this.ACT_Fecha_Asignacion = ACT_Fecha_Asignacion;
 	}
 
-	public Time getACT_Fecha_Baja() {
+	public Date getACT_Fecha_Baja() {
 		return this.ACT_Fecha_Baja;
 	}
 
-	public void setACT_Fecha_Baja(Time ACT_Fecha_Baja) {
+	public void setACT_Fecha_Baja(Date ACT_Fecha_Baja) {
 		this.ACT_Fecha_Baja = ACT_Fecha_Baja;
 	}
 
-	public Time getACT_Fecha_Comodato() {
+	public Date getACT_Fecha_Comodato() {
 		return this.ACT_Fecha_Comodato;
 	}
 
-	public void setACT_Fecha_Comodato(Time ACT_Fecha_Comodato) {
+	public void setACT_Fecha_Comodato(Date ACT_Fecha_Comodato) {
 		this.ACT_Fecha_Comodato = ACT_Fecha_Comodato;
 	}
 
-	public Time getACT_Fecha_Compra() {
+	public Date getACT_Fecha_Compra() {
 		return this.ACT_Fecha_Compra;
 	}
 
-	public void setACT_Fecha_Compra(Time ACT_Fecha_Compra) {
+	public void setACT_Fecha_Compra(Date ACT_Fecha_Compra) {
 		this.ACT_Fecha_Compra = ACT_Fecha_Compra;
 	}
 
-	public Time getACT_Fecha_Incorporacion() {
+	public Date getACT_Fecha_Incorporacion() {
 		return this.ACT_Fecha_Incorporacion;
 	}
 
-	public void setACT_Fecha_Incorporacion(Time ACT_Fecha_Incorporacion) {
+	public void setACT_Fecha_Incorporacion(Date ACT_Fecha_Incorporacion) {
 		this.ACT_Fecha_Incorporacion = ACT_Fecha_Incorporacion;
 	}
 
-	public Time getACT_Fecha_Registro() {
+	public Date getACT_Fecha_Registro() {
 		return this.ACT_Fecha_Registro;
 	}
 
-	public void setACT_Fecha_Registro(Time ACT_Fecha_Registro) {
+	public void setACT_Fecha_Registro(Date ACT_Fecha_Registro) {
 		this.ACT_Fecha_Registro = ACT_Fecha_Registro;
 	}
 
-	public Time getACT_Fecha_Vencimiento_Garantia() {
+	public Date getACT_Fecha_Vencimiento_Garantia() {
 		return this.ACT_Fecha_Vencimiento_Garantia;
 	}
 
-	public void setACT_Fecha_Vencimiento_Garantia(Time ACT_Fecha_Vencimiento_Garantia) {
+	public void setACT_Fecha_Vencimiento_Garantia(Date ACT_Fecha_Vencimiento_Garantia) {
 		this.ACT_Fecha_Vencimiento_Garantia = ACT_Fecha_Vencimiento_Garantia;
 	}
 
-	public Time getACT_Fecha_Vencimiento_Mantenimiento() {
+	public Date getACT_Fecha_Vencimiento_Mantenimiento() {
 		return this.ACT_Fecha_Vencimiento_Mantenimiento;
 	}
 
-	public void setACT_Fecha_Vencimiento_Mantenimiento(Time ACT_Fecha_Vencimiento_Mantenimiento) {
+	public void setACT_Fecha_Vencimiento_Mantenimiento(Date ACT_Fecha_Vencimiento_Mantenimiento) {
 		this.ACT_Fecha_Vencimiento_Mantenimiento = ACT_Fecha_Vencimiento_Mantenimiento;
 	}
 
-	public Time getACT_Fecha_Vencimiento_Seguro() {
+	public Date getACT_Fecha_Vencimiento_Seguro() {
 		return this.ACT_Fecha_Vencimiento_Seguro;
 	}
 
-	public void setACT_Fecha_Vencimiento_Seguro(Time ACT_Fecha_Vencimiento_Seguro) {
+	public void setACT_Fecha_Vencimiento_Seguro(Date ACT_Fecha_Vencimiento_Seguro) {
 		this.ACT_Fecha_Vencimiento_Seguro = ACT_Fecha_Vencimiento_Seguro;
 	}
 
@@ -288,12 +295,12 @@ public class Activos implements Serializable {
 		this.ACT_Organismo_Financiador = ACT_Organismo_Financiador;
 	}
 
-	public int getACT_Proveedor() {
-		return this.ACT_Proveedor;
+	public int getACT_NIT_Proveedor() {
+		return this.ACT_NIT_Proveedor;
 	}
 
-	public void setACT_Proveedor(int ACT_Proveedor) {
-		this.ACT_Proveedor = ACT_Proveedor;
+	public void setACT_NIT_Proveedor(int ACT_NIT_Proveedor) {
+		this.ACT_NIT_Proveedor = ACT_NIT_Proveedor;
 	}
 
 	public short getACT_Tipo_Activo() {
