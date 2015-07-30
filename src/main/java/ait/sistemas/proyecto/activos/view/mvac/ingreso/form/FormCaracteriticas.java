@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.view.mvac.ingreso.form;
 
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
 public class FormCaracteriticas extends GridLayout {
@@ -23,11 +24,17 @@ public class FormCaracteriticas extends GridLayout {
 	public TextField txt_numero_contrato_mantenimiento = new TextField("N. de Contrato de Mantenimiento");
 	public TextField txt_vcto_contrato_mantenimientno = new TextField("Vcto de Contrato");
 	
+	private GridLayout grid_activo_fijo = new GridLayout(6, 1);
+	private GridLayout grid_caracteristica = new GridLayout(6, 7);
+	
+	private GridLayout grid_imagen = new GridLayout(1, 1);
+	
 	public FormImageUpload frm_imagen = new FormImageUpload();
 	
 	public FormCaracteriticas() {
 		super(7, 7);
 		setWidth("100%");
+		setSpacing(true);
 		this.txt_codigo_activo.setWidth("90%");
 		this.txt_nombre_activo.setWidth("90%");
 		this.cb_proveedor.setWidth("90%");
@@ -56,29 +63,46 @@ public class FormCaracteriticas extends GridLayout {
 		setColumnExpandRatio(5, 1);
 		setColumnExpandRatio(6, 5);
 		
-		addComponent(this.txt_codigo_activo, 0, 0, 2, 0);
-		addComponent(this.txt_nombre_activo, 3, 0, 5, 0);
+		grid_activo_fijo.addComponent(this.txt_codigo_activo, 0, 0, 2, 0);
+		grid_activo_fijo.addComponent(this.txt_nombre_activo, 3, 0, 5, 0);
 		
-		addComponent(this.cb_proveedor, 0, 1, 5, 1);
+		final Panel pn_activo = new Panel();
+		grid_activo_fijo.setSizeFull();
+		grid_activo_fijo.setMargin(true);
+		pn_activo.setContent(grid_activo_fijo);
+		addComponent(pn_activo, 0, 0, 5, 0);
 		
-		addComponent(this.txt_marca, 0, 2, 2, 2);
-		addComponent(this.txt_numero_serie, 3, 2, 4, 2);
+		grid_caracteristica.addComponent(this.cb_proveedor, 0, 0, 5, 0);
 		
-		addComponent(this.txt_numero_garantia, 0, 3, 1, 3);
+		grid_caracteristica.addComponent(this.txt_marca, 0, 1, 2, 1);
+		grid_caracteristica.addComponent(this.txt_numero_serie, 3, 1, 4, 1);
 		
-		addComponent(this.txt_tiempo_garantia, 2, 3, 3, 3);
-		addComponent(this.txt_vencimiento_garantia, 4, 3, 5, 3);
+		grid_caracteristica.addComponent(this.txt_numero_garantia, 0, 2, 1, 2);
+		grid_caracteristica.addComponent(this.txt_tiempo_garantia, 2, 2, 3, 2);
+		grid_caracteristica.addComponent(this.txt_vencimiento_garantia, 4, 2, 5, 2);
 		
-		addComponent(this.txt_numero_ruat, 0, 4, 2, 4);
-		addComponent(this.txt_numero_folio_real, 3, 4, 5, 4);
+		grid_caracteristica.addComponent(this.txt_numero_ruat, 0, 3, 2, 3);
+		grid_caracteristica.addComponent(this.txt_numero_folio_real, 3, 3, 5, 3);
 		
-		addComponent(this.txt_numero_poliza_seguro, 0, 5, 2, 5);
-		addComponent(this.txt_vencimiento_seguro, 3, 5, 5, 5);
+		grid_caracteristica.addComponent(this.txt_numero_poliza_seguro, 0, 4, 2, 4);
+		grid_caracteristica.addComponent(this.txt_vencimiento_seguro, 3, 4, 5, 4);
 		
-		addComponent(this.txt_numero_contrato_mantenimiento, 0, 6, 2, 6);
-		addComponent(this.txt_vcto_contrato_mantenimientno, 3, 6, 5, 6);
+		grid_caracteristica.addComponent(this.txt_numero_contrato_mantenimiento, 0, 5, 2, 5);
+		grid_caracteristica.addComponent(this.txt_vcto_contrato_mantenimientno, 3, 5, 5, 5);
 		
-		addComponent(this.frm_imagen, 6, 0, 6, 6);
+		final Panel pn_caracteristicas = new Panel();
+		grid_caracteristica.setSizeFull();
+		grid_caracteristica.setMargin(true);
+		pn_caracteristicas.setContent(grid_caracteristica);
+		addComponent(pn_caracteristicas, 0, 1, 5, 5);
 		
+		grid_imagen.addComponent(this.frm_imagen, 0, 0);
+		
+		final Panel pn_imagen = new Panel();
+		pn_imagen.setContent(grid_imagen);
+		grid_imagen.setMargin(true);
+		grid_imagen.setSizeFull();
+		pn_imagen.setSizeFull();
+		addComponent(pn_imagen, 6, 0, 6, 6);
 	}
 }
