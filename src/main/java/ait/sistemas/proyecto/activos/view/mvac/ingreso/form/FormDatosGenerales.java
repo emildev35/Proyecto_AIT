@@ -4,12 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
+import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
+import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
+import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.model.Tipos_Activo;
+import ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel;
+import ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TiposactImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.EmptyValueException;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -28,11 +42,12 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class FormDatosGenerales extends GridLayout implements ClickListener {
+public class FormDatosGenerales extends GridLayout implements ClickListener, ValueChangeListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -60,6 +75,13 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 	
 	private final TiposactImpl tipoactimpl = new TiposactImpl();
 	private final GrupoImpl grupocontableimpl = new GrupoImpl();
+	private final AuxiliarImpl auxcontableimpl = new AuxiliarImpl();
+	private final FuenteImpl fuente_financiamientoimpl = new FuenteImpl();
+	private final OrganismoImpl organismo_financiadorimpl = new OrganismoImpl();
+	private final InmuebleImpl inmuebleimpl = new InmuebleImpl();
+	private final UbicacionImpl ubicacionimpl = new UbicacionImpl();
+	
+	private SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
@@ -94,9 +116,12 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<Double>((double) 0));
 		pitmDatosGenerales.addItemProperty("tipo_cambio", new ObjectProperty<Double>((double) 0));
 		pitmDatosGenerales.addItemProperty("vida_util", new ObjectProperty<Integer>(0));
-		pitmDatosGenerales.addItemProperty("grupo_contable", new ObjectProperty<Short>((short) 0));
-		pitmDatosGenerales.addItemProperty("auxiliar_contable", new ObjectProperty<Short>((short) 0));
-		pitmDatosGenerales.addItemProperty("fuente_financiamiento", new ObjectProperty<Short>((short) 0));
+		pitmDatosGenerales.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(
+				new GruposContablesModel()));
+		pitmDatosGenerales.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
+				new AuxiliaresContablesModel()));
+		pitmDatosGenerales.addItemProperty("fuente_financiamiento",
+				new ObjectProperty<Fuentes_Financiamiento>(new Fuentes_Financiamiento()));
 		pitmDatosGenerales.addItemProperty("organismo_financiador", new ObjectProperty<Short>((short) 0));
 		pitmDatosGenerales.addItemProperty("ubicacion_fisica", new ObjectProperty<Short>((short) 0));
 		pitmDatosGenerales.addItemProperty("inmueble", new ObjectProperty<Short>((short) 0));
@@ -120,47 +145,39 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 		binderDatosGeneraler.bind(this.dtf_fecha_incorparacion, "fecha_incorporacion");
 		
 		this.cb_tipo_activo.setRequired(true);
-		// this.cb_tipo_activo.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.cb_tipo_activo.addValidator(new NullValidator("", false));
 		this.txt_codigo_activo.setRequired(true);
-		// this.txt_codigo_activo.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.txt_codigo_activo.addValidator(new NullValidator("", false));
 		this.txt_nombre_activo.setRequired(true);
-		// this.txt_nombre_activo.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.txt_nombre_activo.addValidator(new NullValidator("", false));
 		this.dtf_fecha_compra.setRequired(true);
-		// this.dtf_fecha_compra.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.dtf_fecha_compra.addValidator(new NullValidator("", false));
 		this.txt_valor_compra.setRequired(true);
-		// this.txt_valor_compra.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.txt_valor_compra.addValidator(new NullValidator("", false));
 		this.txt_tipo_cambio.setRequired(true);
-		// this.txt_tipo_cambio.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.txt_tipo_cambio.addValidator(new NullValidator("", false));
 		this.txt_vida_util.setRequired(true);
-		// this.txt_vida_util.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.txt_vida_util.addValidator(new NullValidator("", false));
 		this.cb_grupo_contable.setRequired(true);
-		// this.cb_grupo_contable.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.cb_grupo_contable.addValidator(new NullValidator("", false));
 		this.cb_auxiliar_contable.setRequired(true);
-		// this.cb_auxiliar_contable.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.cb_auxiliar_contable.addValidator(new NullValidator("", false));
 		this.cb_fuente_financiamiento.setRequired(true);
-		// this.cb_fuente_financiamiento.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.cb_fuente_financiamiento.addValidator(new NullValidator("", false));
 		this.cb_ubicacion_fisica.setRequired(true);
-		// this.cb_ubicacion_fisica.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.cb_ubicacion_fisica.addValidator(new NullValidator("", false));
 		this.cb_inmueble.setRequired(true);
-		// this.cb_inmueble.setRequiredError(Messages.EMPTY_MESSAGE);
 		this.cb_inmueble.addValidator(new NullValidator("", false));
+		
+		this.cb_grupo_contable.addValueChangeListener(this);
+		this.cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
+		
 		buildForm();
 		Responsive.makeResponsive(this);
 	}
 	
 	private void buildForm() {
-		this.binderDatosGeneraler.clear();
+		clean();
 		
 		addComponent(this.cb_tipo_activo, 0, 0, 1, 0);
 		addComponent(this.txt_codigo_activo, 2, 0);
@@ -170,10 +187,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 		addComponent(this.dtf_fecha_compra, 0, 2);
 		addComponent(this.txt_valor_compra, 1, 2);
 		addComponent(this.txt_tipo_cambio, 2, 2);
-		addComponent(this.txt_vida_util, 3, 2);
 		
 		addComponent(this.cb_grupo_contable, 0, 3, 1, 3);
 		addComponent(this.cb_auxiliar_contable, 2, 3, 3, 3);
+		addComponent(this.txt_vida_util, 4, 3);
 		
 		addComponent(this.cb_fuente_financiamiento, 0, 4, 1, 4);
 		addComponent(this.cb_organismo_financiador, 2, 4, 3, 4);
@@ -182,9 +199,20 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 		addComponent(this.cb_inmueble, 2, 5, 3, 5);
 		addComponent(this.dtf_fecha_incorparacion, 4, 5);
 		buildcbTipoActivo();
+		buildcbGrupoContables();
+		buildcbFuenteFinanciamiento();
+		buildcbOrganismoFinanciador();
+		buildcbInmueble(); 
+		buildcbUbicacionesFisicas();
 		
 	}
 	
+	private void clean(){
+		this.binderDatosGeneraler.clear();
+		this.txt_tipo_cambio.setValue("0,0");
+		this.txt_valor_compra.setValue("0,0");
+		this.txt_vida_util.setValue("0");
+	}
 	private void buildcbTipoActivo() {
 		this.cb_tipo_activo.removeAllItems();
 		this.cb_tipo_activo.setNullSelectionAllowed(false);
@@ -196,6 +224,66 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 		}
 	}
 	
+	private void buildcbGrupoContables() {
+		this.cb_grupo_contable.removeAllItems();
+		this.cb_grupo_contable.setNullSelectionAllowed(false);
+		this.cb_grupo_contable.setInputPrompt("Seleccione un Grupo Contable");
+		for (GruposContablesModel grupo_contable : this.grupocontableimpl.getalls()) {
+			cb_grupo_contable.addItem(grupo_contable);
+			cb_grupo_contable.setItemCaption(grupo_contable, grupo_contable.getGRC_Nombre_Grupo_Contable());
+		}
+	}
+	
+	private void buildcbFuenteFinanciamiento() {
+		this.cb_fuente_financiamiento.removeAllItems();
+		this.cb_fuente_financiamiento.setNullSelectionAllowed(false);
+		this.cb_fuente_financiamiento.setInputPrompt("Seleccione una Fuente de Financiamiento");
+		for (Fuentes_Financiamiento fuente_financiamiento : this.fuente_financiamientoimpl.getall()) {
+			cb_fuente_financiamiento.addItem(fuente_financiamiento);
+			cb_fuente_financiamiento.setItemCaption(fuente_financiamiento,
+					fuente_financiamiento.getFFI_Nombre_Fuente_Financiamiento());
+		}
+	}
+	private void buildcbOrganismoFinanciador() {
+		this.cb_organismo_financiador.removeAllItems();
+		this.cb_organismo_financiador.setNullSelectionAllowed(false);
+		this.cb_organismo_financiador.setInputPrompt("Seleccione un Organismo Financiador");
+		for (Organismo_Financiador organismo_financiador : this.organismo_financiadorimpl.getall()) {
+			cb_organismo_financiador.addItem(organismo_financiador);
+			cb_organismo_financiador.setItemCaption(organismo_financiador,
+					organismo_financiador.getORF_Nombre_Organismo_Financiador());
+		}
+	}
+	private void buildcbAxiliaresContables(String grc_Grupo_Contable) {
+		this.cb_auxiliar_contable.removeAllItems();
+		this.cb_auxiliar_contable.setNullSelectionAllowed(false);
+		this.cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
+		for (AuxiliaresContablesModel aux_contable : this.auxcontableimpl.getreporte(grc_Grupo_Contable)) {
+			cb_auxiliar_contable.addItem(aux_contable);
+			cb_auxiliar_contable.setItemCaption(aux_contable, aux_contable.getAUC_Nombre_Auxiliar_Contable());
+		}
+	}
+	private void buildcbInmueble() {
+	
+		this.cb_inmueble.removeAllItems();
+		this.cb_inmueble.setNullSelectionAllowed(false);
+		this.cb_inmueble.setInputPrompt("Seleccione un Inmueble");
+		for (InmuebleModel inmueble : this.inmuebleimpl.getalls(this.session.getId_dependecia())) {
+			cb_inmueble.addItem(inmueble);
+			cb_inmueble.setItemCaption(inmueble,
+					inmueble.getINM_Nombre_Inmueble());
+		}
+	}
+	private void buildcbUbicacionesFisicas() {
+		this.cb_ubicacion_fisica.removeAllItems();
+		this.cb_ubicacion_fisica.setNullSelectionAllowed(false);
+		this.cb_ubicacion_fisica.setInputPrompt("Seleccione una Ubicacion Fisicica");
+		for (UbicacionesFisicasModel ubicacion_fisica : this.ubicacionimpl.getalls(this.session.getId_dependecia())) {
+			cb_ubicacion_fisica.addItem(ubicacion_fisica);
+			cb_ubicacion_fisica.setItemCaption(ubicacion_fisica,
+					ubicacion_fisica.getUBF_Nombre_Ubicacion_Fisica());
+		}
+	}
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_guardar_datos_generales);
@@ -347,9 +435,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
 			this.mensajes = new ArrayList<BarMessage>();
-			if(validate()){
+			if (validate()) {
 				
-			}else{
+			} else {
 				father.addComponent(buildMessages());
 			}
 		}
@@ -360,5 +448,16 @@ public class FormDatosGenerales extends GridLayout implements ClickListener {
 			
 		}
 	}
+	
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		if (this.cb_grupo_contable.getValue() != null
+				&& event.getProperty().getValue() == this.cb_grupo_contable.getValue()) {
+			GruposContablesModel grupo_contable = (GruposContablesModel) this.cb_grupo_contable.getValue();
+			buildcbAxiliaresContables(grupo_contable.getGRC_Grupo_Contable());
+			this.txt_vida_util.setValue(String.valueOf(grupo_contable.getGRC_Vida_Util()));
+		}
+	}
+	
 	
 }

@@ -22,6 +22,7 @@ public class AuxiliaresContablesModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String AUC_Grupo_Contable_ID;
+	
 	private String AUC_Grupo_Contable;
 
 	@Id
