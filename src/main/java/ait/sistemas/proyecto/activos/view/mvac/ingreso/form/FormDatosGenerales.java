@@ -1,9 +1,11 @@
 package ait.sistemas.proyecto.activos.view.mvac.ingreso.form;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
@@ -11,6 +13,7 @@ import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.model.Tipos_Activo;
 import ait.sistemas.proyecto.activos.data.model_rrhh.InmuebleModel;
 import ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
@@ -68,7 +71,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public ComboBox cb_organismo_financiador = new ComboBox("Organismo Financiador");
 	public ComboBox cb_ubicacion_fisica = new ComboBox("Ubicacion Fisica");
 	public ComboBox cb_inmueble = new ComboBox("Inmueble");
-	public DateField dtf_fecha_incorparacion = new DateField("Fecha Como Dato");
+	public DateField dtf_fecha_comodato = new DateField("Fecha Como Dato");
 	
 	final PropertysetItem pitmDatosGenerales = new PropertysetItem();
 	private FieldGroup binderDatosGeneraler;
@@ -80,8 +83,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	private final OrganismoImpl organismo_financiadorimpl = new OrganismoImpl();
 	private final InmuebleImpl inmuebleimpl = new InmuebleImpl();
 	private final UbicacionImpl ubicacionimpl = new UbicacionImpl();
-	
-	private SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
+	private final ActivoImpl activoimpl = new ActivoImpl();
+	private SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
@@ -107,14 +110,15 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.cb_organismo_financiador.setWidth("90%");
 		this.cb_ubicacion_fisica.setWidth("90%");
 		this.cb_inmueble.setWidth("90%");
-		this.dtf_fecha_incorparacion.setWidth("90%");
+		this.dtf_fecha_comodato.setWidth("90%");
 		
 		pitmDatosGenerales.addItemProperty("codigo", new ObjectProperty<String>(""));
-		pitmDatosGenerales.addItemProperty("tipo_activo", new ObjectProperty<Short>((short) 0));
+		pitmDatosGenerales.addItemProperty("tipo_activo",
+				new ObjectProperty<Tipos_Activo>(new Tipos_Activo()));
 		pitmDatosGenerales.addItemProperty("nombre_activo", new ObjectProperty<String>(""));
 		pitmDatosGenerales.addItemProperty("fecha_compra", new ObjectProperty<Date>(new Date()));
-		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<Double>((double) 0));
-		pitmDatosGenerales.addItemProperty("tipo_cambio", new ObjectProperty<Double>((double) 0));
+		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
+		pitmDatosGenerales.addItemProperty("tipo_cambio", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
 		pitmDatosGenerales.addItemProperty("vida_util", new ObjectProperty<Integer>(0));
 		pitmDatosGenerales.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(
 				new GruposContablesModel()));
@@ -122,9 +126,12 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				new AuxiliaresContablesModel()));
 		pitmDatosGenerales.addItemProperty("fuente_financiamiento",
 				new ObjectProperty<Fuentes_Financiamiento>(new Fuentes_Financiamiento()));
-		pitmDatosGenerales.addItemProperty("organismo_financiador", new ObjectProperty<Short>((short) 0));
-		pitmDatosGenerales.addItemProperty("ubicacion_fisica", new ObjectProperty<Short>((short) 0));
-		pitmDatosGenerales.addItemProperty("inmueble", new ObjectProperty<Short>((short) 0));
+		pitmDatosGenerales.addItemProperty("organismo_financiador",
+				new ObjectProperty<Organismo_Financiador>(new Organismo_Financiador()));
+		pitmDatosGenerales.addItemProperty("ubicacion_fisica", new ObjectProperty<UbicacionesFisicasModel>(
+				new UbicacionesFisicasModel()));
+		pitmDatosGenerales
+				.addItemProperty("inmueble", new ObjectProperty<InmuebleModel>(new InmuebleModel()));
 		pitmDatosGenerales.addItemProperty("fecha_incorporacion", new ObjectProperty<Date>(new Date()));
 		
 		this.binderDatosGeneraler = new FieldGroup(pitmDatosGenerales);
@@ -142,7 +149,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		binderDatosGeneraler.bind(this.cb_organismo_financiador, "organismo_financiador");
 		binderDatosGeneraler.bind(this.cb_ubicacion_fisica, "ubicacion_fisica");
 		binderDatosGeneraler.bind(this.cb_inmueble, "inmueble");
-		binderDatosGeneraler.bind(this.dtf_fecha_incorparacion, "fecha_incorporacion");
+		binderDatosGeneraler.bind(this.dtf_fecha_comodato, "fecha_incorporacion");
 		
 		this.cb_tipo_activo.setRequired(true);
 		this.cb_tipo_activo.addValidator(new NullValidator("", false));
@@ -171,6 +178,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		
 		this.cb_grupo_contable.addValueChangeListener(this);
 		this.cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
+		this.cb_inmueble.addValueChangeListener(this);
+		this.cb_ubicacion_fisica.setInputPrompt("Seleccione una Ubicacion Física");
 		
 		buildForm();
 		Responsive.makeResponsive(this);
@@ -195,32 +204,37 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		addComponent(this.cb_fuente_financiamiento, 0, 4, 1, 4);
 		addComponent(this.cb_organismo_financiador, 2, 4, 3, 4);
 		
-		addComponent(this.cb_ubicacion_fisica, 0, 5, 1, 5);
-		addComponent(this.cb_inmueble, 2, 5, 3, 5);
-		addComponent(this.dtf_fecha_incorparacion, 4, 5);
+		addComponent(this.cb_inmueble, 0, 5, 1, 5);
+		addComponent(this.cb_ubicacion_fisica, 2, 5, 3, 5);
+		addComponent(this.dtf_fecha_comodato, 4, 5);
+		
+		buildtxtIdActivo();
 		buildcbTipoActivo();
 		buildcbGrupoContables();
 		buildcbFuenteFinanciamiento();
 		buildcbOrganismoFinanciador();
-		buildcbInmueble(); 
-		buildcbUbicacionesFisicas();
+		buildcbInmueble();
 		
 	}
 	
-	private void clean(){
+	private void buildtxtIdActivo() {
+		this.txt_codigo_activo.setValue(String.valueOf(activoimpl.getIdAcivo(session.getId_dependecia())));
+	}
+	
+	private void clean() {
 		this.binderDatosGeneraler.clear();
 		this.txt_tipo_cambio.setValue("0,0");
 		this.txt_valor_compra.setValue("0,0");
 		this.txt_vida_util.setValue("0");
 	}
+	
 	private void buildcbTipoActivo() {
 		this.cb_tipo_activo.removeAllItems();
 		this.cb_tipo_activo.setNullSelectionAllowed(false);
 		this.cb_tipo_activo.setInputPrompt("Seleccione un Tipo de Activo");
 		for (Tipos_Activo tipo_activo : this.tipoactimpl.getall()) {
-			cb_tipo_activo.addItem(tipo_activo.getTAC_Id_Tipo_Activo());
-			cb_tipo_activo.setItemCaption(tipo_activo.getTAC_Id_Tipo_Activo(),
-					tipo_activo.getTAC_Nombre_Tipo_Activo());
+			cb_tipo_activo.addItem(tipo_activo);
+			cb_tipo_activo.setItemCaption(tipo_activo, tipo_activo.getTAC_Nombre_Tipo_Activo());
 		}
 	}
 	
@@ -244,6 +258,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 					fuente_financiamiento.getFFI_Nombre_Fuente_Financiamiento());
 		}
 	}
+	
 	private void buildcbOrganismoFinanciador() {
 		this.cb_organismo_financiador.removeAllItems();
 		this.cb_organismo_financiador.setNullSelectionAllowed(false);
@@ -254,6 +269,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 					organismo_financiador.getORF_Nombre_Organismo_Financiador());
 		}
 	}
+	
 	private void buildcbAxiliaresContables(String grc_Grupo_Contable) {
 		this.cb_auxiliar_contable.removeAllItems();
 		this.cb_auxiliar_contable.setNullSelectionAllowed(false);
@@ -263,27 +279,29 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			cb_auxiliar_contable.setItemCaption(aux_contable, aux_contable.getAUC_Nombre_Auxiliar_Contable());
 		}
 	}
-	private void buildcbInmueble() {
 	
+	private void buildcbInmueble() {
+		
 		this.cb_inmueble.removeAllItems();
 		this.cb_inmueble.setNullSelectionAllowed(false);
 		this.cb_inmueble.setInputPrompt("Seleccione un Inmueble");
 		for (InmuebleModel inmueble : this.inmuebleimpl.getalls(this.session.getId_dependecia())) {
 			cb_inmueble.addItem(inmueble);
-			cb_inmueble.setItemCaption(inmueble,
-					inmueble.getINM_Nombre_Inmueble());
+			cb_inmueble.setItemCaption(inmueble, inmueble.getINM_Nombre_Inmueble());
 		}
 	}
-	private void buildcbUbicacionesFisicas() {
+	
+	private void buildcbUbicacionesFisicas(short id_inmueble) {
 		this.cb_ubicacion_fisica.removeAllItems();
 		this.cb_ubicacion_fisica.setNullSelectionAllowed(false);
-		this.cb_ubicacion_fisica.setInputPrompt("Seleccione una Ubicacion Fisicica");
-		for (UbicacionesFisicasModel ubicacion_fisica : this.ubicacionimpl.getalls(this.session.getId_dependecia())) {
+		this.cb_ubicacion_fisica.setInputPrompt("Seleccione una Ubicacion Física");
+		for (UbicacionesFisicasModel ubicacion_fisica : this.ubicacionimpl.getbyInmueble(id_inmueble)) {
 			cb_ubicacion_fisica.addItem(ubicacion_fisica);
 			cb_ubicacion_fisica.setItemCaption(ubicacion_fisica,
 					ubicacion_fisica.getUBF_Nombre_Ubicacion_Fisica());
 		}
 	}
+	
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_guardar_datos_generales);
@@ -419,12 +437,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				this.mensajes.add(new BarMessage(cb_inmueble.getCaption(), ive.getMessage()));
 			}
 			try {
-				this.dtf_fecha_incorparacion.validate();
+				this.dtf_fecha_comodato.validate();
 			} catch (EmptyValueException eve) {
-				this.mensajes
-						.add(new BarMessage(dtf_fecha_incorparacion.getCaption(), Messages.EMPTY_MESSAGE));
+				this.mensajes.add(new BarMessage(dtf_fecha_comodato.getCaption(), Messages.EMPTY_MESSAGE));
 			} catch (InvalidValueException ive) {
-				this.mensajes.add(new BarMessage(dtf_fecha_incorparacion.getCaption(), ive.getMessage()));
+				this.mensajes.add(new BarMessage(dtf_fecha_comodato.getCaption(), ive.getMessage()));
 			}
 			return false;
 			
@@ -433,9 +450,41 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
+		this.mensajes = new ArrayList<BarMessage>();
 		if (event.getButton() == this.btn_guardar) {
-			this.mensajes = new ArrayList<BarMessage>();
 			if (validate()) {
+				
+				DatosGeneralesActivos datos_generales = new DatosGeneralesActivos();
+				datos_generales.setTipo_activo(((Tipos_Activo) cb_tipo_activo.getValue())
+						.getTAC_Id_Tipo_Activo());
+				datos_generales.setId_dependencia(session.getId_dependecia());
+				datos_generales.setNombre_activo(this.txt_nombre_activo.getValue());
+				datos_generales.setId_activo(Long.parseLong(this.txt_codigo_activo.getValue()));
+				datos_generales
+						.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
+				datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue()));
+				datos_generales.setTipo_cambio(new BigDecimal(txt_tipo_cambio.getValue()));
+				datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue())
+						.getGRC_Grupo_Contable());
+				datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable
+						.getValue()).getAUC_Auxiliar_Contable());
+				datos_generales.setVida_util(Integer.parseInt(txt_vida_util.getValue()));
+				datos_generales
+						.setId_fuente_financiamiento(((Fuentes_Financiamiento) cb_fuente_financiamiento
+								.getValue()).getFFI_Fuente_Financiamiento());
+				datos_generales
+						.setId_organimismo_financiador(((Organismo_Financiador) cb_organismo_financiador
+								.getValue()).getORF_Organismo_Financiador());
+				datos_generales.setId_ubicacion_fisica(((UbicacionesFisicasModel) cb_ubicacion_fisica
+						.getValue()).getUBF_Ubicacion_Fisica());
+				datos_generales.setFecha_como_dato(new java.sql.Date(this.dtf_fecha_comodato.getValue()
+						.getTime()));
+				
+				if (activoimpl.add(datos_generales)) {
+					Notification.show(Messages.SUCCESS_MESSAGE);
+				} else {
+					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+				}
 				
 			} else {
 				father.addComponent(buildMessages());
@@ -457,7 +506,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			buildcbAxiliaresContables(grupo_contable.getGRC_Grupo_Contable());
 			this.txt_vida_util.setValue(String.valueOf(grupo_contable.getGRC_Vida_Util()));
 		}
+		if (this.cb_inmueble.getValue() != null
+				&& event.getProperty().getValue() == this.cb_inmueble.getValue()) {
+			InmuebleModel inmueble = (InmuebleModel) this.cb_inmueble.getValue();
+			buildcbUbicacionesFisicas(inmueble.getINM_Inmueble());
+		}
 	}
-	
 	
 }

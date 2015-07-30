@@ -9,7 +9,6 @@ import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
@@ -24,7 +23,6 @@ public class VActivoA extends VerticalLayout implements View{
 	private FormComponentes frm_componentes = new FormComponentes();
 	private FormDocumentos frm_documentos = new FormDocumentos();
 	
-	private CssLayout mensages;
 	
 	public VActivoA() {
 		setWidth("100%");
