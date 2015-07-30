@@ -73,7 +73,7 @@ public class Activos implements Serializable {
 
 	private short ACT_Organismo_Financiador;
 
-	private int ACT_NIT_Proveedor;
+	private String ACT_NIT_Proveedor;
 
 	private short ACT_Tipo_Activo;
 
@@ -295,11 +295,11 @@ public class Activos implements Serializable {
 		this.ACT_Organismo_Financiador = ACT_Organismo_Financiador;
 	}
 
-	public int getACT_NIT_Proveedor() {
+	public String getACT_NIT_Proveedor() {
 		return this.ACT_NIT_Proveedor;
 	}
 
-	public void setACT_NIT_Proveedor(int ACT_NIT_Proveedor) {
+	public void setACT_NIT_Proveedor(String ACT_NIT_Proveedor) {
 		this.ACT_NIT_Proveedor = ACT_NIT_Proveedor;
 	}
 
