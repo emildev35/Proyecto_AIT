@@ -9,19 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
 /**
  * The persistent class for the Activos database table.
  * 
  */
 @Entity
-@Table(name="Activos")
-@NamedQuery(name="Activos.findAll", query="SELECT a FROM Activos a")
+@Table(name = "Activos")
+@NamedQuery(name = "Activos.findAll", query = "SELECT a FROM Activos a")
 public class Activos implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private short ACT_Dependencia;
-	
+
 	@Id
 	private String ACT_Codigo_Activo;
 
@@ -87,18 +86,23 @@ public class Activos implements Serializable {
 
 	private int ACT_Vida_Util;
 
+	private String ACT_Marca;
+
 	public Activos() {
 	}
 
 	public short getACT_Dependencia() {
 		return this.ACT_Dependencia;
 	}
+
 	public void setACT_Dependencia(short ACT_Dependencia) {
 		this.ACT_Dependencia = ACT_Dependencia;
 	}
+
 	public String getACT_Codigo_Activo() {
 		return this.ACT_Codigo_Activo;
 	}
+
 	public void setACT_Codigo_Activo(String ACT_Codigo_Activo) {
 		this.ACT_Codigo_Activo = ACT_Codigo_Activo;
 	}
@@ -349,6 +353,14 @@ public class Activos implements Serializable {
 
 	public void setACT_Vida_Util(int ACT_Vida_Util) {
 		this.ACT_Vida_Util = ACT_Vida_Util;
+	}
+
+	public String getACT_Marca() {
+		return ACT_Marca;
+	}
+
+	public void setACT_Marca(String aCT_Marca) {
+		ACT_Marca = aCT_Marca;
 	}
 
 }

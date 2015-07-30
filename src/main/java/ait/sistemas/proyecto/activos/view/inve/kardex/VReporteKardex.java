@@ -1,8 +1,10 @@
 package ait.sistemas.proyecto.activos.view.inve.kardex;
 
-	import java.util.List;
+	import java.math.BigDecimal;
+import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
+import ait.sistemas.proyecto.activos.data.model.ActivosModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.cdi.CDIView;
@@ -30,7 +32,7 @@ import com.vaadin.ui.VerticalLayout;
 		private FormReporte frmReporte = new FormReporte();
 		private String[][] data;
 		int r = 0;
-		private final GrupoImpl grupo_impl = new GrupoImpl();
+		private final ActivoImpl activo_impl = new ActivoImpl();
 		private CssLayout hl_errores = new CssLayout();
 		public VReporteKardex() {
 
@@ -82,7 +84,48 @@ import com.vaadin.ui.VerticalLayout;
 			// TODO Auto-generated method stub
 
 		}
-
+		public String[][] getData() {
+			
+			List<ActivosModel> lista = activo_impl.getall((BigDecimal) this.frmReporte.cb_Activos.getValue());
+			
+			this.data = new String[lista.size()][6];
+			this.r = 0;
+			for (ActivosModel activos : lista) {
+				String fullname_empelado = String.format("%s %s %s",
+						activos.getACT_Nombre_Empleado(),
+						activos.getACT_APaterno_Empleado(),
+						activos.getACT_AMaterno_Empleado()
+						);
+				String[] row = { 
+						activos.getACT_Codigo_Activo(), 
+						activos.getACT_Nombre_Activo(),
+						activos.getACT_No_Serie(),
+						activos.getACT_Grupo_Contable(),
+						activos.getACT_Auxiliar_Contable(),
+					String.valueOf(activos.getACT_Vida_Util()),
+						activos.getACT_Partidas_Presupuestarias(),
+						activos.getACT_Fuente_Financiamiento(),
+						activos.getACT_Organismo_Financiador(),
+						activos.getACT_Nombre_Proveedor(),
+						activos.getACT_Marca(),
+					String.valueOf(activos.getACT_Fecha_Compra()),
+					String.valueOf(	activos.getACT_Tipo_Cambio()),
+					String.valueOf(activos.getACT_Valor()),
+					String.valueOf(activos.getACT_No_Comprobante_Gasto()),
+						activos.getACT_No_Folio_Real(),
+						activos.getACT_No_RUAT(),
+						activos.getACT_No_Poliza_Seguro(),
+						activos.getACT_No_Contrato_Mantenimiento(),
+					String.valueOf(activos.getACT_Fecha_Vencimiento_Mantenimiento()),
+						activos.getACT_Inmueble(),
+						activos.getACT_Ubicacion_Fisica_Activo(),
+						String.valueOf(activos.getACT_Fecha_Vencimiento_Seguro()),
+						fullname_empelado };
+				this.data[r] = row;
+				this.r++;
+			}
+			return data;
+		}
 	
 		private void buildMessages(List<BarMessage> mensages) {
 			this.hl_errores.removeAllComponents();
@@ -98,12 +141,10 @@ import com.vaadin.ui.VerticalLayout;
 		}
 		@Override
 		public void buttonClick(ClickEvent event) {
-//			if (this.frmReporte.validate()) {
+			if (this.frmReporte.validate()) {
 //				ReportPdf reporte = new ReportPdf();
 //				try {
-//					reporte.getPdf(getData(), this.frmReporte.cbDependencia
-//							.getItemCaption(this.frmReporte.cbDependencia
-//									.getValue()));
+//					reporte.getPdf(getData());
 //					File pdfFile = new File(ReportPdf.SAVE_PATH);
 //
 //					VerticalLayout vl_pdf = new VerticalLayout();
@@ -114,7 +155,7 @@ import com.vaadin.ui.VerticalLayout;
 //					vl_pdf.setSizeFull();
 //					vl_pdf.addComponent(pdf);
 //
-//					Window subWindow = new Window("Reporte Personal");
+//					Window subWindow = new Window("Reporte Kardex");
 //					VerticalLayout subContent = new VerticalLayout();
 //					subContent.setMargin(true);
 //					subWindow.setContent(vl_pdf);
@@ -128,8 +169,8 @@ import com.vaadin.ui.VerticalLayout;
 //				} catch (IOException e) {
 //					e.printStackTrace();
 //				}
-//			}
-//			buildMessages(this.frmReporte.getMessage());
+			}
+			buildMessages(this.frmReporte.getMessage());
 		}
 		
 
