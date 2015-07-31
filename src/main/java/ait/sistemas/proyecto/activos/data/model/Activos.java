@@ -76,7 +76,11 @@ public class Activos implements Serializable {
 
 	private short ACT_Tipo_Activo;
 
-	private BigDecimal ACT_Tipo_Cambio;
+	private BigDecimal ACT_Tipo_Cambio_Dolar;
+	private BigDecimal ACT_Tipo_Cambio_UFV;
+	private BigDecimal ACT_Actualizacion_Acumulada;
+	private BigDecimal ACT_Depresiacion_Acumulada;
+	private BigDecimal ACT_Valor_Gestion_Anterior;
 
 	private int ACT_Ubicacion_Fisica_Activo;
 
@@ -315,12 +319,44 @@ public class Activos implements Serializable {
 		this.ACT_Tipo_Activo = ACT_Tipo_Activo;
 	}
 
-	public BigDecimal getACT_Tipo_Cambio() {
-		return this.ACT_Tipo_Cambio;
+	public BigDecimal getACT_Tipo_Cambio_Dolar() {
+		return this.ACT_Tipo_Cambio_Dolar;
 	}
 
-	public void setACT_Tipo_Cambio(BigDecimal ACT_Tipo_Cambio) {
-		this.ACT_Tipo_Cambio = ACT_Tipo_Cambio;
+	public void setACT_Tipo_Cambio_Dolar(BigDecimal ACT_Tipo_Cambio_Dolar) {
+		this.ACT_Tipo_Cambio_Dolar = ACT_Tipo_Cambio_Dolar;
+	}
+
+	public BigDecimal getACT_Tipo_Cambio_UFV() {
+		return ACT_Tipo_Cambio_UFV;
+	}
+
+	public void setACT_Tipo_Cambio_UFV(BigDecimal aCT_Tipo_Cambio_UFV) {
+		ACT_Tipo_Cambio_UFV = aCT_Tipo_Cambio_UFV;
+	}
+
+	public BigDecimal getACT_Actualizacion_Acumulada() {
+		return ACT_Actualizacion_Acumulada;
+	}
+
+	public void setACT_Actualizacion_Acumulada(BigDecimal aCT_Actualizacion_Acumulada) {
+		ACT_Actualizacion_Acumulada = aCT_Actualizacion_Acumulada;
+	}
+
+	public BigDecimal getACT_Depresiacion_Acumulada() {
+		return ACT_Depresiacion_Acumulada;
+	}
+
+	public void setACT_Depresiacion_Acumulada(BigDecimal aCT_Depresiacion_Acumulada) {
+		ACT_Depresiacion_Acumulada = aCT_Depresiacion_Acumulada;
+	}
+
+	public BigDecimal getACT_Valor_Gestion_Anterior() {
+		return ACT_Valor_Gestion_Anterior;
+	}
+
+	public void setACT_Valor_Gestion_Anterior(BigDecimal aCT_Valor_Gestion_Anterior) {
+		ACT_Valor_Gestion_Anterior = aCT_Valor_Gestion_Anterior;
 	}
 
 	public int getACT_Ubicacion_Fisica_Activo() {

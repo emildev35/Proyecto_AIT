@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto.activos.view.inve.kardex;
 
+import java.util.List;
+
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
@@ -89,7 +91,15 @@ public class KardexBuilder {
         kardex.setFontSizesubtitle(fontSize);
         return this;
     }
-    
+    public KardexBuilder setTextTitleFont(PDFont textFont) {
+        kardex.setTexttitleFont(textFont);
+        return this;
+    }
+
+    public KardexBuilder setFontSizeTextTitle(float fontSize) {
+        kardex.setFontSizetexttitle(fontSize);
+        return this;
+    }
     public KardexBuilder setHeaderSize(int size) {
         kardex.setHeaderSize(size);
         return this;
@@ -110,8 +120,16 @@ public class KardexBuilder {
     	kardex.setDependencia(dependencia);
     	return this;
     }
+    public KardexBuilder setelement(KardexElement[][] elemenos){
+    	kardex.setElemenos(elemenos);
+    	return this;
+    }
     public KardexBuilder setUsuario(String usuario){
     	kardex.setUsuario(usuario);
+    	return this;
+    }
+    public KardexBuilder setrowTitleHeigth(float heigth){
+    	kardex.setRowTitleHeight(heigth);
     	return this;
     }
     public Kardex build() {

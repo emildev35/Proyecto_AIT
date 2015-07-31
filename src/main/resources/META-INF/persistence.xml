@@ -29,7 +29,7 @@
 	<persistence-unit name="AIT-Activos">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>ait.sistemas.proyecto.activos.data.model.Activos</class>
-		<class>ait.sistemas.proyecto.activos.data.model.ActivosPK</class>
+		<class>ait.sistemas.proyecto.activos.data.model.ActivosModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Autorizacione</class>
 		<class>ait.sistemas.proyecto.activos.data.model.AutorizacionePK</class>
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
