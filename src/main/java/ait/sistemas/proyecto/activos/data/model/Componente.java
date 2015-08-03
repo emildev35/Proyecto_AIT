@@ -1,12 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.ComponentePK;
-
 import java.sql.Time;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -19,9 +19,12 @@ import java.sql.Time;
 public class Componente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	@Column(insertable = false, updatable = false)
-	private ComponentePK id;
+	private short COM_Dependencia;
+
+	private String COM_Codigo_Activo;
+
+	@Id
+	private short COM_Id_Componente;
 
 	private String COM_Caracteristica_Componente;
 
@@ -32,14 +35,24 @@ public class Componente implements Serializable {
 	public Componente() {
 	}
 
-	public ComponentePK getId() {
-		return this.id;
+	public short getCOM_Dependencia() {
+		return this.COM_Dependencia;
 	}
-
-	public void setId(ComponentePK id) {
-		this.id = id;
+	public void setCOM_Dependencia(short COM_Dependencia) {
+		this.COM_Dependencia = COM_Dependencia;
 	}
-
+	public String getCOM_Codigo_Activo() {
+		return this.COM_Codigo_Activo;
+	}
+	public void setCOM_Codigo_Activo(String COM_Codigo_Activo) {
+		this.COM_Codigo_Activo = COM_Codigo_Activo;
+	}
+	public short getCOM_Id_Componente() {
+		return this.COM_Id_Componente;
+	}
+	public void setCOM_Id_Componente(short COM_Id_Componente) {
+		this.COM_Id_Componente = COM_Id_Componente;
+	}
 	public String getCOM_Caracteristica_Componente() {
 		return this.COM_Caracteristica_Componente;
 	}

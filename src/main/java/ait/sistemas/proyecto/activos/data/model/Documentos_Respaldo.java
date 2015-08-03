@@ -1,12 +1,11 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.Documentos_RespaldoPK;
-
 import java.sql.Time;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -18,8 +17,12 @@ import java.sql.Time;
 public class Documentos_Respaldo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private Documentos_RespaldoPK id;
+	private short DOR_Dependencia;
+
+	private String DOR_Codigo_Activo;
+	
+	@Id
+	private int DOR_Id_Documento_Respaldo;
 
 	private Time DOR_Fecha_Registro;
 
@@ -30,12 +33,23 @@ public class Documentos_Respaldo implements Serializable {
 	public Documentos_Respaldo() {
 	}
 
-	public Documentos_RespaldoPK getId() {
-		return this.id;
+	public short getDOR_Dependencia() {
+		return this.DOR_Dependencia;
 	}
-
-	public void setId(Documentos_RespaldoPK id) {
-		this.id = id;
+	public void setDOR_Dependencia(short DOR_Dependencia) {
+		this.DOR_Dependencia = DOR_Dependencia;
+	}
+	public String getDOR_Codigo_Activo() {
+		return this.DOR_Codigo_Activo;
+	}
+	public void setDOR_Codigo_Activo(String DOR_Codigo_Activo) {
+		this.DOR_Codigo_Activo = DOR_Codigo_Activo;
+	}
+	public int getDOR_Id_Documento_Respaldo() {
+		return this.DOR_Id_Documento_Respaldo;
+	}
+	public void setDOR_Id_Documento_Respaldo(int DOR_Id_Documento_Respaldo) {
+		this.DOR_Id_Documento_Respaldo = DOR_Id_Documento_Respaldo;
 	}
 
 	public Time getDOR_Fecha_Registro() {

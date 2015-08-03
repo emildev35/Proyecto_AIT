@@ -39,12 +39,12 @@
 		<class>ait.sistemas.proyecto.activos.data.model.C_MovimientoPK</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Ciudade</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
-		<class>ait.sistemas.proyecto.activos.data.model.ComponentePK</class>
+		<class>ait.sistemas.proyecto.activos.data.model.ComponentesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.D_Movimiento</class>
 		<class>ait.sistemas.proyecto.activos.data.model.D_MovimientoPK</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Dependencia</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Documentos_Respaldo</class>
-		<class>ait.sistemas.proyecto.activos.data.model.Documentos_RespaldoPK</class>
+		<class>ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Grupos_Contable</class>
 		<class>ait.sistemas.proyecto.activos.data.model.GruposContablesModel</class>
