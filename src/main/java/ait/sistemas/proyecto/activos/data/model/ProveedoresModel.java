@@ -13,7 +13,7 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "PRV_Dependencia_NIT", column = "PRV_Dependencia_NIT"),
 		@FieldResult(name = "PRV_Dependencia_ID", column = "PRV_Dependencia_ID"),
 		@FieldResult(name = "PRV_Dependencia", column = "PRV_Dependencia"),
-		@FieldResult(name = "PRV_NIT", column = "PRV_NIT"),
+		@FieldResult(name = "PRV_NIT", column = "PRV_NIT_Proveedor"),
 		@FieldResult(name = "PRV_Celular_Contacto", column = "PRV_Celular_Contacto"),
 		@FieldResult(name = "PRV_Domicilio", column = "PRV_Domicilio"),
 		@FieldResult(name = "PRV_Fecha_Registro", column = "PRV_Fecha_Registro"),

@@ -2,14 +2,14 @@ package ait.sistemas.proyecto.activos.component.model;
 
 public class Componente {
 	private String nombre;
-	private String caracteritica;
+	private String caracteristica;
 	
 	public Componente() {
 	}
 	
 	public Componente(String nombre, String caracteritica) {
 		this.nombre = nombre;
-		this.caracteritica = caracteritica;
+		this.caracteristica = caracteritica;
 	}
 	
 	public String getNombre() {
@@ -21,11 +21,11 @@ public class Componente {
 	}
 	
 	public String getCaracteritica() {
-		return caracteritica;
+		return caracteristica;
 	}
 	
 	public void setCaracteritica(String caracteritica) {
-		this.caracteritica = caracteritica;
+		this.caracteristica = caracteritica;
 	}
 	
 }

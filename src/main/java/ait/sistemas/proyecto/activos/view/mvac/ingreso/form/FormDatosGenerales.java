@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
+import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
@@ -21,6 +22,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TiposactImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
+import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
@@ -45,10 +47,9 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.UI;
 
 public class FormDatosGenerales extends GridLayout implements ClickListener, ValueChangeListener {
 	
@@ -88,9 +89,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	VerticalLayout father;
+	VActivoA father;
 	
-	public FormDatosGenerales(VerticalLayout father) {
+	public FormDatosGenerales(VActivoA father) {
 		super(5, 6);
 		setWidth("100%");
 		setMargin(true);
@@ -113,25 +114,23 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.dtf_fecha_comodato.setWidth("90%");
 		
 		pitmDatosGenerales.addItemProperty("codigo", new ObjectProperty<String>(""));
-		pitmDatosGenerales.addItemProperty("tipo_activo",
-				new ObjectProperty<Tipos_Activo>(new Tipos_Activo()));
+		pitmDatosGenerales.addItemProperty("tipo_activo", new ObjectProperty<Tipos_Activo>(new Tipos_Activo()));
 		pitmDatosGenerales.addItemProperty("nombre_activo", new ObjectProperty<String>(""));
 		pitmDatosGenerales.addItemProperty("fecha_compra", new ObjectProperty<Date>(new Date()));
 		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
 		pitmDatosGenerales.addItemProperty("tipo_cambio", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
 		pitmDatosGenerales.addItemProperty("vida_util", new ObjectProperty<Integer>(0));
-		pitmDatosGenerales.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(
-				new GruposContablesModel()));
+		pitmDatosGenerales
+				.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
 		pitmDatosGenerales.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
 				new AuxiliaresContablesModel()));
-		pitmDatosGenerales.addItemProperty("fuente_financiamiento",
-				new ObjectProperty<Fuentes_Financiamiento>(new Fuentes_Financiamiento()));
-		pitmDatosGenerales.addItemProperty("organismo_financiador",
-				new ObjectProperty<Organismo_Financiador>(new Organismo_Financiador()));
+		pitmDatosGenerales.addItemProperty("fuente_financiamiento", new ObjectProperty<Fuentes_Financiamiento>(
+				new Fuentes_Financiamiento()));
+		pitmDatosGenerales.addItemProperty("organismo_financiador", new ObjectProperty<Organismo_Financiador>(
+				new Organismo_Financiador()));
 		pitmDatosGenerales.addItemProperty("ubicacion_fisica", new ObjectProperty<UbicacionesFisicasModel>(
 				new UbicacionesFisicasModel()));
-		pitmDatosGenerales
-				.addItemProperty("inmueble", new ObjectProperty<InmuebleModel>(new InmuebleModel()));
+		pitmDatosGenerales.addItemProperty("inmueble", new ObjectProperty<InmuebleModel>(new InmuebleModel()));
 		pitmDatosGenerales.addItemProperty("fecha_incorporacion", new ObjectProperty<Date>(new Date()));
 		
 		this.binderDatosGeneraler = new FieldGroup(pitmDatosGenerales);
@@ -208,7 +207,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		addComponent(this.cb_ubicacion_fisica, 2, 5, 3, 5);
 		addComponent(this.dtf_fecha_comodato, 4, 5);
 		
-		buildtxtIdActivo();
 		buildcbTipoActivo();
 		buildcbGrupoContables();
 		buildcbFuenteFinanciamiento();
@@ -226,6 +224,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_tipo_cambio.setValue("0,0");
 		this.txt_valor_compra.setValue("0,0");
 		this.txt_vida_util.setValue("0");
+		buildtxtIdActivo();
 	}
 	
 	private void buildcbTipoActivo() {
@@ -297,8 +296,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.cb_ubicacion_fisica.setInputPrompt("Seleccione una Ubicacion Física");
 		for (UbicacionesFisicasModel ubicacion_fisica : this.ubicacionimpl.getbyInmueble(id_inmueble)) {
 			cb_ubicacion_fisica.addItem(ubicacion_fisica);
-			cb_ubicacion_fisica.setItemCaption(ubicacion_fisica,
-					ubicacion_fisica.getUBF_Nombre_Ubicacion_Fisica());
+			cb_ubicacion_fisica.setItemCaption(ubicacion_fisica, ubicacion_fisica.getUBF_Nombre_Ubicacion_Fisica());
 		}
 	}
 	
@@ -409,16 +407,14 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			try {
 				this.cb_fuente_financiamiento.validate();
 			} catch (EmptyValueException eve) {
-				this.mensajes.add(new BarMessage(cb_fuente_financiamiento.getCaption(),
-						Messages.EMPTY_MESSAGE));
+				this.mensajes.add(new BarMessage(cb_fuente_financiamiento.getCaption(), Messages.EMPTY_MESSAGE));
 			} catch (InvalidValueException ive) {
 				this.mensajes.add(new BarMessage(cb_fuente_financiamiento.getCaption(), ive.getMessage()));
 			}
 			try {
 				this.cb_organismo_financiador.validate();
 			} catch (EmptyValueException eve) {
-				this.mensajes.add(new BarMessage(cb_organismo_financiador.getCaption(),
-						Messages.EMPTY_MESSAGE));
+				this.mensajes.add(new BarMessage(cb_organismo_financiador.getCaption(), Messages.EMPTY_MESSAGE));
 			} catch (InvalidValueException ive) {
 				this.mensajes.add(new BarMessage(cb_organismo_financiador.getCaption(), ive.getMessage()));
 			}
@@ -453,61 +449,70 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.mensajes = new ArrayList<BarMessage>();
 		if (event.getButton() == this.btn_guardar) {
 			if (validate()) {
-				
-				DatosGeneralesActivos datos_generales = new DatosGeneralesActivos();
-				datos_generales.setTipo_activo(((Tipos_Activo) cb_tipo_activo.getValue())
-						.getTAC_Id_Tipo_Activo());
-				datos_generales.setId_dependencia(session.getId_dependecia());
-				datos_generales.setNombre_activo(this.txt_nombre_activo.getValue());
-				datos_generales.setId_activo(Long.parseLong(this.txt_codigo_activo.getValue()));
-				datos_generales
-						.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
-				datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue()));
-				datos_generales.setTipo_cambio(new BigDecimal(txt_tipo_cambio.getValue()));
-				datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue())
-						.getGRC_Grupo_Contable());
-				datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable
-						.getValue()).getAUC_Auxiliar_Contable());
-				datos_generales.setVida_util(Integer.parseInt(txt_vida_util.getValue()));
-				datos_generales
-						.setId_fuente_financiamiento(((Fuentes_Financiamiento) cb_fuente_financiamiento
-								.getValue()).getFFI_Fuente_Financiamiento());
-				datos_generales
-						.setId_organimismo_financiador(((Organismo_Financiador) cb_organismo_financiador
-								.getValue()).getORF_Organismo_Financiador());
-				datos_generales.setId_ubicacion_fisica(((UbicacionesFisicasModel) cb_ubicacion_fisica
-						.getValue()).getUBF_Ubicacion_Fisica());
-				datos_generales.setFecha_como_dato(new java.sql.Date(this.dtf_fecha_comodato.getValue()
-						.getTime()));
-				
-				if (activoimpl.add(datos_generales)) {
-					Notification.show(Messages.SUCCESS_MESSAGE);
-				} else {
-					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-				}
-				
+				save();
+				getUI().getSession().setAttribute("activo", null);
+				Notification.show(Messages.SUCCESS_MESSAGE);
+
 			} else {
 				father.addComponent(buildMessages());
 			}
 		}
 		if (event.getButton() == this.btn_guardar_datos_generales) {
-			
+			if (validate()) {
+				save();
+				this.father.tbs_form.setSelectedTab(1);
+				
+			} else {
+				father.addComponent(buildMessages());
+			}
 		}
 		if (event.getButton() == this.btn_salir) {
 			
 		}
 	}
 	
+	public void save() {
+		
+		DatosGeneralesActivos datos_generales = new DatosGeneralesActivos();
+		datos_generales.setTipo_activo(((Tipos_Activo) cb_tipo_activo.getValue()).getTAC_Id_Tipo_Activo());
+		datos_generales.setId_dependencia(session.getId_dependecia());
+		datos_generales.setNombre_activo(this.txt_nombre_activo.getValue());
+		datos_generales.setId_activo(Long.parseLong(this.txt_codigo_activo.getValue()));
+		datos_generales.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
+		datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue()));
+		datos_generales.setTipo_cambio(new BigDecimal(txt_tipo_cambio.getValue()));
+		datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue()).getGRC_Grupo_Contable());
+		datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable.getValue())
+				.getAUC_Auxiliar_Contable());
+		datos_generales.setVida_util(Integer.parseInt(txt_vida_util.getValue()));
+		datos_generales.setId_fuente_financiamiento(((Fuentes_Financiamiento) cb_fuente_financiamiento.getValue())
+				.getFFI_Fuente_Financiamiento());
+		datos_generales.setId_organimismo_financiador(((Organismo_Financiador) cb_organismo_financiador.getValue())
+				.getORF_Organismo_Financiador());
+		datos_generales.setId_ubicacion_fisica(((UbicacionesFisicasModel) cb_ubicacion_fisica.getValue())
+				.getUBF_Ubicacion_Fisica());
+		if (dtf_fecha_comodato.getValue() != null) {
+			datos_generales.setFecha_como_dato(new java.sql.Date(this.dtf_fecha_comodato.getValue().getTime()));
+		}
+		if (activoimpl.add(datos_generales)) {
+			ActivoSession activo_session = new ActivoSession(datos_generales.getId_activo(), datos_generales.getId_dependencia(),
+					datos_generales.getNombre_activo());
+			UI.getCurrent().getSession().setAttribute("activo", activo_session);
+			clean();
+		} else {
+			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+		}
+		
+	}
+	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		if (this.cb_grupo_contable.getValue() != null
-				&& event.getProperty().getValue() == this.cb_grupo_contable.getValue()) {
+		if (this.cb_grupo_contable.getValue() != null && event.getProperty().getValue() == this.cb_grupo_contable.getValue()) {
 			GruposContablesModel grupo_contable = (GruposContablesModel) this.cb_grupo_contable.getValue();
 			buildcbAxiliaresContables(grupo_contable.getGRC_Grupo_Contable());
 			this.txt_vida_util.setValue(String.valueOf(grupo_contable.getGRC_Vida_Util()));
 		}
-		if (this.cb_inmueble.getValue() != null
-				&& event.getProperty().getValue() == this.cb_inmueble.getValue()) {
+		if (this.cb_inmueble.getValue() != null && event.getProperty().getValue() == this.cb_inmueble.getValue()) {
 			InmuebleModel inmueble = (InmuebleModel) this.cb_inmueble.getValue();
 			buildcbUbicacionesFisicas(inmueble.getINM_Inmueble());
 		}
