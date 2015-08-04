@@ -2,10 +2,10 @@ package ait.sistemas.proyecto.activos.view.inve.kardex;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+
+import ait.sistemas.proyecto.common.report.Column;
 
 public class Kardex {
 
@@ -15,6 +15,7 @@ public class Kardex {
 	private PDRectangle pageSize;
 	private boolean isLandscape;
 	private float rowHeight;
+	private float rowTitleHeight;
 	private float sizeofcell;
 	private int headerSize;
 	private PDFont textFont;
@@ -22,24 +23,42 @@ public class Kardex {
 	private PDFont footerFont;
 	private PDFont titleFont;
 	private PDFont subtitleFont;
+	private PDFont texttitleFont;
 	private float fontSize;
 	private float fontSizeheader;
+	private float fontSizetexttitle;
 	private float fontSizefooter;
 	private float fontSizetitle;
 	private float fontSizesubtitle;
 
-	private Integer numberOfRows;
 	private float cellMargin;
 
+	Integer numberOfRows;
 	private String usuario;
 	private String unidad;
 	private String dependencia;
 	private String title;
 	private String subtitle;
-	List<KardexElement> elemenos;
+	
+	private KardexElement[][] elementos;
+	
+	private Integer numberOfRowsComponentes;
+	private List<Column> columns_componentes;
+	private String[][] componentes;
+	private Integer numberOfRowsDocumentos;
+	private List<Column> columns_documentos;
+	private String[][] documentos;
 
 	public Kardex() {
 
+	}
+
+	public Integer getNumberOfRows() {
+		return (numberOfRows + numberOfRowsComponentes + numberOfRowsDocumentos);
+	}
+
+	public void setNumberOfRows(Integer numberOfRows) {
+		this.numberOfRows = numberOfRows;
 	}
 
 	public void setSizeofcell(float sizeofcell) {
@@ -122,6 +141,22 @@ public class Kardex {
 		this.headerFont = headerFont;
 	}
 
+	public float getRowTitleHeight() {
+		return rowTitleHeight;
+	}
+
+	public void setRowTitleHeight(float rowTitleHeight) {
+		this.rowTitleHeight = rowTitleHeight;
+	}
+
+	public KardexElement[][] getElementos() {
+		return elementos;
+	}
+
+	public void setElementos(KardexElement[][] elementos) {
+		this.elementos = elementos;
+	}
+
 	public PDFont getFooterFont() {
 		return footerFont;
 	}
@@ -186,12 +221,21 @@ public class Kardex {
 		this.fontSizesubtitle = fontSizesubtitle;
 	}
 
-	public Integer getNumberOfRows() {
-		return numberOfRows;
+
+	public Integer getNumberOfRowsComponentes() {
+		return numberOfRowsComponentes;
 	}
 
-	public void setNumberOfRows(Integer numberOfRows) {
-		this.numberOfRows = numberOfRows;
+	public void setNumberOfRowsComponentes(Integer numberOfRowsComponentes) {
+		this.numberOfRowsComponentes = numberOfRowsComponentes;
+	}
+
+	public Integer getNumberOfRowsDocumentos() {
+		return numberOfRowsDocumentos;
+	}
+
+	public void setNumberOfRowsDocumentos(Integer numberOfRowsDocumentos) {
+		this.numberOfRowsDocumentos = numberOfRowsDocumentos;
 	}
 
 	public float getCellMargin() {
@@ -242,16 +286,92 @@ public class Kardex {
 		this.subtitle = subtitle;
 	}
 
-	public List<KardexElement> getElemenos() {
-		return elemenos;
+	public KardexElement[][] getElemenos() {
+		return elementos;
 	}
 
-	public void setElemenos(List<KardexElement> elemenos) {
-		this.elemenos = elemenos;
+	public void setElemenos( KardexElement[][] elemenos) {
+		this.elementos = elemenos;
+	}
+
+	public PDFont getTexttitleFont() {
+		return texttitleFont;
+	}
+
+	public void setTexttitleFont(PDFont texttitleFont) {
+		this.texttitleFont = texttitleFont;
+	}
+
+	public float getFontSizetexttitle() {
+		return fontSizetexttitle;
+	}
+
+	public void setFontSizetexttitle(float fontSizetexttitle) {
+		this.fontSizetexttitle = fontSizetexttitle;
+	}
+
+	public float getWidth() {
+		float tableWidth = 0f;
+
+		for (int i = 0; i < elementos.length; i++) {
+			if( this.elementos[0][i] == null){
+				return tableWidth;
+			}
+			tableWidth += this.elementos[0][i].getAncho();
+		}
+		return tableWidth;
 	}
 
 	public float getSizeWidthRow() {
 		return ((this.pageSize.getWidth() - 2 * this.cellMargin) / this.numberofcell);
 	}
 
+	public String[][] getComponentes() {
+		return componentes;
+	}
+
+	public void setComponentes(String[][] componentes) {
+		this.componentes = componentes;
+	}
+
+	public String[][] getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(String[][] documentos) {
+		this.documentos = documentos;
+	}
+
+	public List<Column> getColumns_componentes() {
+		return columns_componentes;
+	}
+
+	public void setColumns_componentes(List<Column> columns_componentes) {
+		this.columns_componentes = columns_componentes;
+	}
+
+	public List<Column> getColumns_documentos() {
+		return columns_documentos;
+	}
+
+	public void setColumns_documentos(List<Column> columns_documentos) {
+		this.columns_documentos = columns_documentos;
+	}
+
+	public String[] getColumnsComponentsNamesAsArray() {
+		 String[] columnNames = new String[columns_componentes.size()];
+	        for (int i = 0; i < columns_componentes.size(); i++) {
+	            columnNames[i] = columns_componentes.get(i).getName();
+	        }
+	        return columnNames;
+	}
+	
+	public String[] getColumnsDocumentsNamesAsArray() {
+		 String[] columnNames = new String[columns_documentos.size()];
+	        for (int i = 0; i < columns_documentos.size(); i++) {
+	            columnNames[i] = columns_documentos.get(i).getName();
+	        }
+	        return columnNames;
+	}
+	
 }

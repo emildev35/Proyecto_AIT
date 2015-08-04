@@ -12,7 +12,9 @@ import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
 import ait.sistemas.proyecto.activos.component.model.Documento;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
-import ait.sistemas.proyecto.activos.data.model.Activos;
+import ait.sistemas.proyecto.activos.data.model.ActivosModel;
+import ait.sistemas.proyecto.activos.data.model.ComponentesModel;
+import ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel;
 
 public class ActivoImpl {
 	private EntityManagerFactory emf;
@@ -32,14 +34,43 @@ public class ActivoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Activos> activos_by_auxiliar(String id_auxiliar) {
-		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", Activos.class);
+	public List<ActivosModel> activos_by_auxiliar(String id_auxiliar) {
+		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
 		query.setParameter(1, id_auxiliar);
-		List<Activos> resultlist = query.getResultList();
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getall(long id_activo) {
+		Query query = em.createNativeQuery("Mvac_Activo_Q " + "@ACT_Codigo_Activo=?1 ", "mapeo-activo");
+		query.setParameter(1, id_activo);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ComponentesModel> getcomponente(long id_activo, short id_dependencia) {
+		Query query = em.createNativeQuery("Mvac_ActivobyComponente " + "@COM_Codigo_Activo=?1, " + "@COM_Dependencia=?2",
+				"mapeo-componente");
+		query.setParameter(1, id_activo);
+		query.setParameter(2, id_dependencia);
+		List<ComponentesModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<DocumentosRespaldoModel> getdocumento(long id_activo, short id_dependencia) {
+		Query query = em.createNativeQuery("Mvac_ActivobyDocumentoRespaldo " + "@DOR_Codigo_Activo=?1," + "@DOR_Dependencia=?2 ",
+				"mapeo-documento");
+		query.setParameter(1, id_activo);
+		query.setParameter(2, id_dependencia);
+		List<DocumentosRespaldoModel> resultlist = query.getResultList();
 		return resultlist;
 	}
 	
 	public boolean add(DatosGeneralesActivos datos_generales) {
+		
 		String str_datos_generales = "EXEC MVAC_INGRESO_A" + " @Id_Activos=?1, " + "@Id_Dependencia=?2, " + "@Nombre_Activo=?3, "
 				+ "@Tipo_Activo=?4, " + "@Fecha_Compra=?5, " + "@Valor=?6, " + "@Tipo_Cambio=?7, " + "@Grupo_Contable=?8, "
 				+ "@Auxiliar_Contable=?9, " + "@Vida_Util=?10, " + "@Fuente_Financiamiento=?11, "
@@ -95,9 +126,7 @@ public class ActivoImpl {
 		}
 		return true;
 	}
-
-
-
+	
 	public boolean addDocumentos(List<Documento> documetnos, ActivoSession sessionactivo) {
 		// TODO Auto-generated method stub
 		final DocumentoRespaldoImpl documentoimpl = new DocumentoRespaldoImpl();
@@ -109,4 +138,5 @@ public class ActivoImpl {
 		}
 		return true;
 	}
+	
 }

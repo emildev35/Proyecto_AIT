@@ -9,19 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
 /**
  * The persistent class for the Activos database table.
  * 
  */
 @Entity
-@Table(name="Activos")
-@NamedQuery(name="Activos.findAll", query="SELECT a FROM Activos a")
+@Table(name = "Activos")
+@NamedQuery(name = "Activos.findAll", query = "SELECT a FROM Activos a")
 public class Activos implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private short ACT_Dependencia;
-	
+
 	@Id
 	private String ACT_Codigo_Activo;
 
@@ -77,7 +76,11 @@ public class Activos implements Serializable {
 
 	private short ACT_Tipo_Activo;
 
-	private BigDecimal ACT_Tipo_Cambio;
+	private BigDecimal ACT_Tipo_Cambio_Dolar;
+	private BigDecimal ACT_Tipo_Cambio_UFV;
+	private BigDecimal ACT_Actualizacion_Acumulada;
+	private BigDecimal ACT_Depresiacion_Acumulada;
+	private BigDecimal ACT_Valor_Gestion_Anterior;
 
 	private int ACT_Ubicacion_Fisica_Activo;
 
@@ -87,18 +90,23 @@ public class Activos implements Serializable {
 
 	private int ACT_Vida_Util;
 
+	private String ACT_Marca;
+
 	public Activos() {
 	}
 
 	public short getACT_Dependencia() {
 		return this.ACT_Dependencia;
 	}
+
 	public void setACT_Dependencia(short ACT_Dependencia) {
 		this.ACT_Dependencia = ACT_Dependencia;
 	}
+
 	public String getACT_Codigo_Activo() {
 		return this.ACT_Codigo_Activo;
 	}
+
 	public void setACT_Codigo_Activo(String ACT_Codigo_Activo) {
 		this.ACT_Codigo_Activo = ACT_Codigo_Activo;
 	}
@@ -311,12 +319,44 @@ public class Activos implements Serializable {
 		this.ACT_Tipo_Activo = ACT_Tipo_Activo;
 	}
 
-	public BigDecimal getACT_Tipo_Cambio() {
-		return this.ACT_Tipo_Cambio;
+	public BigDecimal getACT_Tipo_Cambio_Dolar() {
+		return this.ACT_Tipo_Cambio_Dolar;
 	}
 
-	public void setACT_Tipo_Cambio(BigDecimal ACT_Tipo_Cambio) {
-		this.ACT_Tipo_Cambio = ACT_Tipo_Cambio;
+	public void setACT_Tipo_Cambio_Dolar(BigDecimal ACT_Tipo_Cambio_Dolar) {
+		this.ACT_Tipo_Cambio_Dolar = ACT_Tipo_Cambio_Dolar;
+	}
+
+	public BigDecimal getACT_Tipo_Cambio_UFV() {
+		return ACT_Tipo_Cambio_UFV;
+	}
+
+	public void setACT_Tipo_Cambio_UFV(BigDecimal aCT_Tipo_Cambio_UFV) {
+		ACT_Tipo_Cambio_UFV = aCT_Tipo_Cambio_UFV;
+	}
+
+	public BigDecimal getACT_Actualizacion_Acumulada() {
+		return ACT_Actualizacion_Acumulada;
+	}
+
+	public void setACT_Actualizacion_Acumulada(BigDecimal aCT_Actualizacion_Acumulada) {
+		ACT_Actualizacion_Acumulada = aCT_Actualizacion_Acumulada;
+	}
+
+	public BigDecimal getACT_Depresiacion_Acumulada() {
+		return ACT_Depresiacion_Acumulada;
+	}
+
+	public void setACT_Depresiacion_Acumulada(BigDecimal aCT_Depresiacion_Acumulada) {
+		ACT_Depresiacion_Acumulada = aCT_Depresiacion_Acumulada;
+	}
+
+	public BigDecimal getACT_Valor_Gestion_Anterior() {
+		return ACT_Valor_Gestion_Anterior;
+	}
+
+	public void setACT_Valor_Gestion_Anterior(BigDecimal aCT_Valor_Gestion_Anterior) {
+		ACT_Valor_Gestion_Anterior = aCT_Valor_Gestion_Anterior;
 	}
 
 	public int getACT_Ubicacion_Fisica_Activo() {
@@ -349,6 +389,14 @@ public class Activos implements Serializable {
 
 	public void setACT_Vida_Util(int ACT_Vida_Util) {
 		this.ACT_Vida_Util = ACT_Vida_Util;
+	}
+
+	public String getACT_Marca() {
+		return ACT_Marca;
+	}
+
+	public void setACT_Marca(String aCT_Marca) {
+		ACT_Marca = aCT_Marca;
 	}
 
 }

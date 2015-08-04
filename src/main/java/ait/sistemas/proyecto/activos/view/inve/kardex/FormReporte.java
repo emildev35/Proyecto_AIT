@@ -4,7 +4,7 @@ package ait.sistemas.proyecto.activos.view.inve.kardex;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.Activos;
+import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
@@ -112,11 +112,14 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 		cb_Activos.removeAllItems();
 		cb_Activos.setNullSelectionAllowed(false);
 		cb_Activos.setInputPrompt("Seleccione el Activo");
-		for (Activos activo : activo_impl.activos_by_auxiliar(id_auxiliar))
+		for (ActivosModel activo : activo_impl.activos_by_auxiliar(id_auxiliar))
 		{
 			cb_Activos.addItem(activo.getACT_Codigo_Activo());
 			cb_Activos.setItemCaption(activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo());
 		}
+		String a = "ALL";
+		cb_Activos.addItem(a);
+		cb_Activos.setItemCaption(a, "Todos los Activos");
 	}
 	private void buildContent() {
 		
