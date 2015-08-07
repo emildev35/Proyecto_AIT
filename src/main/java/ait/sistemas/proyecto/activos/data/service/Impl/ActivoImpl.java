@@ -63,8 +63,14 @@ public class ActivoImpl {
 
 
 	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getactivos() {
+		Query query = em.createNativeQuery("Mvac_Activo_Q ", "mapeo-activo");
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getall(long id_activo) {
-		Query query = em.createNativeQuery("Mvac_Activo_Q " + "@ACT_Codigo_Activo=?1 ", "mapeo-activo");
+		Query query = em.createNativeQuery("Mvac_Activo_Cod " + "@ACT_Codigo_Activo=?1 ", "mapeo-activo");
 		query.setParameter(1, id_activo);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
