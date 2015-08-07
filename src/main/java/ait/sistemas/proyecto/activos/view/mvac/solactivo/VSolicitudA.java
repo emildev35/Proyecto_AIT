@@ -53,6 +53,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		Responsive.makeResponsive(this);
 	}
 	
 
@@ -118,8 +119,8 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 			if(this.frm_solicitud.validate()){
 //				this.inmuble_impl.add(this.frm_solicitud.getData());
 //				grid_solicitud.update();
-				this.frm_solicitud.update();
-				this.frm_solicitud.updateId();
+//				this.frm_solicitud.update();
+//				this.frm_solicitud.updateId();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -129,7 +130,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		}
 		if (event.getButton() == this.btn_limpiar) {
 			frm_solicitud.update();
-			this.frm_solicitud.updateId();
+//			this.frm_solicitud.updateId();
 			
 		}
 	}

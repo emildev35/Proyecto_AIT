@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
+import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
+import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
@@ -35,13 +39,14 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	public ComboBox cb_grupo_contable = new ComboBox("Grupo Contable");
 	public ComboBox cb_auxiliar_contable = new ComboBox("Auxiliar Contable");
 	
-	private List<BarMessage> mensajes;
+	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	private DependenciaImpl dependencia_impl = new DependenciaImpl();
-	private InmuebleImpl inmueble_impl = new InmuebleImpl();
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private final GrupoImpl grupoimpl = new GrupoImpl();
+	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
 	public FormSolicitud() {
 		
@@ -51,8 +56,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		
 		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
 		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
-		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<Short>((short) 1));
-		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<String>(""));
+		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
+		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(new AuxiliaresContablesModel()));
 		
 		this.binder_solicitud = new FieldGroup(this.pitm_solicitud);
 		
@@ -71,15 +76,16 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		this.cb_grupo_contable.setRequired(true);
 		this.cb_grupo_contable.addValidator(new NullValidator("No Nulo", false));
 		cb_grupo_contable.setInputPrompt("Seleccione un Grupo Contable");
+		cb_grupo_contable.addValueChangeListener(this);
 		this.cb_auxiliar_contable.setRequired(true);
 		this.cb_auxiliar_contable.addValidator(new NullValidator("No Nulo", false));
 		cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
+		
 		txt_id_solicitud.setWidth("90%");
 		dtf_fecha_soliciud.setWidth("90%");
 		cb_grupo_contable.setWidth("90%");
 		cb_auxiliar_contable.setWidth("90%");
 		
-		updateId();
 		fillcbGrupoContable();
 		buildContent();
 		buildId();
@@ -94,9 +100,17 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private void fillcbGrupoContable() {
 		cb_grupo_contable.setNullSelectionAllowed(false);
 		
-		for (Ciudade ciudad : dependencia_impl.getallsigla()) {
-			cb_grupo_contable.addItem(ciudad.getCIU_Ciudad());
-			cb_grupo_contable.setItemCaption(ciudad.getCIU_Ciudad(), ciudad.getCIU_Nombre_Ciudad());
+		for (GruposContablesModel grupo_contable : grupoimpl.getalls()) {
+			cb_grupo_contable.addItem(grupo_contable);
+			cb_grupo_contable.setItemCaption(grupo_contable, grupo_contable.getGRC_Nombre_Grupo_Contable());
+		}
+	}
+	
+	private void fillcbAuxiliarContable(String id_grupo) {
+		cb_auxiliar_contable.setNullSelectionAllowed(false);
+		for (AuxiliaresContablesModel auxiliar_contable : auxiliarimpl.getreporte(id_grupo)) {
+			cb_auxiliar_contable.addItem(auxiliar_contable);
+			cb_auxiliar_contable.setItemCaption(auxiliar_contable, auxiliar_contable.getAUC_Nombre_Auxiliar_Contable());
 		}
 	}
 	
@@ -127,10 +141,6 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	
 	public void update() {
 		binder_solicitud.clear();
-	}
-	
-	public void updateId() {
-		this.txt_id_solicitud.setValue(inmueble_impl.generateId() + "");
 	}
 	
 	public List<BarMessage> getMensajes() {
@@ -186,6 +196,9 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		// updateId();
+		if (event.getProperty() == cb_grupo_contable && this.cb_grupo_contable.getValue() != null) {
+			GruposContablesModel grupo = (GruposContablesModel) cb_grupo_contable.getValue();
+			fillcbAuxiliarContable(grupo.getGRC_Grupo_Contable());
+		}
 	}
 }
