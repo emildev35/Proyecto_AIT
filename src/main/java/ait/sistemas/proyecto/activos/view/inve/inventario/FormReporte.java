@@ -75,7 +75,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 			cb_Dependencia.addItem(dependencia.getDEP_Dependencia());
 			cb_Dependencia.setItemCaption(dependencia.getDEP_Dependencia(), dependencia.getDEP_Nombre_Dependencia());
 		}
-		String a = "ALL";
+		short a = 0;
 		cb_Dependencia.addItem(a);
 		cb_Dependencia.setItemCaption(a, "Todas las Dependencias");
 	}
