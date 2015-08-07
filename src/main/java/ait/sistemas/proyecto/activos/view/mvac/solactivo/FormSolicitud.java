@@ -24,6 +24,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
 public class FormSolicitud extends GridLayout implements ValueChangeListener {
@@ -44,10 +45,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	
 	public FormSolicitud() {
 		
-		super.setColumns(4);
-		super.setRows(3);
+		super(6, 2);
 		setSpacing(true);
-		setMargin(true);
 		setWidth("100%");
 		
 		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
@@ -102,13 +101,27 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void buildContent() {
-		setColumnExpandRatio(0, 0.5f);
-		setColumnExpandRatio(1, 2);
-		setColumnExpandRatio(2, 1);
-		addComponent(this.txt_id_solicitud, 0, 0);
-		addComponent(this.dtf_fecha_soliciud, 1, 0);
-		addComponent(this.cb_grupo_contable, 1, 1);
-		addComponent(this.cb_auxiliar_contable, 2, 1);
+		
+		Panel pn_solicitud = new Panel("Solicitud de Asignacion de Activos");
+		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
+		
+		GridLayout gridl_solicitud = new GridLayout(2, 1);
+		gridl_solicitud.setSizeFull();
+		gridl_solicitud.setMargin(true);
+		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
+		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
+		pn_solicitud.setContent(gridl_solicitud);
+		
+		this.addComponent(pn_solicitud, 4, 0, 5, 0);
+		
+		GridLayout gridl_activos = new GridLayout(2, 1);
+		gridl_activos.setSizeFull();
+		gridl_activos.setMargin(true);
+		gridl_activos.addComponent(this.cb_grupo_contable, 0, 0);
+		gridl_activos.addComponent(this.cb_auxiliar_contable, 1, 0);
+		pn_activos.setContent(gridl_activos);
+		
+		this.addComponent(pn_activos, 0, 1, 5, 1);
 		
 	}
 	

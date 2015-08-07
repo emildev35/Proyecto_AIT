@@ -72,18 +72,12 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 				
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true	);
-		Panel frmPanel = new Panel();
-		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Datos a registrar");
-		frmPanel.setContent(this.frm_solicitud);
-		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
-		Panel gridPanel = new Panel();
+		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Inmuebles registrados");
 		gridPanel.setContent(this.grid_solicitud);
 		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
+		formContent.addComponent(frm_solicitud);
 		formContent.addComponent(gridPanel);
 		Responsive.makeResponsive(formContent);
 		return formContent;

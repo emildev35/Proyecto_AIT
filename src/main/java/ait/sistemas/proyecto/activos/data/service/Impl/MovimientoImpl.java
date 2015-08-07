@@ -13,10 +13,10 @@ public class MovimientoImpl {
 		this.emf = Persistence.createEntityManagerFactory("AIT-Activos");
 		this.em = emf.createEntityManager();
 	}
-	public int getId(){
+	public long getId(){
 		String str_id = "EXEC Mvac_Generar_Codigo_Movimiento_Q";
 		Query query = this.em.createNativeQuery(str_id);
-		int result = (Integer)query.getSingleResult();
+		long result = (Long)query.getSingleResult();
 		return result;
 	}
 }
