@@ -24,6 +24,9 @@ public class FormImageUpload extends VerticalLayout {
 	}
 	
 	public String getFile() {
-		return reciver.file.getAbsolutePath();
+		if(reciver.file==null){
+			return "";
+		}
+		return reciver.file.getAbsolutePath().equals(null)?"":reciver.file.getAbsolutePath();
 	}
 }

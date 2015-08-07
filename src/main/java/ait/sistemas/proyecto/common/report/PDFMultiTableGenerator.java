@@ -10,10 +10,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
-import com.vaadin.ui.UI;
-
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
-import ait.sistemas.proyecto.seguridad.data.model.UsuarioModel;
+
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("deprecation")
 public class PDFMultiTableGenerator {

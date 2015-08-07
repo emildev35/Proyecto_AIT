@@ -145,5 +145,11 @@ public class ProveedorImpl implements Dao<Proveedore> {
 		List<ProveedoresModel> result = query.getResultList();
 		return result;
 	}
-
+	public List<ProveedoresModel> getByDependencia(short id_dependencia){
+		String str_get_by_dependencia = "EXEC Mant_ProveedorByDependencia @Id_Dependencia=?1";
+		Query query = this.em.createNativeQuery(str_get_by_dependencia, "archive-map-proveedor")
+				.setParameter(1, id_dependencia);
+		List<ProveedoresModel> result = query.getResultList();
+		return result;
+	}
 }
