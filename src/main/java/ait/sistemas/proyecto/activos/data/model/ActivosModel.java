@@ -54,6 +54,7 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo", column = "ACT_Ubicacion_Fisica_Activo"),
 		@FieldResult(name = "ACT_Ubicacion_Imagen", column = "ACT_Ubicacion_Imagen"),
 		@FieldResult(name = "ACT_Valor", column = "ACT_Valor"),
+		@FieldResult(name = "ACT_Valor_Neto", column = "ACT_Valor_Neto"),
 		@FieldResult(name = "ACT_Vida_Util", column = "ACT_Vida_Util"),
 		@FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
 		@FieldResult(name = "ACT_Partidas_Presupuestarias", column = "ACT_Partidas_Presupuestarias"),
@@ -70,7 +71,8 @@ public class ActivosModel implements Serializable {
 	@Id
 	private String ACT_Dependencia_Codigo_Activo;
 
-	private short ACT_Dependencia;
+	private short ACT_Dependencia_ID;
+	private String ACT_Dependencia;
 
 	private String ACT_Codigo_Activo;
 
@@ -144,6 +146,7 @@ public class ActivosModel implements Serializable {
 	private String ACT_Ubicacion_Imagen;
 
 	private BigDecimal ACT_Valor;
+	private BigDecimal ACT_Valor_Neto;
 
 	private int ACT_Vida_Util;
 
@@ -168,12 +171,20 @@ public class ActivosModel implements Serializable {
 		ACT_Dependencia_Codigo_Activo = aCT_Dependencia_Codigo_Activo;
 	}
 
-	public short getACT_Dependencia() {
-		return this.ACT_Dependencia;
+	public short getACT_Dependencia_ID() {
+		return this.ACT_Dependencia_ID;
 	}
 
-	public void setACT_Dependencia(short ACT_Dependencia) {
-		this.ACT_Dependencia = ACT_Dependencia;
+	public void setACT_Dependencia_ID(short ACT_Dependencia_ID) {
+		this.ACT_Dependencia_ID = ACT_Dependencia_ID;
+	}
+
+	public String getACT_Dependencia() {
+		return ACT_Dependencia;
+	}
+
+	public void setACT_Dependencia(String aCT_Dependencia) {
+		ACT_Dependencia = aCT_Dependencia;
 	}
 
 	public String getACT_Codigo_Activo() {
@@ -502,6 +513,14 @@ public class ActivosModel implements Serializable {
 
 	public void setACT_Valor(BigDecimal ACT_Valor) {
 		this.ACT_Valor = ACT_Valor;
+	}
+
+	public BigDecimal getACT_Valor_Neto() {
+		return ACT_Valor_Neto;
+	}
+
+	public void setACT_Valor_Neto(BigDecimal aCT_Valor_Neto) {
+		ACT_Valor_Neto = aCT_Valor_Neto;
 	}
 
 	public int getACT_Vida_Util() {

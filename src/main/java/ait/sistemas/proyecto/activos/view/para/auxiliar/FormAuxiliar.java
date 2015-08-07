@@ -69,7 +69,7 @@ public class FormAuxiliar extends GridLayout implements ValueChangeListener{
 		this.cb_grupo.addValidator(new NullValidator("No Nulo", false));
 		this.txt_id_auxiliar.setRequired(true);
 		this.txt_id_auxiliar.addValidator(new NullValidator("No Nulo", false));
-		this.txt_id_auxiliar.addValidator(new RegexpValidator("[0-9]{2}", "Campo solo de numeros no mayor a 99"));
+		this.txt_id_auxiliar.addValidator(new RegexpValidator("[0-9]{1,2}", "Campo solo de numeros no mayor a 99"));
 		this.txt_nombre_auxiliar.setRequired(true);
 		this.txt_nombre_auxiliar.addValidator(new NullValidator("No Nulo", false));
 		this.txt_nombre_auxiliar.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3,50,false));

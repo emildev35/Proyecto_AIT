@@ -8,7 +8,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
-import ait.sistemas.proyecto.activos.data.model.Activos;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.model.ComponentesModel;
 import ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel;
@@ -34,6 +33,24 @@ public class ActivoImpl {
 	public List<ActivosModel> activos_by_auxiliar(String id_auxiliar) {
 		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
 		query.setParameter(1, id_auxiliar);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> activos_by_dependencia(short id_dependencia) {
+		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " + "@ACT_Dependencia=?1 ", ActivosModel.class);
+		query.setParameter(1, id_dependencia);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> activo_aux_grup(String auxiliar, String grupo, short id_dependencia) {
+		Query query = em.createNativeQuery("Mvac_ActivobyAuxiliar-Grupo " + "@ACT_Dependencia=?1, "
+				+ "@ACT_Auxiliar_Contable=?2,"
+				+ "@ACT_Grupo_Contable=?3", ActivosModel.class);
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, auxiliar);
+		query.setParameter(3, grupo);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}

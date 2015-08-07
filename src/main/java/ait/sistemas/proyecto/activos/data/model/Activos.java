@@ -87,6 +87,7 @@ public class Activos implements Serializable {
 	private String ACT_Ubicacion_Imagen;
 
 	private BigDecimal ACT_Valor;
+	private BigDecimal ACT_Valor_Neto;
 
 	private int ACT_Vida_Util;
 
@@ -381,6 +382,14 @@ public class Activos implements Serializable {
 
 	public void setACT_Valor(BigDecimal ACT_Valor) {
 		this.ACT_Valor = ACT_Valor;
+	}
+
+	public BigDecimal getACT_Valor_Neto() {
+		return ACT_Valor_Neto;
+	}
+
+	public void setACT_Valor_Neto(BigDecimal aCT_Valor_Neto) {
+		ACT_Valor_Neto = aCT_Valor_Neto;
 	}
 
 	public int getACT_Vida_Util() {
