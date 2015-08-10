@@ -3,9 +3,6 @@ package ait.sistemas.proyecto.activos.view.mvac.solactivo;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -26,9 +23,9 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VSolicitudA.ID)
+@CDIView(value = VSolicitudA.ID)
 public class VSolicitudA extends VerticalLayout implements View, ClickListener {
-
+	
 	private static final long serialVersionUID = 1L;
 	public static final String ID = "/act/mvac/solicitud/a";
 	
@@ -36,18 +33,16 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
 	private Button btn_agregar;
-	private GridSolicitud grid_solicitud = new GridSolicitud();
-	private final GrupoImpl inmuble_impl = new GrupoImpl();
-	private final AuxiliarImpl auximpsĺ = new AuxiliarImpl();
+	
 	private final ActivoImpl activoImpl = new ActivoImpl();
-	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	
 	public VSolicitudA() {
 		frm_solicitud = new FormSolicitud();
-		this.btn_limpiar= new Button("Limpiar");
-		this.btn_agregar= new Button("Agregar");
+		this.btn_limpiar = new Button("Limpiar");
+		this.btn_agregar = new Button("Agregar");
 		this.btn_agregar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
-
+		
 		this.hl_errores = new CssLayout();
 		
 		addComponent(buildNavBar());
@@ -56,9 +51,6 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		Responsive.makeResponsive(this);
 	}
 	
-
-
-
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		this.btn_agregar.setStyleName("ait-buttons-btn");
@@ -68,22 +60,22 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
 	}
-
+	
 	private Component buildFormContent() {
-				
+		
 		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true	);
+		formContent.setSpacing(true);
 		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Inmuebles registrados");
-		gridPanel.setContent(this.grid_solicitud);
+		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 		formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
 		formContent.addComponent(gridPanel);
 		Responsive.makeResponsive(formContent);
 		return formContent;
 	}
-
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
@@ -95,34 +87,37 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
 	}
-
+	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
 		
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(new Label(barMessage.getComponetName()+":"+barMessage.getErrorName()));
+			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-			
+		
 	}
-
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
-			if(this.frm_solicitud.validate()){
-//				this.inmuble_impl.add(this.frm_solicitud.getData());
-//				grid_solicitud.update();
-//				this.frm_solicitud.update();
-//				this.frm_solicitud.updateId();
-				Notification.show(Messages.SUCCESS_MESSAGE);
-			}else{
+			if (this.frm_solicitud.validate()) {
+				if (activoImpl.mov_asignacion(this.frm_solicitud.getData())>0) {
+					this.frm_solicitud.clear();
+					Notification.show(Messages.SUCCESS_MESSAGE);
+				}
+				else{
+					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+					
+				}
+			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
 			buildMessages(this.frm_solicitud.getMensajes());
@@ -130,10 +125,9 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		}
 		if (event.getButton() == this.btn_limpiar) {
 			frm_solicitud.update();
-//			this.frm_solicitud.updateId();
+			// this.frm_solicitud.updateId();
 			
 		}
 	}
 	
-
 }

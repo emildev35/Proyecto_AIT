@@ -10,19 +10,16 @@ import java.sql.Date;
 public class Detalle {
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
-	private short tipo_movimiento;
 	private long nro_documento;
 	private long id_activo;
 	private String observacion;
 	private Date fecha_registro;
 	public Detalle() {
-		// TODO Auto-generated constructor stub
 	}
-	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, short tipo_movimiento, long nro_documento,
+	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
 			long id_activo, String observacion, Date fecha_registro) {
 		this.id_dependencia = id_dependencia;
 		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
-		this.tipo_movimiento = tipo_movimiento;
 		this.nro_documento = nro_documento;
 		this.id_activo = id_activo;
 		this.observacion = observacion;
@@ -40,12 +37,7 @@ public class Detalle {
 	public void setId_unidad_organizacional_origen(short id_unidad_organizacional_origen) {
 		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
 	}
-	public short getTipo_movimiento() {
-		return tipo_movimiento;
-	}
-	public void setTipo_movimiento(short tipo_movimiento) {
-		this.tipo_movimiento = tipo_movimiento;
-	}
+
 	public long getNro_documento() {
 		return nro_documento;
 	}

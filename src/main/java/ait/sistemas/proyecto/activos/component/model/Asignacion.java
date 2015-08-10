@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.component.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,22 +13,31 @@ public class Asignacion {
 	
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
-	private short tipo_movimiento;
 	private long nro_documento;
+	private String id_usuario;
 	
 	private Date fecha_registro;
-	private Date fecha_movimiento;
+	private Date fecha_movimiento;	
 	private List<Detalle> detalles;
+	private String observacion;
 	
-	public Asignacion() {
-		// TODO Auto-generated constructor stub
+	
+	public String getObservacion() {
+		return observacion;
 	}
 
-	public Asignacion(short id_dependencia, short id_unidad_organizacional_origen, short tipo_movimiento, long nro_documento,
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
+
+	public Asignacion() {
+		this.detalles = new ArrayList<Detalle>();
+	}
+
+	public Asignacion(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
 			Date fecha_registro, Date fecha_movimiento, List<Detalle> detalles) {
 		this.id_dependencia = id_dependencia;
 		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
-		this.tipo_movimiento = tipo_movimiento;
 		this.nro_documento = nro_documento;
 		this.fecha_registro = fecha_registro;
 		this.fecha_movimiento = fecha_movimiento;
@@ -48,14 +58,6 @@ public class Asignacion {
 
 	public void setId_unidad_organizacional_origen(short id_unidad_organizacional_origen) {
 		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
-	}
-
-	public short getTipo_movimiento() {
-		return tipo_movimiento;
-	}
-
-	public void setTipo_movimiento(short tipo_movimiento) {
-		this.tipo_movimiento = tipo_movimiento;
 	}
 
 	public long getNro_documento() {
@@ -91,6 +93,14 @@ public class Asignacion {
 	}
 	public void addDetalle(Detalle detalle){
 		this.detalles.add(detalle);	
+	}
+
+	public String getUsuario() {
+		return id_usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.id_usuario = usuario;
 	}
 	
 }

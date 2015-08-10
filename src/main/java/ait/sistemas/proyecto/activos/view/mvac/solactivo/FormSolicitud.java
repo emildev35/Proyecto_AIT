@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.registry.BulkResponse;
+
+import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
+import ait.sistemas.proyecto.activos.component.model.Asignacion;
+import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
-import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
-import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -27,10 +29,12 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
@@ -45,11 +49,11 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
 	
-	
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
-	private final ActivoImpl activosimpl = new ActivoImpl();
+	
+	private GridSolicitud grid_solicitud = new GridSolicitud();
 	
 	public FormSolicitud() {
 		
@@ -60,7 +64,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
 		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
 		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
-		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(new AuxiliaresContablesModel()));
+		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
+				new AuxiliaresContablesModel()));
 		
 		this.binder_solicitud = new FieldGroup(this.pitm_solicitud);
 		
@@ -125,7 +130,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		
 		GridLayout gridl_solicitud = new GridLayout(2, 1);
 		gridl_solicitud.setSizeFull();
-//		gridl_solicitud.setMargin(true);
+		// gridl_solicitud.setMargin(true);
 		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
 		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
 		pn_solicitud.setContent(gridl_solicitud);
@@ -181,22 +186,32 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		}
 	}
 	
-	// public Inmueble getData(){
-	// Inmueble resul = new Inmueble();
-	// SessionModel usuario =
-	// (SessionModel)UI.getCurrent().getSession().getAttribute("user");
-	//
-	// short dependencia =
-	// dependencia_impl.getdependencia_ID(usuario.getDependecia());
-	// resul.setINM_Dependencia(dependencia);
-	// resul.setINM_Inmueble(Short.parseShort(this.txt_id_inmueble.getValue()));
-	// resul.setINM_Nombre_Inmueble(this.txt_nombre_inmueble.getValue());
-	// resul.setINM_Domicilio_Inmueble(this.txt_domicilio.getValue());
-	// resul.setINM_Ciudad((short)this.cb_ciudad.getValue());
-	// long lnMilis = new Date().getTime();
-	// resul.setINM_Fecha_Registro(new java.sql.Date(lnMilis));
-	// return resul;
-	// }
+	public Asignacion getData() {
+		Asignacion result = new Asignacion();
+		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
+		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
+		
+		result.setId_dependencia(usuario.getId_dependecia());
+		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+		result.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
+		result.setFecha_movimiento(fecha_registro);
+		result.setFecha_registro(fecha_registro);
+		result.setUsuario(usuario.getCi());
+		result.setObservacion("");
+		for (Object row : grid_solicitud.getSelectedRows()) {
+			ActivoGrid activo = (ActivoGrid) row;
+			Detalle detalle = new Detalle();
+			detalle.setId_activo(activo.getId_activo());
+			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+			detalle.setId_dependencia(usuario.getId_dependecia());
+			detalle.setObservacion("");
+			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
+			detalle.setFecha_registro(fecha_registro);
+			result.addDetalle(detalle);
+		}
+		
+		return result;
+	}
 	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
@@ -209,9 +224,21 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			buildGrid(auxiliar.getAUC_Auxiliar_Contable());
 		}
 	}
-
+	
 	private void buildGrid(String auc_Auxiliar_Contable) {
-		
+		GruposContablesModel grupo = (GruposContablesModel) cb_grupo_contable.getValue();
+		this.grid_solicitud.update(grupo.getGRC_Grupo_Contable(), auc_Auxiliar_Contable);
+	}
+	
+	public Component getgrid_solicitud() {
+		return this.grid_solicitud;
+	}
+
+	public void clear() {
+	
+		this.binder_solicitud.clear();
+		buildId();
+		this.grid_solicitud = new GridSolicitud();
 		
 	}
 }

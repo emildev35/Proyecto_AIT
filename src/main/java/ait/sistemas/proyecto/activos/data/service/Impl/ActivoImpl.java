@@ -8,9 +8,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
+import ait.sistemas.proyecto.activos.component.model.Asignacion;
 import ait.sistemas.proyecto.activos.component.model.CaracteristicasActivo;
 import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
+import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Documento;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -41,6 +43,7 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activosgrid_by_auxiliar(String id_auxiliar) {
 		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
@@ -48,6 +51,7 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activos_by_dependencia(short id_dependencia) {
 		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " + "@ACT_Dependencia=?1 ", ActivosModel.class);
@@ -55,25 +59,25 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activo_aux_grup(String auxiliar, String grupo, short id_dependencia) {
 		Query query = em.createNativeQuery("Mvac_ActivobyAuxiliar-Grupo " + "@ACT_Dependencia=?1, "
-				+ "@ACT_Auxiliar_Contable=?2,"
-				+ "@ACT_Grupo_Contable=?3", ActivosModel.class);
+				+ "@ACT_Auxiliar_Contable=?2," + "@ACT_Grupo_Contable=?3", ActivosModel.class);
 		query.setParameter(1, id_dependencia);
 		query.setParameter(2, auxiliar);
 		query.setParameter(3, grupo);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
-
-
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getactivos() {
 		Query query = em.createNativeQuery("Mvac_Activo_Q ", "mapeo-activo");
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getall(long id_activo) {
 		Query query = em.createNativeQuery("Mvac_Activo_Cod " + "@ACT_Codigo_Activo=?1 ", "mapeo-activo");
@@ -172,13 +176,85 @@ public class ActivoImpl {
 		return true;
 	}
 	
-	public List<ActivoGrid> getDisponibles(String grupo_contable, String auxiliar_contable){
+	@SuppressWarnings("unchecked")
+	public List<ActivoGrid> getDisponibles(String grupo_contable, String auxiliar_contable) {
 		String str_query_act_disponibles = "EXEC Mvact_Select_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2";
-		Query query = this.em.createNativeQuery(str_query_act_disponibles).
-				setParameter(1, grupo_contable).
-				setParameter(2, auxiliar_contable);
-		List<ActivoGrid> result = (List<ActivoGrid>)query.getResultList();
+		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple").setParameter(1, grupo_contable)
+				.setParameter(2, auxiliar_contable);
+		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
 		return result;
+	}
+	
+	public int mov_asignacion(Asignacion data) {
+		String str_cabezera = "EXEC Mvac_CAsignacion_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
+				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6,"
+				+ "@Observaciones=?7";
+		Query query_cabezera = this.em.createNativeQuery(str_cabezera);
+		query_cabezera.setParameter(1, data.getId_dependencia());
+		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(3, data.getNro_documento());
+		query_cabezera.setParameter(4, data.getFecha_registro());
+		query_cabezera.setParameter(5, data.getFecha_movimiento());
+		query_cabezera.setParameter(6, data.getUsuario());
+		query_cabezera.setParameter(7, data.getObservacion());
+		
+		int result_cabezera = (Integer) query_cabezera.getSingleResult();
+		int result_detalle = 0;
+		if (result_cabezera > 0) {
+			for (Detalle detalle : data.getDetalles()) {
+				
+				String str_detalle = "EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
+						+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Tipo_Movimiento=?5," + "@Activo_Id=?6,"
+						+ "@Observaciones=?7";
+				Query query_detalle = this.em.createNativeQuery(str_detalle);
+				query_detalle.setParameter(1, detalle.getId_dependencia());
+				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+				query_detalle.setParameter(3, detalle.getNro_documento());
+				query_detalle.setParameter(4, detalle.getFecha_registro());
+				query_detalle.setParameter(5, 3);
+				query_detalle.setParameter(6, detalle.getId_activo());
+				query_detalle.setParameter(7, detalle.getObservacion());
+				result_detalle += (Integer) query_detalle.getSingleResult();
+			}
+			
+			if (result_detalle == data.getDetalles().size()) {
+				return 1;
+			} else {
+				drop_mov_asignacion(data);
+				return 0;
+			}
+			
+		} else {
+			return 0;
+		}
+	}
+	
+	public int drop_mov_asignacion(Asignacion data) {
+		int result_cabezera;
+		for (Detalle detalle : data.getDetalles()) {
+			
+			String str_detalle = "EXEC Mvact_DMovimiento_D " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
+					+ "@Numero_Documento=?3," + "@Tipo_Movimiento=?4," + "@Activo_Id=?4";
+			
+			Query query_detalle = this.em.createNativeQuery(str_detalle);
+			query_detalle.setParameter(1, detalle.getId_dependencia());
+			query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+			query_detalle.setParameter(3, detalle.getNro_documento());
+			query_detalle.setParameter(4, 3);
+			query_detalle.setParameter(5, detalle.getId_activo());
+			result_cabezera = (Integer) query_detalle.getSingleResult();
+		}
+		
+		String str_cabezera = "EXEC Mvact_CAsignacion_D " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
+				+ "@Numero_Documento=?3";
+		Query query_cabezera = this.em.createNativeQuery(str_cabezera);
+		query_cabezera.setParameter(1, data.getId_dependencia());
+		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(3, data.getNro_documento());
+		
+		result_cabezera = (Integer) query_cabezera.getSingleResult();
+		return result_cabezera;
+		
 	}
 	
 }
