@@ -1,12 +1,11 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.Tipos_AutorizacionPK;
-
 import java.sql.Time;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -18,9 +17,14 @@ import java.sql.Time;
 public class Tipos_Autorizacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
 	@Id
-	private Tipos_AutorizacionPK id;
+	private short TAU_Dependencia;
+
+	private short TAU_Unidad_Organizacional;
+
+	private short TAU_Tipo_Movimiento;
+
+	private short TAU_Orden_Autorizacion;
 
 	private String TAU_CI_Autoriza;
 
@@ -35,14 +39,30 @@ public class Tipos_Autorizacion implements Serializable {
 	public Tipos_Autorizacion() {
 	}
 
-	public Tipos_AutorizacionPK getId() {
-		return this.id;
+	public short getTAU_Dependencia() {
+		return this.TAU_Dependencia;
 	}
-
-	public void setId(Tipos_AutorizacionPK id) {
-		this.id = id;
+	public void setTAU_Dependencia(short TAU_Dependencia) {
+		this.TAU_Dependencia = TAU_Dependencia;
 	}
-
+	public short getTAU_Unidad_Organizacional() {
+		return this.TAU_Unidad_Organizacional;
+	}
+	public void setTAU_Unidad_Organizacional(short TAU_Unidad_Organizacional) {
+		this.TAU_Unidad_Organizacional = TAU_Unidad_Organizacional;
+	}
+	public short getTAU_Tipo_Movimiento() {
+		return this.TAU_Tipo_Movimiento;
+	}
+	public void setTAU_Tipo_Movimiento(short TAU_Tipo_Movimiento) {
+		this.TAU_Tipo_Movimiento = TAU_Tipo_Movimiento;
+	}
+	public short getTAU_Orden_Autorizacion() {
+		return this.TAU_Orden_Autorizacion;
+	}
+	public void setTAU_Orden_Autorizacion(short TAU_Orden_Autorizacion) {
+		this.TAU_Orden_Autorizacion = TAU_Orden_Autorizacion;
+	}
 	public String getTAU_CI_Autoriza() {
 		return this.TAU_CI_Autoriza;
 	}

@@ -1,12 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.AutorizacionePK;
-
 import java.sql.Time;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -19,9 +19,16 @@ import java.sql.Time;
 public class Autorizacione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
 	@Id
-	private AutorizacionePK id;
+	private short AUT_Dependencia;
+
+	private short AUT_Unidad_Organizacional;
+
+	private short AUT_Tipo_Movimiento;
+
+	private short AUT_Orden_Autorizacion;
+
+	private long AUT_No_Documento_Autorizado;
 
 	private String AUT_CI_Autoriza;
 
@@ -40,12 +47,35 @@ public class Autorizacione implements Serializable {
 	public Autorizacione() {
 	}
 
-	public AutorizacionePK getId() {
-		return this.id;
+	public short getAUT_Dependencia() {
+		return this.AUT_Dependencia;
 	}
-
-	public void setId(AutorizacionePK id) {
-		this.id = id;
+	public void setAUT_Dependencia(short AUT_Dependencia) {
+		this.AUT_Dependencia = AUT_Dependencia;
+	}
+	public short getAUT_Unidad_Organizacional() {
+		return this.AUT_Unidad_Organizacional;
+	}
+	public void setAUT_Unidad_Organizacional(short AUT_Unidad_Organizacional) {
+		this.AUT_Unidad_Organizacional = AUT_Unidad_Organizacional;
+	}
+	public short getAUT_Tipo_Movimiento() {
+		return this.AUT_Tipo_Movimiento;
+	}
+	public void setAUT_Tipo_Movimiento(short AUT_Tipo_Movimiento) {
+		this.AUT_Tipo_Movimiento = AUT_Tipo_Movimiento;
+	}
+	public short getAUT_Orden_Autorizacion() {
+		return this.AUT_Orden_Autorizacion;
+	}
+	public void setAUT_Orden_Autorizacion(short AUT_Orden_Autorizacion) {
+		this.AUT_Orden_Autorizacion = AUT_Orden_Autorizacion;
+	}
+	public long getAUT_No_Documento_Autorizado() {
+		return this.AUT_No_Documento_Autorizado;
+	}
+	public void setAUT_No_Documento_Autorizado(long AUT_No_Documento_Autorizado) {
+		this.AUT_No_Documento_Autorizado = AUT_No_Documento_Autorizado;
 	}
 
 	public String getAUT_CI_Autoriza() {
