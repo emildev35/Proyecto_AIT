@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.registry.BulkResponse;
-
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
-import ait.sistemas.proyecto.activos.component.model.Asignacion;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
@@ -125,7 +123,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	
 	private void buildContent() {
 		
-		Panel pn_solicitud = new Panel("Solicitud de Asignacion de Activos");
+		Panel pn_solicitud = new Panel("Solicitud de Movimiento de Activos");
 		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
 		
 		GridLayout gridl_solicitud = new GridLayout(2, 1);
@@ -186,8 +184,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		}
 	}
 	
-	public Asignacion getData() {
-		Asignacion result = new Asignacion();
+	public Movimiento getData() {
+		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
 		
@@ -198,8 +196,10 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
+		result.setTipo_movimiento((short)3);
 		for (Object row : grid_solicitud.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
+			
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
 			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
@@ -207,6 +207,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
+			detalle.setTipo_movimiento((short)3);
 			result.addDetalle(detalle);
 		}
 		

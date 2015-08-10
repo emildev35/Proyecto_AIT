@@ -107,11 +107,14 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
 			if(this.frm_solicitud.validate()){
-				this.movimiento_impl.add_solicitud(this.frm_solicitud.getData());
-				this.grid_solicitud.update();				
-				this.frm_solicitud.update();
-				this.frm_solicitud.updateId();
-				Notification.show(Messages.SUCCESS_MESSAGE);
+				if (movimiento_impl.addMovimiento(this.frm_solicitud.getData())>0) {
+					this.frm_solicitud.clear();
+					Notification.show(Messages.SUCCESS_MESSAGE);
+				}
+				else{
+					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+					
+				}
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			

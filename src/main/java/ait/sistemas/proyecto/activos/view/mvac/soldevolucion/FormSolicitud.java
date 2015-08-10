@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
-import ait.sistemas.proyecto.activos.component.model.Asignacion;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.activos.view.mvac.solactivo.GridSolicitud;
 import ait.sistemas.proyecto.common.component.BarMessage;
@@ -32,7 +32,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private TextField txt_id_solicitud = new TextField("Id. Solicitud");
 	public DateField dtf_fecha_soliciud = new DateField("Fecha Solicitud");
 	
-	private List<BarMessage> mensajes;
+	private List<BarMessage> mensajes=new ArrayList<BarMessage>();
 	
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
@@ -120,8 +120,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			return false;
 		}
 	}
-	public Asignacion getData() {
-		Asignacion result = new Asignacion();
+	public Movimiento getData() {
+		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
 		
@@ -131,6 +131,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
+		result.setTipo_movimiento((short)4);
 		result.setObservacion("");
 		for (Object row : grid_solicitud.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
@@ -138,6 +139,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			detalle.setId_activo(activo.getId_activo());
 			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
 			detalle.setId_dependencia(usuario.getId_dependecia());
+			detalle.setTipo_movimiento((short)4);
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
