@@ -25,7 +25,6 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 
 public class FormAuxiliar extends GridLayout implements ValueChangeListener{

@@ -1,12 +1,12 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import ait.sistemas.proyecto.activos.data.model.pk.C_MovimientoPK;
-
 import java.sql.Time;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -19,9 +19,14 @@ import java.sql.Time;
 public class C_Movimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
 	@Id
-	private C_MovimientoPK id;
+	private short CMV_Dependencia;
+
+	private short CMV_Unidad_Organizacional_Origen;
+
+	private short CMV_Tipo_Movimiento;
+
+	private long CMV_No_Documento;
 
 	private String CMV_CI_Funcionario_Destino;
 
@@ -50,12 +55,29 @@ public class C_Movimiento implements Serializable {
 	public C_Movimiento() {
 	}
 
-	public C_MovimientoPK getId() {
-		return this.id;
+	public short getCMV_Dependencia() {
+		return this.CMV_Dependencia;
 	}
-
-	public void setId(C_MovimientoPK id) {
-		this.id = id;
+	public void setCMV_Dependencia(short CMV_Dependencia) {
+		this.CMV_Dependencia = CMV_Dependencia;
+	}
+	public short getCMV_Unidad_Organizacional_Origen() {
+		return this.CMV_Unidad_Organizacional_Origen;
+	}
+	public void setCMV_Unidad_Organizacional_Origen(short CMV_Unidad_Organizacional_Origen) {
+		this.CMV_Unidad_Organizacional_Origen = CMV_Unidad_Organizacional_Origen;
+	}
+	public short getCMV_Tipo_Movimiento() {
+		return this.CMV_Tipo_Movimiento;
+	}
+	public void setCMV_Tipo_Movimiento(short CMV_Tipo_Movimiento) {
+		this.CMV_Tipo_Movimiento = CMV_Tipo_Movimiento;
+	}
+	public long getCMV_No_Documento() {
+		return this.CMV_No_Documento;
+	}
+	public void setCMV_No_Documento(long CMV_No_Documento) {
+		this.CMV_No_Documento = CMV_No_Documento;
 	}
 
 	public String getCMV_CI_Funcionario_Destino() {
