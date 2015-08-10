@@ -90,7 +90,7 @@ public class Asignacion {
 		this.detalles = detalles;
 	}
 	public void addDetalle(Detalle detalle){
-		this.detalles.add(detalle);
+		this.detalles.add(detalle);	
 	}
 	
 }

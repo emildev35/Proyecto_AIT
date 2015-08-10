@@ -7,6 +7,7 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
@@ -41,16 +42,18 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	private DependenciaImpl dependencia_impl = new DependenciaImpl();
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
+	
+	
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
+	private final ActivoImpl activosimpl = new ActivoImpl();
 	
 	public FormSolicitud() {
 		
-		super(6, 2);
+		super(6, 3);
 		setSpacing(true);
 		setWidth("100%");
 		
@@ -78,6 +81,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		cb_grupo_contable.setInputPrompt("Seleccione un Grupo Contable");
 		cb_grupo_contable.addValueChangeListener(this);
 		this.cb_auxiliar_contable.setRequired(true);
+		cb_auxiliar_contable.addValueChangeListener(this);
 		this.cb_auxiliar_contable.addValidator(new NullValidator("No Nulo", false));
 		cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
 		
@@ -121,7 +125,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		
 		GridLayout gridl_solicitud = new GridLayout(2, 1);
 		gridl_solicitud.setSizeFull();
-		gridl_solicitud.setMargin(true);
+//		gridl_solicitud.setMargin(true);
 		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
 		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
 		pn_solicitud.setContent(gridl_solicitud);
@@ -200,5 +204,14 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			GruposContablesModel grupo = (GruposContablesModel) cb_grupo_contable.getValue();
 			fillcbAuxiliarContable(grupo.getGRC_Grupo_Contable());
 		}
+		if (event.getProperty() == cb_auxiliar_contable && this.cb_auxiliar_contable.getValue() != null) {
+			AuxiliaresContablesModel auxiliar = (AuxiliaresContablesModel) cb_auxiliar_contable.getValue();
+			buildGrid(auxiliar.getAUC_Auxiliar_Contable());
+		}
+	}
+
+	private void buildGrid(String auc_Auxiliar_Contable) {
+		
+		
 	}
 }

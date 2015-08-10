@@ -18,7 +18,6 @@ import javax.persistence.Table;
 @NamedQuery(name = "Activos.findAll", query = "SELECT a FROM Activos a")
 public class Activos implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	private short ACT_Dependencia;
 
 	@Id

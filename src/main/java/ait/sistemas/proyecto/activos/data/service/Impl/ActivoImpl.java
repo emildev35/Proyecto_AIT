@@ -7,13 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.CaracteristicasActivo;
 import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
-
 import ait.sistemas.proyecto.activos.component.model.Documento;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
-
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.model.ComponentesModel;
 import ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel;
@@ -37,6 +36,13 @@ public class ActivoImpl {
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activos_by_auxiliar(String id_auxiliar) {
+		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
+		query.setParameter(1, id_auxiliar);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> activosgrid_by_auxiliar(String id_auxiliar) {
 		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
 		query.setParameter(1, id_auxiliar);
 		List<ActivosModel> resultlist = query.getResultList();
@@ -164,6 +170,15 @@ public class ActivoImpl {
 			}
 		}
 		return true;
+	}
+	
+	public List<ActivoGrid> getDisponibles(String grupo_contable, String auxiliar_contable){
+		String str_query_act_disponibles = "EXEC Mvact_Select_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2";
+		Query query = this.em.createNativeQuery(str_query_act_disponibles).
+				setParameter(1, grupo_contable).
+				setParameter(2, auxiliar_contable);
+		List<ActivoGrid> result = (List<ActivoGrid>)query.getResultList();
+		return result;
 	}
 	
 }

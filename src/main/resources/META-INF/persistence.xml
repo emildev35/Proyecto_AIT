@@ -62,6 +62,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Ubicaciones_Fisica</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Unidades_Organizacionale</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Unidades_OrganizacionalePK</class>
+		<class>ait.sistemas.proyecto.activos.component.model.ActivoGrid</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 					<property name="javax.persistence.jdbc.url"
