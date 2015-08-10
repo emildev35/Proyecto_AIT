@@ -3,7 +3,7 @@ package ait.sistemas.proyecto.activos.component.model;
 import java.sql.Date;
 
 /**
- * Detalle de Movimientos Asignacion, Devolucion
+ * Detalle de Movimientos Movimiento, Devolucion
  * @author franzemil
  *
  */
@@ -12,6 +12,7 @@ public class Detalle {
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private long id_activo;
+	private short tipo_movimiento;
 	private String observacion;
 	private Date fecha_registro;
 	public Detalle() {
@@ -24,6 +25,13 @@ public class Detalle {
 		this.id_activo = id_activo;
 		this.observacion = observacion;
 		this.fecha_registro = fecha_registro;
+	}
+	
+	public short getTipo_movimiento() {
+		return tipo_movimiento;
+	}
+	public void setTipo_movimiento(short tipo_movimiento) {
+		this.tipo_movimiento = tipo_movimiento;
 	}
 	public short getId_dependencia() {
 		return id_dependencia;

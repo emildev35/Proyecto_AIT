@@ -2,7 +2,7 @@ package ait.sistemas.proyecto.activos.view.mvac.solactivo;
 
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -34,7 +34,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	private Button btn_limpiar;
 	private Button btn_agregar;
 	
-	private final ActivoImpl activoImpl = new ActivoImpl();
+	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
 	public VSolicitudA() {
 		frm_solicitud = new FormSolicitud();
@@ -109,7 +109,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
 			if (this.frm_solicitud.validate()) {
-				if (activoImpl.mov_asignacion(this.frm_solicitud.getData())>0) {
+				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
 					this.frm_solicitud.clear();
 					Notification.show(Messages.SUCCESS_MESSAGE);
 				}

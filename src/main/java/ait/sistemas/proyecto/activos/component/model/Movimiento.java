@@ -9,13 +9,21 @@ import java.util.List;
  * @author franzemil
  *
  */
-public class Asignacion {
+public class Movimiento {
 	
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private String id_usuario;
-	
+	private short tipo_movimiento;
+	public short getTipo_movimiento() {
+		return tipo_movimiento;
+	}
+
+	public void setTipo_movimiento(short tipo_movimiento) {
+		this.tipo_movimiento = tipo_movimiento;
+	}
+
 	private Date fecha_registro;
 	private Date fecha_movimiento;	
 	private List<Detalle> detalles;
@@ -30,11 +38,11 @@ public class Asignacion {
 		this.observacion = observacion;
 	}
 
-	public Asignacion() {
+	public Movimiento() {
 		this.detalles = new ArrayList<Detalle>();
 	}
 
-	public Asignacion(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
+	public Movimiento(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
 			Date fecha_registro, Date fecha_movimiento, List<Detalle> detalles) {
 		this.id_dependencia = id_dependencia;
 		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
