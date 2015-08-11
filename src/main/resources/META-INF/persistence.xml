@@ -49,6 +49,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Grupos_Contable</class>
 		<class>ait.sistemas.proyecto.activos.data.model.GruposContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Inmueble</class>
+		<class>ait.sistemas.proyecto.activos.data.model.Motivo_Baja</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Organismo_Financiador</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Personal</class>
