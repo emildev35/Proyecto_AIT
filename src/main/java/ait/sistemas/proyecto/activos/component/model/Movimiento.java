@@ -16,6 +16,7 @@ public class Movimiento {
 	private long nro_documento;
 	private String id_usuario;
 	private short tipo_movimiento;
+	
 	public short getTipo_movimiento() {
 		return tipo_movimiento;
 	}

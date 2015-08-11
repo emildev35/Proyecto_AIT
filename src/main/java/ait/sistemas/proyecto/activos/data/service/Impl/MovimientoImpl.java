@@ -81,7 +81,7 @@ public class MovimientoImpl {
 			return 0;
 		}
 	}
-	
+
 	public int dropmovimiento(Movimiento data) {
 		int result_cabezera;
 		for (Detalle detalle : data.getDetalles()) {
@@ -93,7 +93,7 @@ public class MovimientoImpl {
 			query_detalle.setParameter(1, detalle.getId_dependencia());
 			query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
 			query_detalle.setParameter(3, detalle.getNro_documento());
-			query_detalle.setParameter(4, 3);
+			query_detalle.setParameter(4, detalle.getTipo_movimiento());
 			query_detalle.setParameter(5, detalle.getId_activo());
 			result_cabezera = (Integer) query_detalle.getSingleResult();
 		}

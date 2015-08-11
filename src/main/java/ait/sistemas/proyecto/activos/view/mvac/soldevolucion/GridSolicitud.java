@@ -28,8 +28,7 @@ public class GridSolicitud extends Grid{
 		buildGrid();
 	}
 	public void buildGrid(){
-		bean_movimiento = new BeanItemContainer<ActivoGrid>(
-				ActivoGrid.class);
+		bean_movimiento = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setSelectionMode(SelectionMode.MULTI);
 		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 		
@@ -50,4 +49,5 @@ public class GridSolicitud extends Grid{
 		nombre_activoColumn.setHeaderCaption("Nombre del Activo").setExpandRatio(6);
 		Responsive.makeResponsive(this);
 	}
+
 }
