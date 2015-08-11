@@ -108,7 +108,6 @@ public class FormAutorizacion extends GridLayout {
 			} catch (InvalidValueException ex) {
 				this.mensajes.add(new BarMessage(txt_nombre_partida.getCaption(), ex.getMessage()));
 			}
-			
 			return false;
 		}
 	}
