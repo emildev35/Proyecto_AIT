@@ -8,39 +8,40 @@ import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
-import ait.sistemas.proyecto.activos.view.mvac.solactivo.GridSolicitud;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.Responsive;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormSolicitud extends GridLayout implements ValueChangeListener {
+public class FormSolicitud extends GridLayout {
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_solicitud = new TextField("Id. Solicitud");
 	public DateField dtf_fecha_soliciud = new DateField("Fecha Solicitud");
 	
-	private List<BarMessage> mensajes=new ArrayList<BarMessage>();
+	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
-	private final MovimientoImpl movimiento_impl = new MovimientoImpl();
+	
+	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	
 	private GridSolicitud grid_solicitud = new GridSolicitud();
+	
 	public FormSolicitud() {
 		
-		super(6, 2);
+		super(6, 3);
 		setSpacing(true);
 		setWidth("100%");
 		
@@ -59,28 +60,26 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		this.dtf_fecha_soliciud.setEnabled(false);
 		this.dtf_fecha_soliciud.addValidator(new NullValidator("No Nulo", false));
 		
-		
 		txt_id_solicitud.setWidth("90%");
 		dtf_fecha_soliciud.setWidth("90%");
 		
-		updateId();
 		buildContent();
 		buildId();
 		Responsive.makeResponsive(this);
 	}
 	
 	private void buildId() {
-		this.txt_id_solicitud.setValue(String.valueOf(movimiento_impl.getId()));
+		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId()));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
 	
 	private void buildContent() {
 		
-		Panel pn_solicitud = new Panel("Solicitud de Devolucion de Activos");
+		Panel pn_solicitud = new Panel("Solicitud de Movimiento de Activos");
 		
 		GridLayout gridl_solicitud = new GridLayout(2, 1);
 		gridl_solicitud.setSizeFull();
-		gridl_solicitud.setMargin(true);
+		// gridl_solicitud.setMargin(true);
 		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
 		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
 		pn_solicitud.setContent(gridl_solicitud);
@@ -95,10 +94,6 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	
 	public void update() {
 		binder_solicitud.clear();
-	}
-	
-	public void updateId() {
-		this.txt_id_solicitud.setValue(movimiento_impl.getId() + "");
 	}
 	
 	public List<BarMessage> getMensajes() {
@@ -120,6 +115,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			return false;
 		}
 	}
+	
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
@@ -131,28 +127,31 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
-		result.setTipo_movimiento((short)4);
 		result.setObservacion("");
+		result.setTipo_movimiento((short)4);
 		for (Object row : grid_solicitud.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
+			
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
 			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
 			detalle.setId_dependencia(usuario.getId_dependecia());
-			detalle.setTipo_movimiento((short)4);
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
+			detalle.setTipo_movimiento((short)4);
 			result.addDetalle(detalle);
 		}
-		return result;
-		}
-	
-	@Override
-	public void valueChange(ValueChangeEvent event) {
-	}
-	public void clear() {
 		
+		return result;
+	}
+	
+	public Component getgrid_solicitud() {
+		return this.grid_solicitud;
+	}
+
+	public void clear() {
+	
 		this.binder_solicitud.clear();
 		buildId();
 		this.grid_solicitud = new GridSolicitud();

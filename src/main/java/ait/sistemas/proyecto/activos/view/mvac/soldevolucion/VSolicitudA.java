@@ -23,9 +23,9 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VSolicitudA.ID)
+@CDIView(value = VSolicitudA.ID)
 public class VSolicitudA extends VerticalLayout implements View, ClickListener {
-
+	
 	private static final long serialVersionUID = 1L;
 	public static final String ID = "/act/mvac/soldevolucion/a";
 	
@@ -33,20 +33,22 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
 	private Button btn_agregar;
-	private MovimientoImpl movimiento_impl = new MovimientoImpl();
-	private GridSolicitud grid_solicitud = new GridSolicitud();
+	
+	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	
 	public VSolicitudA() {
 		frm_solicitud = new FormSolicitud();
-		this.btn_limpiar= new Button("Limpiar");
-		this.btn_agregar= new Button("Agregar");
+		this.btn_limpiar = new Button("Limpiar");
+		this.btn_agregar = new Button("Agregar");
 		this.btn_agregar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
-
+		
 		this.hl_errores = new CssLayout();
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		Responsive.makeResponsive(this);
 	}
 	
 	private Component buildButtonBar() {
@@ -58,56 +60,56 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
 	}
-
+	
 	private Component buildFormContent() {
-				
+		
 		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true	);
-		Panel gridPanel = new Panel("Activos Fijos Asignados : Selecciona (el) los Activos a devolver");
+		formContent.setSpacing(true);
+		Panel gridPanel = new Panel("Activos Fijos Asignados : Selecciona los Activos");
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Activos Fijos Asignados");
-		gridPanel.setContent(this.grid_solicitud);
+		gridPanel.setCaption("Activos Asignados");
+		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 		formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
 		formContent.addComponent(gridPanel);
 		Responsive.makeResponsive(formContent);
 		return formContent;
 	}
-
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Movimiento de Activos Fijos>>"));
-		nav.addComponent(new Label("Solicitud de Devolucion de Activos>>"));
+		nav.addComponent(new Label("Movimiento de Activos>>"));
+		nav.addComponent(new Label("Solicitud Devolucion>>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
 	}
-
+	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
 		
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(barMessage.getComponetName()+":"+barMessage.getErrorName());
+			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-			
+		
 	}
-
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
-			if(this.frm_solicitud.validate()){
-				if (movimiento_impl.addMovimiento(this.frm_solicitud.getData())>0) {
+			if (this.frm_solicitud.validate()) {
+				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
 					this.frm_solicitud.clear();
 					Notification.show(Messages.SUCCESS_MESSAGE);
 				}
@@ -115,19 +117,17 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 					
 				}
-			}else{
+			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-			
-		}
+			}
 			buildMessages(this.frm_solicitud.getMensajes());
 			this.frm_solicitud.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
 			frm_solicitud.update();
-			this.frm_solicitud.updateId();
+			// this.frm_solicitud.updateId();
 			
 		}
 	}
 	
-
 }
