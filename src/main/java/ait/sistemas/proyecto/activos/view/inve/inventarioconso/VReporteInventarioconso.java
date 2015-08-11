@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
-import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
@@ -118,6 +117,7 @@ public class VReporteInventarioconso extends VerticalLayout implements View, Cli
 		return data;
 	}
 
+	@SuppressWarnings("unused")
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
