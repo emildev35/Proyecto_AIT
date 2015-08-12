@@ -89,9 +89,7 @@ public class FormUbicacion extends GridLayout implements ValueChangeListener{
 		cb_inmueble.setNullSelectionAllowed(false);
 		cb_inmueble.setInputPrompt("Seleccione el Inmueble");
 		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
-		
-		 short dependencia = dependencia_impl.getdependencia_ID(usuario.getDependecia());
-		for (InmuebleModel inmueble : inmueble_impl.getalls(dependencia))
+		for (InmuebleModel inmueble : inmueble_impl.getalls(usuario.getId_dependecia()))
 		{
 			cb_inmueble.addItem(inmueble.getINM_Inmueble());
 			cb_inmueble.setItemCaption(inmueble.getINM_Inmueble(), inmueble.getINM_Nombre_Inmueble());
@@ -112,7 +110,7 @@ public class FormUbicacion extends GridLayout implements ValueChangeListener{
 	}
 	public void updateId(){
 		SessionModel usuario = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
-		 short dependencia = dependencia_impl.getdependencia_ID(usuario.getDependecia());
+		short dependencia = usuario.getId_dependecia();
 		this.txt_id_ubicacion.setValue(ubicacion_impl.generateId(dependencia) + "");
 	}
 	public void enabled(){

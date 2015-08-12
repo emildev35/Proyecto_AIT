@@ -8,21 +8,24 @@ import java.sql.Date;
  *
  */
 public class Detalle {
+	
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private long id_activo;
 	private short tipo_movimiento;
+	private short id_motivo_baja;
 	private String observacion;
 	private Date fecha_registro;
 	public Detalle() {
 	}
 	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
-			long id_activo, String observacion, Date fecha_registro) {
+			long id_activo, short id_motivo_baja, String observacion, Date fecha_registro) {
 		this.id_dependencia = id_dependencia;
 		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
 		this.nro_documento = nro_documento;
 		this.id_activo = id_activo;
+		this.id_motivo_baja = id_motivo_baja;
 		this.observacion = observacion;
 		this.fecha_registro = fecha_registro;
 	}
@@ -57,6 +60,12 @@ public class Detalle {
 	}
 	public void setId_activo(long id_activo) {
 		this.id_activo = id_activo;
+	}
+	public short getId_motivo_baja() {
+		return id_motivo_baja;
+	}
+	public void setId_motivo_baja(short id_motivo_baja) {
+		this.id_motivo_baja = id_motivo_baja;
 	}
 	public String getObservacion() {
 		return observacion;

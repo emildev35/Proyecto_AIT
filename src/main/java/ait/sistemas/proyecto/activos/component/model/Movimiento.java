@@ -16,20 +16,22 @@ public class Movimiento {
 	private long nro_documento;
 	private String id_usuario;
 	private short tipo_movimiento;
+	private String nro_documento_referencia;
+
+	private Date fecha_nro_referencia;
 	
-	public short getTipo_movimiento() {
-		return tipo_movimiento;
-	}
-
-	public void setTipo_movimiento(short tipo_movimiento) {
-		this.tipo_movimiento = tipo_movimiento;
-	}
-
 	private Date fecha_registro;
 	private Date fecha_movimiento;	
 	private List<Detalle> detalles;
 	private String observacion;
 	
+	public short getTipo_movimiento() {
+		return tipo_movimiento;
+	}
+	
+	public void setTipo_movimiento(short tipo_movimiento) {
+		this.tipo_movimiento = tipo_movimiento;
+	}
 	
 	public String getObservacion() {
 		return observacion;
@@ -111,5 +113,22 @@ public class Movimiento {
 	public void setUsuario(String usuario) {
 		this.id_usuario = usuario;
 	}
+
+	public String getNro_documento_referencia() {
+		return nro_documento_referencia;
+	}
+
+	public void setNro_documento_referencia(String nro_documento_referencia) {
+		this.nro_documento_referencia = nro_documento_referencia;
+	}
+
+	public Date getFecha_nro_referencia() {
+		return fecha_nro_referencia;
+	}
+
+	public void setFecha_nro_referencia(Date fecha_nro_referencia) {
+		this.fecha_nro_referencia = fecha_nro_referencia;
+	}
+	
 	
 }
