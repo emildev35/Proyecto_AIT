@@ -48,6 +48,7 @@ public class Messages {
 			+ " un caracter especial y contar con una longitud minima de 8 caracteres y una maxima de 15";
 	public static final String ERROR_EQUALS_PASSWORD = "Las contraseñas no son iguales";
 	public static final String LOGIN_ERROR = "Login Incorrecto";
+	public static final String NUMBER_VALUE = "El formato no es correcto";
 
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
