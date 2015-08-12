@@ -8,6 +8,7 @@ import java.sql.Date;
  *
  */
 public class Detalle {
+	
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;

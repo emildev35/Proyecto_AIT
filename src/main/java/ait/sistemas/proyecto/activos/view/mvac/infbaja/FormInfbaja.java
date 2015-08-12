@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
-import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
@@ -27,7 +27,6 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
@@ -36,7 +35,10 @@ import com.vaadin.ui.UI;
 
 public class FormInfbaja extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
-	private TextField txt_num_inf_baja = new TextField("Num. Inf de baja");
+	private TextField txt_resolucion = new TextField("Num. Resolucion");
+	public DateField dtf_fecha_resol = new DateField("Fecha");
+
+	private TextField txt_num_inf_baja = new TextField("Num. Informe");
 	public DateField dtf_fecha_inf = new DateField("Fecha");
 	
 	public ComboBox cb_grupo_contable = new ComboBox("Grupo Contable");
@@ -59,6 +61,8 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		setSpacing(true);
 		setWidth("100%");
 		
+		pitm_informe.addItemProperty("id_resolucion", new ObjectProperty<String>(""));
+		pitm_informe.addItemProperty("fecha_resolucion", new ObjectProperty<Date>(new Date()));
 		pitm_informe.addItemProperty("id_informe", new ObjectProperty<Integer>(0));
 		pitm_informe.addItemProperty("fecha_informe", new ObjectProperty<Date>(new Date()));
 		pitm_informe.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
@@ -67,15 +71,21 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		
 		this.binder_informe = new FieldGroup(this.pitm_informe);
 		
+		binder_informe.bind(this.txt_resolucion, "id_resolucion");
+		binder_informe.bind(this.dtf_fecha_resol, "fecha_resolucion");
 		binder_informe.bind(this.txt_num_inf_baja, "id_informe");
 		binder_informe.bind(this.dtf_fecha_inf, "fecha_informe");
 		binder_informe.bind(this.cb_grupo_contable, "grupo_contable");
 		binder_informe.bind(this.cb_auxiliar_contable, "auxiliar_contable");
 		binder_informe.clear();
 		
+		this.txt_resolucion.addValidator(new NullValidator("No Nulo", false));
+
 		this.txt_num_inf_baja.setEnabled(false);
 		this.txt_num_inf_baja.addValidator(new NullValidator("No Nulo", false));
 		
+		this.dtf_fecha_resol.addValidator(new NullValidator("No Nulo", false));
+
 		this.dtf_fecha_inf.setEnabled(false);
 		this.dtf_fecha_inf.addValidator(new NullValidator("No Nulo", false));
 		
@@ -88,6 +98,8 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		this.cb_auxiliar_contable.addValidator(new NullValidator("No Nulo", false));
 		cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
 		
+		txt_resolucion.setWidth("90%");
+		dtf_fecha_resol.setWidth("90%");
 		txt_num_inf_baja.setWidth("90%");
 		dtf_fecha_inf.setWidth("90%");
 		cb_grupo_contable.setWidth("90%");
@@ -100,13 +112,13 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void buildId() {
+		this.dtf_fecha_resol.setValue(new Date());
 		this.txt_num_inf_baja.setValue(String.valueOf(movimientoimpl.getId()));
 		this.dtf_fecha_inf.setValue(new Date());
 	}
 	
 	private void fillcbGrupoContable() {
 		cb_grupo_contable.setNullSelectionAllowed(false);
-		
 		for (GruposContablesModel grupo_contable : grupoimpl.getalls()) {
 			cb_grupo_contable.addItem(grupo_contable);
 			cb_grupo_contable.setItemCaption(grupo_contable, grupo_contable.getGRC_Nombre_Grupo_Contable());
@@ -114,6 +126,7 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void fillcbAuxiliarContable(String id_grupo) {
+		cb_auxiliar_contable.removeAllItems();
 		cb_auxiliar_contable.setNullSelectionAllowed(false);
 		for (AuxiliaresContablesModel auxiliar_contable : auxiliarimpl.getreporte(id_grupo)) {
 			cb_auxiliar_contable.addItem(auxiliar_contable);
@@ -123,9 +136,18 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 	
 	private void buildContent() {
 		
+		Panel pn_resolucion = new Panel("Resolucion de Bajas");
 		Panel pn_solicitud = new Panel("Informe de Baja de Activos");
 		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
 		
+		GridLayout gridl_resolucion = new GridLayout(2, 1);
+		gridl_resolucion.setSizeFull();
+		// gridl_solicitud.setMargin(true);
+		gridl_resolucion.addComponent(this.txt_resolucion, 0, 0);
+		gridl_resolucion.addComponent(this.dtf_fecha_resol, 1, 0);
+		pn_resolucion.setContent(gridl_resolucion);
+		this.addComponent(pn_resolucion, 0, 0, 1, 0);
+
 		GridLayout gridl_solicitud = new GridLayout(2, 1);
 		gridl_solicitud.setSizeFull();
 		// gridl_solicitud.setMargin(true);
@@ -186,6 +208,7 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 	
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
+		
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
 		
@@ -194,23 +217,11 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		result.setNro_documento(Long.parseLong(this.txt_num_inf_baja.getValue()));
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
+		result.setFecha_nro_referencia(new java.sql.Date(dtf_fecha_resol.getValue().getTime()));
+		result.setNro_documento_referencia(this.txt_resolucion.getValue());
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
 		result.setTipo_movimiento((short)6);
-		for (Object row : grid_solicitud.getSelectedRows()) {
-			ActivoGrid activo = (ActivoGrid) row;
-			
-			Detalle detalle = new Detalle();
-			detalle.setId_activo(activo.getId_activo());
-			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
-			detalle.setId_dependencia(usuario.getId_dependecia());
-			detalle.setObservacion("");
-			detalle.setNro_documento(Long.parseLong(this.txt_num_inf_baja.getValue()));
-			detalle.setFecha_registro(fecha_registro);
-			detalle.setTipo_movimiento((short)6);
-			result.addDetalle(detalle);
-		}
-		
 		return result;
 	}
 	
@@ -231,7 +242,7 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		this.grid_solicitud.update(grupo.getGRC_Grupo_Contable(), auc_Auxiliar_Contable);
 	}
 	
-	public Component getgrid_solicitud() {
+	public GridInfbaja getgrid_solicitud() {
 		return this.grid_solicitud;
 	}
 

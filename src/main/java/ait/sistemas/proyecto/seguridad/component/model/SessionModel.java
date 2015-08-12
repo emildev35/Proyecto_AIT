@@ -38,12 +38,18 @@ public class SessionModel {
 	public SessionModel() {
 	}
 	
-	public SessionModel(String id, String full_name, String dependecia,
-			String unidad) {
+	
+
+	public SessionModel(String id, String full_name, String dependecia, short id_dependecia,
+			String unidad_organizacional, short id_unidad_organizacional, String ci) {
+		super();
 		this.id = id;
 		this.full_name = full_name;
 		this.dependecia = dependecia;
-		this.unidad_organizacional = unidad;
+		this.id_dependecia = id_dependecia;
+		this.unidad_organizacional = unidad_organizacional;
+		this.id_unidad_organizacional = id_unidad_organizacional;
+		this.ci = ci;
 	}
 
 	public String getId() {

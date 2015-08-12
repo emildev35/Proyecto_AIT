@@ -23,7 +23,7 @@ public class GridInfbaja extends Grid{
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
+		setHeightByRows(8);
 	}
 	public void update(String grupo_contable, String auxiliar_contable){
 		removeAllColumns();
