@@ -11,8 +11,8 @@ import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
-import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 
 public class MovimientoImpl {
 	private EntityManagerFactory emf;
@@ -154,5 +154,11 @@ public class MovimientoImpl {
 		result_cabezera = (Integer) query_cabezera.getSingleResult();
 		return result_cabezera;
 		
+	}
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getActivos_Resolucion() {
+		Query query = this.em.createNativeQuery("EXEC Mvac_Activos_Resolucion");
+		List<Movimiento> resultlist = query.getResultList();		
+		return resultlist;
 	}
 }
