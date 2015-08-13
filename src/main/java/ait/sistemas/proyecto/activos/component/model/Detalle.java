@@ -1,14 +1,34 @@
 package ait.sistemas.proyecto.activos.component.model;
 
+import java.io.Serializable;
 import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
+import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
 
 /**
  * Detalle de Movimientos Movimiento, Devolucion
  * @author franzemil
  *
  */
-public class Detalle {
-	
+@SqlResultSetMapping(name = "detalle-movimiento", entities = { @EntityResult(entityClass = Detalle.class, fields = {
+	@FieldResult(name = "id_detalle", column = "id_detalle"),
+	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
+	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
+	@FieldResult(name = "nro_documento", column = "nro_documento"),
+	@FieldResult(name = "id_activo", column = "id_activo"),
+	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
+	@FieldResult(name = "id_motivo_baja", column = "id_motivo_baja"),
+	@FieldResult(name = "observacion", column = "observacion"),
+	@FieldResult(name = "fecha_registro", column = "fecha_registro")})})
+@Entity
+public class Detalle implements Serializable{
+	private static final long serialVersionUID = 1L;
+	@Id
+	private String id_detalle;
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
@@ -17,6 +37,8 @@ public class Detalle {
 	private short id_motivo_baja;
 	private String observacion;
 	private Date fecha_registro;
+	private String Nombre_Activo;
+	private String Motivo_Baja;
 	public Detalle() {
 	}
 	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
@@ -78,6 +100,18 @@ public class Detalle {
 	}
 	public void setFecha_registro(Date fecha_registro) {
 		this.fecha_registro = fecha_registro;
+	}
+	public String getNombre_Activo() {
+		return Nombre_Activo;
+	}
+	public void setNombre_Activo(String nombre_Activo) {
+		Nombre_Activo = nombre_Activo;
+	}
+	public String getMotivo_Baja() {
+		return Motivo_Baja;
+	}
+	public void setMotivo_Baja(String motivo_Baja) {
+		Motivo_Baja = motivo_Baja;
 	}
 	
 }

@@ -157,8 +157,18 @@ public class MovimientoImpl {
 	}
 	@SuppressWarnings("unchecked")
 	public List<Movimiento> getActivos_Resolucion() {
-		Query query = this.em.createNativeQuery("EXEC Mvac_Activos_Resolucion");
+//		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
+		Query query = this.em.createNativeQuery("EXEC Mvac_Activos_Resolucion", "cmovimiento");
 		List<Movimiento> resultlist = query.getResultList();		
 		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Detalle> getDetallesbyMovimiento(long nro_documento, short id_dependencia){
+		String str_detallesbymovimiento = "EXEC Mavc_GetDetallesByDocumento @Id_Dependencia=?1,@Nro_Documento=?2";
+		Query query = this.em.createNativeQuery(str_detallesbymovimiento, "detalle-movimiento");
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, nro_documento);
+		List<Detalle> result = (List<Detalle>)query.getResultList();
+		return result;
 	}
 }

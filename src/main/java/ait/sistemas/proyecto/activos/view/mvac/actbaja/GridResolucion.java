@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto.activos.view.mvac.actbaja;
 
+import java.util.Locale;
+
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 
@@ -7,6 +9,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.renderers.DateRenderer;
 
 	public class GridResolucion extends Grid{
 
@@ -29,7 +32,13 @@ import com.vaadin.ui.Grid;
 			setHeightMode(HeightMode.ROW);
 			setHeightByRows(5);
 
-			removeColumn("PAP_Fecha_Registro");
+			removeColumn("id_dependencia");
+			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("usuario");
+			removeColumn("tipo_movimiento");
+			removeColumn("detalles");
+			removeColumn("fecha_movimiento");
+			removeColumn("observacion");
 			
 			setWidth("100%");
 
@@ -44,7 +53,8 @@ import com.vaadin.ui.Grid;
 			Fecha_Documento_ReferenciaColumn.setHeaderCaption("Fecha Resolucion");
 			No_DocumentoColumn.setHeaderCaption("No Informe");
 			Fecha_DocumentoColumn.setHeaderCaption("Fecha Informe");
-			
+			Fecha_Documento_ReferenciaColumn.setRenderer(new DateRenderer("%1$te de %1$tB,  %1$tY",
+                    new Locale("es", "BO")));
 			Responsive.makeResponsive(this);
 		}
 	}

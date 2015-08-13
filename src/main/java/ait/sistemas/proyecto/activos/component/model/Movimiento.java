@@ -1,25 +1,47 @@
 package ait.sistemas.proyecto.activos.component.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
+import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
 
 /**
  * Movimiento de Activos para asginar un activo a un usuario
  * @author franzemil
  *
  */
+@SqlResultSetMapping(name = "cmovimiento", entities = { @EntityResult(entityClass = Movimiento.class, fields = {
+	@FieldResult(name = "id_cmovimiento", column = "id_cmovimiento"),
+	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
+	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
+	@FieldResult(name = "nro_documento", column = "nro_documento"),
+	@FieldResult(name = "id_usuario", column = "id_usuario"),
+	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
+	@FieldResult(name = "nro_documento_referencia", column = "nro_documento_referencia"),
+	@FieldResult(name = "fecha_nro_referencia", column = "fecha_nro_referencia"),
+	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
+	@FieldResult(name = "fecha_movimiento", column = "fecha_movimiento"),
+	@FieldResult(name = "detalles", column = "detalles"),
+	@FieldResult(name = "observacion", column = "observacion")
+	})})
+@Entity
 public class Movimiento {
 	
+	@Id
+	private String id_cmovimiento;
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private String id_usuario;
 	private short tipo_movimiento;
 	private String nro_documento_referencia;
-
 	private Date fecha_nro_referencia;
-	
 	private Date fecha_registro;
 	private Date fecha_movimiento;	
 	private List<Detalle> detalles;

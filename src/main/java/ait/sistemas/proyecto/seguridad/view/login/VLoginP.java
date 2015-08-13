@@ -23,6 +23,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -112,11 +113,11 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 					try {
 						result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
 						if(result!=null){
-							Notification.show("Encontrado");
-							getUI().getSession().setAttribute("user", result);
-							getUI().getPage().reload();
-							getUI().getNavigator().navigateTo(HomeView.URL);
+							UI.getCurrent().getSession().setAttribute("user", result);
+							UI.getCurrent().getPage().reload();
+							UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 						}else{
+							Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 						}
 					} catch (SQLException e) {
 						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);

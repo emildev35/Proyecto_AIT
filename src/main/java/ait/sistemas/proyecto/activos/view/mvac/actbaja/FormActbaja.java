@@ -3,6 +3,7 @@ package ait.sistemas.proyecto.activos.view.mvac.actbaja;
 	import java.util.ArrayList;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
@@ -40,7 +41,7 @@ import com.vaadin.ui.TextField;
 			setMargin(true);
 			setWidth("100%");
 
-			this.txt_documento= new TextField("Documento Resolucion de Baja");
+			this.txt_documento= new TextField("Nombre del Documento");
 			this.txt_ubicacion_documento = new TextField("Ubicacion del Documento");
 			this.mensajes = new ArrayList<BarMessage>();
 			
@@ -117,11 +118,6 @@ import com.vaadin.ui.TextField;
 //			long lnMilis = new Date().getTime();
 //			resul.setPAP_Fecha_Registro(new java.sql.Date(lnMilis));
 //			return resul;
-//		}
-//		public void setData(Movimiento data){	
-//			this.txt_id_partida.setValue(String.valueOf(data.getPAP_Partida()));
-//			this.txt_nombre_partida.setValue(String.valueOf(data.getPAP_Nombre_Partida()));
-//					
 //		}
 		@Override
 		public void valueChange(ValueChangeEvent event) {

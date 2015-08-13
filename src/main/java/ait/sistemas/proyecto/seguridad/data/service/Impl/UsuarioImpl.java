@@ -29,7 +29,7 @@ public class UsuarioImpl implements Dao<Usuario> {
 	private Date fecha_Registro;
 	
 	public UsuarioImpl() {
-		this.emf = Persistence.createEntityManagerFactory("AIT-Seguridad");
+			this.emf = Persistence.createEntityManagerFactory("AIT-Seguridad");
 		this.em = this.emf.createEntityManager();
 		this.fecha_Registro = new Date(new java.util.Date().getTime());
 	}

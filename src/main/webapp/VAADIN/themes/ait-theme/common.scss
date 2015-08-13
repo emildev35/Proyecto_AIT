@@ -3,6 +3,7 @@
 	.ait-content{
 		height: 100%;
 		//position: relative;
+			overflow: scroll;
 	}
 	.main-content{
 		height: 92% !important;
@@ -15,7 +16,7 @@
 		width: 100%;
 	}
 	.ait-content-form{
-	z-index:0 !important;
+		z-index:0 !important;
 	}
 	.ait-error-bar{
 		z-index:1 !important;

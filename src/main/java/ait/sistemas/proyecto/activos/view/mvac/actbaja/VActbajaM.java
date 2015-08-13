@@ -35,6 +35,7 @@ import com.vaadin.ui.VerticalLayout;
 		private Button btn_imprimir;
 		private Button btn_actualizar;
 		private GridResolucion grid_Actualizacion_baja;
+		private GridActbaja grid_Detalle;
 		private final MovimientoImpl movimiento_impl = new MovimientoImpl();
 		
 		
@@ -60,7 +61,7 @@ import com.vaadin.ui.VerticalLayout;
 			formContent.setSpacing(true	);
 			Panel frmPanel = new Panel();
 			frmPanel.setWidth("100%");
-			frmPanel.setCaption("Activos Fijos para dar de baja");
+			frmPanel.setCaption("Documento Resolucion de Baja");
 			frmPanel.setContent(this.frm_Actualizacion_baja);
 			formContent.setMargin(true);
 			formContent.addComponent(frmPanel);
@@ -69,7 +70,13 @@ import com.vaadin.ui.VerticalLayout;
 			gridPanel.setCaption("Seleccione la Resolucion");
 			gridPanel.setContent(this.grid_Actualizacion_baja);
 			formContent.setMargin(true);
+			Panel grid2Panel = new Panel();
+			grid2Panel.setWidth("100%");
+			grid2Panel.setCaption("Activos Fijos para dar de baja");
+			grid2Panel.setContent(this.grid_Detalle);
+			formContent.setMargin(true);
 			formContent.addComponent(gridPanel);
+			formContent.addComponent(grid2Panel);
 			formContent.addComponent(frmPanel);
 			this.frm_Actualizacion_baja.update();
 			Responsive.makeResponsive(formContent);
@@ -117,7 +124,9 @@ import com.vaadin.ui.VerticalLayout;
 		public void select(SelectionEvent event) {
 
 			if ((Movimiento)this.grid_Actualizacion_baja.getSelectedRow() != null) {
-				this.frm_Actualizacion_baja.setData((Movimiento)this.grid_Actualizacion_baja.getSelectedRow());	
+				Movimiento data =(Movimiento)this.grid_Actualizacion_baja.getSelectedRow();
+				this.frm_Actualizacion_baja.setData(data);	
+			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia());
 			}		
 		}
 		@Override

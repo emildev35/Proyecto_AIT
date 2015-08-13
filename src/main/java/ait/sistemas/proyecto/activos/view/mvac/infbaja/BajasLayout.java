@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.data.model.Motivo_Baja;
 import ait.sistemas.proyecto.activos.data.service.Impl.MotivobajaImpl;
 
-import com.google.gwt.cell.client.EditTextCell;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
