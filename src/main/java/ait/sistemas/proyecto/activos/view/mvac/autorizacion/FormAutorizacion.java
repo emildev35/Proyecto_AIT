@@ -5,6 +5,7 @@ import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.Auth;
 
 import com.vaadin.data.Validator.EmptyValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -12,14 +13,14 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
 
 public class FormAutorizacion extends GridLayout {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private TextField txt_pin = new TextField("PIN");
+	private PasswordField txt_pin = new PasswordField("PIN");
 	private TextArea tarea_motivo = new TextArea("Descripcion del Motivo");
 	
 	public List<BarMessage> mensajes = new ArrayList<BarMessage>();
@@ -58,6 +59,7 @@ public class FormAutorizacion extends GridLayout {
 	
 	public boolean validate() {
 		try{
+
 			this.binder_autorizacion.commit();
 			return true;
 		}catch(CommitException ex)
@@ -75,5 +77,9 @@ public class FormAutorizacion extends GridLayout {
 			this.mensajes.add(new BarMessage("Fomulario", Messages.NOT_SUCCESS_MESSAGE));
 			return false;
 		}
+	}
+
+	public String getPIN() {
+		return Auth.hash(this.txt_pin.getValue().toString());
 	}
 }

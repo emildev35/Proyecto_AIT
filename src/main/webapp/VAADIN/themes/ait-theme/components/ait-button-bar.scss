@@ -1,15 +1,17 @@
-@mixin ait-content-bar-button{
-	
-	.ait-buttons{	
-		
-		background-color: #e1e1e1;
-		padding: 1px;
+@mixin ait-content-bar-button { 
+
+	.ait-buttons { background-color:#e1e1e1;
+		padding: 5px;
 		position: fixed;
 		display: block;
-		bottom:0px;
+		bottom: 0px;
 		height: 5%;
 		width: 100%;
-		z-index:1 !important;
+		z-index: 1 !important;
 	}
 
+	.ait-buttons-btn {
+		padding: 5px;
+		height: 95%
+	}
 }
