@@ -7,6 +7,7 @@ import ait.sistemas.proyecto.common.component.Messages;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class PinForm extends VerticalLayout {
@@ -29,10 +30,13 @@ public class PinForm extends VerticalLayout {
 	}
 	
 	public void updatePin() {
-		String pin = String.valueOf(new Date().getTime() / 100);
-		int pos =  (int) Math.round(Math.random() * pin.length());
-		this.txt_pin.setValue(pin.substring(pos-1, pos)
-				+ pin.substring(pin.length() - 4, pin.length()));
+		try {
+			String pin = String.valueOf(new Date().getTime() / 100);
+			int pos = 1 + (int) Math.round(Math.random() * (pin.length() - 1));
+			this.txt_pin.setValue(pin.substring(pos - 1, pos) + pin.substring(pin.length() - 4, pin.length()));
+		} catch (Exception e) {
+			UI.getCurrent().getPage().reload();
+		}
 	}
 	
 	public String getCode() {

@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
 
 import javax.persistence.Entity;
@@ -15,8 +16,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Autorizaciones")
-@NamedQuery(name="Autorizacione.findAll", query="SELECT a FROM Autorizacione a")
-public class Autorizacione implements Serializable {
+@NamedQuery(name="Autorizacion.findAll", query="SELECT a FROM Autorizacion a")
+public class Autorizacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,11 +33,11 @@ public class Autorizacione implements Serializable {
 
 	private String AUT_CI_Autoriza;
 
-	private Time AUT_Fecha_Autorizacion;
+	private Date AUT_Fecha_Autorizacion;
 
-	private Time AUT_Fecha_Rechazo;
+	private Date AUT_Fecha_Rechazo;
 
-	private Time AUT_Fecha_Registro;
+	private Date AUT_Fecha_Registro;
 
 	private String AUT_ID_Usuario;
 
@@ -44,7 +45,9 @@ public class Autorizacione implements Serializable {
 
 	private String AUT_PIN_Autoriza_Rechaza;
 
-	public Autorizacione() {
+	private String AUT_Motivo_Autorizacion_Rechazo;
+	
+	public Autorizacion() {
 	}
 
 	public short getAUT_Dependencia() {
@@ -86,27 +89,27 @@ public class Autorizacione implements Serializable {
 		this.AUT_CI_Autoriza = AUT_CI_Autoriza;
 	}
 
-	public Time getAUT_Fecha_Autorizacion() {
+	public Date getAUT_Fecha_Autorizacion() {
 		return this.AUT_Fecha_Autorizacion;
 	}
 
-	public void setAUT_Fecha_Autorizacion(Time AUT_Fecha_Autorizacion) {
+	public void setAUT_Fecha_Autorizacion(Date AUT_Fecha_Autorizacion) {
 		this.AUT_Fecha_Autorizacion = AUT_Fecha_Autorizacion;
 	}
 
-	public Time getAUT_Fecha_Rechazo() {
+	public Date getAUT_Fecha_Rechazo() {
 		return this.AUT_Fecha_Rechazo;
 	}
 
-	public void setAUT_Fecha_Rechazo(Time AUT_Fecha_Rechazo) {
+	public void setAUT_Fecha_Rechazo(Date AUT_Fecha_Rechazo) {
 		this.AUT_Fecha_Rechazo = AUT_Fecha_Rechazo;
 	}
 
-	public Time getAUT_Fecha_Registro() {
+	public Date getAUT_Fecha_Registro() {
 		return this.AUT_Fecha_Registro;
 	}
 
-	public void setAUT_Fecha_Registro(Time AUT_Fecha_Registro) {
+	public void setAUT_Fecha_Registro(Date AUT_Fecha_Registro) {
 		this.AUT_Fecha_Registro = AUT_Fecha_Registro;
 	}
 
@@ -132,6 +135,14 @@ public class Autorizacione implements Serializable {
 
 	public void setAUT_PIN_Autoriza_Rechaza(String AUT_PIN_Autoriza_Rechaza) {
 		this.AUT_PIN_Autoriza_Rechaza = AUT_PIN_Autoriza_Rechaza;
+	}
+
+	public String getAUT_Motivo_Autorizacion_Rechazo() {
+		return AUT_Motivo_Autorizacion_Rechazo;
+	}
+
+	public void setAUT_Motivo_Autorizacion_Rechazo(String aUT_Motivo_Autorizacion_Rechazo) {
+		AUT_Motivo_Autorizacion_Rechazo = aUT_Motivo_Autorizacion_Rechazo;
 	}
 
 }

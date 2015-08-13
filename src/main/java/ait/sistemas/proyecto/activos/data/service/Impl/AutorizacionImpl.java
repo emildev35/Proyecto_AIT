@@ -21,7 +21,6 @@ public class AutorizacionImpl {
 	@SuppressWarnings("unchecked")
 	public List<DocumentoPendiente> getDocumentosPendientes(String id_usuario){
 		String str_query = "EXEC Mvac_Get_DocumentosbyUsuario @Id_Usuario=?1";
-		
 		Query query = this.em.createNativeQuery(str_query, "documento-pendiente");
 		query.setParameter(1, id_usuario);
 		List<DocumentoPendiente> result = query.getResultList();

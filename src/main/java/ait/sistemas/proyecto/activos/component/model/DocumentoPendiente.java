@@ -16,6 +16,7 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "dependencia_id", column = "dependencia_id"),
 	@FieldResult(name = "nombre_solicitante", column = "nombre_solicitante"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
+	@FieldResult(name = "unidad_organizacional_id", column = "unidad_organizacional_id"),
 	@FieldResult(name = "nro_autorizacion", column = "nro_autorizacion")})})
 @Entity
 public class DocumentoPendiente {
@@ -27,15 +28,15 @@ public class DocumentoPendiente {
 	private String ci_solicitante;
 	private String nombre_solicitante;
 	private String tipo_movimiento;
-	private String nro_autorizacion;
-	
+	private short nro_autorizacion;
+	private short unidad_organizacional_id;
 	
 	public DocumentoPendiente() {
 	}
 	
 	
 	public DocumentoPendiente(long nro_documento, short tipo_movimiento_id, Date fecha_movimiento, String ci_solicitante,
-			String nombre_solicitante, String tipo_solicitante, String nro_autorizacion) {
+			String nombre_solicitante, String tipo_solicitante, short nro_autorizacion) {
 		this.nro_documento = nro_documento;
 		this.tipo_movimiento_id = tipo_movimiento_id;
 		this.fecha_movimiento = fecha_movimiento;
@@ -43,6 +44,16 @@ public class DocumentoPendiente {
 		this.nombre_solicitante = nombre_solicitante;
 		this.tipo_movimiento = tipo_solicitante;
 		this.nro_autorizacion = nro_autorizacion;
+	}
+
+
+	public short getUnidad_organizacional_id() {
+		return unidad_organizacional_id;
+	}
+
+
+	public void setUnidad_organizacional_id(short unidad_organizacional_id) {
+		this.unidad_organizacional_id = unidad_organizacional_id;
 	}
 
 
@@ -116,12 +127,12 @@ public class DocumentoPendiente {
 	}
 
 
-	public String getNro_autorizacion() {
+	public short getNro_autorizacion() {
 		return nro_autorizacion;
 	}
 
 
-	public void setNro_autorizacion(String nro_autorizacion) {
+	public void setNro_autorizacion(short nro_autorizacion) {
 		this.nro_autorizacion = nro_autorizacion;
 	}
 
