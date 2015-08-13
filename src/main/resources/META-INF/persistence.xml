@@ -65,7 +65,8 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Unidades_OrganizacionalePK</class>
 		<class>ait.sistemas.proyecto.activos.component.model.ActivoGrid</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel</class>
-		
+		<class>ait.sistemas.proyecto.activos.component.model.DocumentoPendiente</class>   
+		<class>ait.sistemas.proyecto.activos.component.model.Detalle</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 					<property name="javax.persistence.jdbc.url"

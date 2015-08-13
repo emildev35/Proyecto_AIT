@@ -3,7 +3,6 @@ package ait.sistemas.proyecto.activos.view.rrhh.autorizado;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoAutorizacionImpl;
-import ait.sistemas.proyecto.activos.view.rrhh.ciudad.GridCiudad;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 

@@ -33,34 +33,33 @@ import com.vaadin.ui.UI;
 @CDIUI("")
 @Widgetset("ait.sistemas.proyecto.AitWidgetset")
 public class AitUI extends UI {
-
-
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Inject
 	private CDIViewProvider viewprovider;
 	Navigator navigator;
-
+	
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
-		//Comentado para motivo de pruebas
-		/*if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
-			SessionModel result = Auth.getDefaultUser();
-			getUI().getSession().setAttribute("user", result);
-		}*/
-		if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
-		SessionModel result;
-		try {
-			result = Auth.login("KI-VASQ-IM", "3Enero199$");
-			getUI().getSession().setAttribute("user", result);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		// Comentado para motivo de pruebas
+		/*
+		 * if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
+		 * SessionModel result = Auth.getDefaultUser();
+		 * getUI().getSession().setAttribute("user", result); }
+		 */
+		if (((SessionModel) getUI().getSession().getAttribute("user")) == null) {
+			SessionModel result;
+			try {
+				result = Auth.login("KI-VASQ-IM", "3Enero199$");
+				getUI().getSession().setAttribute("user", result);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		CssLayout layout = new CssLayout();
 		setContent(new MainView(layout));
-		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(
-				layout);
+		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(layout);
 		this.navigator = new Navigator(this, viewDisplay);
 		this.navigator.addProvider(viewprovider);
 		

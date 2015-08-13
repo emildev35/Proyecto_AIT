@@ -2,13 +2,31 @@ package ait.sistemas.proyecto.activos.component.model;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
+import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
+
 /**
  * Detalle de Movimientos Movimiento, Devolucion
  * @author franzemil
  *
  */
+@SqlResultSetMapping(name = "detalle-movimiento", entities = { @EntityResult(entityClass = Detalle.class, fields = {
+	@FieldResult(name = "id_detalle", column = "id_detalle"),
+	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
+	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
+	@FieldResult(name = "nro_documento", column = "nro_documento"),
+	@FieldResult(name = "id_activo", column = "id_activo"),
+	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
+	@FieldResult(name = "id_motivo_baja", column = "id_motivo_baja"),
+	@FieldResult(name = "observacion", column = "observacion"),
+	@FieldResult(name = "fecha_registro", column = "fecha_registro")})})
+@Entity
 public class Detalle {
-	
+	@Id
+	private String id_detalle;
 	private short id_dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;

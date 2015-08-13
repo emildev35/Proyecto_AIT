@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.autorizado;
+package ait.sistemas.proyecto.activos.view.rrhh.generardorpin;
 
 import ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoAutorizacionImpl;
@@ -8,26 +8,20 @@ import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 
-public class GridAutorizacion extends Grid {
-	private TipoAutorizacionImpl tipo_autorizacion_impl = new TipoAutorizacionImpl();
-	private static final long serialVersionUID = 1L;
-	private BeanItemContainer<TipoAutorizacionModel> bean_tipo_autorizacion;
 
-	public GridAutorizacion() {
-		buildGrid();
-	}
-	public void update() {
-		this.removeAllColumns();
-		bean_tipo_autorizacion = null;
-		buildGrid();
-	}
-	public void buildGrid(){
-		bean_tipo_autorizacion = new BeanItemContainer<TipoAutorizacionModel>(
-				TipoAutorizacionModel.class, this.tipo_autorizacion_impl.getall());
-		setContainerDataSource(bean_tipo_autorizacion);
+public class GridTipoAutorizacion extends Grid{
+	
+	private static final long serialVersionUID = 1L;
+	final TipoAutorizacionImpl tipo_autorizacionimpl = new TipoAutorizacionImpl();
+	private BeanItemContainer<TipoAutorizacionModel> bean_autorizacion;
+	
+	public GridTipoAutorizacion(String usuario) {
+		bean_autorizacion = new BeanItemContainer<TipoAutorizacionModel>(
+				TipoAutorizacionModel.class, this.tipo_autorizacionimpl.getallbyusuario(usuario));
+		setContainerDataSource(bean_autorizacion);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
-		
+		setSelectionMode(SelectionMode.NONE);
+		setHeightByRows(4);
 		removeColumn("dependencia_id");	
 		removeColumn("ci");	
 		removeColumn("nivel_autorizacion_id");	

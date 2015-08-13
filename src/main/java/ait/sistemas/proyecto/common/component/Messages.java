@@ -49,6 +49,8 @@ public class Messages {
 	public static final String ERROR_EQUALS_PASSWORD = "Las contraseñas no son iguales";
 	public static final String LOGIN_ERROR = "Login Incorrecto";
 	public static final String NUMBER_VALUE = "El formato no es correcto";
+	public static final String PIN_MESSAGES = "* El PIN Generado es de uso exclusivo para Autorizar Documentos de Movimientos de Activos Fijos";
+	public static final String PIN_MESSAGES_2 = "* El PIN Generado esta bajo su responsabilidad y no debe ser divulgado a terceros";
 
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel;
 
+@SuppressWarnings("unchecked")
 public class TipoAutorizacionImpl {
 	
 	private EntityManagerFactory emf;
@@ -40,4 +41,15 @@ public class TipoAutorizacionImpl {
 		List<TipoAutorizacionModel> result = query.getResultList();
 		return result;
 	}
+	
+	
+	public List<TipoAutorizacionModel> getallbyusuario(String id_usuario) {
+		String str_get_by_dependencia = "EXEC Act_getTipoAutorizacionByUsuario @Id_Usuario=?1";
+		Query query = this.em.createNativeQuery(str_get_by_dependencia, "tipo-autorizacion");
+		query.setParameter(1, id_usuario);
+		List<TipoAutorizacionModel> result = query.getResultList();
+		this.em.close();
+		return result;
+	}
+	
 }
