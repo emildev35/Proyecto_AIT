@@ -12,8 +12,8 @@
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Ubicaciones_Fisica</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel</class>
-		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>	
-		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>	
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>
+		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>
 		<properties>
 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
@@ -65,12 +65,13 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Unidades_OrganizacionalePK</class>
 		<class>ait.sistemas.proyecto.activos.component.model.ActivoGrid</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel</class>
-		<class>ait.sistemas.proyecto.activos.component.model.DocumentoPendiente</class>   
+		<class>ait.sistemas.proyecto.activos.component.model.DocumentoPendiente</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Detalle</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Movimiento</class>
+		<class>ait.sistemas.proyecto.activos.component.model.TipoCambio</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
-					<property name="javax.persistence.jdbc.url"
+			<property name="javax.persistence.jdbc.url"
 				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
