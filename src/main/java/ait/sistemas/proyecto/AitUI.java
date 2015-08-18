@@ -3,13 +3,10 @@ package ait.sistemas.proyecto;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
-import javax.jms.Session;
 
 import ait.sistemas.proyecto.common.view.MainView;
 import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
-import ait.sistemas.proyecto.seguridad.data.model.Usuario;
-import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -19,7 +16,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 /**

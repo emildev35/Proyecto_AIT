@@ -83,7 +83,7 @@ public class VInfbajaA extends VerticalLayout implements View, ClickListener {
 		// formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
 
-		Panel gridData = new Panel("Ki");
+		Panel gridData = new Panel();
 		gridData.setScrollLeft(1);
 		gridData.setHeight("400px");
 		gridData.setCaption("Activos Seleccionados");

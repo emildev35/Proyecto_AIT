@@ -55,6 +55,8 @@ import com.vaadin.ui.renderers.DateRenderer;
 			Fecha_DocumentoColumn.setHeaderCaption("Fecha Informe");
 			Fecha_Documento_ReferenciaColumn.setRenderer(new DateRenderer("%1$te de %1$tB,  %1$tY",
                     new Locale("es", "BO")));
+			Fecha_DocumentoColumn.setRenderer(new DateRenderer("%1$te de %1$tB,  %1$tY",
+					new Locale("es", "BO")));
 			Responsive.makeResponsive(this);
 		}
 	}

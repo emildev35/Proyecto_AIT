@@ -25,7 +25,10 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "nombre_activo", column = "nombre_activo"),
 	@FieldResult(name = "motivo_baja", column = "motivo_baja"),
 	@FieldResult(name = "observacion", column = "observacion"),
-	@FieldResult(name = "fecha_registro", column = "fecha_registro")})})
+	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
+	@FieldResult(name = "nombre_activo", column = "nombre_activo"),
+	@FieldResult(name = "motivo_baja", column = "motivo_baja")
+	})})
 @Entity
 public class Detalle implements Serializable{
 	private static final long serialVersionUID = 1L;

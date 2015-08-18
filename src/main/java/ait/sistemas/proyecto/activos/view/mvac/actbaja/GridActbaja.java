@@ -15,7 +15,29 @@ import com.vaadin.ui.Grid;
 		private BeanItemContainer<Detalle> bean_detalle;
 
 		public GridActbaja() {
-		
+			bean_detalle = new BeanItemContainer<Detalle>(Detalle.class);
+			setContainerDataSource(bean_detalle);
+			setHeightMode(HeightMode.ROW);
+			setWidth("100%");
+			removeColumn("id_dependencia");
+			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("nro_documento");
+			removeColumn("tipo_movimiento");
+			removeColumn("fecha_registro");
+			removeColumn("id_motivo_baja");
+			setColumnOrder("id_activo", "nombre_activo","motivo_baja","observacion");
+			 	
+			Grid.Column id_activoColumn = this.getColumn("id_activo");
+			Grid.Column nombre_activoColumn = this.getColumn("nombre_activo");
+			Grid.Column motivo_bajaColumn = this.getColumn("motivo_baja");
+			Grid.Column observacionColumn = this.getColumn("observacion");
+			
+			id_activoColumn.setHeaderCaption("Codigo");
+			nombre_activoColumn.setHeaderCaption("Nombre del Activo");
+			motivo_bajaColumn.setHeaderCaption("Causal o motivo de baja");
+			observacionColumn.setHeaderCaption("Observaciones");
+			
+			setHeightByRows(5);
 		}
 		public void update(long nro_documenro, short id_dependencia) {
 			this.removeAllColumns();
@@ -24,20 +46,23 @@ import com.vaadin.ui.Grid;
 		}
 		public void buildGrid(long nro_documenro, short id_dependencia){
 			bean_detalle = new BeanItemContainer<Detalle>(Detalle.class);
-			bean_detalle.addAll(movimiento_impl.getDetallesbyMovimiento(nro_documenro, id_dependencia));
+			bean_detalle.addAll(movimiento_impl.getDetallesbyCmovimiento(nro_documenro, id_dependencia));
 			setContainerDataSource(bean_detalle);
-			setHeightMode(HeightMode.ROW);
-			setHeightByRows(5);
 
+//			removeColumn("id_detalle");
+			removeColumn("id_dependencia");
 			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("nro_documento");
+			removeColumn("tipo_movimiento");
+			removeColumn("fecha_registro");
+			removeColumn("id_motivo_baja");
 			
-			setWidth("100%");
 
-			setColumnOrder("id_activo", "Nombre_Activo","Motivo_Baja","observacion");
+			setColumnOrder("id_activo", "nombre_activo","motivo_baja","observacion");
 			
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
-			Grid.Column nombre_activoColumn = this.getColumn("Nombre_Activo");
-			Grid.Column motivo_bajaColumn = this.getColumn("Motivo_Baja");
+			Grid.Column nombre_activoColumn = this.getColumn("nombre_activo");
+			Grid.Column motivo_bajaColumn = this.getColumn("motivo_baja");
 			Grid.Column observacionColumn = this.getColumn("observacion");
 			
 			id_activoColumn.setHeaderCaption("Codigo");

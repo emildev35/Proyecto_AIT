@@ -3,7 +3,7 @@ package ait.sistemas.proyecto.activos.view.mvac.actbaja;
 	import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
+import ait.sistemas.proyecto.activos.component.DocumentUploader;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -20,15 +20,17 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 
 	public class FormActbaja extends GridLayout implements ValueChangeListener{
 		private static final long serialVersionUID = 1L;
 		private TextField txt_documento;
-		public TextField txt_ubicacion_documento;
+		private DocumentUploader reciver = new DocumentUploader();
+		public Upload field_ubicacion_documento = new Upload("Direccion Documento", reciver);
+		
 
 		private List<BarMessage> mensajes;
 
-		private MovimientoImpl movimiento_impl = new MovimientoImpl();
 		private PropertysetItem pitm_Actualizacion_Baja = new PropertysetItem();
 		private FieldGroup binder_Actualizacion_Baja;
 
@@ -41,7 +43,6 @@ import com.vaadin.ui.TextField;
 			setWidth("100%");
 
 			this.txt_documento= new TextField("Nombre del Documento");
-			this.txt_ubicacion_documento = new TextField("Ubicacion del Documento");
 			this.mensajes = new ArrayList<BarMessage>();
 			
 			pitm_Actualizacion_Baja.addItemProperty("documento", new ObjectProperty<String>(("")));
@@ -51,19 +52,16 @@ import com.vaadin.ui.TextField;
 			this.binder_Actualizacion_Baja = new FieldGroup(this.pitm_Actualizacion_Baja);
 
 			binder_Actualizacion_Baja.bind(this.txt_documento, "documento");
-			binder_Actualizacion_Baja.bind(this.txt_ubicacion_documento, "ubicacion_documento");
 			binder_Actualizacion_Baja.clear();
 
 			this.txt_documento.setRequired(true);
 			this.txt_documento.addValidator(new NullValidator("No Nulo", false));
 			this.txt_documento.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 60), 3,60,false));
-			this.txt_ubicacion_documento.setRequired(true);
-			this.txt_ubicacion_documento.addValidator(new NullValidator("No Nulo", false));
-			this.txt_ubicacion_documento.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 100), 3,100,false));
 			
 			txt_documento.setWidth("90%");
-			txt_ubicacion_documento.setWidth("90%");
-
+			this.field_ubicacion_documento.setWidth("90%");
+			this.field_ubicacion_documento.setWidth("90%");
+			this.field_ubicacion_documento.setButtonCaption("Adjuntar");
 			buildContent();
 			Responsive.makeResponsive(this);
 		}
@@ -71,7 +69,7 @@ import com.vaadin.ui.TextField;
 			setColumnExpandRatio(0, 2);
 			setColumnExpandRatio(1, 2);
 			addComponent(this.txt_documento, 0,0);
-			addComponent(this.txt_ubicacion_documento, 1,0);
+			addComponent(this.field_ubicacion_documento, 1,0);
 
 		}
 		
@@ -99,27 +97,24 @@ import com.vaadin.ui.TextField;
 				}catch (InvalidValueException ex) {
 					this.mensajes.add(new BarMessage(txt_documento.getCaption(), ex.getMessage()));
 				}
-				try {
-					this.txt_ubicacion_documento.validate();
-				}catch(EmptyValueException ex){
-					this.mensajes.add(new BarMessage(txt_ubicacion_documento.getCaption(), Messages.EMPTY_MESSAGE));
-				}catch (InvalidValueException ex) {
-					this.mensajes.add(new BarMessage(txt_ubicacion_documento.getCaption(), ex.getMessage()));
-				}
+				
+					if(this.reciver.getFile().equals("")){
+						this.mensajes.add(new BarMessage(field_ubicacion_documento.getCaption(), Messages.EMPTY_MESSAGE));
+					}
 					
 				return false;
 			}		
 		}
-//		public Detalle getData(){
-//			Partidas_Presupuestaria resul = new Partidas_Presupuestaria();
-//			resul.setPAP_Partida(Integer.parseInt(this.txt_id_partida.getValue()));
-//			resul.setPAP_Nombre_Partida(this.txt_nombre_partida.getValue());
-//			long lnMilis = new Date().getTime();
-//			resul.setPAP_Fecha_Registro(new java.sql.Date(lnMilis));
-//			return resul;
-//		}
+		
 		@Override
 		public void valueChange(ValueChangeEvent event) {
+		}
+
+		public String getDireccionDocumento() {
+			return reciver.getFile();
+		}
+		public String getNombreDocumento() {
+			return this.txt_documento.getValue().toString();
 		}
 	}
 
