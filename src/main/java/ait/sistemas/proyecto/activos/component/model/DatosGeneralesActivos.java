@@ -9,8 +9,10 @@ public class DatosGeneralesActivos {
 	private String nombre_activo;
 	private short tipo_activo;
 	private Date fecha_compra;
+	private Date fecha_incorporacion;
 	private BigDecimal valor;
-	private BigDecimal tipo_cambio;
+	private BigDecimal tipo_cambio_ufv;
+	private BigDecimal tipo_cambio_dolar;
 	private String id_grupo_contable;
 	private String id_auxiliar_contalbe;
 	private int vida_util;
@@ -22,17 +24,20 @@ public class DatosGeneralesActivos {
 	public DatosGeneralesActivos() {
 	}
 
-	public DatosGeneralesActivos(long id_activo, short id_dependencia, String nombre_activo,
-			short tipo_activo, Date fecha_compra, BigDecimal valor, BigDecimal tipo_cambio, String id_grupo_contable,
-			String id_auxiliar_contalbe, int vida_util, int id_fuente_financiamiento,
-			short id_organimismo_financiador, int id_ubicacion_fisica, Date fecha_como_dato) {
+
+	public DatosGeneralesActivos(long id_activo, short id_dependencia, String nombre_activo, short tipo_activo,
+			Date fecha_compra, Date fecha_incorporacion, BigDecimal valor, BigDecimal tipo_cambio_ufv,
+			BigDecimal tipo_cambio_dolar, String id_grupo_contable, String id_auxiliar_contalbe, int vida_util,
+			int id_fuente_financiamiento, short id_organimismo_financiador, int id_ubicacion_fisica, Date fecha_como_dato) {
 		this.id_activo = id_activo;
 		this.id_dependencia = id_dependencia;
 		this.nombre_activo = nombre_activo;
 		this.tipo_activo = tipo_activo;
 		this.fecha_compra = fecha_compra;
+		this.fecha_incorporacion = fecha_incorporacion;
 		this.valor = valor;
-		this.tipo_cambio = tipo_cambio;
+		this.tipo_cambio_ufv = tipo_cambio_ufv;
+		this.tipo_cambio_dolar = tipo_cambio_dolar;
 		this.id_grupo_contable = id_grupo_contable;
 		this.id_auxiliar_contalbe = id_auxiliar_contalbe;
 		this.vida_util = vida_util;
@@ -41,6 +46,7 @@ public class DatosGeneralesActivos {
 		this.id_ubicacion_fisica = id_ubicacion_fisica;
 		this.fecha_como_dato = fecha_como_dato;
 	}
+
 
 	public long getId_activo() {
 		return id_activo;
@@ -90,13 +96,36 @@ public class DatosGeneralesActivos {
 		this.valor = valor;
 	}
 
-	public BigDecimal getTipo_cambio() {
-		return tipo_cambio;
+
+	public Date getFecha_incorporacion() {
+		return fecha_incorporacion;
 	}
 
-	public void setTipo_cambio(BigDecimal tipo_cambio) {
-		this.tipo_cambio = tipo_cambio;
+
+	public void setFecha_incorporacion(Date fecha_incorporacion) {
+		this.fecha_incorporacion = fecha_incorporacion;
 	}
+
+
+	public BigDecimal getTipo_cambio_ufv() {
+		return tipo_cambio_ufv;
+	}
+
+
+	public void setTipo_cambio_ufv(BigDecimal tipo_cambio_ufv) {
+		this.tipo_cambio_ufv = tipo_cambio_ufv;
+	}
+
+
+	public BigDecimal getTipo_cambio_dolar() {
+		return tipo_cambio_dolar;
+	}
+
+
+	public void setTipo_cambio_dolar(BigDecimal tipo_cambio_dolar) {
+		this.tipo_cambio_dolar = tipo_cambio_dolar;
+	}
+
 
 	public String getId_grupo_contable() {
 		return id_grupo_contable;

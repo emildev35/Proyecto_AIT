@@ -1,9 +1,6 @@
 package ait.sistemas.proyecto.activos.view.mvac.autorizacion;
 
-import java.sql.Date;
 import java.util.List;
-
-import org.eclipse.persistence.internal.dbws.SOAPAttachmentHandler;
 
 import ait.sistemas.proyecto.activos.component.grid.GridDetalleActivo;
 import ait.sistemas.proyecto.activos.component.model.DocumentoPendiente;
@@ -115,7 +112,7 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Movimientos de Activos Fijos>>"));
 		nav.addComponent(new Label("Autorizaciones>>"));
-	
+		
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -139,25 +136,35 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_aprobar ||event.getButton() == this.btn_rechazar) {
+		if (event.getButton() == this.btn_aprobar || event.getButton() == this.btn_rechazar) {
 			if (this.grid_documentos.getSelectedRow() != null) {
 				if (this.frm_autorizacion.validate()) {
 					java.sql.Date fecha = new java.sql.Date(new java.util.Date().getTime());
-					
 					Autorizacion autorizacion = new Autorizacion();
 					autorizacion.setAUT_CI_Autoriza(session.getCi());
 					autorizacion.setAUT_Dependencia(documento_seleccionado.getDependencia_id());
 					autorizacion.setAUT_Fecha_Registro(fecha);
-//					 (autorizacionimpol.add(this.frm_solicitud.getData())>0)
-//					 {
-//					 this.frm_solicitud.clear();
-//					 Notification.show(Messages.SUCCESS_MESSAGE);
-//					 }
-//					 else{
-//					 Notification.show(Messages.NOT_SUCCESS_MESSAGE,
-//					 Type.ERROR_MESSAGE);
-//					
-//					 }
+					if (event.getButton() == btn_aprobar) {
+						autorizacion.setAUT_Fecha_Autorizacion(fecha);
+					} else {
+						autorizacion.setAUT_Fecha_Rechazo(fecha);
+					}
+					autorizacion.setAUT_ID_Usuario(session.getId());
+					autorizacion.setAUT_Motivo_Autorizacion_Rechazo(frm_autorizacion.getMotivo());
+					autorizacion.setAUT_No_Documento_Autorizado(documento_seleccionado.getNro_documento());
+					autorizacion.setAUT_Orden_Autorizacion(documento_seleccionado.getNro_autorizacion());
+					autorizacion.setAUT_PIN_Autoriza_Rechaza(frm_autorizacion.getPIN());
+					autorizacion.setAUT_Tipo_Movimiento(documento_seleccionado.getTipo_movimiento_id());
+					autorizacion.setAUT_Unidad_Organizacional(documento_seleccionado.getUnidad_organizacional_id());
+					
+					if (autorizacionimpl.add(autorizacion) > 0) {
+						this.frm_autorizacion.clear();
+						Notification.show(Messages.SUCCESS_MESSAGE);
+					} else {
+						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+						
+					}
+					
 				} else {
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 				}

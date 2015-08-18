@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
+import ait.sistemas.proyecto.activos.component.model.TipoCambio;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
@@ -20,6 +21,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.InmuebleImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TiposactImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
@@ -37,6 +39,7 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -64,7 +67,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public TextField txt_nombre_activo = new TextField("Nombre del Activo");
 	public DateField dtf_fecha_compra = new DateField("Fecha Compra");
 	public TextField txt_valor_compra = new TextField("Valor de la Compra (Bs)", "######,###BS");
-	public TextField txt_tipo_cambio = new TextField("Tipo Cambio");
+	public DateField dtf_fecha_incorporacion = new DateField("Fecha de Incorporacion");
+	public TextField txt_tipo_cambio_ufv = new TextField("Tipo Cambio UFV");
+	public TextField txt_tipo_cambio_dolar = new TextField("Tipo Cambio Dolar");
 	public TextField txt_vida_util = new TextField("Vida Util (Años)");
 	public ComboBox cb_grupo_contable = new ComboBox("Grupo Contable");
 	public ComboBox cb_auxiliar_contable = new ComboBox("Auxiliar Contable");
@@ -85,6 +90,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	private final InmuebleImpl inmuebleimpl = new InmuebleImpl();
 	private final UbicacionImpl ubicacionimpl = new UbicacionImpl();
 	private final ActivoImpl activoimpl = new ActivoImpl();
+	private final TipoCambioImpl tipocambioimpl = new TipoCambioImpl();
+	
 	private SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
@@ -102,8 +109,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_codigo_activo.setWidth("90%");
 		this.txt_nombre_activo.setWidth("90%");
 		this.dtf_fecha_compra.setWidth("90%");
+		this.dtf_fecha_incorporacion.setWidth("90%");
 		this.txt_valor_compra.setWidth("90%");
-		this.txt_tipo_cambio.setWidth("90%");
+		this.txt_tipo_cambio_ufv.setWidth("90%");
+		this.txt_tipo_cambio_dolar.setWidth("90%");
 		this.txt_vida_util.setWidth("90%");
 		this.cb_grupo_contable.setWidth("90%");
 		this.cb_auxiliar_contable.setWidth("90%");
@@ -117,8 +126,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		pitmDatosGenerales.addItemProperty("tipo_activo", new ObjectProperty<Tipos_Activo>(new Tipos_Activo()));
 		pitmDatosGenerales.addItemProperty("nombre_activo", new ObjectProperty<String>(""));
 		pitmDatosGenerales.addItemProperty("fecha_compra", new ObjectProperty<Date>(new Date()));
+		pitmDatosGenerales.addItemProperty("fecha_incorporacion", new ObjectProperty<Date>(new Date()));
 		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
-		pitmDatosGenerales.addItemProperty("tipo_cambio", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
+		pitmDatosGenerales.addItemProperty("tipo_cambio_ufv", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
+		pitmDatosGenerales.addItemProperty("tipo_cambio_dolar", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
 		pitmDatosGenerales.addItemProperty("vida_util", new ObjectProperty<Integer>(0));
 		pitmDatosGenerales
 				.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
@@ -131,7 +142,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		pitmDatosGenerales.addItemProperty("ubicacion_fisica", new ObjectProperty<UbicacionesFisicasModel>(
 				new UbicacionesFisicasModel()));
 		pitmDatosGenerales.addItemProperty("inmueble", new ObjectProperty<InmuebleModel>(new InmuebleModel()));
-		pitmDatosGenerales.addItemProperty("fecha_incorporacion", new ObjectProperty<Date>(new Date()));
+		pitmDatosGenerales.addItemProperty("fecha_comodato", new ObjectProperty<Date>(new Date()));
 		
 		this.binderDatosGeneraler = new FieldGroup(pitmDatosGenerales);
 		
@@ -139,8 +150,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		binderDatosGeneraler.bind(this.txt_codigo_activo, "codigo");
 		binderDatosGeneraler.bind(this.txt_nombre_activo, "nombre_activo");
 		binderDatosGeneraler.bind(this.dtf_fecha_compra, "fecha_compra");
+		binderDatosGeneraler.bind(this.dtf_fecha_incorporacion, "fecha_incorporacion");
 		binderDatosGeneraler.bind(this.txt_valor_compra, "valor_compra");
-		binderDatosGeneraler.bind(this.txt_tipo_cambio, "tipo_cambio");
+		binderDatosGeneraler.bind(this.txt_tipo_cambio_ufv, "tipo_cambio_ufv");
+		binderDatosGeneraler.bind(this.txt_tipo_cambio_dolar, "tipo_cambio_dolar");
 		binderDatosGeneraler.bind(this.txt_vida_util, "vida_util");
 		binderDatosGeneraler.bind(this.cb_grupo_contable, "grupo_contable");
 		binderDatosGeneraler.bind(this.cb_auxiliar_contable, "auxiliar_contable");
@@ -148,7 +161,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		binderDatosGeneraler.bind(this.cb_organismo_financiador, "organismo_financiador");
 		binderDatosGeneraler.bind(this.cb_ubicacion_fisica, "ubicacion_fisica");
 		binderDatosGeneraler.bind(this.cb_inmueble, "inmueble");
-		binderDatosGeneraler.bind(this.dtf_fecha_comodato, "fecha_incorporacion");
+		binderDatosGeneraler.bind(this.dtf_fecha_comodato, "fecha_comodato");
 		
 		this.cb_tipo_activo.setRequired(true);
 		this.cb_tipo_activo.addValidator(new NullValidator("", false));
@@ -158,10 +171,14 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_nombre_activo.addValidator(new NullValidator("", false));
 		this.dtf_fecha_compra.setRequired(true);
 		this.dtf_fecha_compra.addValidator(new NullValidator("", false));
+		this.dtf_fecha_incorporacion.setRequired(true);
+		this.dtf_fecha_incorporacion.addValidator(new NullValidator("", false));
 		this.txt_valor_compra.setRequired(true);
 		this.txt_valor_compra.addValidator(new NullValidator("", false));
-		this.txt_tipo_cambio.setRequired(true);
-		this.txt_tipo_cambio.addValidator(new NullValidator("", false));
+		this.txt_tipo_cambio_ufv.setRequired(true);
+		this.txt_tipo_cambio_ufv.addValidator(new NullValidator("", false));
+		this.txt_tipo_cambio_dolar.setRequired(true);
+		this.txt_tipo_cambio_dolar.addValidator(new NullValidator("", false));
 		this.txt_vida_util.setRequired(true);
 		this.txt_vida_util.addValidator(new NullValidator("", false));
 		this.cb_grupo_contable.setRequired(true);
@@ -179,6 +196,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
 		this.cb_inmueble.addValueChangeListener(this);
 		this.cb_ubicacion_fisica.setInputPrompt("Seleccione una Ubicacion Física");
+		this.dtf_fecha_incorporacion.addValueChangeListener(this);
+		this.txt_tipo_cambio_dolar.setEnabled(false);
+		this.txt_tipo_cambio_ufv.setEnabled(false);
 		
 		buildForm();
 		Responsive.makeResponsive(this);
@@ -194,7 +214,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		
 		addComponent(this.dtf_fecha_compra, 0, 2);
 		addComponent(this.txt_valor_compra, 1, 2);
-		addComponent(this.txt_tipo_cambio, 2, 2);
+		
+		addComponent(this.dtf_fecha_incorporacion, 2, 2);
+		addComponent(this.txt_tipo_cambio_ufv, 3, 2);
+		addComponent(this.txt_tipo_cambio_dolar, 4, 2);
 		
 		addComponent(this.cb_grupo_contable, 0, 3, 1, 3);
 		addComponent(this.cb_auxiliar_contable, 2, 3, 3, 3);
@@ -221,7 +244,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	private void clean() {
 		this.binderDatosGeneraler.clear();
-		this.txt_tipo_cambio.setValue("0,0");
+		this.txt_tipo_cambio_ufv.setValue("0,0");
+		this.txt_tipo_cambio_dolar.setValue("0,0");
 		this.txt_valor_compra.setValue("0,0");
 		this.txt_vida_util.setValue("0");
 		buildtxtIdActivo();
@@ -317,15 +341,16 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	}
 	
 	public Component buildMessages() {
-		
 		CssLayout hl_errores = new CssLayout();
 		hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		for (BarMessage barMessage : this.mensajes) {
 			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
+			lbError.setContentMode(ContentMode.HTML);
 			hl_errores.addComponent(lbError);
 		}
+		this.mensajes = new ArrayList<BarMessage>();
 		return hl_errores;
 	}
 	
@@ -375,11 +400,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			}
 			
 			try {
-				this.txt_tipo_cambio.validate();
+				this.txt_tipo_cambio_ufv.validate();
 			} catch (EmptyValueException eve) {
-				this.mensajes.add(new BarMessage(txt_tipo_cambio.getCaption(), Messages.EMPTY_MESSAGE));
+				this.mensajes.add(new BarMessage(txt_tipo_cambio_ufv.getCaption(), Messages.EMPTY_MESSAGE));
 			} catch (InvalidValueException ive) {
-				this.mensajes.add(new BarMessage(txt_tipo_cambio.getCaption(), ive.getMessage()));
+				this.mensajes.add(new BarMessage(txt_tipo_cambio_ufv.getCaption(), ive.getMessage()));
 			}
 			
 			try {
@@ -452,7 +477,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				save();
 				getUI().getSession().setAttribute("activo", null);
 				Notification.show(Messages.SUCCESS_MESSAGE);
-
+				
 			} else {
 				father.addComponent(buildMessages());
 			}
@@ -479,8 +504,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		datos_generales.setNombre_activo(this.txt_nombre_activo.getValue());
 		datos_generales.setId_activo(Long.parseLong(this.txt_codigo_activo.getValue()));
 		datos_generales.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
+		datos_generales.setFecha_incorporacion(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
 		datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue()));
-		datos_generales.setTipo_cambio(new BigDecimal(txt_tipo_cambio.getValue()));
+		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue()));
+		datos_generales.setTipo_cambio_dolar(new BigDecimal(txt_tipo_cambio_dolar.getValue()));
 		datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue()).getGRC_Grupo_Contable());
 		datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable.getValue())
 				.getAUC_Auxiliar_Contable());
@@ -516,6 +543,26 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			InmuebleModel inmueble = (InmuebleModel) this.cb_inmueble.getValue();
 			buildcbUbicacionesFisicas(inmueble.getINM_Inmueble());
 		}
+		
+		if (this.dtf_fecha_incorporacion.getValue() != null && event.getProperty().getValue() == this.dtf_fecha_incorporacion.getValue()) {
+			List<TipoCambio> tipo_cambio = this.tipocambioimpl.getTipoCambio(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
+				
+			if(tipo_cambio.size()==0){
+				this.mensajes.add(new BarMessage("TIPO CAMBIO", Messages.EMPTY_TIPO_CAMBIO));
+				father.addComponent(buildMessages());
+				this.txt_tipo_cambio_dolar.setEnabled(true);
+				this.txt_tipo_cambio_ufv.setEnabled(true);
+			}else{
+				this.txt_tipo_cambio_dolar.setEnabled(false);
+				this.txt_tipo_cambio_ufv.setEnabled(false);
+				if (tipo_cambio.get(0).getMoneda().equals("SUS")) {
+					this.txt_tipo_cambio_dolar.setValue(tipo_cambio.get(0).getTipo_cambio().toString().replace(".", ","));
+					this.txt_tipo_cambio_ufv.setValue(tipo_cambio.get(1).getTipo_cambio().toString().replace(".", ","));
+				} else {
+					this.txt_tipo_cambio_ufv.setValue(tipo_cambio.get(0).getTipo_cambio().toString().replace(".", ","));
+					this.txt_tipo_cambio_dolar.setValue(tipo_cambio.get(1).getTipo_cambio().toString().replace(".", ","));
+				}
+			}
+		}
 	}
-	
 }

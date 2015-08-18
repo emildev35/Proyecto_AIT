@@ -52,6 +52,7 @@ public class Messages {
 	public static final String PIN_MESSAGES = "* El PIN Generado es de uso exclusivo para Autorizar Documentos de Movimientos de Activos Fijos";
 	public static final String PIN_MESSAGES_2 = "* El PIN Generado esta bajo su responsabilidad y no debe ser divulgado a terceros";
 	public static final String SELECT_MOVIMIENTO = "Seleccione un Movimiento";
+	public static final String EMPTY_TIPO_CAMBIO = "No se encontro el <strong>Tipo de Cambio</strong> favor introducirlo de manera manual";
 
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);

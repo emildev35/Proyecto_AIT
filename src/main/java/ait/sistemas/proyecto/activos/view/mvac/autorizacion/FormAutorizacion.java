@@ -82,4 +82,12 @@ public class FormAutorizacion extends GridLayout {
 	public String getPIN() {
 		return Auth.hash(this.txt_pin.getValue().toString());
 	}
+
+	public String getMotivo() {
+		return this.tarea_motivo.getValue().toString();
+	}
+
+	public void clear() {
+		this.binder_autorizacion.clear();
+	}
 }
