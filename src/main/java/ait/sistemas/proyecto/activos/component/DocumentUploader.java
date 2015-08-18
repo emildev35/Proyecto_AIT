@@ -16,7 +16,7 @@ public class DocumentUploader implements Receiver {
 	public OutputStream receiveUpload(String filename, String mimeType) {
 		FileOutputStream fos = null; // Stream to write to
 		try {
-			file = new File("/tmp/uploads/" + filename);
+			file = new File("C:\\Editores\\Desarrollo\\ProyectoGit\\Upload\\" + filename);
 			fos = new FileOutputStream(file);
 		} catch (final java.io.FileNotFoundException e) {
 			new Notification("Could not open file<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());

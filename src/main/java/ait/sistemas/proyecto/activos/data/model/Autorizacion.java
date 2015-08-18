@@ -2,7 +2,6 @@ package ait.sistemas.proyecto.activos.data.model;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

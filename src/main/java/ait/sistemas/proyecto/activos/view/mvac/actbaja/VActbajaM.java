@@ -2,9 +2,11 @@ package ait.sistemas.proyecto.activos.view.mvac.actbaja;
 
 	import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
@@ -20,6 +22,8 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -35,9 +39,9 @@ import com.vaadin.ui.VerticalLayout;
 		private Button btn_imprimir;
 		private Button btn_actualizar;
 		private GridResolucion grid_Actualizacion_baja;
-		private GridActbaja grid_Detalle;
+		private GridActbaja grid_Detalle = new  GridActbaja();
 		private final MovimientoImpl movimiento_impl = new MovimientoImpl();
-		
+		private Movimiento data;
 		
 		public VActbajaM() {
 			
@@ -124,22 +128,26 @@ import com.vaadin.ui.VerticalLayout;
 		public void select(SelectionEvent event) {
 
 			if ((Movimiento)this.grid_Actualizacion_baja.getSelectedRow() != null) {
-				Movimiento data =(Movimiento)this.grid_Actualizacion_baja.getSelectedRow();
-				this.frm_Actualizacion_baja.setData(data);	
+				 data =(Movimiento)this.grid_Actualizacion_baja.getSelectedRow();
 			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia());
 			}		
 		}
 		@Override
 		public void buttonClick(ClickEvent event) {
 			if (event.getButton() == this.btn_actualizar) {
-//				if(this.frm_Actualizacion_baja.validate()){
-//					this.movimiento_impl.update(this.frm_Actualizacion_baja.getData());
-//					this.frm_partida.update();
-//					this.grid_Actualizacion_baja.update();
-//					Notification.show(Messages.SUCCESS_MESSAGE);
-//				}else{
-//					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-//				}
+				if(this.frm_Actualizacion_baja.validate()){
+					CmovimientoDocumento movimiento = new CmovimientoDocumento();
+					movimiento.setNro_documento_referencia(data.getNro_documento_referencia());
+					movimiento.setId_dependencia(data.getId_dependencia());
+					movimiento.setFecha_nro_referencia(data.getFecha_registro());
+					movimiento.setNombre_documento(frm_Actualizacion_baja.getNombreDocumento());
+					movimiento.setDireccion_documento(frm_Actualizacion_baja.getDireccionDocumento());
+					this.movimiento_impl.update(movimiento);
+					this.grid_Detalle= new GridActbaja();
+					Notification.show(Messages.SUCCESS_MESSAGE);
+				}else{
+					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+				}
 				buildMessages(this.frm_Actualizacion_baja.getMensajes());
 				this.frm_Actualizacion_baja.clearMessages();
 			}

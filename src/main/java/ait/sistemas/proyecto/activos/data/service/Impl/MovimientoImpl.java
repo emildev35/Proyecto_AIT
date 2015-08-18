@@ -11,6 +11,7 @@ import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
+import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 
@@ -170,5 +171,31 @@ public class MovimientoImpl {
 		query.setParameter(2, nro_documento);
 		List<Detalle> result = (List<Detalle>)query.getResultList();
 		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Detalle> getDetallesbyCmovimiento(long nro_documento, short id_dependencia){
+		String str_detallesbymovimiento = "EXEC Mavc_DetallesByDocumento @Id_Dependencia=?1,@Nro_Documento=?2";
+		Query query = this.em.createNativeQuery(str_detallesbymovimiento, "detalle-movimiento");
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, nro_documento);
+		List<Detalle> result = (List<Detalle>)query.getResultList();
+		return result;
+	}
+	public int update ( CmovimientoDocumento table){
+		String strQuery = String.format("EXEC Mvac_Actbaja_I "
+				+ "@id_dependencia=?1, "
+				+ "@nro_documento=?2, "
+				+ "@nombre_documento=?3, "
+				+ "@direccion_documento=?4,"
+				+ "@fecha_nro_referencia=?5 ");
+		Query query = this.em.createNativeQuery(strQuery, CmovimientoDocumento.class);
+		query.setParameter(1, table.getId_dependencia());
+		query.setParameter(2, table.getNro_documento_referencia());
+		query.setParameter(3, table.getNombre_documento());
+		query.setParameter(4, table.getDireccion_documento());
+		query.setParameter(5, table.getFecha_nro_referencia());
+	
+	//	CmovimientoDocumento result = (CmovimientoDocumento) query.getSingleResult();
+		return 1;
 	}
 }
