@@ -22,6 +22,8 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "id_activo", column = "id_activo"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
 	@FieldResult(name = "id_motivo_baja", column = "id_motivo_baja"),
+	@FieldResult(name = "nombre_activo", column = "nombre_activo"),
+	@FieldResult(name = "motivo_baja", column = "motivo_baja"),
 	@FieldResult(name = "observacion", column = "observacion"),
 	@FieldResult(name = "fecha_registro", column = "fecha_registro")})})
 @Entity
@@ -37,8 +39,8 @@ public class Detalle implements Serializable{
 	private short id_motivo_baja;
 	private String observacion;
 	private Date fecha_registro;
-	private String Nombre_Activo;
-	private String Motivo_Baja;
+	private String nombre_activo;
+	private String motivo_baja;
 	public Detalle() {
 	}
 	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
@@ -101,17 +103,18 @@ public class Detalle implements Serializable{
 	public void setFecha_registro(Date fecha_registro) {
 		this.fecha_registro = fecha_registro;
 	}
-	public String getNombre_Activo() {
-		return Nombre_Activo;
+	public String getNombre_activo() {
+		return nombre_activo;
 	}
-	public void setNombre_Activo(String nombre_Activo) {
-		Nombre_Activo = nombre_Activo;
+	public void setNombre_activo(String nombre_activo) {
+		this.nombre_activo = nombre_activo;
 	}
-	public String getMotivo_Baja() {
-		return Motivo_Baja;
+	public String getMotivo_baja() {
+		return motivo_baja;
 	}
-	public void setMotivo_Baja(String motivo_Baja) {
-		Motivo_Baja = motivo_Baja;
+	public void setMotivo_baja(String motivo_baja) {
+		this.motivo_baja = motivo_baja;
 	}
+
 	
 }

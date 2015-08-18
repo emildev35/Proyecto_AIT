@@ -12,8 +12,6 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "id_tipo_autorizacion", column = "id_tipo_autorizacion"),
 		@FieldResult(name = "dependencia", column = "dependencia"),
 		@FieldResult(name = "dependencia_id", column = "dependencia_id"),
-		@FieldResult(name = "unidad_organizacional", column = "unidad_organizacional"),
-		@FieldResult(name = "unidad_organizacional", column = "unidad_organizacional"),
 		@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
 		@FieldResult(name = "tipo_movimiento_id", column = "tipo_movimiento_id"), @FieldResult(name = "orden", column = "orden"),
 		@FieldResult(name = "ci", column = "ci"), @FieldResult(name = "fecha_registro", column = "fecha_registro"),
@@ -29,8 +27,6 @@ public class TipoAutorizacionModel {
 	private String dependencia;
 	private short dependencia_id;
 	
-	private String unidad_organizacional;
-	private short unidad_organizacional_id;
 	
 	private String tipo_movimiento;
 	private short tipo_movimiento_id;
@@ -52,14 +48,14 @@ public class TipoAutorizacionModel {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TipoAutorizacionModel(String dependencia, short dependencia_id, String unidad_organizacional,
-			short unidad_organizacional_id, String tipo_movimiento, short tipo_movimiento_id, short orden, String ci,
-			Date fecha_registro, String usuario_id, String servidor_publico, String nivel_autorizacion,
-			short nivel_autorizacion_id) {
+
+	
+	public TipoAutorizacionModel(String id_tipo_autorizacion, String dependencia, short dependencia_id, String tipo_movimiento,
+			short tipo_movimiento_id, short orden, String ci, Date fecha_registro, String usuario_id, String servidor_publico,
+			String nivel_autorizacion, short nivel_autorizacion_id) {
+		this.id_tipo_autorizacion = id_tipo_autorizacion;
 		this.dependencia = dependencia;
 		this.dependencia_id = dependencia_id;
-		this.unidad_organizacional = unidad_organizacional;
-		this.unidad_organizacional_id = unidad_organizacional_id;
 		this.tipo_movimiento = tipo_movimiento;
 		this.tipo_movimiento_id = tipo_movimiento_id;
 		this.orden = orden;
@@ -70,7 +66,9 @@ public class TipoAutorizacionModel {
 		this.nivel_autorizacion = nivel_autorizacion;
 		this.nivel_autorizacion_id = nivel_autorizacion_id;
 	}
-	
+
+
+
 	public String getDependencia() {
 		return dependencia;
 	}
@@ -85,22 +83,6 @@ public class TipoAutorizacionModel {
 	
 	public void setDependencia_id(short dependencia_id) {
 		this.dependencia_id = dependencia_id;
-	}
-	
-	public String getUnidad_organizacional() {
-		return unidad_organizacional;
-	}
-	
-	public void setUnidad_organizacional(String unidad_organizacional) {
-		this.unidad_organizacional = unidad_organizacional;
-	}
-	
-	public short getUnidad_organizacional_id() {
-		return unidad_organizacional_id;
-	}
-	
-	public void setUnidad_organizacional_id(short unidad_organizacional_id) {
-		this.unidad_organizacional_id = unidad_organizacional_id;
 	}
 	
 	public String getTipo_movimiento() {

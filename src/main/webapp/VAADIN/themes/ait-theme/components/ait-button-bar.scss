@@ -1,7 +1,7 @@
 @mixin ait-content-bar-button { 
 
 	.ait-buttons { background-color:#e1e1e1;
-		padding: 5px;
+		padding: 4px;
 		position: fixed;
 		display: block;
 		bottom: 0px;
@@ -11,7 +11,7 @@
 	}
 
 	.ait-buttons-btn {
-		padding: 5px;
+		padding: 4px;
 		height: 95%
 	}
 }

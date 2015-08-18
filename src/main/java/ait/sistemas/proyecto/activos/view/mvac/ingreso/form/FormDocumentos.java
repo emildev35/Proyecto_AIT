@@ -229,7 +229,6 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private void fillActivo() {
 		if (UI.getCurrent().getSession().getAttribute("activo") != null) {
 			this.sessionactivo = (ActivoSession) UI.getCurrent().getSession().getAttribute("activo");
-			Notification.show(sessionactivo.getNombre_activo());
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
 		}

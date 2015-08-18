@@ -3,7 +3,6 @@ package ait.sistemas.proyecto.activos.view.mvac.actbaja;
 	import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;

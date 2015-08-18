@@ -107,7 +107,7 @@ public class ActivoImpl {
 	public boolean add(DatosGeneralesActivos datos_generales) {
 		
 		String str_datos_generales = "EXEC Mvac_Activos_I" + " @Id_Activos=?1, " + "@Id_Dependencia=?2, " + "@Nombre_Activo=?3, "
-				+ "@Tipo_Activo=?4, " + "@Fecha_Compra=?5, " + "@Valor=?6, " + "@Tipo_Cambio=?7, " + "@Grupo_Contable=?8, "
+				+ "@Tipo_Activo=?4, " + "@Fecha_Compra=?5, " + "@Valor=?6, " + "@Tipo_Cambio_UFV=?7, " + "@Grupo_Contable=?8, "
 				+ "@Auxiliar_Contable=?9, " + "@Vida_Util=?10, " + "@Fuente_Financiamiento=?11, "
 				+ "@Organismo_Financiador=?12, " + "@Ubicacion_Fisica=?13, " + "@Fecha_ComoDato=?14, "
 				+ "@Fecha_Incorporacion=?15," + "@Tipo_Cambio_Dolar=?16";

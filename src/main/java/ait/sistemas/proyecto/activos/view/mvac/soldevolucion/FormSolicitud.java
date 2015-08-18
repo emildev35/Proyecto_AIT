@@ -44,6 +44,7 @@ public class FormSolicitud extends GridLayout {
 		super(6, 3);
 		setSpacing(true);
 		setWidth("100%");
+		setMargin(true);
 		
 		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
 		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));

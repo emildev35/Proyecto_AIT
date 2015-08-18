@@ -23,4 +23,5 @@ public class GridDocumentosPendientes extends Grid{
 		setHeightMode(HeightMode.ROW);
 		Responsive.makeResponsive(this);
 	}
+
 }

@@ -21,16 +21,15 @@ public class TipoAutorizacionImpl {
 	}
 	
 	public boolean add(TipoAutorizacionModel tipo_autorizacion) {
-		String str_get_by_dependencia = "EXEC Act_Autorizaciones_I " + "@Dependencia_Id=?1, " + "@Unidad_Organizacional_Id=?2,"
-				+ "@Tipo_Movimiento=?3," + "@Orden=?4," + "@Nivel_Autorizacion_Id=?5," + "@CI=?6," + "@Fecha_Registro=?7";
+		String str_get_by_dependencia = "EXEC Act_Autorizaciones_I " + "@Dependencia_Id=?1, "
+				+ "@Tipo_Movimiento=?2," + "@Orden=?3," + "@Nivel_Autorizacion_Id=?4," + "@CI=?5," + "@Fecha_Registro=?6";
 		Query query = this.em.createNativeQuery(str_get_by_dependencia);
 		query.setParameter(1, tipo_autorizacion.getDependencia_id());
-		query.setParameter(2, tipo_autorizacion.getUnidad_organizacional_id());
-		query.setParameter(3, tipo_autorizacion.getTipo_movimiento_id());
-		query.setParameter(4, tipo_autorizacion.getOrden());
-		query.setParameter(5, tipo_autorizacion.getNivel_autorizacion_id());
-		query.setParameter(6, tipo_autorizacion.getCi());
-		query.setParameter(7, tipo_autorizacion.getFecha_registro());
+		query.setParameter(2, tipo_autorizacion.getTipo_movimiento_id());
+		query.setParameter(3, tipo_autorizacion.getOrden());
+		query.setParameter(4, tipo_autorizacion.getNivel_autorizacion_id());
+		query.setParameter(5, tipo_autorizacion.getCi());
+		query.setParameter(6, tipo_autorizacion.getFecha_registro());
 		int result = (Integer) query.getSingleResult();
 		return result > 0 ? true : false;
 	}
