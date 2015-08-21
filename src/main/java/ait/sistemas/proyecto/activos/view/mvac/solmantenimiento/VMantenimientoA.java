@@ -1,10 +1,10 @@
 package ait.sistemas.proyecto.activos.view.mvac.solmantenimiento;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
-import ait.sistemas.proyecto.activos.view.mvac.soldevolucion.FormSolicitud;
-import ait.sistemas.proyecto.activos.view.mvac.soldevolucion.GridSolicitud;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.data.service.Impl.MantenimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -31,16 +31,17 @@ public class VMantenimientoA extends VerticalLayout implements View, ClickListen
 	private static final long serialVersionUID = 1L;
 	public static final String ID = "/act/mvac/mantenimiento/a";
 	
-	private GridSolicitud grid_mantenimiento = new GridSolicitud();
-	private FormSolicitud frm_solicitud = new FormSolicitud();
-	Button btn_limpiar = new Button("Limpiar");
-	Button btn_agregar = new Button("Agregar");
+	private FormMantenimiento frm_mantenimiento = new FormMantenimiento();
+	Button btn_generar_solicitud = new Button("Generar Solicitud");
+	Button btn_imprimir = new Button("Imprimir");
+	Button btn_salir = new Button("Salir");
 	CssLayout hl_errores = new CssLayout();
-	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private  MantenimientoImpl mantenimientoimpl = new MantenimientoImpl();
 	
 	public VMantenimientoA() {
-		this.btn_agregar.addClickListener(this);
-		this.btn_limpiar.addClickListener(this);
+		this.btn_imprimir.addClickListener(this);
+		this.btn_generar_solicitud.addClickListener(this);
+		this.btn_salir.addClickListener(this);
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
@@ -50,11 +51,13 @@ public class VMantenimientoA extends VerticalLayout implements View, ClickListen
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
-		buttonContent.addComponent(this.btn_agregar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		this.btn_generar_solicitud.setStyleName("ait-buttons-btn");
+		buttonContent.addComponent(this.btn_generar_solicitud);
+		this.btn_imprimir.setStyleName("ait-buttons-btn");
+		buttonContent.addComponent(this.btn_imprimir);
+		this.btn_salir.setStyleName("ait-buttons-btn");
 		buttonContent.addStyleName("ait-buttons");
-		buttonContent.addComponent(this.btn_limpiar);
+		buttonContent.addComponent(this.btn_salir);
 		return buttonContent;
 	}
 	
@@ -65,10 +68,9 @@ public class VMantenimientoA extends VerticalLayout implements View, ClickListen
 		Panel gridPanel = new Panel("Activos Fijos Asignados : Selecciona los Activos");
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Activos Asignados");
-		gridPanel.setContent(this.grid_mantenimiento);
+		gridPanel.setContent(frm_mantenimiento.getgrid_solicitud());
 		formContent.setMargin(true);
-		
-		formContent.addComponent(frm_solicitud);
+		formContent.addComponent(frm_mantenimiento);
 		formContent.addComponent(gridPanel);
 		Responsive.makeResponsive(formContent);
 		return formContent;
@@ -103,25 +105,31 @@ public class VMantenimientoA extends VerticalLayout implements View, ClickListen
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_agregar) {
-			if (this.frm_solicitud.validate()) {
-				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData()) > 0) {
-					this.frm_solicitud.clear();
-					Notification.show(Messages.SUCCESS_MESSAGE);
-				} else {
-					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-					
+		if (event.getButton() == this.btn_imprimir) {
+			frm_mantenimiento.update();
+		}
+		if (event.getButton() == this.btn_generar_solicitud) {
+			if (this.frm_mantenimiento.validate()) {
+				 Movimiento data = this.frm_mantenimiento.getData();
+				try {
+					if (mantenimientoimpl.addMantenimiento(data)) {
+						this.frm_mantenimiento.clear();
+						Notification.show(Messages.SUCCESS_MESSAGE);
+					} else {
+						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
-			buildMessages(this.frm_solicitud.getMensajes());
-			this.frm_solicitud.clearMessages();
+			buildMessages(this.frm_mantenimiento.getMensajes());
+			this.frm_mantenimiento.clearMessages();
+			frm_mantenimiento.update();
 		}
-		if (event.getButton() == this.btn_limpiar) {
-			frm_solicitud.update();
-			// this.frm_solicitud.updateId();
-			
+		if (event.getButton() == this.btn_salir) {
+			frm_mantenimiento.update();
 		}
 	}
 	

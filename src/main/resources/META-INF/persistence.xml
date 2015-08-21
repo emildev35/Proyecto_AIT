@@ -35,8 +35,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_ContablePK</class>
-		<class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class>
-		<class>ait.sistemas.proyecto.activos.data.model.C_MovimientoPK</class>
+		<!-- <class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class> -->
 		<class>ait.sistemas.proyecto.activos.data.model.Ciudade</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ComponentesModel</class>
@@ -78,6 +77,20 @@
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
+
+<!-- 			<property name="eclipselink.ddl-generation" value="create-tables" /> -->
+<!-- 			<property name="eclipselink.jdbc.cache-statements" value="false" /> -->
+<!-- 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" /> -->
+<!-- 			<property name="eclipselink.jdbc.batch-writing.size" value="5000" /> -->
+<!-- 			<property name="eclipselink.cache.shared.default" value="false" /> -->
+<!-- 			<property name="eclipselink.cache.shared.Customer" value="false" /> -->
+<!-- 			<property name="eclipselink.logging.level" value="off" /> -->
+<!-- 			<property name="eclipselink.persistence-context.close-on-commit" -->
+<!-- 				value="true" /> -->
+<!-- 			<property name="eclipselink.persistence-context.flush-mode" value="commit" /> -->
+<!-- 			<property name="eclipselink.persistence-context.persist-on-commit" -->
+<!-- 				value="false" /> -->
+
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="AIT-Seguridad">
@@ -108,6 +121,7 @@
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
+
 		</properties>
 	</persistence-unit>
 </persistence>

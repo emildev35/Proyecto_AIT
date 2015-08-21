@@ -42,7 +42,7 @@ public class FormSolicitud extends GridLayout {
 	public FormSolicitud() {
 		
 		super(6, 3);
-		setSpacing(true);
+
 		setWidth("100%");
 		setMargin(true);
 		
@@ -69,7 +69,7 @@ public class FormSolicitud extends GridLayout {
 		Responsive.makeResponsive(this);
 	}
 	
-	private void buildId() {
+	protected void buildId() {
 		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId()));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
@@ -80,7 +80,7 @@ public class FormSolicitud extends GridLayout {
 		
 		GridLayout gridl_solicitud = new GridLayout(2, 1);
 		gridl_solicitud.setSizeFull();
-		// gridl_solicitud.setMargin(true);
+		gridl_solicitud.setMargin(true);
 		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
 		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
 		pn_solicitud.setContent(gridl_solicitud);
@@ -95,6 +95,7 @@ public class FormSolicitud extends GridLayout {
 	
 	public void update() {
 		binder_solicitud.clear();
+		buildId();
 	}
 	
 	public List<BarMessage> getMensajes() {

@@ -47,7 +47,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
 	
-	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
