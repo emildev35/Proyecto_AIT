@@ -5,12 +5,11 @@
 	
 			<persistence-unit name="AIT-Activos">
 				<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>ait.sistemas.proyecto.activos.data.model.Activos</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ActivosModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Autorizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
-		<class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class>
+<!-- 		<class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class> -->
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ComponentesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.D_Movimiento</class>
@@ -33,6 +32,7 @@
 		<class>ait.sistemas.proyecto.activos.component.model.Detalle</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Movimiento</class>
 		<class>ait.sistemas.proyecto.activos.component.model.TipoCambio</class>
+		<class>ait.sistemas.proyecto.activos.data.model.Activo</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
@@ -42,6 +42,7 @@
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
+
 		</properties>
 	</persistence-unit>
 	
@@ -73,6 +74,7 @@
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
+
 		</properties>
 	</persistence-unit>
 	

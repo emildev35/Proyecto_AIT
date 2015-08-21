@@ -7,19 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 
 /**
  * The persistent class for the C_Movimientos database table.
  * 
  */
-@Entity
-@Table(name="C_Movimientos")
-@NamedQuery(name="C_Movimiento.findAll", query="SELECT c FROM C_Movimiento c")
+//@Entity
+//@Table(name="C_Movimientos")
+//@NamedQuery(name="C_Movimiento.findAll", query="SELECT c FROM C_Movimiento c")
 public class C_Movimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+//	@Id
 	private short CMV_Dependencia;
 
 	private short CMV_Unidad_Organizacional_Origen;
@@ -40,7 +41,6 @@ public class C_Movimiento implements Serializable {
 
 	private Time CMV_Fecha_Registro;
 
-	private short CMV_Inmueble;
 
 	private String CMV_No_Documento_referencia;
 
@@ -51,7 +51,9 @@ public class C_Movimiento implements Serializable {
 	private int CMV_Ubicacion_Fisica;
 
 	private int CMV_Unidad_Organizacional_Destino;
-
+//	@Version
+	private long version;
+	
 	public C_Movimiento() {
 	}
 
@@ -126,14 +128,6 @@ public class C_Movimiento implements Serializable {
 
 	public void setCMV_Fecha_Registro(Time CMV_Fecha_Registro) {
 		this.CMV_Fecha_Registro = CMV_Fecha_Registro;
-	}
-
-	public short getCMV_Inmueble() {
-		return this.CMV_Inmueble;
-	}
-
-	public void setCMV_Inmueble(short CMV_Inmueble) {
-		this.CMV_Inmueble = CMV_Inmueble;
 	}
 
 	public String getCMV_No_Documento_referencia() {

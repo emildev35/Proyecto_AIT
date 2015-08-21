@@ -7,6 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import ait.sistemas.proyecto.activos.component.model.DocumentoPendiente;
 import ait.sistemas.proyecto.activos.data.model.Autorizacion;
 
@@ -23,6 +26,7 @@ public class AutorizacionImpl {
 	public List<DocumentoPendiente> getDocumentosPendientes(String id_usuario){
 		String str_query = "EXEC Mvac_Get_DocumentosbyUsuario @Id_Usuario=?1";
 		Query query = this.em.createNativeQuery(str_query, "documento-pendiente");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_usuario);
 		List<DocumentoPendiente> result = query.getResultList();
 		return result;

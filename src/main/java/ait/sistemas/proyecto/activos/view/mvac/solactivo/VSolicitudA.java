@@ -34,7 +34,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	private Button btn_limpiar;
 	private Button btn_agregar;
 	
-	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
 	public VSolicitudA() {
 		frm_solicitud = new FormSolicitud();
@@ -115,7 +115,6 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 				}
 				else{
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-					
 				}
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);

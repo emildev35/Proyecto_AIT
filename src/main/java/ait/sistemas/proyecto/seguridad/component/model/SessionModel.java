@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto.seguridad.component.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
@@ -16,8 +18,9 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "ci", column = "ci"),
 	@FieldResult(name = "id_unidad_organizacional", column = "id_unidad_organizacional")}) })
 @Entity
-public class SessionModel {
+public class SessionModel implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	private String id;
 	private String full_name;

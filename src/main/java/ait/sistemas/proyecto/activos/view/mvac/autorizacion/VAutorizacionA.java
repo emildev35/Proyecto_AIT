@@ -159,6 +159,7 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 					
 					if (autorizacionimpl.add(autorizacion) > 0) {
 						this.frm_autorizacion.clear();
+						this.grid_documentos = new GridDocumentosPendientes(session.getId());
 						Notification.show(Messages.SUCCESS_MESSAGE);
 					} else {
 						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);

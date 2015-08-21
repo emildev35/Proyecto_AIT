@@ -47,7 +47,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
 	
-	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
@@ -58,7 +58,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		super(6, 3);
 		setSpacing(true);
 		setWidth("100%");
-		
+		setMargin(true);
 		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
 		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
 		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));

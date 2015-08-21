@@ -7,6 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.CaracteristicasActivo;
 import ait.sistemas.proyecto.activos.component.model.Componente;
@@ -107,7 +110,7 @@ public class ActivoImpl {
 	public boolean add(DatosGeneralesActivos datos_generales) {
 		
 		String str_datos_generales = "EXEC Mvac_Activos_I" + " @Id_Activos=?1, " + "@Id_Dependencia=?2, " + "@Nombre_Activo=?3, "
-				+ "@Tipo_Activo=?4, " + "@Fecha_Compra=?5, " + "@Valor=?6, " + "@Tipo_Cambio=?7, " + "@Grupo_Contable=?8, "
+				+ "@Tipo_Activo=?4, " + "@Fecha_Compra=?5, " + "@Valor=?6, " + "@Tipo_Cambio_UFV=?7, " + "@Grupo_Contable=?8, "
 				+ "@Auxiliar_Contable=?9, " + "@Vida_Util=?10, " + "@Fuente_Financiamiento=?11, "
 				+ "@Organismo_Financiador=?12, " + "@Ubicacion_Fisica=?13, " + "@Fecha_ComoDato=?14, "
 				+ "@Fecha_Incorporacion=?15," + "@Tipo_Cambio_Dolar=?16";
@@ -184,6 +187,15 @@ public class ActivoImpl {
 				.setParameter(2, auxiliar_contable);
 		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
 		return result;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivoGrid> getAsignados(String ci_usuario) {
+		Query query = em.createNativeQuery("exec Mvac_ActivoAsignadobyUsuario @CI_Usuario=?1", "activo-simple").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, ci_usuario);
+		List<ActivoGrid> resultlist = query.getResultList();		
+		return resultlist;
 	}
 	
 }

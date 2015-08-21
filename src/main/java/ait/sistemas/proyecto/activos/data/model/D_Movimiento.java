@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class D_Movimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id()
+	@Id
 	private short DMV_Dependencia;
 
 	private short DMV_Unidad_Organizacional;

@@ -22,6 +22,8 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "id_activo", column = "id_activo"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
 	@FieldResult(name = "id_motivo_baja", column = "id_motivo_baja"),
+	@FieldResult(name = "nombre_activo", column = "nombre_activo"),
+	@FieldResult(name = "motivo_baja", column = "motivo_baja"),
 	@FieldResult(name = "observacion", column = "observacion"),
 	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
 	@FieldResult(name = "nombre_activo", column = "nombre_activo"),

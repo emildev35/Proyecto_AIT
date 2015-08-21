@@ -127,9 +127,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		pitmDatosGenerales.addItemProperty("nombre_activo", new ObjectProperty<String>(""));
 		pitmDatosGenerales.addItemProperty("fecha_compra", new ObjectProperty<Date>(new Date()));
 		pitmDatosGenerales.addItemProperty("fecha_incorporacion", new ObjectProperty<Date>(new Date()));
-		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
-		pitmDatosGenerales.addItemProperty("tipo_cambio_ufv", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
-		pitmDatosGenerales.addItemProperty("tipo_cambio_dolar", new ObjectProperty<BigDecimal>(new BigDecimal('0')));
+		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<BigDecimal>(new BigDecimal("0")));
+		pitmDatosGenerales.addItemProperty("tipo_cambio_ufv", new ObjectProperty<BigDecimal>(new BigDecimal("0")));
+		pitmDatosGenerales.addItemProperty("tipo_cambio_dolar", new ObjectProperty<BigDecimal>(new BigDecimal("0")));
 		pitmDatosGenerales.addItemProperty("vida_util", new ObjectProperty<Integer>(0));
 		pitmDatosGenerales
 				.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
@@ -506,8 +506,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		datos_generales.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
 		datos_generales.setFecha_incorporacion(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
 		datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue()));
-		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue()));
-		datos_generales.setTipo_cambio_dolar(new BigDecimal(txt_tipo_cambio_dolar.getValue()));
+		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue().toString().replace(",", ".")));
+		datos_generales.setTipo_cambio_dolar(new BigDecimal(txt_tipo_cambio_dolar.getValue().toString().replace(",", ".")));
 		datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue()).getGRC_Grupo_Contable());
 		datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable.getValue())
 				.getAUC_Auxiliar_Contable());
