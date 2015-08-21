@@ -14,6 +14,7 @@ import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
 
 public class MovimientoImpl {
 	private EntityManagerFactory emf;
@@ -194,6 +195,35 @@ public class MovimientoImpl {
 		query.setParameter(3, table.getNombre_documento());
 		query.setParameter(4, table.getDireccion_documento());
 		query.setParameter(5, table.getFecha_nro_referencia());
+		return 1;
+	}
+	public long getIdActa() {
+		Query query = this.em.createNativeQuery("EXEC Mvac_Generar_No_Acta");
+		long result = (Long) query.getSingleResult();
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getsolicitud(Movimiento table) {
+//		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
+		Query query = this.em.createNativeQuery("EXEC Mant_SolAsignacion_Q "+"@tipo_movimiento=?1 ", "cmovimiento");
+		query.setParameter(1, table.getTipo_movimiento());
+		List<Movimiento> resultlist = query.getResultList();		
+		return resultlist;
+	}
+	public int acta_ingreso ( Movimiento table ){
+		System.out.println(table.getNro_documento());
+		System.out.println(table.getNo_acta());
+		System.out.println(table.getFecha_acta());
+		String strQuery = String.format("EXEC Mvac_Acta_I "
+				+ "@nro_documento=?1, "
+				+ "@no_acta=?2, "
+				+ "@fecha_acta=?3 ");
+		Query query = this.em.createNativeQuery(strQuery, "cmovimiento");
+		query.setParameter(1, table.getNro_documento());
+		query.setParameter(2, table.getNo_acta());
+		query.setParameter(3, table.getFecha_acta());
+	//	Movimiento result = (Movimiento) query.getSingleResult();
+		query.getSingleResult();
 		return 1;
 	}
 }
