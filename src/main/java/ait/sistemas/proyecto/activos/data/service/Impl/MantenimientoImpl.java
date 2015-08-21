@@ -26,6 +26,7 @@ import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Mantenimiento;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.data.Conecction;
 import ait.sistemas.proyecto.activos.data.model.C_Movimiento;
 
 public class MantenimientoImpl {
@@ -83,58 +84,37 @@ public class MantenimientoImpl {
 	}
 	
 	public boolean addMantenimiento(Movimiento mantenimiento) throws SQLException {
-		String str_conn = "jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos;user=sa;password=sa";
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			Connection conn = DriverManager.getConnection(str_conn);
-			System.out.println("Coneccion Realizada con Exito");
-			Statement sta = conn.createStatement();
-			String Sql = String.format("exec [dbo].[Mvac_Mantenimiento_I] " + "@Dependencia_Id=%d,"
-					+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
-					+ "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s' ", mantenimiento.getId_dependencia(), mantenimiento
-					.getId_unidad_organizacional_origen(), mantenimiento.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM")
-					.format(mantenimiento.getFecha_registro()), new SimpleDateFormat("yyyy-dd-MM").format(mantenimiento
-					.getFecha_movimiento()), mantenimiento.getUsuario());
-			System.out.println(Sql);
-			ResultSet rs = sta.executeQuery(Sql);
-			rs.next();
-			int resultado_cabecera = rs.getInt("res");
-			conn.close();
-			int result_detalle = 0;
-			if (resultado_cabecera > 0) {
-				for (Detalle detalle : mantenimiento.getDetalles()) {
-					Connection conn_detalle = DriverManager.getConnection(str_conn);
-					Statement sta_detalle = conn_detalle.createStatement();
-					String str_detalle = String.format("EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=%d,"
-							+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
-							+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'",
-							detalle.getId_dependencia(),
-							detalle.getId_unidad_organizacional_origen(), 
-							detalle.getNro_documento(), 
-							new SimpleDateFormat("yyyy-dd-MM").format(detalle.getFecha_registro()), 
-							detalle.getTipo_movimiento(), 
-							detalle.getId_activo(), detalle.getObservacion());
-					ResultSet rs_detalle = sta_detalle.executeQuery(str_detalle);
-					rs_detalle.next();
-					System.out.println(detalle.getNombre_activo());
-					result_detalle += rs_detalle.getInt("res");
-					conn_detalle.close();
-				}
-				if (result_detalle == mantenimiento.getDetalles().size()) {
-					return true;
-				} else {
-					dropmovimiento(mantenimiento);
-					return false;
-				}
+		Conecction conn = new Conecction();
+		
+		String Sql = String.format("exec [dbo].[Mvac_Mantenimiento_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
+				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s' ",
+				mantenimiento.getId_dependencia(), mantenimiento.getId_unidad_organizacional_origen(),
+				mantenimiento.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(mantenimiento.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM").format(mantenimiento.getFecha_movimiento()), mantenimiento.getUsuario());
+		int resultado_cabecera = conn.callproc(Sql);
+		int result_detalle = 0;
+		if (resultado_cabecera > 0) {
+			for (Detalle detalle : mantenimiento.getDetalles()) {
 				
+				String str_detalle = String.format("EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=%d,"
+						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
+						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'", detalle.getId_dependencia(), detalle
+						.getId_unidad_organizacional_origen(), detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM")
+						.format(detalle.getFecha_registro()), detalle.getTipo_movimiento(), detalle.getId_activo(), detalle
+						.getObservacion());
+				result_detalle += conn.callproc(str_detalle);
+			}
+			if (result_detalle == mantenimiento.getDetalles().size()) {
+				return true;
 			} else {
+				dropmovimiento(mantenimiento);
 				return false;
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			Notification.show("Clase No entontrada");
+			
+		} else {
 			return false;
 		}
+		
 	}
 	
 	public int dropmovimiento(Movimiento data) {
