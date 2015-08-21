@@ -3,7 +3,7 @@ package ait.sistemas.proyecto.activos.view.mvac.asignacion;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
-import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -39,7 +39,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	private Button btn_imprimir;
 	private GridSolasignacion grid_asignacion;
 	private GridDetalle grid_Detalle = new  GridDetalle();
-	private MovimientoImpl movimiento_impl = new MovimientoImpl();
+	private ActasImpl acta_impl = new ActasImpl();
 	private Movimiento data;
 
 	public VAsignacionA() {
@@ -137,7 +137,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_asignacion) {
 			if (this.frm_asignacion.validate()) {
-				this.movimiento_impl.acta_ingreso(this.frm_asignacion.getData());
+				this.acta_impl.addActa(this.frm_asignacion.getData());
 				this.grid_Detalle= new GridDetalle();
 				this.frm_asignacion.buidId();
 				this.grid_asignacion.update();

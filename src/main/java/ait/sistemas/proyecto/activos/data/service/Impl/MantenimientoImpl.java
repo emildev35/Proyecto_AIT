@@ -1,33 +1,17 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
-
-import com.google.web.bindery.requestfactory.server.Logging;
-import com.vaadin.ui.Notification;
-
-import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Mantenimiento;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
-import ait.sistemas.proyecto.activos.data.Conecction;
-import ait.sistemas.proyecto.activos.data.model.C_Movimiento;
+import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 
 public class MantenimientoImpl {
 	
@@ -84,7 +68,7 @@ public class MantenimientoImpl {
 	}
 	
 	public boolean addMantenimiento(Movimiento mantenimiento) throws SQLException {
-		Conecction conn = new Conecction();
+		ConnecctionActivos conn = new ConnecctionActivos();
 		
 		String Sql = String.format("exec [dbo].[Mvac_Mantenimiento_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
 				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s' ",

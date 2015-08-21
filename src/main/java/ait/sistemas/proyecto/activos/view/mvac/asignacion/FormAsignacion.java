@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
-import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -34,7 +34,7 @@ public class FormAsignacion extends GridLayout implements ValueChangeListener{
 	public DateField dtf_fecha_acta;
 
 	private List<BarMessage> mensajes;
-	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private final ActasImpl acta_impl = new ActasImpl();
 	private PropertysetItem pitm_Asignacion = new PropertysetItem();
 	private FieldGroup binder_Asignacion;
 
@@ -97,7 +97,7 @@ public class FormAsignacion extends GridLayout implements ValueChangeListener{
 		Responsive.makeResponsive(this);
 	}
 	public void buidId() {
-		this.txt_no_acta.setValue(String.valueOf(movimientoimpl.getIdActa()));
+		this.txt_no_acta.setValue(String.valueOf(acta_impl.getIdActa()));
 		this.dtf_fecha_acta.setValue(new Date());
 	}
 	private void buildContent() {

@@ -3,7 +3,7 @@ package ait.sistemas.proyecto.activos.view.mvac.asignacion;
 import java.util.Locale;
 
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
-import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Responsive;
@@ -13,7 +13,7 @@ import com.vaadin.ui.renderers.DateRenderer;
 
 public class GridSolasignacion extends Grid{
 
-	private MovimientoImpl movimiento_impl = new MovimientoImpl();
+	private ActasImpl acta_impl = new ActasImpl();
 	private static final long serialVersionUID = 1L;
 	private BeanItemContainer<Movimiento> bean_Movimiento;
 
@@ -29,7 +29,7 @@ public class GridSolasignacion extends Grid{
 		bean_Movimiento = new BeanItemContainer<Movimiento>(Movimiento.class);
 		Movimiento movimiento = new Movimiento();
 		movimiento.setTipo_movimiento((short) 3);
-		bean_Movimiento.addAll(movimiento_impl.getsolicitud(movimiento));
+		bean_Movimiento.addAll(acta_impl.getsolicitud(movimiento));
 		setContainerDataSource(bean_Movimiento);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
