@@ -25,35 +25,39 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormSolicitud extends GridLayout {
+public class FormSoldevolucion extends GridLayout {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private TextField txt_id_solicitud = new TextField("Id. Solicitud");
 	public DateField dtf_fecha_soliciud = new DateField("Fecha Solicitud");
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	private PropertysetItem pitm_solicitud = new PropertysetItem();
-	private FieldGroup binder_solicitud;
+	private PropertysetItem pitm_mantenimiento = new PropertysetItem();
+	private FieldGroup binder_mantenimiento;
 	
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
-	private GridSolicitud grid_solicitud = new GridSolicitud();
+	private GridSoldevolucion grid_mantenimiento = new GridSoldevolucion();
 	
-	public FormSolicitud() {
+	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
+	
+	public FormSoldevolucion() {
 		
 		super(6, 3);
-
+		setSpacing(true);
 		setWidth("100%");
 		setMargin(true);
+		pitm_mantenimiento.addItemProperty("id_solicitud", new ObjectProperty<String>(""));
+		pitm_mantenimiento.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
 		
-		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
-		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
+		this.binder_mantenimiento = new FieldGroup(this.pitm_mantenimiento);
 		
-		this.binder_solicitud = new FieldGroup(this.pitm_solicitud);
-		
-		binder_solicitud.bind(this.txt_id_solicitud, "id_solicitud");
-		binder_solicitud.bind(this.dtf_fecha_soliciud, "fecha_solicitud");
-		binder_solicitud.clear();
+		binder_mantenimiento.bind(this.txt_id_solicitud, "id_solicitud");
+		binder_mantenimiento.bind(this.dtf_fecha_soliciud, "fecha_solicitud");
+
+		binder_mantenimiento.clear();
 		
 		this.txt_id_solicitud.setEnabled(false);
 		this.txt_id_solicitud.addValidator(new NullValidator("No Nulo", false));
@@ -61,18 +65,23 @@ public class FormSolicitud extends GridLayout {
 		this.dtf_fecha_soliciud.setEnabled(false);
 		this.dtf_fecha_soliciud.addValidator(new NullValidator("No Nulo", false));
 		
+		
 		txt_id_solicitud.setWidth("90%");
 		dtf_fecha_soliciud.setWidth("90%");
+
 		
+		this.grid_mantenimiento.update(session.getCi());
 		buildContent();
 		buildId();
 		Responsive.makeResponsive(this);
 	}
 	
-	protected void buildId() {
+	private void buildId() {
 		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId()));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
+	
+	
 	
 	private void buildContent() {
 		
@@ -91,10 +100,11 @@ public class FormSolicitud extends GridLayout {
 		gridl_activos.setSizeFull();
 		gridl_activos.setMargin(true);
 		
+		
 	}
 	
 	public void update() {
-		binder_solicitud.clear();
+		binder_mantenimiento.clear();
 		buildId();
 	}
 	
@@ -109,10 +119,11 @@ public class FormSolicitud extends GridLayout {
 	public boolean validate() {
 		
 		try {
-			this.binder_solicitud.commit();
+			this.binder_mantenimiento.commit();
 			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
 			return true;
 		} catch (CommitException e) {
+			
 			
 			return false;
 		}
@@ -121,7 +132,7 @@ public class FormSolicitud extends GridLayout {
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
+		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
 		
 		result.setId_dependencia(usuario.getId_dependecia());
 		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
@@ -130,8 +141,8 @@ public class FormSolicitud extends GridLayout {
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
-		result.setTipo_movimiento((short)4);
-		for (Object row : grid_solicitud.getSelectedRows()) {
+		result.setTipo_movimiento((short) 4);
+		for (Object row : grid_mantenimiento.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
 			
 			Detalle detalle = new Detalle();
@@ -141,22 +152,24 @@ public class FormSolicitud extends GridLayout {
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
-			detalle.setTipo_movimiento((short)4);
+			detalle.setTipo_movimiento((short) 4);
 			result.addDetalle(detalle);
 		}
-		
 		return result;
 	}
 	
-	public Component getgrid_solicitud() {
-		return this.grid_solicitud;
-	}
-
-	public void clear() {
 	
-		this.binder_solicitud.clear();
+
+	
+	public Component getgrid_solicitud() {
+		return this.grid_mantenimiento;
+	}
+	
+	public void clear() {
+		
+		this.binder_mantenimiento.clear();
 		buildId();
-		this.grid_solicitud = new GridSolicitud();
+		this.grid_mantenimiento.update(session.getCi());
 		
 	}
 }

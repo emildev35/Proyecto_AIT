@@ -27,7 +27,10 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
 	@FieldResult(name = "fecha_movimiento", column = "fecha_movimiento"),
 	@FieldResult(name = "detalles", column = "detalles"),
-	@FieldResult(name = "observacion", column = "observacion")
+	@FieldResult(name = "observacion", column = "observacion"),
+	@FieldResult(name = "solicitante", column = "solicitante"),
+	@FieldResult(name = "no_acta", column = "no_acta"),
+	@FieldResult(name = "fecha_acta", column = "fecha_acta")
 	})})
 @Entity
 public class Movimiento {
@@ -45,6 +48,9 @@ public class Movimiento {
 	private Date fecha_movimiento;	
 	private List<Detalle> detalles;
 	private String observacion;
+	private String solicitante;
+	private long no_acta;
+	private Date fecha_acta;
 	
 	public short getTipo_movimiento() {
 		return tipo_movimiento;
@@ -150,6 +156,26 @@ public class Movimiento {
 	public void setFecha_nro_referencia(Date fecha_nro_referencia) {
 		this.fecha_nro_referencia = fecha_nro_referencia;
 	}
-	
-	
+
+	public String getSolicitante() {
+		return solicitante;
+	}
+
+	public void setSolicitante(String solicitante) {
+		this.solicitante = solicitante;
+	}
+
+	public long getNo_acta() {
+		return no_acta;
+	}
+
+	public void setNo_acta(long no_acta) {
+		this.no_acta = no_acta;
+	}
+	public Date getFecha_acta() {
+		return fecha_acta;
+	}
+	public void setFecha_acta(Date fecha_acta) {
+		this.fecha_acta = fecha_acta;
+	}
 }
