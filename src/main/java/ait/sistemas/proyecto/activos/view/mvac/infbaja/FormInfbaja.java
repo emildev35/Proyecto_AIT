@@ -111,7 +111,7 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 	
 	private void buildId() {
 		this.dtf_fecha_resol.setValue(new Date());
-		this.txt_num_inf_baja.setValue(String.valueOf(movimientoimpl.getId()));
+		this.txt_num_inf_baja.setValue(String.valueOf(movimientoimpl.getId((short)6)));
 		this.dtf_fecha_inf.setValue(new Date());
 	}
 	

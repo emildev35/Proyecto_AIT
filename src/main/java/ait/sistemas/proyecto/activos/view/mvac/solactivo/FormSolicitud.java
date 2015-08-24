@@ -100,7 +100,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void buildId() {
-		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId()));
+		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short)3)));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
 	

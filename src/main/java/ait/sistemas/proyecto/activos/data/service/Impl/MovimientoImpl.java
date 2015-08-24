@@ -28,11 +28,12 @@ public class MovimientoImpl {
 		this.em = emf.createEntityManager();
 	}
 	
-	public long getId() {
-		String str_id = "EXEC Mvac_Generar_Codigo_Movimiento_Q";
+	public long getId(short tipo_mov) {
+		String str_id = "EXEC Mvac_Generar_Codigo_Movimiento_Q @CMV_Tipo_Movimiento=?1 ";
 		Query query = this.em.createNativeQuery(str_id);
-		long result = (Long) query.getSingleResult();
-		return result;
+		query.setParameter(1, tipo_mov);
+		return (Long) query.getSingleResult();
+		//return result;
 	}
 	
 	@SuppressWarnings("unchecked")
