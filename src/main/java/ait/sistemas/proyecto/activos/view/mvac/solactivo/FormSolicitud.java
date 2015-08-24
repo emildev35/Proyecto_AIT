@@ -174,7 +174,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			}
 			try {
 				this.cb_auxiliar_contable.validate();
-			} catch (EmptyValueException ex) {
+			} catch (EmptyValueException ex) {this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), ex.getMessage()));
 				this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), Messages.EMPTY_MESSAGE));
 			} catch (InvalidValueException ex) {
 				this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), ex.getMessage()));
