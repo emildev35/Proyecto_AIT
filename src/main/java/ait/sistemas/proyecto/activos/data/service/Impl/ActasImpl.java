@@ -38,8 +38,8 @@ public class ActasImpl {
 	public int addActa(Movimiento table){
 		String str_proc = String.format("EXEC Mvac_Acta_I "
 				+ "@nro_documento=%d, "
-				+ "@no_acta=%d "
-				+ "@fecha_acta=%s",table.getNro_documento(), table.getNo_acta(), new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()));
+				+ "@no_acta=%d, "
+				+ "@fecha_acta='%s' ",table.getNro_documento(), table.getNo_acta(), new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()));
 		try {
 			return conn.callproc(str_proc);
 		} catch (SQLException e) {

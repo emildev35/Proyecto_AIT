@@ -139,6 +139,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 			if (this.frm_asignacion.validate()) {
 				this.acta_impl.addActa(this.frm_asignacion.getData());
 				this.grid_Detalle= new GridDetalle();
+				this.frm_asignacion.update();
 				this.frm_asignacion.buidId();
 				this.grid_asignacion.update();
 				Notification.show(Messages.SUCCESS_MESSAGE);

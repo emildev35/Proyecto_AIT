@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,7 @@ import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 
 public class MovimientoImpl {
 	
@@ -206,6 +209,38 @@ public class MovimientoImpl {
 		query.setParameter(5, table.getFecha_nro_referencia());
 		return 1;
 	}
-
+	public boolean addMovimientos (Movimiento movimiento) throws SQLException {
+		ConnecctionActivos conn = new ConnecctionActivos();
+		
+		String Sql = String.format("exec [dbo].[Mvac_CMovimiento_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
+				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s'," + "@Tipo_Movimiento=%d," + "@Observaciones='%s'",
+				movimiento.getId_dependencia(), movimiento.getId_unidad_organizacional_origen(),
+				movimiento.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_movimiento()), movimiento.getUsuario(), movimiento.getTipo_movimiento(), movimiento.getObservacion());
+		int resultado_cabecera = conn.callproc(Sql);
+		int result_detalle = 0;
+		if (resultado_cabecera > 0) {
+			for (Detalle detalle : movimiento.getDetalles()) {
+				
+				String str_detalle = String.format("EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=%d,"
+						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
+						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'", detalle.getId_dependencia(), detalle
+						.getId_unidad_organizacional_origen(), detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM")
+						.format(detalle.getFecha_registro()), detalle.getTipo_movimiento(), detalle.getId_activo(), detalle
+						.getObservacion());
+				result_detalle += conn.callproc(str_detalle);
+			}
+			if (result_detalle == movimiento.getDetalles().size()) {
+				return true;
+			} else {
+				dropmovimiento(movimiento);
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
+		
+	}
 
 }

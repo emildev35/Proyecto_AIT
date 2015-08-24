@@ -100,6 +100,9 @@ public class FormAsignacion extends GridLayout implements ValueChangeListener{
 		this.txt_no_acta.setValue(String.valueOf(acta_impl.getIdActa()));
 		this.dtf_fecha_acta.setValue(new Date());
 	}
+	public void update(){
+		binder_Asignacion.clear();
+	}
 	private void buildContent() {
 		Panel pn_solicitud = new Panel("Solicitud de Activos");
 		Panel pn_acta = new Panel("Acta de Entrega");
