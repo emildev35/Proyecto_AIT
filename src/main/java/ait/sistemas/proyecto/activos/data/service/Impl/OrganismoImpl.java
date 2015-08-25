@@ -61,7 +61,6 @@ import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 
 		@Override
 		public int delete(Organismo_Financiador table) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 		public int deletes(short id_organismo) {

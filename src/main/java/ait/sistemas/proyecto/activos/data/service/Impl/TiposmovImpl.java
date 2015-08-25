@@ -63,7 +63,6 @@ import ait.sistemas.proyecto.activos.data.model.Tipos_Movimiento;
 
 		@Override
 		public int delete(Tipos_Movimiento table) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 		public int deletes(Short id_tipo_movimiento) {

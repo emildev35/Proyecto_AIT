@@ -15,7 +15,6 @@ public class PinModel {
 	private String ci;
 	
 	public PinModel() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public PinModel(String usuario_id, short dependencia_id, short unidad_organizacional_id, Date fecha_generacion,

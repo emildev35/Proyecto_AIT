@@ -139,7 +139,6 @@ public class VOpcionPerfilD extends VerticalLayout implements View,
 
 	@Override
 	public void onClose(ConfirmDialog arg0) {
-		// TODO Auto-generated method stub
 		if (arg0.isConfirmed()) {
 			eliminar();
 		}

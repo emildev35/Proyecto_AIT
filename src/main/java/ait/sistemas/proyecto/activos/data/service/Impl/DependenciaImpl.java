@@ -69,7 +69,6 @@ public class DependenciaImpl implements Dao<Dependencia> {
 	
 	@Override
 	public Dependencia getone(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -99,7 +98,6 @@ public class DependenciaImpl implements Dao<Dependencia> {
 	
 	@Override
 	public int delete(Dependencia table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

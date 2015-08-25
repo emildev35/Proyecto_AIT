@@ -74,13 +74,11 @@ public class MenuImpl implements Dao<Arbol_menus> {
 
 	@Override
 	public Arbol_menus getone(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
 	public Arbol_menus addSubSistema(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_Subsistema_I "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Id_Subsistema = ?2, "
@@ -103,7 +101,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 	
 	
 	public Arbol_menus addMenu(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_Menu_I "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Id_Subsistema = ?2, "
@@ -126,7 +123,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		return result;
 	}
 	public Arbol_menus addSubMenu(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_SubMenu_I "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Id_Subsistema = ?2, "
@@ -151,7 +147,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		return result;
 	}
 	public Arbol_menus addOpcion(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_Opcion_I "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Id_Subsistema = ?2, "
@@ -178,7 +173,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		return result;
 	}
 	public Arbol_menus updatesubmenu(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_SubMenu_U "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Id_Subsistema = ?2, "
@@ -204,7 +198,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 	}
 	
 	public Arbol_menus updatemenu(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_Menu_U "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Nombre = ?2, "
@@ -223,7 +216,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		return result;
 	}
 	public Arbol_menus updateSubSistema(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("exec  Estr_SubSistema_U "
 				+ "@AME_Id_Identificador = ?1, "
 				+ "@AME_Nombre = ?2, "
@@ -243,7 +235,6 @@ public class MenuImpl implements Dao<Arbol_menus> {
 	}
 	@Override
 	public Arbol_menus add(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		String strQuery = String.format("EXEC EstrArbol_menusI  "
 				+ "@AME_Id_Identificador=?1, "
 				+ "@AME_Id_Subsistema int=?2, "
@@ -276,13 +267,11 @@ public class MenuImpl implements Dao<Arbol_menus> {
 
 	@Override
 	public int delete(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Arbol_menus update(Arbol_menus table) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public String generateId(){

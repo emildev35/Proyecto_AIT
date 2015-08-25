@@ -105,7 +105,6 @@ public class VSubMenuB extends VerticalLayout implements View, ClickListener, Se
 	}
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 	private void buildMessages(List<BarMessage> mensages) {

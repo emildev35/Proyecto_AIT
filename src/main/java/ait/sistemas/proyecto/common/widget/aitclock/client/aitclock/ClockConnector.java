@@ -24,7 +24,6 @@ public class ClockConnector extends AbstractComponentConnector {
 	private Timer timer = null;
 
     public ClockConnector() {    
-		// TODO ServerRpc usage example, do something useful instead
 		timer = new Timer(){
 			@Override
 			public void run() {
@@ -53,7 +52,6 @@ public class ClockConnector extends AbstractComponentConnector {
     public void onStateChanged(StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
 		
-		// TODO do something useful
         final long time = getState().time;
         getWidget().setTime(time);
     }

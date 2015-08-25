@@ -51,8 +51,6 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 	private UsuarioImpl usuarioimpl;
 	
 	public MenuDash() {
-		// TODO Auto-generated constructor stub
-			
 		this.Treemenu = new Tree();	
 		this.usuarioimpl = new UsuarioImpl(); 
 		this.menuelements = new ArrayList<Arbol_menus>();
@@ -65,7 +63,6 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 	}
 
 	private Component builComponent() {
-		// TODO Auto-generated method stub
 		CssLayout mainContent = new CssLayout();
 		mainContent.addStyleName("ait-menu");
 		mainContent.addComponent(UserInfo());
@@ -114,7 +111,6 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 	 * @param style ESte recieve in 
 	 */
 	public void show(String style) {
-		// TODO Auto-generated method stub
 		if (getCompositionRoot().getStyleName().contains(style)) {
 			getCompositionRoot().removeStyleName(style);
 		} else {
@@ -142,7 +138,6 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 
 	@Override
 	public void itemClick(ItemClickEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 }

@@ -6,7 +6,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTML;
 
-// TODO extend any GWT Widget
 public class ClockWidget extends HTML {
 
 	public static final String CLASSNAME = "clockcomponent";

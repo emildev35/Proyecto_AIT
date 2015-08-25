@@ -169,7 +169,6 @@ public class ActivoImpl {
 	}
 	
 	public boolean addDocumentos(List<Documento> documetnos, ActivoSession sessionactivo) {
-		// TODO Auto-generated method stub
 		final DocumentoRespaldoImpl documentoimpl = new DocumentoRespaldoImpl();
 		for (Documento componente : documetnos) {
 			if (!documentoimpl.add(sessionactivo.getCodigo(), sessionactivo.getDependencia(), componente.getNombre(),

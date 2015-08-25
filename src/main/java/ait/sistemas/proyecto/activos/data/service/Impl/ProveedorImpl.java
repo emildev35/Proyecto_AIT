@@ -86,7 +86,6 @@ public class ProveedorImpl implements Dao<Proveedore> {
 
 	@Override
 	public int delete(Proveedore table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	public int deletes(Short id_dependencia, String NIT) {

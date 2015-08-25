@@ -87,7 +87,6 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -116,7 +115,6 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		
 		List<ProveedoresModel> lista = proveedor_impl.getalls();
 		
-		int [][] datas = proveedor_impl.getProvedoreCuidad();
 		this.data = new String[lista.size()][7];
 		this.r = 0;
 		int puntero = 0;
@@ -124,7 +122,6 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		Map<Short, Integer> dic_cuidades = new HashMap<Short, Integer>();
 		
 		for (ProveedoresModel proveedor : lista) {
-			short cuidad_actual = proveedor.getPRV_Ciudad_ID();
 			cuidad_id = proveedor.getPRV_Ciudad_ID();
 			dic_cuidades.put(cuidad_id, puntero);
 			

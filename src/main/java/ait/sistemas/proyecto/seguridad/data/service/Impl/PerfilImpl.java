@@ -43,7 +43,6 @@ public class PerfilImpl implements Dao<Perfil> {
 
 	@Override
 	public Perfil getone(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

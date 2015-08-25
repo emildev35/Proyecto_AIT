@@ -45,7 +45,6 @@ public class TipoAutorizacionModel {
 	private short nivel_autorizacion_id;
 	
 	public TipoAutorizacionModel() {
-		// TODO Auto-generated constructor stub
 	}
 	
 

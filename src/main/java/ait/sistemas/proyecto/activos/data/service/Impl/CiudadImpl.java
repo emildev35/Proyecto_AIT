@@ -39,7 +39,6 @@ public class CiudadImpl implements Dao<Ciudade> {
 
 	@Override
 	public Ciudade getone(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -66,7 +65,6 @@ public class CiudadImpl implements Dao<Ciudade> {
 
 	@Override
 	public int delete(Ciudade table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	public int deletes(int id_ciudad) {

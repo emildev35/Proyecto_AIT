@@ -45,7 +45,6 @@ public class InmuebleImpl implements Dao<Inmueble> {
 	}
 	@Override
 	public Inmueble getone(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -76,7 +75,6 @@ public class InmuebleImpl implements Dao<Inmueble> {
 
 	@Override
 	public int delete(Inmueble table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	public int deletes(int id_inmueble) {

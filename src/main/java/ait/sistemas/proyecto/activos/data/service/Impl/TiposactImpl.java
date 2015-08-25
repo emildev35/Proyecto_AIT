@@ -59,7 +59,6 @@ public class TiposactImpl implements Dao<Tipos_Activo> {
 
 	@Override
 	public int delete(Tipos_Activo table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	public int deletes(Short id_tipo_movimiento) {

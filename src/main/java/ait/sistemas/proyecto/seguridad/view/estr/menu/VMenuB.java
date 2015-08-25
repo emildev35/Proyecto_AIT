@@ -105,7 +105,6 @@ public class VMenuB extends VerticalLayout implements View, ClickListener, Selec
 	}
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 	private void buildMessages(List<BarMessage> mensages) {

@@ -23,7 +23,6 @@ public class CaracteristicasActivo {
 	private String ubicacion_imagen;
 	
 	public CaracteristicasActivo() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public CaracteristicasActivo(String codigo, String nit_proveedor, String marca, String numero_serie,

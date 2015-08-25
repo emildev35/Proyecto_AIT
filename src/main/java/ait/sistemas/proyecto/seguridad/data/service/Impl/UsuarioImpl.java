@@ -36,13 +36,11 @@ public class UsuarioImpl implements Dao<Usuario> {
 	
 	@Override
 	public List<Usuario> getall() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
 	public Usuario getone(long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -72,13 +70,11 @@ public class UsuarioImpl implements Dao<Usuario> {
 	
 	@Override
 	public int delete(Usuario table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Override
 	public Usuario update(Usuario table) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

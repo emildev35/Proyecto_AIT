@@ -23,6 +23,7 @@ public class GridMantenimiento extends Grid{
 		id_activo.setHeaderCaption("Codigo");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
+		
 	}
 	public void update(String ci_usuario){
 		removeAllColumns();

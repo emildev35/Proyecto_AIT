@@ -63,7 +63,6 @@ public class FuenteImpl implements Dao<Fuentes_Financiamiento> {
 	
 	@Override
 	public int delete(Fuentes_Financiamiento table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

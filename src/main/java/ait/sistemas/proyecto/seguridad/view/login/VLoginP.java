@@ -98,7 +98,6 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 
