@@ -147,7 +147,7 @@ public class VInfbajaA extends VerticalLayout implements View, ClickListener {
 					if (submodal.getComponent(0, i) != null) {
 						Detalle detalle = new Detalle();
 						detalle.setId_activo(submodal.getIdActivo(i));
-						detalle.setTipo_movimiento((short) 6);
+						detalle.setTipo_movimiento((short) 7);
 						detalle.setId_motivo_baja(submodal.getMotivo(i));
 						detalle.setFecha_registro(baja.getFecha_registro());
 						detalle.setObservacion(submodal.getObservacion(i));

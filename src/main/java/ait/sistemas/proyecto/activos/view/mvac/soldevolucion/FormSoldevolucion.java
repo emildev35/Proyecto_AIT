@@ -141,7 +141,7 @@ public class FormSoldevolucion extends GridLayout {
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
-		result.setTipo_movimiento((short) 4);
+		result.setTipo_movimiento((short) 3);
 		for (Object row : grid_mantenimiento.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
 			
@@ -152,7 +152,7 @@ public class FormSoldevolucion extends GridLayout {
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
-			detalle.setTipo_movimiento((short) 4);
+			detalle.setTipo_movimiento((short) 3);
 			result.addDetalle(detalle);
 		}
 		return result;

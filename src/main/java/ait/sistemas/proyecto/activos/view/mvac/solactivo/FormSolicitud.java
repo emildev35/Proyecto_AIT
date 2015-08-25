@@ -196,7 +196,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
-		result.setTipo_movimiento((short)3);
+		result.setTipo_movimiento((short)1);
 		for (Object row : grid_solicitud.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
 			
@@ -207,7 +207,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
-			detalle.setTipo_movimiento((short)3);
+			detalle.setTipo_movimiento((short)1);
 			result.addDetalle(detalle);
 		}
 		

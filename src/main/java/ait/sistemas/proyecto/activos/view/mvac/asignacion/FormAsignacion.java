@@ -172,6 +172,7 @@ public class FormAsignacion extends GridLayout implements ValueChangeListener{
 		resul.setNro_documento(Long.parseLong( this.txt_no_solicitud.getValue()));
 		resul.setNo_acta(Long.parseLong( this.txt_no_acta.getValue()));
 		resul.setFecha_acta(new java.sql.Date( new Date().getTime()));
+		resul.setTipo_movimiento((short)2);
 		return resul;
 	}
 	public void setData(Movimiento data){	
