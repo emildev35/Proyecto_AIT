@@ -60,7 +60,6 @@ public class MotivobajaImpl implements Dao<Motivo_Baja> {
 
 	@Override
 	public int delete(Motivo_Baja table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	public int deletes(int id_motivobaja) {

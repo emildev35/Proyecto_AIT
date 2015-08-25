@@ -6,7 +6,6 @@ public class ActivoSession {
 	private String nombre_activo;
 	
 	public ActivoSession() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ActivoSession(long codigo, short dependencia, String nombre_activo) {

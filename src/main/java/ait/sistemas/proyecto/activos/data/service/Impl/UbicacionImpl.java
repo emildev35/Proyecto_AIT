@@ -90,7 +90,6 @@ public class UbicacionImpl implements Dao<Ubicaciones_Fisica> {
 	
 	@Override
 	public int delete(Ubicaciones_Fisica table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

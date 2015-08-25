@@ -160,7 +160,6 @@ public class VPersonalB extends VerticalLayout implements View,
 	}
 	@Override
 	public void onClose(ConfirmDialog dialog) {
-		// TODO Auto-generated method stub
 		if(dialog.isConfirmed()){
 			eliminar();
 		}else{

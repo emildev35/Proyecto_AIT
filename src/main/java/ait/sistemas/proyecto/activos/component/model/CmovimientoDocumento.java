@@ -11,7 +11,6 @@ public class CmovimientoDocumento {
 	private Date fecha_nro_referencia;
 	
 	public CmovimientoDocumento() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public short getId_dependencia() {

@@ -61,7 +61,6 @@ import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
 
 		@Override
 		public int delete(Partidas_Presupuestaria table) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 		public int deletes(int id_partida) {

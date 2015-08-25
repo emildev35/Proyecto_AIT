@@ -161,7 +161,6 @@ public class ReportPdf {
 
 	public boolean getPdfKardexGeneratorMulti(KardexElement[][][] data, Object value, short id_dependecia)
 			throws IOException {
-		// TODO Auto-generated method stub
 		return new PdfKardexGeneratorMulti().generatePDF(createContent(data, id_dependecia), SAVE_PATH);
 
 	}

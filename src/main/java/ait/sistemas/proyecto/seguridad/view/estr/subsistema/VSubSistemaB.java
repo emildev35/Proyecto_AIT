@@ -173,7 +173,6 @@ public class VSubSistemaB extends VerticalLayout implements View,
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 
 	}
 	
@@ -220,7 +219,6 @@ public class VSubSistemaB extends VerticalLayout implements View,
 
 	@Override
 	public void select(SelectionEvent event) {
-		// TODO Auto-generated method stub
 		if ((Arbol_menus) this.gridSubSistemas.getSelectedRow() != null) {
 			this.subsistema = (Arbol_menus) this.gridSubSistemas
 					.getSelectedRow();
@@ -235,7 +233,6 @@ public class VSubSistemaB extends VerticalLayout implements View,
 
 	@Override
 	public void onClose(ConfirmDialog dialog) {
-		// TODO Auto-generated method stub
 		if(dialog.isConfirmed()){
 			eliminar();
 		}else{

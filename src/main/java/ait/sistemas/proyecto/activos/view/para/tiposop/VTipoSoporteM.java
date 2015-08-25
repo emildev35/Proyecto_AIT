@@ -1,14 +1,13 @@
-package ait.sistemas.proyecto.activos.view.mant.proveedor;
+package ait.sistemas.proyecto.activos.view.para.tiposop;
 
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
-import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
+import ait.sistemas.proyecto.activos.data.model.TipoSoporte;
+import ait.sistemas.proyecto.activos.data.service.Impl.TipoSoporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -27,71 +26,73 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-
-@CDIView(value=VProveedorM.ID)
-public class VProveedorM extends VerticalLayout implements View, ClickListener, SelectionListener{
+@CDIView(value = VTipoSoporteM.URL)
+public class VTipoSoporteM extends VerticalLayout implements View,
+		SelectionListener, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/mant/proveedor/m";
-	
-	
-	private FormProveedor frm_proveedor;
-	private CssLayout hl_errores;
-	private Button btn_limpiar;
+	public static final String URL = "/act/para/tiposoporte/m";
+
+	private final TipoSoporteImpl tipo_soporteimpl = new TipoSoporteImpl();
+	private GridTipoSoporte grid_tipo_soporte;
+	private FormTipoSoporte frm_tipo_soporte;
 	private Button btn_modificar;
-	private GridProveedor grid_proveedor;
-	private final ProveedorImpl proveedor_impl = new ProveedorImpl();
+	private Button btn_limpiar;
+	private CssLayout hl_errores;
 	
-	final PropertysetItem pitm_Proveedor = new PropertysetItem();
-	
-	public VProveedorM() {
-		
-		this.frm_proveedor= new FormProveedor();
+	public VTipoSoporteM() {
+
+		frm_tipo_soporte= new FormTipoSoporte();
 		this.btn_limpiar= new Button("Limpiar");
 		this.btn_modificar= new Button("Modificar");
 		this.btn_modificar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
-	
-		this.grid_proveedor = new GridProveedor();
-		this.grid_proveedor.addSelectionListener(this);
+
+		this.grid_tipo_soporte = new GridTipoSoporte();
+		this.grid_tipo_soporte.addSelectionListener(this);
 		this.hl_errores = new CssLayout();
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 	}
-	private Component buildFormContent() {
 		
+	private Component buildFormContent() {
+
 		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true	);
-		Panel frmPanel = new Panel();
-		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Datos a modificar:");
-		frmPanel.setContent(this.frm_proveedor);
-		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
+		formContent.setSpacing(true	);	
+		
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Seleccione el Proveedor para modificar sus datos:");
-		gridPanel.setContent(this.grid_proveedor);
+		gridPanel.setCaption("TIPO DE SOPORTE A MODIFICAR");
+		gridPanel.setContent(this.grid_tipo_soporte);
 		formContent.setMargin(true);
+				
+		Panel frmPanel = new Panel();
+		frmPanel.setWidth("100%");
+		frmPanel.setCaption("TIPOS DE SOPORTE REGISTRADOS");
+		frmPanel.setContent(this.frm_tipo_soporte);
+		formContent.setMargin(true);
+		
 		formContent.addComponent(gridPanel);
 		formContent.addComponent(frmPanel);
+		this.frm_tipo_soporte.update();
 		Responsive.makeResponsive(formContent);
 		return formContent;
-		
 	}
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Mantenimiento>>"));
-		nav.addComponent(new Label("Proveedor>>"));
-		nav.addComponent(new Label("<strong>Modificar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("Activos » "));
+		nav.addComponent(new Label("Parametros » "));
+		nav.addComponent(new Label("Tipos de Soporte » "));
+		nav.addComponent(new Label("<strong>Modificar</strong>",
+				ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
+
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		this.btn_modificar.setStyleName("ait-buttons-btn");
@@ -102,9 +103,18 @@ public class VProveedorM extends VerticalLayout implements View, ClickListener, 
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
+
 	@Override
 	public void enter(ViewChangeEvent event) {
-		
+
+	}
+
+	@Override
+	public void select(SelectionEvent event) {
+
+		if ((TipoSoporte)this.grid_tipo_soporte.getSelectedRow() != null) {
+			this.frm_tipo_soporte.setData((TipoSoporte)this.grid_tipo_soporte.getSelectedRow());	
+		}
 	}
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
@@ -112,37 +122,35 @@ public class VProveedorM extends VerticalLayout implements View, ClickListener, 
 		this.addComponent(this.hl_errores);
 		
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(barMessage.getComponetName()+":"+barMessage.getErrorName());
+			Label lbError = new Label(new Label(barMessage.getComponetName()+":"+barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
+		
 	
-	}
-	@Override
-	public void select(SelectionEvent event) {
-
-		if ((ProveedoresModel)this.grid_proveedor.getSelectedRow() != null) {
-			this.frm_proveedor.setData((ProveedoresModel)this.grid_proveedor.getSelectedRow());	
-		}		
 	}
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_modificar) {
-			if(this.frm_proveedor.validate()){
-				this.proveedor_impl.update(this.frm_proveedor.getData());
-				this.frm_proveedor.update();
-				this.grid_proveedor.update();
-				Notification.show(Messages.SUCCESS_MESSAGE);
+			if(this.frm_tipo_soporte.validate()){
+				if (this.tipo_soporteimpl.modificar(this.frm_tipo_soporte.getData())>0) {
+					grid_tipo_soporte.update();
+					this.frm_tipo_soporte.update();
+					Notification.show(Messages.SUCCESS_MESSAGE);
+				}
+				else{
+					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+				}
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
-			buildMessages(this.frm_proveedor.getMensajes());
-			this.frm_proveedor.clearMessages();
+			buildMessages(this.frm_tipo_soporte.getMensajes());
+			this.frm_tipo_soporte.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			frm_proveedor.update();
-		}	
+			this.frm_tipo_soporte.update();
+		}
 	}
-	
 
 }
+

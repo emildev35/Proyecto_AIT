@@ -189,7 +189,6 @@ public class Arbol_menus implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return this.getAME_Nombre();
 	}
 

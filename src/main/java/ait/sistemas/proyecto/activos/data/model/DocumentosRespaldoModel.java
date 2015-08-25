@@ -21,7 +21,6 @@ import javax.persistence.SqlResultSetMapping;
 
 }) })
 @Entity
-@NamedQuery(name = "Documentos_Respaldo.findAll", query = "SELECT d FROM Documentos_Respaldo d")
 public class DocumentosRespaldoModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -58,7 +58,6 @@ public class BarDash extends CustomComponent {
 	 * @return Component
 	 */
 	private Component buildComponents() {
-		// TODO Auto-generated method stub
 		CssLayout mainContent = new CssLayout();
 		mainContent.addStyleName("ait-bar-main");
 		buildNavigation();
@@ -75,7 +74,6 @@ public class BarDash extends CustomComponent {
 	 * @return
 	 */
 	private Component buildLogo() {
-		// TODO Auto-generated method stub
 		CssLayout logoContent = new CssLayout();
 		this.logo_ait.setStyleName("ait-bar-logo");
 		logoContent.addComponent(this.logo_ait);
@@ -90,7 +88,6 @@ public class BarDash extends CustomComponent {
 	}
 
 	private Component buildNavigation() {
-		// TODO Auto-generated method stub
 		CssLayout navigationContent = new CssLayout();
 		/**
 		 * Componentes de Navegacion

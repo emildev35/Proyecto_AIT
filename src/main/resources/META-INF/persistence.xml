@@ -32,6 +32,7 @@
 		<class>ait.sistemas.proyecto.activos.component.model.Detalle</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Movimiento</class>
 		<class>ait.sistemas.proyecto.activos.component.model.TipoCambio</class>
+		<class>ait.sistemas.proyecto.activos.data.model.TipoSoporte</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
@@ -40,7 +41,6 @@
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
-			<property name="eclipselink.cache.shared.default" value="false" />
 
 		</properties>
 	</persistence-unit>

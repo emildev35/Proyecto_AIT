@@ -17,7 +17,6 @@ public class ActivoGrid {
 	private String nombre;
 	
 	public ActivoGrid() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ActivoGrid(long id_activo, String nombre) {

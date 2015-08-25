@@ -3,12 +3,6 @@ package ait.sistemas.proyecto.activos.data.model;
 import java.io.Serializable;
 import java.sql.Time;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Version;
-
 
 /**
  * The persistent class for the C_Movimientos database table.

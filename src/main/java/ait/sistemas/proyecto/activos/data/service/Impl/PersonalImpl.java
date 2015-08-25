@@ -86,7 +86,6 @@ public class PersonalImpl implements Dao<Personal> {
 
 	@Override
 	public int delete(Personal table) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	public int deletes(String ci_personal) {

@@ -154,14 +154,12 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 	}
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 	
 	}
 
 
 	@Override
 	public void containerItemSetChange(ItemSetChangeEvent event) {
-		// TODO Auto-generated method stub
 		Notification.show("XD");
 	}
 
