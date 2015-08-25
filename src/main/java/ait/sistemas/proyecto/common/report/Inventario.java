@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
+@SuppressWarnings("unused")
 public class Inventario {
 	private float margin;
 	private float height;

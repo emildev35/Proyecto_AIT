@@ -7,6 +7,7 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.service.Impl.ReporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.report.msexcel.SimpleExcel;
+import ait.sistemas.proyecto.common.report.msword.SimpleWord;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
@@ -22,7 +23,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -118,7 +118,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			int[] columns_width = frm_reporte.getColumnssizes();
 			String sql = frm_reporte.getSQL();
 			String[][] data = reporteimpl.getData(sql, "Reporte_Activos", frm_reporte.getNumColumns());
-			if (event.getButton() == this.btn_imprimir_word) {
+			if (event.getButton() == this.btn_imprimir_pdf) {
 				
 				PdfReport pdf_reporte = new PdfReport();
 				try {
@@ -151,11 +151,60 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 				getUI().addWindow(subWindow);
 				
 			}
-			if (event.getButton() == this.btn_imprimir_pdf) {
+			if (event.getButton() == this.btn_imprimir_word) {
+				
+				SimpleWord simpleWord = new SimpleWord();
+				simpleWord.save(data, columns_header, this.frm_reporte.getTitle());
+				
+				File pdfFile = new File(simpleWord.SAVE_PATH);
+				
+				VerticalLayout vl_pdf = new VerticalLayout();
+				Embedded pdf = new Embedded("", new FileResource(pdfFile));
+				
+				pdf.setMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				pdf.setType(Embedded.TYPE_BROWSER);
+				pdf.setSizeFull();
+				vl_pdf.setSizeFull();
+				vl_pdf.addComponent(pdf);
+				
+				Window subWindow = new Window("Reporte Inventario Activos");
+				VerticalLayout subContent = new VerticalLayout();
+				subContent.setMargin(true);
+				subWindow.setContent(vl_pdf);
+				
+				subWindow.setWidth("90%");
+				subWindow.setHeight("90%");
+				subWindow.center();
+				
+				// Open it in the UI
+				getUI().addWindow(subWindow);
 			}
 			if (event.getButton() == this.btn_imprimir_excel) {
 				SimpleExcel simpleExcel = new SimpleExcel();
-				simpleExcel.save(data, columns_header);
+				simpleExcel.save(data, columns_header, this.frm_reporte.getTitle());
+				
+				File pdfFile = new File(simpleExcel.SAVE_PATH);
+				
+				VerticalLayout vl_pdf = new VerticalLayout();
+				Embedded pdf = new Embedded("", new FileResource(pdfFile));
+				
+				pdf.setMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				pdf.setType(Embedded.TYPE_BROWSER);
+				pdf.setSizeFull();
+				vl_pdf.setSizeFull();
+				vl_pdf.addComponent(pdf);
+				
+				Window subWindow = new Window("Reporte Inventario Activos");
+				VerticalLayout subContent = new VerticalLayout();
+				subContent.setMargin(true);
+				subWindow.setContent(vl_pdf);
+				
+				subWindow.setWidth("90%");
+				subWindow.setHeight("90%");
+				subWindow.center();
+				
+				// Open it in the UI
+				getUI().addWindow(subWindow);
 				
 			}
 		}

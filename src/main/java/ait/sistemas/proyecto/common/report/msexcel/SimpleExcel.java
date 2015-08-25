@@ -9,23 +9,32 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+@SuppressWarnings("deprecation")
 public class SimpleExcel {
-	public final String SAVE_PATH = "/tmp/" + String.valueOf(new java.util.Date().getTime()) + ".xlsx";
 	
-	@SuppressWarnings("resource")
-	public void save(String[][] data, List<String> columns) {
+	public final String SAVE_PATH = "/tmp/" + String.valueOf(new java.util.Date().getTime()) + ".xlsx";
+	XSSFWorkbook workbook = new XSSFWorkbook();
+	public void save(String[][] data, List<String> columns, String titulo) {
 		
 		try {
-			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet spreadsheet = workbook.createSheet();
 			XSSFRow row;
+			writeTitle(spreadsheet, titulo, columns);
 			Map<String, String[]> empinfo = new TreeMap<String, String[]>();
-			
+			XSSFRow row_title = spreadsheet.createRow((short) 0);
+			row_title.setHeight((short) 800);
+			XSSFCell celltitle = (XSSFCell) row_title.createCell((short) 0);
+			celltitle.setCellValue(titulo);
+			spreadsheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columns.size()));
 			int r = 0;
 			String[] header = new String[columns.size()];
 			for (String column : columns) {
@@ -36,13 +45,12 @@ public class SimpleExcel {
 			empinfo.put(String.valueOf(r), header);
 			r++;
 			for (String[] item : data) {
-				
 				empinfo.put(String.valueOf(r), item);
 				r++;
 			}
 			
 			Set<String> keyid = empinfo.keySet();
-			int rowid = 0;
+			int rowid = 1;
 			for (String key : keyid) {
 				row = spreadsheet.createRow(rowid++);
 				Object[] objectArr = empinfo.get(key);
@@ -52,7 +60,6 @@ public class SimpleExcel {
 					cell.setCellValue((String) obj);
 				}
 			}
-			
 			FileOutputStream out;
 			out = new FileOutputStream(new File(SAVE_PATH));
 			workbook.write(out);
@@ -63,5 +70,18 @@ public class SimpleExcel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void writeTitle(XSSFSheet spreadsheet, String titulo, List<String> columns){
+		XSSFRow row_title = spreadsheet.createRow((short) 0);
+		Font font = workbook.createFont();
+		font.setFontHeightInPoints((short)18);
+		CellStyle title_style = workbook.createCellStyle();
+		title_style.setFont(font);
+		row_title.setHeight((short) 400);
+		XSSFCell celltitle = (XSSFCell) row_title.createCell((short) 0);
+		celltitle.setCellStyle(title_style);
+		celltitle.setCellValue(titulo);
+		spreadsheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columns.size()));
 	}
 }

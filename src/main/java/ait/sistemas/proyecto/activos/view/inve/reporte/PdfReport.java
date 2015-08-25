@@ -51,7 +51,7 @@ public class PdfReport {
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 	
-	private static final int HEADER_SIZE = 3;
+	private static final int HEADER_SIZE = 3	;
 	
 	static String SAVE_PATH = "/tmp/" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 	

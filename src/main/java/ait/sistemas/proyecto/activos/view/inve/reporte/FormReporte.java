@@ -44,7 +44,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		txt_nombre_reporte.addTextChangeListener(this);
 		tb_vista_previa.setSizeFull();
 		txt_nombre_reporte.setWidth("90%");
-		tb_vista_previa.setColumnReorderingAllowed(true);
+//		tb_vista_previa.setColumnReorderingAllowed(true);
 		tb_vista_previa.setResponsive(true);
 		tb_vista_previa.setWidth("100%");
 		tw_campos.setWidth("100%");

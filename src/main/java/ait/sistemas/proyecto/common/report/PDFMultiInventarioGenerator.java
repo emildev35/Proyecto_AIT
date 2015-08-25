@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.common.report;
 
 import java.io.IOException;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +13,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.ui.UI;
-
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "unused" })
 public class PDFMultiInventarioGenerator {
 
 	private PDDocument doc;
