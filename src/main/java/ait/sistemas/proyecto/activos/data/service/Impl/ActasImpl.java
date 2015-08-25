@@ -23,20 +23,42 @@ public class ActasImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Movimiento> getsolicitud(Movimiento table) {
+	public List<Movimiento> getSolicitudAsignacion(Movimiento table) {
 //		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
-		Query query = this.em.createNativeQuery("EXEC Mant_SolAsignacion_Q "+"@tipo_movimiento=?1 ", "cmovimiento");
+		Query query = this.em.createNativeQuery("EXEC Mvac_SolAsignacion_Q "+"@tipo_movimiento=?1 ", "cmovimiento");
 		query.setParameter(1, table.getTipo_movimiento());
 		List<Movimiento> resultlist = query.getResultList();		
 		return resultlist;
 	}
-	public int addActa(Movimiento table){
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getSolicitudDevolucion(Movimiento table) {
+		Query query = this.em.createNativeQuery("EXEC Mvac_SolDevolucion_Q "+"@tipo_movimiento=?1 ", "cmovimiento");
+		query.setParameter(1, table.getTipo_movimiento());
+		List<Movimiento> resultlist = query.getResultList();		
+		return resultlist;
+	}
+	public int addActaAsignacion(Movimiento table){
 		String str_proc = String.format("EXEC Mvac_ActaAsignacion_I "
 				+ "@nro_documento=%d, "
 				+ "@no_acta=%d, "
 				+ "@fecha_acta='%s', "
 				+ "@Tipo_Movimiento=%d ",
 		table.getNro_documento(), table.getNo_acta(), new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()), table.getTipo_movimiento());
+		try {
+			return conn.callproc(str_proc);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int addActaDevolucion(Movimiento table){
+		String str_proc = String.format("EXEC Mvac_ActaDevolucion_I "
+				+ "@nro_documento=%d, "
+				+ "@no_acta=%d, "
+				+ "@fecha_acta='%s', "
+				+ "@Tipo_Movimiento=%d ",
+				table.getNro_documento(), table.getNo_acta(), new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()), table.getTipo_movimiento());
 		try {
 			return conn.callproc(str_proc);
 		} catch (SQLException e) {
