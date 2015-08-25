@@ -155,7 +155,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			}
 			if (event.getButton() == this.btn_imprimir_excel) {
 				SimpleExcel simpleExcel = new SimpleExcel();
-				simpleExcel.save(data, columns_header);
+				simpleExcel.save(data, columns_header, this.frm_reporte.getTitle());
 				
 			}
 		}
