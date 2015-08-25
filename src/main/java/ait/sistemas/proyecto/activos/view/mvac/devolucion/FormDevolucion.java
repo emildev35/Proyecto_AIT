@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion;
+package ait.sistemas.proyecto.activos.view.mvac.devolucion;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
-public class FormAsignacion extends GridLayout implements ValueChangeListener{
+public class FormDevolucion extends GridLayout implements ValueChangeListener{
 	private static final long serialVersionUID = 1L;
 	public TextField txt_no_solicitud;
 	public DateField dtf_fecha;
@@ -38,7 +38,7 @@ public class FormAsignacion extends GridLayout implements ValueChangeListener{
 	private PropertysetItem pitm_Asignacion = new PropertysetItem();
 	private FieldGroup binder_Asignacion;
 
-	public FormAsignacion() {
+	public FormDevolucion() {
 
 		super.setColumns(6);
 		super.setRows(7);

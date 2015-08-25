@@ -77,7 +77,7 @@ public class FormMantenimiento extends GridLayout {
 	}
 	
 	private void buildId() {
-		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId()));
+		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short)1)));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
 	

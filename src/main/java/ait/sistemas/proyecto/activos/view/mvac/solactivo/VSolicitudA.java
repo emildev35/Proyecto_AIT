@@ -67,7 +67,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		formContent.setSpacing(true);
 		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Inmuebles registrados");
+		gridPanel.setCaption("Activos Disponibles");
 		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 		formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
@@ -81,8 +81,8 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Recursos Humanos>>"));
-		nav.addComponent(new Label("Inmuebles>>"));
+		nav.addComponent(new Label("Movimiento de Activos >>"));
+		nav.addComponent(new Label("Solicitud de Asignacion>>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;

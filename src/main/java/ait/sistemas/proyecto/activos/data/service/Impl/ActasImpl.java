@@ -21,11 +21,6 @@ public class ActasImpl {
 		this.emf = Persistence.createEntityManagerFactory("AIT-Activos");
 		this.em = emf.createEntityManager();
 	}
-	public long getIdActa() {
-		Query query = this.em.createNativeQuery("EXEC Mvac_Generar_No_Acta");
-		long result = (Long) query.getSingleResult();
-		return result;
-	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Movimiento> getsolicitud(Movimiento table) {

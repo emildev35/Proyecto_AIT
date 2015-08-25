@@ -77,7 +77,7 @@ public class FormSoldevolucion extends GridLayout {
 	}
 	
 	private void buildId() {
-		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId()));
+		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short)4)));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
 	
