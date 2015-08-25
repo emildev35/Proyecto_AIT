@@ -219,7 +219,7 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		result.setNro_documento_referencia(this.txt_resolucion.getValue());
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
-		result.setTipo_movimiento((short)6);
+		result.setTipo_movimiento((short)7);
 		return result;
 	}
 	
