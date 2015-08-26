@@ -126,10 +126,11 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 	public void select(SelectionEvent event) {
 
 		if ((Movimiento) this.grid_asignacion.getSelectedRow() != null) {
-			this.frm_asignacion.setData((Movimiento) this.grid_asignacion.getSelectedRow());
+			this.frm_asignacion.setData((Movimiento) 
+			this.grid_asignacion.getSelectedRow());
 			
 			data =(Movimiento)this.grid_asignacion.getSelectedRow();
-			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia());
+			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia(),data.getTipo_movimiento());
 		}
 	}
 
@@ -137,8 +138,8 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_asignacion) {
 			if (this.frm_asignacion.validate()) {
-				this.acta_impl.addActa(this.frm_asignacion.getData());
-				this.grid_Detalle= new GridDetalle();
+				this.acta_impl.addActaDevolucion(this.frm_asignacion.getData());
+				this.grid_Detalle.vaciar();
 				this.frm_asignacion.update();
 				this.frm_asignacion.buidId();
 				this.grid_asignacion.update();

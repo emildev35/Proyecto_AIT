@@ -33,7 +33,7 @@ import com.vaadin.ui.VerticalLayout;
 public class VAutorizacionA extends VerticalLayout implements View, ClickListener, SelectionListener {
 	
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/mvac/autorizacion/a";
+	public static final String ID = "/act/mvac/autorizacion/a";
 	
 	private FormAutorizacion frm_autorizacion = new FormAutorizacion();
 	private FormDocumento frm_documento = new FormDocumento();
@@ -187,7 +187,7 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 		if ((GridDocumentosPendientes) event.getSource() == this.grid_documentos && grid_documentos.getSelectedRow() != null) {
 			documento_seleccionado = (DocumentoPendiente) grid_documentos.getSelectedRow();
 			frm_documento.fillData(documento_seleccionado);
-			grid_detalle_activo.update(documento_seleccionado.getNro_documento(), documento_seleccionado.getDependencia_id());
+			grid_detalle_activo.update(documento_seleccionado.getNro_documento(), documento_seleccionado.getDependencia_id(), documento_seleccionado.getTipo_movimiento_id());
 		}
 	}
 	

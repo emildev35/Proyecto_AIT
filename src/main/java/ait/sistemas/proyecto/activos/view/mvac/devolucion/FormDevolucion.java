@@ -97,7 +97,7 @@ public class FormDevolucion extends GridLayout implements ValueChangeListener{
 		Responsive.makeResponsive(this);
 	}
 	public void buidId() {
-		this.txt_no_acta.setValue(String.valueOf(movimiento_impl.getId((short)7)));
+		this.txt_no_acta.setValue(String.valueOf(movimiento_impl.getId((short)4)));
 		this.dtf_fecha_acta.setValue(new Date());
 	}
 	public void update(){
@@ -172,6 +172,7 @@ public class FormDevolucion extends GridLayout implements ValueChangeListener{
 		resul.setNro_documento(Long.parseLong( this.txt_no_solicitud.getValue()));
 		resul.setNo_acta(Long.parseLong( this.txt_no_acta.getValue()));
 		resul.setFecha_acta(new java.sql.Date( new Date().getTime()));
+		resul.setTipo_movimiento((short)3);
 		return resul;
 	}
 	public void setData(Movimiento data){	

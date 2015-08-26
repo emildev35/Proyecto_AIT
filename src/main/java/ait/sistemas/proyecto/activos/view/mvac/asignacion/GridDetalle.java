@@ -37,14 +37,39 @@ import com.vaadin.ui.Grid;
 			
 			setHeightByRows(5);
 		}
-		public void update(long nro_documenro, short id_dependencia) {
+		public void update(long nro_documenro, short id_dependencia, short tipo_movimiento) {
 			this.removeAllColumns();
 			bean_detalle = null;
-			buildGrid( nro_documenro,  id_dependencia);
+			buildGrid( nro_documenro,  id_dependencia, tipo_movimiento);
 		}
-		public void buildGrid(long nro_documenro, short id_dependencia){
+		public void vaciar (){
+			this.removeAllColumns();
+			bean_detalle = null;
 			bean_detalle = new BeanItemContainer<Detalle>(Detalle.class);
-			bean_detalle.addAll(movimiento_impl.getDetallesbyMovimiento(nro_documenro, id_dependencia));
+			setContainerDataSource(bean_detalle);
+			setHeightMode(HeightMode.ROW);
+			setWidth("100%");
+			removeColumn("id_dependencia");
+			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("nro_documento");
+			removeColumn("tipo_movimiento");
+			removeColumn("fecha_registro");
+			removeColumn("id_motivo_baja");
+			removeColumn("motivo_baja");
+			removeColumn("observacion");
+			setColumnOrder("id_activo", "nombre_activo");
+			 	
+			Grid.Column id_activoColumn = this.getColumn("id_activo");
+			Grid.Column nombre_activoColumn = this.getColumn("nombre_activo");
+			
+			id_activoColumn.setHeaderCaption("Codigo");
+			nombre_activoColumn.setHeaderCaption("Nombre del Activo");
+			
+			setHeightByRows(5);
+		}
+		public void buildGrid(long nro_documenro, short id_dependencia, short tipo_movimiento){
+			bean_detalle = new BeanItemContainer<Detalle>(Detalle.class);
+			bean_detalle.addAll(movimiento_impl.getDetallesbyMovimiento(nro_documenro, id_dependencia, tipo_movimiento));
 			setContainerDataSource(bean_detalle);
 
 //			removeColumn("id_detalle");

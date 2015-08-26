@@ -180,11 +180,12 @@ public class MovimientoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Detalle> getDetallesbyMovimiento(long nro_documento, short id_dependencia) {
-		String str_detallesbymovimiento = "EXEC Mavc_GetDetallesByDocumento @Id_Dependencia=?1,@Nro_Documento=?2";
+	public List<Detalle> getDetallesbyMovimiento(long nro_documento, short id_dependencia, short tipo_movimiento) {
+		String str_detallesbymovimiento = "EXEC Mavc_GetDetallesByDocumento @Id_Dependencia=?1,@Nro_Documento=?2,@Tipo_Movimiento=?3 ";
 		Query query = this.em.createNativeQuery(str_detallesbymovimiento, "detalle-movimiento");
 		query.setParameter(1, id_dependencia);
 		query.setParameter(2, nro_documento);
+		query.setParameter(3, tipo_movimiento);
 		List<Detalle> result = (List<Detalle>) query.getResultList();
 		return result;
 	}

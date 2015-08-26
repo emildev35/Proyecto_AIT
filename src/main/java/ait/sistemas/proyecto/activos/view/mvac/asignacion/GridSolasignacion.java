@@ -29,7 +29,7 @@ public class GridSolasignacion extends Grid{
 		bean_Movimiento = new BeanItemContainer<Movimiento>(Movimiento.class);
 		Movimiento movimiento = new Movimiento();
 		movimiento.setTipo_movimiento((short) 1);
-		bean_Movimiento.addAll(acta_impl.getsolicitud(movimiento));
+		bean_Movimiento.addAll(acta_impl.getSolicitudAsignacion(movimiento));
 		setContainerDataSource(bean_Movimiento);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);

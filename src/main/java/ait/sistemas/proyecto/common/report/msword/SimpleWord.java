@@ -14,7 +14,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 public class SimpleWord {
 	
-	public final String SAVE_PATH = "/tmp/" + String.valueOf(new java.util.Date().getTime()) + ".docx";
+	public final String SAVE_PATH = "C://" + String.valueOf(new java.util.Date().getTime()) + ".docx";
 	private XWPFDocument word_document = new XWPFDocument();
 	
 	public void save(String[][] data, List<String> columns, String titulo) {

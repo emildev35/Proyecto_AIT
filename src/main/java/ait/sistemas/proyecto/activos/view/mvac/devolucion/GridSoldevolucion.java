@@ -29,7 +29,7 @@ public class GridSoldevolucion extends Grid{
 		bean_Movimiento = new BeanItemContainer<Movimiento>(Movimiento.class);
 		Movimiento movimiento = new Movimiento();
 		movimiento.setTipo_movimiento((short) 3);
-		bean_Movimiento.addAll(acta_impl.getsolicitud(movimiento));
+		bean_Movimiento.addAll(acta_impl.getSolicitudDevolucion(movimiento));
 		setContainerDataSource(bean_Movimiento);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
