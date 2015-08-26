@@ -46,7 +46,6 @@ public class C_Movimiento implements Serializable {
 
 	private int CMV_Unidad_Organizacional_Destino;
 //	@Version
-	private long version;
 	
 	public C_Movimiento() {
 	}

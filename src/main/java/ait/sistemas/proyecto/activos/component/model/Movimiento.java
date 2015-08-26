@@ -51,6 +51,9 @@ public class Movimiento {
 	private String solicitante;
 	private long no_acta;
 	private Date fecha_acta;
+	private short tipo_soporte;
+	private long id_subsistema;
+	private short id_estado_soporte;
 	
 	public short getTipo_movimiento() {
 		return tipo_movimiento;
@@ -178,4 +181,30 @@ public class Movimiento {
 	public void setFecha_acta(Date fecha_acta) {
 		this.fecha_acta = fecha_acta;
 	}
+
+	public short getTipo_soporte() {
+		return tipo_soporte;
+	}
+
+	public void setTipo_soporte(short tipo_soporte) {
+		this.tipo_soporte = tipo_soporte;
+	}
+
+	public long getId_subsistema() {
+		return id_subsistema;
+	}
+
+	public void setId_subsistema(long id_subsistema) {
+		this.id_subsistema = id_subsistema;
+	}
+
+	public short getId_estado_soporte() {
+		return id_estado_soporte;
+	}
+
+	public void setId_estado_soporte(short id_estado_soporte) {
+		this.id_estado_soporte = id_estado_soporte;
+	}
+
+	
 }

@@ -1,36 +1,34 @@
-package ait.sistemas.proyecto.activos.view.mant.soporte;
+package ait.sistemas.proyecto.activos.view.mant.infsoporte;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.SoporteImpl;
+import ait.sistemas.proyecto.activos.view.mant.soporte.FormSoporte;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.HomeView;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VSoporteP.ID)
-public class VSoporteP extends VerticalLayout implements View, ClickListener {
-	
+public class VInfSoporteP extends VerticalLayout implements View, ClickListener{
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/mant/soporte";
+	public static final String ID = "/act/mant/infsoporte";
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
 	private Button btn_salir = new Button("SALIR");
@@ -40,7 +38,7 @@ public class VSoporteP extends VerticalLayout implements View, ClickListener {
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VSoporteP() {
+	public VInfSoporteP() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
