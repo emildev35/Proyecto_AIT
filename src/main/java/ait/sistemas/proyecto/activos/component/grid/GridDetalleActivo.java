@@ -25,9 +25,9 @@ public class GridDetalleActivo extends Grid {
 //		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 //		nombre_activo.setHeaderCaption("Nombre Activo");
 	}
-	public void update(long nro_documento, short id_dependencia, short tipo_dependencia){
+	public void update(long nro_documento, short id_dependencia, short tipo_movimiento){
 		removeAllColumns();
-		this.bean_detalles = new BeanItemContainer<Detalle>(Detalle.class, movimientoimpl.getDetallesbyMovimiento(nro_documento, id_dependencia, tipo_dependencia));
+		this.bean_detalles = new BeanItemContainer<Detalle>(Detalle.class, movimientoimpl.getDetallesbyMovimiento(nro_documento, id_dependencia, tipo_movimiento));
 		setContainerDataSource(bean_detalles);
 		setSelectionMode(SelectionMode.NONE);
 //		Column id_activo = getColumn("id_activo").setExpandRatio(1);
