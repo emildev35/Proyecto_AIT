@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.SqlResultSetMapping;
 
 @SqlResultSetMapping(name = "mapeo-documento", entities = { @EntityResult(entityClass = DocumentosRespaldoModel.class, fields = {

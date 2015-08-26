@@ -47,8 +47,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
-		addComponent(buildButtonBar());
-		Responsive.makeResponsive(this);
+
 	}
 	
 	private Component buildButtonBar() {

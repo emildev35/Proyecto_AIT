@@ -21,11 +21,12 @@ public class MantenimientoImpl {
 	public MantenimientoImpl() {
 		this.emf = Persistence.createEntityManagerFactory("AIT-Activos");
 		this.em = emf.createEntityManager();
-		// this.em.lock(C_Movimiento.class, LockModeType.NONE);
 	}
 	
 	public int addMantenimiento(Mantenimiento data) {
-		this.em.clear();
+		ConnecctionActivos conn = new ConnecctionActivos();
+
+		
 		String str_mantenimiento = "EXEC Mvac_Mantenimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
 				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6";
 		Query query_mantenimiento = this.em.createNativeQuery(str_mantenimiento);
