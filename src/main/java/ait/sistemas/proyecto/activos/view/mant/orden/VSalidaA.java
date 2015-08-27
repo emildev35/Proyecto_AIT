@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.infsoporte;
+package ait.sistemas.proyecto.activos.view.mant.orden;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,20 +26,20 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VInfSoporteP.ID)
-public class VInfSoporteP extends VerticalLayout implements View, ClickListener{
+@CDIView(value=VSalidaA.ID)
+public class VSalidaA extends VerticalLayout implements View, ClickListener{
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/mant/infsoporte";
+	public static final String ID = "/act/mant/salida";
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormInfSoporte frm_soporte = new FormInfSoporte();
+	private FormOrdenSalida frm_soporte = new FormOrdenSalida();
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VInfSoporteP() {
+	public VSalidaA() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
@@ -117,5 +117,6 @@ public class VInfSoporteP extends VerticalLayout implements View, ClickListener{
 	public void enter(ViewChangeEvent event) {
 		
 	}
+	
 	
 }

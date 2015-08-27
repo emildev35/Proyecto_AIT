@@ -2,41 +2,62 @@ package ait.sistemas.proyecto.activos.component.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
 
+import ait.sistemas.proyecto.common.component.Messages;
+
+@SqlResultSetMapping(name = "solicitud-soporte", entities = { @EntityResult(entityClass = SolicitudSoporte.class, fields = {
+	@FieldResult(name = "nro_documento", column = "nro_documento"),
+	@FieldResult(name = "dependencia", column = "dependencia"),
+	@FieldResult(name = "fecha", column = "fecha"),
+	@FieldResult(name = "hora", column = "hora"),
+	@FieldResult(name = "ci_solicitante", column = "ci_solicitante"),
+	@FieldResult(name = "nombre_solicitante", column = "nombre_solicitante"),
+	@FieldResult(name = "descripcion", column = "descripcion"),
+	@FieldResult(name = "nombre_sistema", column = "nombre_sistema"),
+	@FieldResult(name = "tipo_soporte", column = "tipo_soporte")})})
 @Entity
 public class SolicitudSoporte implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private long nro_documento;
-	private short tipo_movimiento_id;
-	private short dependencia_id;
-	private Date fecha_movimiento;
+	private short tipo_movimiento;
+	private short dependencia;
+	private Date fecha;
+	private Time hora;
 	private String ci_solicitante;
 	private String nombre_solicitante;
 	private String tipo_soporte;
-	private short nro_autorizacion;
-	private short unidad_organizacional_id;
+	private String descripcion;
+	private String nombre_sistema;
 	
 	public SolicitudSoporte() {
 	}
 
 	
-	public SolicitudSoporte(long nro_documento, short tipo_movimiento_id, short dependencia_id, Date fecha_movimiento,
-			String ci_solicitante, String nombre_solicitante, String tipo_soporte, short nro_autorizacion,
-			short unidad_organizacional_id) {
+
+	public SolicitudSoporte(long nro_documento, short tipo_movimiento, short dependencia, Date fecha, Time hora,
+			String ci_solicitante, String nombre_solicitante, String tipo_soporte, String descripcion, String nombre_sistema) {
 		this.nro_documento = nro_documento;
-		this.tipo_movimiento_id = tipo_movimiento_id;
-		this.dependencia_id = dependencia_id;
-		this.fecha_movimiento = fecha_movimiento;
+		this.tipo_movimiento = tipo_movimiento;
+		this.dependencia = dependencia;
+		this.fecha = fecha;
+		this.hora = hora;
 		this.ci_solicitante = ci_solicitante;
 		this.nombre_solicitante = nombre_solicitante;
 		this.tipo_soporte = tipo_soporte;
-		this.nro_autorizacion = nro_autorizacion;
-		this.unidad_organizacional_id = unidad_organizacional_id;
+		this.descripcion = descripcion;
+		this.nombre_sistema = nombre_sistema;
 	}
+
+
+
 
 
 	public long getNro_documento() {
@@ -47,28 +68,39 @@ public class SolicitudSoporte implements Serializable {
 		this.nro_documento = nro_documento;
 	}
 
-	public short getTipo_movimiento_id() {
-		return tipo_movimiento_id;
+
+	public short getTipo_movimiento() {
+		return tipo_movimiento;
 	}
 
-	public void setTipo_movimiento_id(short tipo_movimiento_id) {
-		this.tipo_movimiento_id = tipo_movimiento_id;
+
+	public void setTipo_movimiento(short tipo_movimiento) {
+		this.tipo_movimiento = tipo_movimiento;
 	}
 
-	public short getDependencia_id() {
-		return dependencia_id;
+
+	public short getDependencia() {
+		return dependencia;
 	}
 
-	public void setDependencia_id(short dependencia_id) {
-		this.dependencia_id = dependencia_id;
+	public void setDependencia(short dependencia) {
+		this.dependencia = dependencia;
 	}
 
-	public Date getFecha_movimiento() {
-		return fecha_movimiento;
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public void setFecha_movimiento(Date fecha_movimiento) {
-		this.fecha_movimiento = fecha_movimiento;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Time getHora() {
+		return hora;
+	}
+
+	public void setHora(Time hora) {
+		this.hora = hora;
 	}
 
 	public String getCi_solicitante() {
@@ -95,20 +127,28 @@ public class SolicitudSoporte implements Serializable {
 		this.tipo_soporte = tipo_soporte;
 	}
 
-	public short getNro_autorizacion() {
-		return nro_autorizacion;
+
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setNro_autorizacion(short nro_autorizacion) {
-		this.nro_autorizacion = nro_autorizacion;
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public short getUnidad_organizacional_id() {
-		return unidad_organizacional_id;
+
+	public String getNombre_sistema() {
+		return nombre_sistema == null ? Messages.NOT_FOUND_STRING :nombre_sistema;
 	}
 
-	public void setUnidad_organizacional_id(short unidad_organizacional_id) {
-		this.unidad_organizacional_id = unidad_organizacional_id;
+
+	public void setNombre_sistema(String nombre_sistema) {
+		this.nombre_sistema = nombre_sistema;
 	}
+
+	
+	
+
 	
 }
