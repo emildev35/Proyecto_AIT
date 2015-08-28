@@ -27,7 +27,11 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "observacion", column = "observacion"),
 	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
 	@FieldResult(name = "nombre_activo", column = "nombre_activo"),
-	@FieldResult(name = "motivo_baja", column = "motivo_baja")
+	@FieldResult(name = "motivo_baja", column = "motivo_baja"),
+	@FieldResult(name = "nro_seguro", column = "nro_seguro"),
+	@FieldResult(name = "vto_seguro", column = "vto_seguro"),
+	@FieldResult(name = "nro_garantia", column = "nro_garantia"),
+	@FieldResult(name = "vto_garantia", column = "vto_garantia")
 	})})
 @Entity
 public class Detalle implements Serializable{
@@ -44,6 +48,11 @@ public class Detalle implements Serializable{
 	private Date fecha_registro;
 	private String nombre_activo;
 	private String motivo_baja;
+	
+	private int nro_seguro;
+	private Date vto_seguro;
+	private int nro_garantia;
+	private Date vto_garantia;
 	public Detalle() {
 	}
 	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
@@ -117,6 +126,30 @@ public class Detalle implements Serializable{
 	}
 	public void setMotivo_baja(String motivo_baja) {
 		this.motivo_baja = motivo_baja;
+	}
+	public int getNro_seguro() {
+		return nro_seguro;
+	}
+	public void setNro_seguro(int nro_seguro) {
+		this.nro_seguro = nro_seguro;
+	}
+	public Date getVto_seguro() {
+		return vto_seguro;
+	}
+	public void setVto_seguro(Date vto_seguro) {
+		this.vto_seguro = vto_seguro;
+	}
+	public int getNro_garantia() {
+		return nro_garantia;
+	}
+	public void setNro_garantia(int nro_garantia) {
+		this.nro_garantia = nro_garantia;
+	}
+	public Date getVto_garantia() {
+		return vto_garantia;
+	}
+	public void setVto_garantia(Date vto_garantia) {
+		this.vto_garantia = vto_garantia;
 	}
 
 	
