@@ -7,9 +7,9 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.grid.GridDetalleActivo;
 import ait.sistemas.proyecto.activos.component.model.DocumentoPendiente;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
-import ait.sistemas.proyecto.activos.data.model.EstadoSoporte;
-import ait.sistemas.proyecto.activos.data.service.Impl.EstadoSoporteImpl;
+import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
@@ -51,7 +51,7 @@ public class FormOrdenSalida extends GridLayout implements SelectionListener {
 	
 	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	private final MovimientoImpl movimientoImpl = new MovimientoImpl();
-	private final EstadoSoporteImpl estado_soporteimpl = new EstadoSoporteImpl();
+	private final ProveedorImpl proveedorimpl = new ProveedorImpl();
 	private DocumentoPendiente sol_mantenimiento;
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
@@ -62,6 +62,7 @@ public class FormOrdenSalida extends GridLayout implements SelectionListener {
 		this.txt_dependencia.setWidth("100%");
 		this.txt_solicitante.setWidth("100%");
 		this.txt_nro_informe.setWidth("100%");
+		this.txt_unidad_organizacional.setWidth("100%");
 		this.dtf_fecha.setWidth("100%");
 		this.cb_proveedor.setWidth("100%");
 		
@@ -70,12 +71,12 @@ public class FormOrdenSalida extends GridLayout implements SelectionListener {
 		this.pitm_infsoporte.addItemProperty("descripcion", new ObjectProperty<String>(""));
 		this.pitm_infsoporte.addItemProperty("id_informe", new ObjectProperty<String>(""));
 		this.pitm_infsoporte.addItemProperty("descripcion_trabajo", new ObjectProperty<String>(""));
-		this.pitm_infsoporte.addItemProperty("estado_soporte", new ObjectProperty<EstadoSoporte>(new EstadoSoporte()));
+		this.pitm_infsoporte.addItemProperty("proveedor", new ObjectProperty<ProveedoresModel>(new ProveedoresModel()));
 		
 		binder_infsoporte = new FieldGroup(pitm_infsoporte);
 		binder_infsoporte.bind(this.txt_solicitante, "descripcion");
 		binder_infsoporte.bind(this.txt_nro_informe, "id_informe");
-		binder_infsoporte.bind(this.cb_proveedor, "estado_soporte");
+		binder_infsoporte.bind(this.cb_proveedor, "proveedor");
 		
 		this.txt_solicitante.setRequired(true);
 		this.txt_solicitante.addValidator(new NullValidator("", false));
@@ -145,13 +146,16 @@ public class FormOrdenSalida extends GridLayout implements SelectionListener {
 		this.txt_nro_informe.setEnabled(false);
 		this.txt_dependencia.setEnabled(false);
 		this.txt_solicitante.setEnabled(false);
+		this.txt_unidad_organizacional.setEnabled(false);
+		this.txt_nro_solicitud.setEnabled(false);
+		this.dtf_fecha_solicitud.setEnabled(false);
 	}
 	
 	@Override
 	public void select(SelectionEvent event) {
 		if ((DocumentoPendiente) grid_solmanapr.getSelectedRow() != null) {
 			this.sol_mantenimiento = (DocumentoPendiente) grid_solmanapr.getSelectedRow();
-			this.grid_detalle_activo.update(sol_mantenimiento.getNro_documento(), sol_mantenimiento.getDependencia_id(),
+			this.grid_detalle_activo.update_salida(sol_mantenimiento.getNro_documento(), sol_mantenimiento.getDependencia_id(),
 					sol_mantenimiento.getTipo_movimiento_id());
 			this.txt_dependencia.setValue(sol_mantenimiento.getDependencia());
 			this.txt_solicitante.setValue(sol_mantenimiento.getNombre_solicitante());
@@ -164,9 +168,9 @@ public class FormOrdenSalida extends GridLayout implements SelectionListener {
 	private void fillcbProveedor() {
 		cb_proveedor.setInputPrompt("Seleccione un Proveedor");
 		cb_proveedor.setNullSelectionAllowed(false);
-		for (EstadoSoporte estado_soporte : estado_soporteimpl.getall()) {
-			cb_proveedor.addItem(estado_soporte);
-			cb_proveedor.setItemCaption(estado_soporte, estado_soporte.getNombre());
+		for (ProveedoresModel provedor : proveedorimpl.getalls()) {
+			cb_proveedor.addItem(provedor);
+			cb_proveedor.setItemCaption(provedor, provedor.getPRV_Nombre() );
 		}
 	}
 	
