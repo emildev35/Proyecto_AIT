@@ -54,6 +54,7 @@ public class Messages {
 	public static final String SELECT_MOVIMIENTO = "Seleccione un Movimiento";
 	public static final String EMPTY_TIPO_CAMBIO = "No se encontro el <strong>Tipo de Cambio</strong> favor introducirlo de manera manual";
 	public static final String EMPTY_GRID = "Debe seleccionar al menos un elemento del Grid";
+	public static final String INVALIT_DATE = "La fecha debe ser Mayor a la fecha de la ultima depreciacion";
 
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);

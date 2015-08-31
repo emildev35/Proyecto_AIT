@@ -227,7 +227,7 @@ import com.vaadin.ui.Window;
 				kardex_elements[r][6][0]  = new KardexElement();
 				kardex_elements[r][6][0].setAncho(150);
 				kardex_elements[r][6][0].setTitulo("Valor Actualizado Getion Anterior");
-				kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Valor_Gestion_Anterior()));
+				kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada_Gestion_Anterior()));
 				
 				kardex_elements[r][6][1]  = new KardexElement();
 				kardex_elements[r][6][1].setAncho(100);
@@ -242,7 +242,7 @@ import com.vaadin.ui.Window;
 				kardex_elements[r][6][3]  = new KardexElement();
 				kardex_elements[r][6][3].setAncho(150);
 				kardex_elements[r][6][3].setTitulo("Valor Actualizado Gestion Actual");
-				kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Valor_Gestion_Anterior()));
+				kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada()));
 				r++;
 			}
 			return kardex_elements;
