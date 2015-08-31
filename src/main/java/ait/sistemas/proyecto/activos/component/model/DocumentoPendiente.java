@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.component.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -15,17 +16,23 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "ci_solicitante", column = "ci_solicitante"),
 	@FieldResult(name = "dependencia_id", column = "dependencia_id"),
 	@FieldResult(name = "nombre_solicitante", column = "nombre_solicitante"),
+	@FieldResult(name = "dependencia", column = "dependencia"),
+	@FieldResult(name = "unidad_organizacional", column = "unidad_organizacional"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
 	@FieldResult(name = "unidad_organizacional_id", column = "unidad_organizacional_id"),
 	@FieldResult(name = "nro_autorizacion", column = "nro_autorizacion")})})
 @Entity
-public class DocumentoPendiente {
+public class DocumentoPendiente implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	private long nro_documento;
 	private short tipo_movimiento_id;
 	private short dependencia_id;
 	private Date fecha_movimiento;
 	private String ci_solicitante;
+	private String unidad_organizacional;
+	private String dependencia;
 	private String nombre_solicitante;
 	private String tipo_movimiento;
 	private short nro_autorizacion;
@@ -134,6 +141,26 @@ public class DocumentoPendiente {
 
 	public void setNro_autorizacion(short nro_autorizacion) {
 		this.nro_autorizacion = nro_autorizacion;
+	}
+
+
+	public String getUnidad_organizacional() {
+		return unidad_organizacional;
+	}
+
+
+	public void setUnidad_organizacional(String unidad_organizacional) {
+		this.unidad_organizacional = unidad_organizacional;
+	}
+
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
 	}
 
 

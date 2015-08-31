@@ -4,6 +4,7 @@ import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 
@@ -20,20 +21,34 @@ public class GridDetalleActivo extends Grid {
 		setSizeFull();
 		setHeightByRows(3);
 		setHeightMode(HeightMode.ROW);
-//		Column id_activo = getColumn("id_activo").setExpandRatio(1);
-//		id_activo.setHeaderCaption("Codigo");
-//		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
-//		nombre_activo.setHeaderCaption("Nombre Activo");
+		removeColumn("id_dependencia");
+		removeColumn("id_unidad_organizacional_origen");
+		removeColumn("motivo_baja");
+		removeColumn("observacion");
+		removeColumn("tipo_movimiento");
+		removeColumn("nro_documento");
+		removeColumn("id_motivo_baja");
+		removeColumn("fecha_registro");
+		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo");
+		getColumn("nombre_activo").setExpandRatio(5).setHeaderCaption("Nombre Activo");
+		Responsive.makeResponsive(this);
 	}
 	public void update(long nro_documento, short id_dependencia, short tipo_movimiento){
 		removeAllColumns();
 		this.bean_detalles = new BeanItemContainer<Detalle>(Detalle.class, movimientoimpl.getDetallesbyMovimiento(nro_documento, id_dependencia, tipo_movimiento));
 		setContainerDataSource(bean_detalles);
 		setSelectionMode(SelectionMode.NONE);
-//		Column id_activo = getColumn("id_activo").setExpandRatio(1);
-//		id_activo.setHeaderCaption("Codigo");
-//		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
-//		nombre_activo.setHeaderCaption("Nombre Activo");
+		removeColumn("id_dependencia");
+		removeColumn("id_unidad_organizacional_origen");
+		removeColumn("motivo_baja");
+		removeColumn("observacion");
+		removeColumn("tipo_movimiento");
+		removeColumn("nro_documento");
+		removeColumn("id_motivo_baja");
+		removeColumn("fecha_registro");
+		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo");
+		getColumn("nombre_activo").setExpandRatio(5).setHeaderCaption("Nombre Activo");
+		Responsive.makeResponsive(this);
 	}
 
 }

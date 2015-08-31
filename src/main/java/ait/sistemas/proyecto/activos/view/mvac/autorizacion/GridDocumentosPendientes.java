@@ -21,6 +21,10 @@ public class GridDocumentosPendientes extends Grid{
 		setContainerDataSource(bean_documentos);
 		setHeightByRows(3);
 		setHeightMode(HeightMode.ROW);
+		removeColumn("tipo_movimiento_id");
+		removeColumn("unidad_organizacional_id");
+		removeColumn("nro_autorizacion");
+		removeColumn("ci_solicitante");
 		Responsive.makeResponsive(this);
 	}
 

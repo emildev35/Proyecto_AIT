@@ -22,6 +22,7 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "nro_documento", column = "nro_documento"),
 	@FieldResult(name = "id_usuario", column = "id_usuario"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
+	@FieldResult(name = "tipo_movimiento_referencia", column = "tipo_movimiento_referencia"),
 	@FieldResult(name = "nro_documento_referencia", column = "nro_documento_referencia"),
 	@FieldResult(name = "fecha_nro_referencia", column = "fecha_nro_referencia"),
 	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
@@ -43,6 +44,7 @@ public class Movimiento {
 	private String id_usuario;
 	private short tipo_movimiento;
 	private String nro_documento_referencia;
+	private short tipo_movimiento_referencia;
 	private Date fecha_nro_referencia;
 	private Date fecha_registro;
 	private Date fecha_movimiento;	
@@ -204,6 +206,14 @@ public class Movimiento {
 
 	public void setId_estado_soporte(short id_estado_soporte) {
 		this.id_estado_soporte = id_estado_soporte;
+	}
+
+	public short getTipo_movimiento_referencia() {
+		return tipo_movimiento_referencia;
+	}
+
+	public void setTipo_movimiento_referencia(short tipo_movimiento_referencia) {
+		this.tipo_movimiento_referencia = tipo_movimiento_referencia;
 	}
 
 	

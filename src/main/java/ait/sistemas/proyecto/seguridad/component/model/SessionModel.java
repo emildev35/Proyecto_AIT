@@ -40,8 +40,6 @@ public class SessionModel implements Serializable {
 
 	public SessionModel() {
 	}
-	
-	
 
 	public SessionModel(String id, String full_name, String dependecia, short id_dependecia,
 			String unidad_organizacional, short id_unidad_organizacional, String ci) {

@@ -26,19 +26,20 @@ public class GridTipoAutorizacion extends Grid{
 		removeColumn("ci");	
 		removeColumn("nivel_autorizacion_id");	
 		removeColumn("tipo_movimiento_id");	
+		try{
 		removeColumn("unidad_organizacional_id");
+		}catch(Exception ex){}
 		removeColumn("usuario_id");	
 		removeColumn("fecha_registro");	
 		
 		setWidth("100%");
 
-		setColumnOrder("tipo_movimiento", "orden","nivel_autorizacion", "dependencia", "unidad_organizacional","servidor_publico");
+		setColumnOrder("tipo_movimiento", "orden","nivel_autorizacion", "dependencia","servidor_publico");
 		
 		getColumn("tipo_movimiento").setHeaderCaption("Tipos de Movimiento").setExpandRatio(3);
 		getColumn("orden").setHeaderCaption("Orden").setExpandRatio(1);
 		getColumn("nivel_autorizacion").setHeaderCaption("Nivel de Autorizacion").setExpandRatio(2);
 		getColumn("dependencia").setHeaderCaption("Dependencia").setExpandRatio(3);
-		getColumn("unidad_organizacional").setHeaderCaption("Unidad Organizacional").setExpandRatio(2);
 		getColumn("servidor_publico").setHeaderCaption("Servidor Publico").setExpandRatio(2);
 	
 		Responsive.makeResponsive(this);

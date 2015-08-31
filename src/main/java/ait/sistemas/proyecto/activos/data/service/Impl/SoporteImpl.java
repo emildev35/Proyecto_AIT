@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.data.service.Impl;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +11,7 @@ import javax.persistence.Query;
 
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.component.model.SolicitudSoporte;
 import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 
 public class SoporteImpl {
@@ -57,6 +59,40 @@ public class SoporteImpl {
 		}
 	}
 	
+	public int addInforme(Movimiento data) throws SQLException {
+		ConnecctionActivos conn = new ConnecctionActivos();
+		String str_cabezera = String.format("EXEC Mant_CInfSoporte_I " 
+				+ "@Dependencia_Id=%d," 
+				+ "@Unidad_Organizacional_Id=%d,"
+				+ "@Numero_Documento=%d,"
+				+ "@Fecha_Registro='%s'," 
+				+ "@Fecha_Movimiento='%s'," 
+				+ "@CI_Usuario='%s',"
+				+ "@Tipo_Movimiento=%d," 
+				+ "@Observaciones='%s'," 
+				+ "@Tipo_Soporte=%d," 
+				+ "@Id_SubSistema=%d,"
+				+ "@Numero_Documento_Referencia='%s'," 
+				+ "@Fecha_Registro_Referencia='%s'," 
+				+ "@Tipo_Movimiento_Referencia=%d,"
+				+ "@Estado_Soporte=%d", 
+				data.getId_dependencia(),
+				data.getId_unidad_organizacional_origen(),
+				data.getNro_documento(), 
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM  HH:mm:ss").format(data.getFecha_movimiento()), 
+				data.getUsuario(),
+				data.getTipo_movimiento(), 
+				data.getObservacion(), 
+				data.getTipo_soporte(), 
+				data.getId_subsistema(),
+				data.getNro_documento_referencia(),
+				new SimpleDateFormat("yyyy-dd-MM  HH:mm:ss").format(data.getFecha_nro_referencia()), 
+				data.getTipo_movimiento_referencia(),
+				data.getId_estado_soporte());
+		return conn.callproc(str_cabezera);
+	}
+	
 	public int dropmovimiento(Movimiento data) {
 		int result_cabezera;
 		for (Detalle detalle : data.getDetalles()) {
@@ -83,5 +119,14 @@ public class SoporteImpl {
 		result_cabezera = (Integer) query_cabezera.getSingleResult();
 		return result_cabezera;
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SolicitudSoporte> getall(short id_dependencia) {
+		String str_query = "EXEC Mant_GetSolSoporte_Q @Id_Dependencia=?1";
+		Query query = this.em.createNativeQuery(str_query, "solicitud-soporte");
+		query.setParameter(1, id_dependencia);
+		List<SolicitudSoporte> result = (List<SolicitudSoporte>) query.getResultList();
+		return result;
 	}
 }

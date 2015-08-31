@@ -52,10 +52,23 @@ public class Messages {
 	public static final String PIN_MESSAGES = "* El PIN Generado es de uso exclusivo para Autorizar Documentos de Movimientos de Activos Fijos";
 	public static final String PIN_MESSAGES_2 = "* El PIN Generado esta bajo su responsabilidad y no debe ser divulgado a terceros";
 	public static final String SELECT_MOVIMIENTO = "Seleccione un Movimiento";
+	/**
+	 * Mensaje utilizado cuando no se encontro un tipo de cambio al momento
+	 * de seleccionar un fecha
+	 */
 	public static final String EMPTY_TIPO_CAMBIO = "No se encontro el <strong>Tipo de Cambio</strong> favor introducirlo de manera manual";
+	/**
+	 * Mensaje utilizado en caso que no se Seleccione un elemento de un Grid
+	 */
 	public static final String EMPTY_GRID = "Debe seleccionar al menos un elemento del Grid";
+	/**
+	 * Mensaje para verificar que una fecha sea mayor a la ultima depreciacion
+	 */
 	public static final String INVALIT_DATE = "La fecha debe ser Mayor a la fecha de la ultima depreciacion";
-
+	/**
+	 * Utilizado en casos donde el String que se desee utilizar tenga el valor de null
+	 */
+	public static final String NOT_FOUND_STRING = "No Disponible";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}

@@ -2,13 +2,18 @@ package ait.sistemas.proyecto.activos.data.service.Impl;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import ait.sistemas.proyecto.activos.component.model.Detalle;
+import ait.sistemas.proyecto.activos.component.model.DocumentoPendiente;
 import ait.sistemas.proyecto.activos.component.model.Mantenimiento;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
@@ -24,9 +29,7 @@ public class MantenimientoImpl {
 	}
 	
 	public int addMantenimiento(Mantenimiento data) {
-		ConnecctionActivos conn = new ConnecctionActivos();
 
-		
 		String str_mantenimiento = "EXEC Mvac_Mantenimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
 				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6";
 		Query query_mantenimiento = this.em.createNativeQuery(str_mantenimiento);
@@ -125,6 +128,15 @@ public class MantenimientoImpl {
 		query_cabezera.setParameter(4, data.getTipo_movimiento());
 		result_cabezera = (Integer) query_cabezera.getSingleResult();
 		return result_cabezera;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<DocumentoPendiente> getMantenimientosAprobados(){
+		String str_query = "SELECT * from View_Mantenimientos_Autorizados";
+		Query query = this.em.createNativeQuery(str_query, "documento-pendiente");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<DocumentoPendiente> result = query.getResultList();
+		return result;
 	}
 	
 }
