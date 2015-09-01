@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -26,12 +25,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VAuxiliarM.ID)
 public class VAuxiliarM extends VerticalLayout implements View, ClickListener,
 		SelectionListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/para/auxiliar/m";
 
 	private FormAuxiliar frm_auxiliar;
 	private CssLayout hl_errores;

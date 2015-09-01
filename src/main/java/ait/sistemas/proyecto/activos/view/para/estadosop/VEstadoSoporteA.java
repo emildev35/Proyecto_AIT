@@ -6,7 +6,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.EstadoSoporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -23,11 +22,9 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VEstadoSoporteA.ID)
 public class VEstadoSoporteA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/para/estadosoporte/a";
 	
 	private FormEstadoSoporte frm_estadp_soporte;
 	private CssLayout hl_errores;

@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.MotivobajaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -29,12 +28,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-	@CDIView(value = VMotivobajaB.URL)
 	public class VMotivobajaB extends VerticalLayout implements View,
 			SelectionListener, ClickListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
 		private static final long serialVersionUID = 1L;
-		public static final String URL = "/act/para/motivobaja/b";
 
 		private MotivobajaImpl motivo_impl = new MotivobajaImpl();
 		private GridMotivobaja grid_motivo;

@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -27,11 +26,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-@CDIView(value = VReporteP.ID)
 public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/para/organismo/reporte";
 
 	private Button btn_imprimir;
 	private String[][] data;
@@ -45,7 +42,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		List<BarMessage> mensajes = new ArrayList<BarMessage>();
-		mensajes.add(new BarMessage("","Pulsar el Boton Imprimir para generar el reporte", "success"));
+		mensajes.add(new BarMessage("", "Pulsar el Boton Imprimir para generar el reporte", "success"));
 		buildMessages(mensajes);
 	}
 
@@ -59,7 +56,6 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
-
 
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
@@ -78,20 +74,20 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	}
 
-
 	public String[][] getData() {
 		List<Organismo_Financiador> result = this.organismo_impl.getall();
-		
+
 		this.data = new String[result.size()][3];
 		this.r = 0;
-		for(Organismo_Financiador row_mov : result){
-			String[] row = {String.valueOf(row_mov.getORF_Organismo_Financiador()),
-					row_mov.getORF_Nombre_Organismo_Financiador()	};
+		for (Organismo_Financiador row_mov : result) {
+			String[] row = { String.valueOf(row_mov.getORF_Organismo_Financiador()),
+					row_mov.getORF_Nombre_Organismo_Financiador() };
 			this.data[r] = row;
 			this.r++;
 		}
 		return data;
 	}
+
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
@@ -104,6 +100,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		}
 
 	}
+
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();

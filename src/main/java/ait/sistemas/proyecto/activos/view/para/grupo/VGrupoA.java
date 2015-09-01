@@ -6,7 +6,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -24,11 +23,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value = VGrupoA.ID)
 public class VGrupoA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/para/grupo/a";
 	
 	private FormGrupo frm_grupo;
 	private CssLayout hl_errores;

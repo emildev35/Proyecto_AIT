@@ -6,7 +6,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -14,21 +13,19 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value = VAuxiliarA.ID)
 public class VAuxiliarA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/para/auxiliar/a";
 	
 	private FormAuxiliar frm_auxiliar;
 	private CssLayout hl_errores;
