@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.PersonalImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -28,11 +27,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value=VPersonalM.ID)
 public class VPersonalM extends VerticalLayout implements View, ClickListener, SelectionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/personal/m";
 	
 	
 	private FormPersonal frm_personal;

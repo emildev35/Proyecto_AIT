@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -27,11 +26,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value=VUnidadM.ID)
 public class VUnidadM extends VerticalLayout implements View, ClickListener, SelectionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/unidad/m";
 	
 	private FormUnidad frm_unidad;
 	private CssLayout hl_errores;

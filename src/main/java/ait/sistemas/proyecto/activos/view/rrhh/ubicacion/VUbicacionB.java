@@ -11,7 +11,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -32,13 +31,11 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VUbicacionB.URL)
 
 public class VUbicacionB extends VerticalLayout implements View,
 		SelectionListener, ClickListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String URL = "/act/rrhh/ubicacion/b";
 
 	private UbicacionImpl ubicacion_impl = new UbicacionImpl();
 	private DependenciaImpl dependencia_impl = new DependenciaImpl();

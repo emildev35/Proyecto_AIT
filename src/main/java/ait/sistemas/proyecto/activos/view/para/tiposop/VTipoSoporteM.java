@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TipoSoporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -26,12 +25,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VTipoSoporteM.URL)
 public class VTipoSoporteM extends VerticalLayout implements View,
 		SelectionListener, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String URL = "/act/para/tiposoporte/m";
 
 	private final TipoSoporteImpl tipo_soporteimpl = new TipoSoporteImpl();
 	private GridTipoSoporte grid_tipo_soporte;

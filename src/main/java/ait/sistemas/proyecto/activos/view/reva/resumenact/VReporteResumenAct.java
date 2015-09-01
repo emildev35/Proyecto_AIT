@@ -29,7 +29,6 @@ import com.vaadin.ui.Window;
 public class VReporteResumenAct extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/reva/resumenact/r";
 
 	private Button btn_imprimir;
 	private FormReporte frmReporte = new FormReporte();
