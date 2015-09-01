@@ -10,7 +10,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TipoSoporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
@@ -31,13 +30,11 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VTipoSoporteB.URL)
 @SuppressWarnings("unused")
 public class VTipoSoporteB extends VerticalLayout implements View, SelectionListener, ClickListener,
 		org.vaadin.dialogs.ConfirmDialog.Listener {
 	
 	private static final long serialVersionUID = 1L;
-	public static final String URL = "/act/para/tiposoporte/b";
 	
 	private TipoSoporteImpl tipo_soporteimpl = new TipoSoporteImpl();
 	private GridTipoSoporte grid_tipo_soporte;

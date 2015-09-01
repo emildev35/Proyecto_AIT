@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -26,11 +25,9 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VFuenteM.ID)
 public class VFuenteM extends VerticalLayout implements View, ClickListener, SelectionListener {
 	
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/para/fuente/m";
 	
 	private FormFuente frm_fuente;
 	private CssLayout hl_errores;

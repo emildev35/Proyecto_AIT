@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -27,11 +26,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value=VUbicacionM.ID)
 public class VUbicacionM extends VerticalLayout implements View, ClickListener, SelectionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/ubicacion/m";
 	
 	private FormUbicacion frm_ubicacion;
 	private CssLayout hl_errores;

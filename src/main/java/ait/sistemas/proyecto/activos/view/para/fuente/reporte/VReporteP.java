@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -27,7 +26,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-@CDIView(value = VReporteP.ID)
 public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
