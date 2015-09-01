@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.reva.actualiza.reporte;
+package ait.sistemas.proyecto.activos.view.reva.resumenact;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ReportPdf {
 
 	private static final int HEADER_SIZE = 5;
 
-	static String SAVE_PATH = "Informe-Actualizacion" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	static String SAVE_PATH = "Informe-Resumen-Actualizacion" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 
@@ -71,10 +71,10 @@ public class ReportPdf {
 
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
-		columns.add(new Column("Nombre del Activo", 350));
-		columns.add(new Column("Fecha Compra", 45));
+		columns.add(new Column("Grupo Contable", 340));
+		columns.add(new Column("Cantidad Items", 45));
 		columns.add(new Column("Valor Compra", 45));
-		columns.add(new Column("Vida Util", 22));
+		columns.add(new Column("Vida Util (Años)", 33));
 		columns.add(new Column("Valor Actualizado Gestion Anterior", 60));
 		columns.add(new Column("Depreciacion Actualizada Gestion Anterior", 60));
 		columns.add(new Column("Actualizacion Gestion Actual", 60));

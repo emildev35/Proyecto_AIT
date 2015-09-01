@@ -51,6 +51,8 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_Actualizacion_Acumulada", column = "ACT_Actualizacion_Acumulada"),
 		@FieldResult(name = "ACT_Depreciacion_Acumulada_Gestion_Anterior", column = "ACT_Depreciacion_Acumulada_Gestion_Anterior"),
 		@FieldResult(name = "ACT_Depresiacion_Acumulada", column = "ACT_Depresiacion_Acumulada"),
+		@FieldResult(name = "ACT_CA", column = "ACT_CA"),
+		@FieldResult(name = "ACT_DAA", column = "ACT_DAA"),
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo_ID", column = "ACT_Ubicacion_Fisica_Activo_ID"),
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo", column = "ACT_Ubicacion_Fisica_Activo"),
 		@FieldResult(name = "ACT_Ubicacion_Imagen", column = "ACT_Ubicacion_Imagen"),
@@ -141,6 +143,8 @@ public class ActivosModel implements Serializable {
 	private BigDecimal ACT_Actualizacion_Acumulada;
 	private BigDecimal ACT_Depresiacion_Acumulada;
 	private BigDecimal ACT_Depreciacion_Acumulada_Gestion_Anterior;
+	private BigDecimal ACT_DAA;
+	private BigDecimal ACT_CA;
 
 	private int ACT_Ubicacion_Fisica_Activo_ID;
 	private String ACT_Ubicacion_Fisica_Activo;
@@ -491,6 +495,22 @@ public class ActivosModel implements Serializable {
 
 	public void setACT_Depresiacion_Acumulada(BigDecimal aCT_Depresiacion_Acumulada) {
 		ACT_Depresiacion_Acumulada = aCT_Depresiacion_Acumulada;
+	}
+
+	public BigDecimal getACT_DAA() {
+		return ACT_DAA;
+	}
+
+	public void setACT_DAA(BigDecimal aCT_DAA) {
+		ACT_DAA = aCT_DAA;
+	}
+
+	public BigDecimal getACT_CA() {
+		return ACT_CA;
+	}
+
+	public void setACT_CA(BigDecimal aCT_CA) {
+		ACT_CA = aCT_CA;
 	}
 
 	public int getACT_Ubicacion_Fisica_Activo_ID() {

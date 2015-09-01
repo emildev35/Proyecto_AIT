@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.reva.actualiza.reporte;
+package ait.sistemas.proyecto.activos.view.reva.resumenact;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +27,11 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-@CDIView(value = VReporteActualizacion.ID)
-public class VReporteActualizacion extends VerticalLayout implements View, ClickListener {
+@CDIView(value = VReporteResumenAct.ID)
+public class VReporteResumenAct extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/reva/actualizar/r";
+	public static final String ID = "/act/reva/resumenact/r";
 
 	private Button btn_imprimir;
 	private FormReporte frmReporte = new FormReporte();
@@ -41,7 +41,7 @@ public class VReporteActualizacion extends VerticalLayout implements View, Click
 	private final ActualizacionImpl actualizacion_impl = new ActualizacionImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteActualizacion() {
+	public VReporteResumenAct() {
 
 		this.btn_imprimir = new Button("Imprimir Actualizacion");
 		addComponent(buildNavBar());
@@ -76,7 +76,7 @@ public class VReporteActualizacion extends VerticalLayout implements View, Click
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Revalorizacion Depreciacion » "));
-		nav.addComponent(new Label("Actualizacion » "));
+		nav.addComponent(new Label("Resumen Actualizacion y Depreciacion de Activos » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -105,17 +105,18 @@ public class VReporteActualizacion extends VerticalLayout implements View, Click
 	public String[][] getDatos() {
 
 		List<ActivosModel> lista = actualizacion_impl
-				.getActualizacion((Short) this.frmReporte.cb_Dependencia.getValue());
+				.getResumenActualizacion((Short) this.frmReporte.cb_Dependencia.getValue());
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), 
-					activo.getACT_Grupo_Contable(), 
-					activo.getACT_Auxiliar_Contable(), 
-					activo.getACT_Codigo_Activo(), 
-					activo.getACT_Nombre_Activo(),
-					String.valueOf(activo.getACT_Fecha_Compra()) ,
+			String[] row = { 
+					activo.getACT_Dependencia(), 
+					" ", 
+					" ", 
+					activo.getACT_Dependencia_Codigo_Activo(), 
+					activo.getACT_Grupo_Contable(),
+					String.valueOf(activo.getACT_Codigo_Activo()) ,
 					String.valueOf(activo.getACT_Valor()), 
 					String.valueOf(activo.getACT_Vida_Util()), 
 					String.valueOf(activo.getACT_Actualizacion_Acumulada_Gestion_Anterior()), 
@@ -187,7 +188,7 @@ public class VReporteActualizacion extends VerticalLayout implements View, Click
 				vl_pdf.setSizeFull();
 				vl_pdf.addComponent(pdf);
 
-				Window subWindow = new Window("Reporte Actualizacion");
+				Window subWindow = new Window("Reporte Resumen Actualizacion");
 				VerticalLayout subContent = new VerticalLayout();
 				subContent.setMargin(true);
 				subWindow.setContent(vl_pdf);

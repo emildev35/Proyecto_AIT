@@ -7,6 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import ait.sistemas.proyecto.activos.component.model.Actualizacion;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 
@@ -37,6 +40,15 @@ public int add_Actualizacion (Actualizacion table) {
 @SuppressWarnings("unchecked")
 public List<ActivosModel> getActualizacion(short id_dependencia) {
 	Query query = em.createNativeQuery("Reva_Actualizacion_Q " + "@ACT_Dependencia=?1 ", ActivosModel.class);
+	query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	query.setParameter(1, id_dependencia);
+	List<ActivosModel> resultlist = query.getResultList();
+	return resultlist;
+}
+@SuppressWarnings("unchecked")
+public List<ActivosModel> getResumenActualizacion(short id_dependencia) {
+	Query query = em.createNativeQuery("Reva_ResumenAct_Q " + "@ACT_Dependencia=?1 ", ActivosModel.class);
+	query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	query.setParameter(1, id_dependencia);
 	List<ActivosModel> resultlist = query.getResultList();
 	return resultlist;
