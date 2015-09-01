@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.PinImpl;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -26,11 +25,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VGenerardorP.ID)
 public class VGenerardorP extends VerticalLayout implements View, ClickListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/rrhh/generarpin/p";
 	
 	private Button btn_agregar;
 	private GridTipoAutorizacion gridTipoAutorizacion;

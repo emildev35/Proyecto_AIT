@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -24,9 +23,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VResetPasswordP.ID)
 public class VResetPasswordP extends VerticalLayout implements View, ClickListener {
-	public static final String ID = "/seg/reset_password";
 	private static final long serialVersionUID = 1L;
 	
 	private ChangePasswordForm frm_change_password = new ChangePasswordForm();

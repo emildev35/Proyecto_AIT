@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -26,7 +25,6 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VAsignacionA.ID)
 public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		SelectionListener {
 

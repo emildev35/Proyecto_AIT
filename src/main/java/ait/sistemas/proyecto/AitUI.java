@@ -2,38 +2,34 @@ package ait.sistemas.proyecto;
 
 import java.sql.SQLException;
 
-import javax.inject.Inject;
+import javax.servlet.annotation.WebServlet;
 
+import ait.sistemas.proyecto.common.component.AitViewProvider;
 import ait.sistemas.proyecto.common.view.MainView;
 import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
-import com.vaadin.cdi.CDIUI;
-import com.vaadin.cdi.CDIViewProvider;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 
-/**
- *
- */
 /**
  * @author franzemil
  *
  */
 @Theme("ait-theme")
-@CDIUI("")
 @Widgetset("ait.sistemas.proyecto.AitWidgetset")
 public class AitUI extends UI {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Inject
-	private CDIViewProvider viewprovider;
+	private AitViewProvider viewprovider = new AitViewProvider();
 	Navigator navigator;
 	
 	@Override
@@ -60,5 +56,10 @@ public class AitUI extends UI {
 		this.navigator.addProvider(viewprovider);
 		
 	}
+    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @VaadinServletConfiguration(ui = AitUI.class, productionMode = false)
+    public static class MyUIServlet extends VaadinServlet {
+		private static final long serialVersionUID = 1L;
+    }
 	
 }

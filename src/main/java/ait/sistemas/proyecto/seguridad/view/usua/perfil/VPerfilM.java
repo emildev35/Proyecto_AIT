@@ -1,15 +1,12 @@
 package ait.sistemas.proyecto.seguridad.view.usua.perfil;
 
-import java.awt.Menu;
 import java.util.Date;
 import java.util.Locale;
 
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
-import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.PerfilImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -23,11 +20,9 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
@@ -37,19 +32,18 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.DateRenderer;
 
-@CDIView(value = VPerfilM.URL)
 @SuppressWarnings({ "unused", "deprecation" })
 public class VPerfilM extends VerticalLayout implements View,
 		SelectionListener, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String URL = "/seg/usua/perfil/m";
 
 	private Table tblPerfiles;
 	private Form frmPerfil;

@@ -6,7 +6,6 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Perfil;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.PerfilImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
@@ -30,11 +29,9 @@ import com.vaadin.ui.VerticalLayout;
 
 
 @SuppressWarnings("deprecation")
-@CDIView(value = VPerfilA.ID)
 public class VPerfilA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/seg/usua/perfil/a";
 	private TextField txt_id_perfil;
 	private DateField fecha_registro;
 	private TextField nombre_perfil;

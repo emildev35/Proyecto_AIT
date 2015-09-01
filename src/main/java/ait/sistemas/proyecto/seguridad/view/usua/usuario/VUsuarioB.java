@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -28,12 +27,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VUsuarioB.ID)
 public class VUsuarioB extends VerticalLayout implements View, ClickListener,
 		SelectionListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/seg/usua/usuario/b";
 
 	private Button btn_submit = new Button("Eliminar");
 	private Button btn_limpiar = new Button("Limpiar");

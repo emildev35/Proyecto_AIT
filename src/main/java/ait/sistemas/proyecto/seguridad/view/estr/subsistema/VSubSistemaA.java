@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.seguridad.component.ComboBoxIcons;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.data.Container.ItemSetChangeEvent;
 import com.vaadin.data.Container.ItemSetChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -34,10 +33,8 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VSubSistemaA.ID)
 public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeListener, ClickListener {
 
-	public static final String ID = "/seg/estr/subsistema/a";
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_submit;

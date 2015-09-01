@@ -1,8 +1,6 @@
 package ait.sistemas.proyecto.activos.view.rrhh.ciudad;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -11,48 +9,31 @@ import ait.sistemas.proyecto.activos.data.service.Impl.CiudadImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-import com.vaadin.cdi.CDIView;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
-import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.Form;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.renderers.DateRenderer;
 
-@CDIView(value = VCiudadB.URL)
-@SuppressWarnings({ "unused", "deprecation" })
+@SuppressWarnings("unused")
 public class VCiudadB extends VerticalLayout implements View,
 		SelectionListener, ClickListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
 	private static final long serialVersionUID = 1L;
-	public static final String URL = "/act/rrhh/ciudad/b";
 
 	private CiudadImpl ciudad_impl = new CiudadImpl();
 	private GridCiudad grid_ciudad;

@@ -7,7 +7,6 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -27,11 +26,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value=VMenuM.ID)
 public class VMenuM extends VerticalLayout implements View, ClickListener, SelectionListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/seg/estr/menu/m";
 	
 	private Button btn_submit;
 	private Button btn_limpiar;

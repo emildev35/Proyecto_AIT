@@ -10,7 +10,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -29,11 +28,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VAutorizacionA.ID)
 public class VAutorizacionA extends VerticalLayout implements View, ClickListener, SelectionListener {
 	
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/mvac/autorizacion/a";
 	
 	private FormAutorizacion frm_autorizacion = new FormAutorizacion();
 	private FormDocumento frm_documento = new FormDocumento();

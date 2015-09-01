@@ -5,18 +5,15 @@ import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormComponentes;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormDatosGenerales;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormDocumentos;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VActivoA.ID)
 public class VActivoA extends VerticalLayout implements View{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/mvac/ingreso/a";
 	
 	private FormDatosGenerales frm_datos_generales = new FormDatosGenerales(this);
 	private FormCaracteriticas frm_caracteristicas = new FormCaracteriticas(this);

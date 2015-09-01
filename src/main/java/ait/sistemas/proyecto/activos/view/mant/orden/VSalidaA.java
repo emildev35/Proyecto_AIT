@@ -8,7 +8,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.HomeView;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -26,10 +25,8 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value=VSalidaA.ID)
 public class VSalidaA extends VerticalLayout implements View, ClickListener{
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/act/mant/salida";
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
 	private Button btn_salir = new Button("SALIR");

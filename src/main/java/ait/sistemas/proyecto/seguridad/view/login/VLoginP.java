@@ -10,7 +10,6 @@ import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -23,15 +22,13 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VLoginP.ID)
 public class VLoginP extends VerticalLayout implements View, ClickListener {
 
-	public static final String ID = "/seg/login";
 	private static final long serialVersionUID = 1L;
 
 	private LoginForm frm_login = new LoginForm();

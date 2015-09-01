@@ -6,7 +6,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -24,11 +23,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-@CDIView(value=VMenuA.ID)
 public class VMenuA extends VerticalLayout implements View, ClickListener{
 
 	private static final long serialVersionUID = 1L;
-	public static final String ID = "/seg/estr/menu/a";
 	
 	private Button btn_submit;
 	private Button btn_limpiar;

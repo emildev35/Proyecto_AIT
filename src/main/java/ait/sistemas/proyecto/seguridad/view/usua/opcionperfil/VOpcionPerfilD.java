@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.PerfilImpl;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -26,13 +25,11 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-@CDIView(value = VOpcionPerfilD.ID)
 public class VOpcionPerfilD extends VerticalLayout implements View,
 		ClickListener, org.vaadin.dialogs.ConfirmDialog.Listener {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String ID = "/seg/usua/opcionperfil/d";
 
 	private FormEliminacion frmOpcionPeril;
 	private Button btn_submit;

@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.report.msexcel.SimpleExcel;
 import ait.sistemas.proyecto.common.report.msword.SimpleWord;
 
-import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -27,10 +26,8 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-@CDIView(value = VReporteP.ID)
 public class VReporteP extends VerticalLayout implements View, ClickListener {
 	
-	public static final String ID = "/act/inv/reporte";
 	private static final long serialVersionUID = 1L;
 	
 	FormReporte frm_reporte = new FormReporte();
