@@ -110,96 +110,6 @@ public class VReporteKardex extends VerticalLayout implements View, ClickListene
 			kardex_elements[r][0][2].setTitulo("Serie");
 			kardex_elements[r][0][2].setContenido(activos.getACT_No_Serie());
 			
-			kardex_elements[r][1][0] = new KardexElement();
-			kardex_elements[r][1][0].setAncho(225);
-			kardex_elements[r][1][0].setTitulo("Grupo Contable");
-			kardex_elements[r][1][0].setContenido(activos.getACT_Grupo_Contable());
-			
-			kardex_elements[r][1][1] = new KardexElement();
-			kardex_elements[r][1][1].setAncho(225);
-			kardex_elements[r][1][1].setTitulo("Auxiliar Contable");
-			kardex_elements[r][1][1].setContenido(activos.getACT_Auxiliar_Contable());
-			
-			kardex_elements[r][1][2] = new KardexElement();
-			kardex_elements[r][1][2].setAncho(50);
-			kardex_elements[r][1][2].setTitulo("Vida Util");
-			kardex_elements[r][1][2].setContenido(String.valueOf(activos.getACT_Vida_Util()));
-			
-			kardex_elements[r][2][0] = new KardexElement();
-			kardex_elements[r][2][0].setAncho(125);
-			kardex_elements[r][2][0].setTitulo("Partida");
-			kardex_elements[r][2][0].setContenido(activos.getACT_Partidas_Presupuestarias());
-			
-			kardex_elements[r][2][1] = new KardexElement();
-			kardex_elements[r][2][1].setAncho(125);
-			kardex_elements[r][2][1].setTitulo("Fuente Financimiento");
-			kardex_elements[r][2][1].setContenido(activos.getACT_Fuente_Financiamiento());
-			
-			kardex_elements[r][2][2] = new KardexElement();
-			kardex_elements[r][2][2].setAncho(125);
-			kardex_elements[r][2][2].setTitulo("Organismo Financiador");
-			kardex_elements[r][2][2].setContenido(activos.getACT_Organismo_Financiador());
-			
-			kardex_elements[r][2][3] = new KardexElement();
-			kardex_elements[r][2][3].setAncho(125);
-			kardex_elements[r][2][3].setTitulo("N. Comprobante de Gasto");
-			kardex_elements[r][2][3].setContenido(String.valueOf(activos.getACT_No_Comprobante_Gasto()));
-			
-			kardex_elements[r][3][0] = new KardexElement();
-			kardex_elements[r][3][0].setAncho(110);
-			kardex_elements[r][3][0].setTitulo("Proveedor");
-			kardex_elements[r][3][0].setContenido(activos.getACT_Nombre_Proveedor());
-			
-			kardex_elements[r][3][1] = new KardexElement();
-			kardex_elements[r][3][1].setAncho(100);
-			kardex_elements[r][3][1].setTitulo("Marca");
-			kardex_elements[r][3][1].setContenido(activos.getACT_Marca());
-			
-			kardex_elements[r][3][2] = new KardexElement();
-			kardex_elements[r][3][2].setAncho(60);
-			kardex_elements[r][3][2].setTitulo("Fecha Compra");
-			kardex_elements[r][3][2].setContenido(String.valueOf(activos.getACT_Fecha_Compra()));
-			
-			kardex_elements[r][3][3] = new KardexElement();
-			kardex_elements[r][3][3].setAncho(75);
-			kardex_elements[r][3][3].setTitulo("Valor Compra (Bs)");
-			kardex_elements[r][3][3].setContenido(String.valueOf(activos.getACT_Valor()));
-			
-			kardex_elements[r][3][4] = new KardexElement();
-			kardex_elements[r][3][4].setAncho(75);
-			kardex_elements[r][3][4].setTitulo("Tipo Cambio ($u$)");
-			kardex_elements[r][3][4].setContenido(String.valueOf(activos.getACT_Tipo_Cambio_Dolar()));
-			
-			kardex_elements[r][3][5] = new KardexElement();
-			kardex_elements[r][3][5].setAncho(80);
-			kardex_elements[r][3][5].setTitulo("Tipo Cambio (UFV)");
-			kardex_elements[r][3][5].setContenido(String.valueOf(activos.getACT_Tipo_Cambio_UFV()));
-			
-			kardex_elements[r][4][0] = new KardexElement();
-			kardex_elements[r][4][0].setAncho(60);
-			kardex_elements[r][4][0].setTitulo("N.Folio Real");
-			kardex_elements[r][4][0].setContenido(activos.getACT_No_Folio_Real());
-			
-			kardex_elements[r][4][1] = new KardexElement();
-			kardex_elements[r][4][1].setAncho(50);
-			kardex_elements[r][4][1].setTitulo("N. Ruat");
-			kardex_elements[r][4][1].setContenido(activos.getACT_No_RUAT());
-			
-			kardex_elements[r][4][2] = new KardexElement();
-			kardex_elements[r][4][2].setAncho(90);
-			kardex_elements[r][4][2].setTitulo("N. Poliza de Seguro");
-			kardex_elements[r][4][2].setContenido(activos.getACT_No_Poliza_Seguro());
-			
-			kardex_elements[r][4][3] = new KardexElement();
-			kardex_elements[r][4][3].setAncho(90);
-			kardex_elements[r][4][3].setTitulo("Vencimiento Seguro");
-			kardex_elements[r][4][3].setContenido(String.valueOf(activos.getACT_Fecha_Vencimiento_Seguro()));
-			
-			kardex_elements[r][4][4] = new KardexElement();
-			kardex_elements[r][4][4].setAncho(110);
-			kardex_elements[r][4][4].setTitulo("N. Contrato Mantenimiento");
-			kardex_elements[r][4][4].setContenido(activos.getACT_No_Contrato_Mantenimiento());
-			
 			kardex_elements[r][4][5] = new KardexElement();
 			kardex_elements[r][4][5].setAncho(100);
 			kardex_elements[r][4][5].setTitulo("Contrato Mantenimiento");
@@ -224,7 +134,7 @@ public class VReporteKardex extends VerticalLayout implements View, ClickListene
 			kardex_elements[r][6][0] = new KardexElement();
 			kardex_elements[r][6][0].setAncho(150);
 			kardex_elements[r][6][0].setTitulo("Valor Actualizado Getion Anterior");
-			kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Valor_Gestion_Anterior()));
+			kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada_Gestion_Anterior()));
 			
 			kardex_elements[r][6][1] = new KardexElement();
 			kardex_elements[r][6][1].setAncho(100);
@@ -239,8 +149,9 @@ public class VReporteKardex extends VerticalLayout implements View, ClickListene
 			kardex_elements[r][6][3] = new KardexElement();
 			kardex_elements[r][6][3].setAncho(150);
 			kardex_elements[r][6][3].setTitulo("Valor Actualizado Gestion Actual");
-			kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Valor_Gestion_Anterior()));
+			kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada()));
 			r++;
+			
 		}
 		return kardex_elements;
 	}

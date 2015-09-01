@@ -30,4 +30,11 @@ public class TipoCambioImpl {
 		List<TipoCambio> result = query.getResultList();
 		return result;
 	}
+	public TipoCambio getTipoCambioUFV(Date fecha){
+		String str_get_tipo_cambio = "EXEC Mvac_Tipo_Cambio_UFV_Q @Fecha=?1 ";
+		Query query = this.em.createNativeQuery(str_get_tipo_cambio, "tipo-cambio");
+		query.setParameter(1, fecha);
+		TipoCambio result = (TipoCambio)query.getSingleResult();
+		return result;
+	}
 }

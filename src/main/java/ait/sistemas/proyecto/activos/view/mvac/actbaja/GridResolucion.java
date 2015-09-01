@@ -39,6 +39,12 @@ import com.vaadin.ui.renderers.DateRenderer;
 			removeColumn("detalles");
 			removeColumn("fecha_movimiento");
 			removeColumn("observacion");
+			removeColumn("id_estado_soporte");
+			removeColumn("tipo_soporte");
+			removeColumn("solicitante");
+			removeColumn("id_subsistema");
+			removeColumn("no_acta");
+			removeColumn("fecha_acta");
 			
 			setWidth("100%");
 

@@ -9,6 +9,8 @@ public class CmovimientoDocumento {
 	private String nombre_documento;
 	private String direccion_documento;
 	private Date fecha_nro_referencia;
+	private short tipo_movimiento;
+	private long no_documento;
 	
 	public CmovimientoDocumento() {
 	}
@@ -52,8 +54,21 @@ public class CmovimientoDocumento {
 	public void setFecha_nro_referencia(Date fecha_nro_referencia) {
 		this.fecha_nro_referencia = fecha_nro_referencia;
 	}
-	
-	
 
+	public short getTipo_movimiento() {
+		return tipo_movimiento;
+	}
+
+	public void setTipo_movimiento(short tipo_movimiento) {
+		this.tipo_movimiento = tipo_movimiento;
+	}
+
+	public long getNo_documento() {
+		return no_documento;
+	}
+
+	public void setNo_documento(long no_documento) {
+		this.no_documento = no_documento;
+	}
 	
 }

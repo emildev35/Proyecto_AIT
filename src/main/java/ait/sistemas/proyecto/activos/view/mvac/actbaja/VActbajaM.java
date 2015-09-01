@@ -133,6 +133,7 @@ public class VActbajaM extends VerticalLayout implements View, ClickListener, Se
 			data = (Movimiento) this.grid_Actualizacion_baja.getSelectedRow();
 			grid_Detalle.update(data.getNro_documento(), data.getId_dependencia());
 		}
+		
 	}
 	
 	@Override
@@ -142,9 +143,11 @@ public class VActbajaM extends VerticalLayout implements View, ClickListener, Se
 				CmovimientoDocumento movimiento = new CmovimientoDocumento();
 				movimiento.setNro_documento_referencia(data.getNro_documento_referencia());
 				movimiento.setId_dependencia(data.getId_dependencia());
-				movimiento.setFecha_nro_referencia(data.getFecha_registro());
+				movimiento.setFecha_nro_referencia(data.getFecha_nro_referencia());
 				movimiento.setNombre_documento(frm_Actualizacion_baja.getNombreDocumento());
 				movimiento.setDireccion_documento(frm_Actualizacion_baja.getDireccionDocumento());
+				movimiento.setTipo_movimiento(data.getTipo_movimiento());
+				movimiento.setNo_documento(data.getNro_documento());
 				this.movimiento_impl.update(movimiento);
 				this.grid_Detalle = new GridActbaja();
 				Notification.show(Messages.SUCCESS_MESSAGE);
@@ -153,7 +156,11 @@ public class VActbajaM extends VerticalLayout implements View, ClickListener, Se
 			}
 			buildMessages(this.frm_Actualizacion_baja.getMensajes());
 			this.frm_Actualizacion_baja.clearMessages();
+			
 		}
+		buildMessages(this.frm_Actualizacion_baja.getMensajes());
+		this.frm_Actualizacion_baja.clearMessages();
+		
 		if (event.getButton() == this.btn_imprimir) {
 		}
 	}

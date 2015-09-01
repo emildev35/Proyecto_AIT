@@ -201,14 +201,19 @@ public class MovimientoImpl {
 	}
 	
 	public int update(CmovimientoDocumento table) {
-		String strQuery = String.format("EXEC Mvac_Actbaja_I " + "@id_dependencia=?1, " + "@nro_documento_referencia=?2, "
-				+ "@nombre_documento=?3, " + "@direccion_documento=?4, " + "@fecha_nro_referencia=?5 ");
+		String strQuery = String.format("EXEC Mvac_ActaBaja_I " + "@id_dependencia=?1, " + "@nro_documento_referencia=?2, "
+				+ "@nombre_documento=?3, " + "@direccion_documento=?4, " + "@fecha_resolucion=?5, "
+						+ "@tipo_movimiento=?6, "
+						+ "@no_documento=?7 ");
 		Query query = this.em.createNativeQuery(strQuery);
 		query.setParameter(1, table.getId_dependencia());
 		query.setParameter(2, table.getNro_documento_referencia());
 		query.setParameter(3, table.getNombre_documento());
 		query.setParameter(4, table.getDireccion_documento());
 		query.setParameter(5, table.getFecha_nro_referencia());
+		query.setParameter(6, table.getTipo_movimiento());
+		query.setParameter(7, table.getNo_documento());
+		int result = (Integer)query.getSingleResult();
 		return 1;
 	}
 	public boolean addMovimientos (Movimiento movimiento) throws SQLException {

@@ -62,10 +62,13 @@ public class Messages {
 	 */
 	public static final String EMPTY_GRID = "Debe seleccionar al menos un elemento del Grid";
 	/**
+	 * Mensaje para verificar que una fecha sea mayor a la ultima depreciacion
+	 */
+	public static final String INVALIT_DATE = "La fecha debe ser Mayor a la fecha de la ultima depreciacion";
+	/**
 	 * Utilizado en casos donde el String que se desee utilizar tenga el valor de null
 	 */
 	public static final String NOT_FOUND_STRING = "No Disponible";
-
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}

@@ -47,9 +47,12 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_Tipo_Activo", column = "ACT_Tipo_Activo"),
 		@FieldResult(name = "ACT_Tipo_Cambio_Dolar", column = "ACT_Tipo_Cambio_Dolar"),
 		@FieldResult(name = "ACT_Tipo_Cambio_UFV", column = "ACT_Tipo_Cambio_UFV"),
+		@FieldResult(name = "ACT_Actualizacion_Acumulada_Gestion_Anterior", column = "ACT_Actualizacion_Acumulada_Gestion_Anterior"),
 		@FieldResult(name = "ACT_Actualizacion_Acumulada", column = "ACT_Actualizacion_Acumulada"),
+		@FieldResult(name = "ACT_Depreciacion_Acumulada_Gestion_Anterior", column = "ACT_Depreciacion_Acumulada_Gestion_Anterior"),
 		@FieldResult(name = "ACT_Depresiacion_Acumulada", column = "ACT_Depresiacion_Acumulada"),
-		@FieldResult(name = "ACT_Valor_Gestion_Anterior", column = "ACT_Valor_Gestion_Anterior"),
+		@FieldResult(name = "ACT_CA", column = "ACT_CA"),
+		@FieldResult(name = "ACT_DAA", column = "ACT_DAA"),
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo_ID", column = "ACT_Ubicacion_Fisica_Activo_ID"),
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo", column = "ACT_Ubicacion_Fisica_Activo"),
 		@FieldResult(name = "ACT_Ubicacion_Imagen", column = "ACT_Ubicacion_Imagen"),
@@ -136,9 +139,12 @@ public class ActivosModel implements Serializable {
 
 	private BigDecimal ACT_Tipo_Cambio_Dolar;
 	private BigDecimal ACT_Tipo_Cambio_UFV;
+	private BigDecimal ACT_Actualizacion_Acumulada_Gestion_Anterior;
 	private BigDecimal ACT_Actualizacion_Acumulada;
 	private BigDecimal ACT_Depresiacion_Acumulada;
-	private BigDecimal ACT_Valor_Gestion_Anterior;
+	private BigDecimal ACT_Depreciacion_Acumulada_Gestion_Anterior;
+	private BigDecimal ACT_DAA;
+	private BigDecimal ACT_CA;
 
 	private int ACT_Ubicacion_Fisica_Activo_ID;
 	private String ACT_Ubicacion_Fisica_Activo;
@@ -459,12 +465,28 @@ public class ActivosModel implements Serializable {
 		ACT_Tipo_Cambio_UFV = aCT_Tipo_Cambio_UFV;
 	}
 
+	public BigDecimal getACT_Actualizacion_Acumulada_Gestion_Anterior() {
+		return ACT_Actualizacion_Acumulada_Gestion_Anterior;
+	}
+
+	public void setACT_Actualizacion_Acumulada_Gestion_Anterior(BigDecimal aCT_Actualizacion_Acumulada_Gestion_Anterior) {
+		ACT_Actualizacion_Acumulada_Gestion_Anterior = aCT_Actualizacion_Acumulada_Gestion_Anterior;
+	}
+
 	public BigDecimal getACT_Actualizacion_Acumulada() {
 		return ACT_Actualizacion_Acumulada;
 	}
 
 	public void setACT_Actualizacion_Acumulada(BigDecimal aCT_Actualizacion_Acumulada) {
 		ACT_Actualizacion_Acumulada = aCT_Actualizacion_Acumulada;
+	}
+
+	public BigDecimal getACT_Depreciacion_Acumulada_Gestion_Anterior() {
+		return ACT_Depreciacion_Acumulada_Gestion_Anterior;
+	}
+
+	public void setACT_Depreciacion_Acumulada_Gestion_Anterior(BigDecimal aCT_Depreciacion_Acumulada_Gestion_Anterior) {
+		ACT_Depreciacion_Acumulada_Gestion_Anterior = aCT_Depreciacion_Acumulada_Gestion_Anterior;
 	}
 
 	public BigDecimal getACT_Depresiacion_Acumulada() {
@@ -475,12 +497,20 @@ public class ActivosModel implements Serializable {
 		ACT_Depresiacion_Acumulada = aCT_Depresiacion_Acumulada;
 	}
 
-	public BigDecimal getACT_Valor_Gestion_Anterior() {
-		return ACT_Valor_Gestion_Anterior;
+	public BigDecimal getACT_DAA() {
+		return ACT_DAA;
 	}
 
-	public void setACT_Valor_Gestion_Anterior(BigDecimal aCT_Valor_Gestion_Anterior) {
-		ACT_Valor_Gestion_Anterior = aCT_Valor_Gestion_Anterior;
+	public void setACT_DAA(BigDecimal aCT_DAA) {
+		ACT_DAA = aCT_DAA;
+	}
+
+	public BigDecimal getACT_CA() {
+		return ACT_CA;
+	}
+
+	public void setACT_CA(BigDecimal aCT_CA) {
+		ACT_CA = aCT_CA;
 	}
 
 	public int getACT_Ubicacion_Fisica_Activo_ID() {
