@@ -1,0 +1,708 @@
+commit 44e655cbbd69a9e470c220836f2deba67d81b910
+Merge: ee786c1 7b68267
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Sep 1 19:17:23 2015 -0400
+
+    correcciones de url
+
+commit ee786c16cad26c2f8844eece3eebf6377f0a2b4a
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Sep 1 19:14:16 2015 -0400
+
+    correccion de url
+
+commit 7b682670bc0ed55b5e0db73b258de886fb703f48
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Sep 1 19:13:35 2015 -0400
+
+    Eliminando CDIView Franz
+
+commit 4f301a0e0664c21fddabfddfe461553e1ed06cd9
+Merge: 2cb390f ed7f9b3
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Sep 1 19:00:20 2015 -0400
+
+    Resolviendo Conflictos
+
+commit 2cb390f87470988d87ba5a3688aaa2aa3bc9960e
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Sep 1 18:56:53 2015 -0400
+
+    Cambiando a Servelt Para el Despliegue
+
+commit ed7f9b3ee975877ee2771972b07a52ad8394adb0
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Sep 1 18:53:47 2015 -0400
+
+    Reporte actualizacion y resumen actualizacion
+
+commit a39e27e2ebb1b4297393361b58fd056c6bf18366
+Merge: 7ce18aa fefc7cb
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 31 16:29:45 2015 -0400
+
+    programa actualizar correcciones
+
+commit 7ce18aae68bee6b946235867ac350db1f635e7da
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 31 16:22:05 2015 -0400
+
+    programa actualizar correccion
+
+commit ca6584d6f8fbfceeab5f945b889215090eb6e697
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 28 12:27:29 2015 -0400
+
+    grid
+
+commit acfec9190264438cdd6f4342286c09dfd1dd065e
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 28 12:27:24 2015 -0400
+
+    form
+
+commit 55ca469b62eb0b9a231d4d86aa6236792bff4afb
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 28 12:27:16 2015 -0400
+
+    detalle
+
+commit fefc7cbf5d688756c1d5cb53c3f6c6778717e81f
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Aug 27 18:40:13 2015 -0400
+
+    Finalizo Mantenimiento
+
+commit 26e258bdabe6168abb2a75feefc560a84332616c
+Merge: 7585f58 ee390f0
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Aug 26 12:31:36 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit 7585f582d41b4f75f951d3c6e151d4899cae82de
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Aug 26 12:31:12 2015 -0400
+
+    algunas correcciones autorizacion
+
+commit ee390f08fcb21252a433803981591fca4eeeb500
+Merge: 4fccde4 47a64c5
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Aug 26 12:29:01 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 4fccde47110511eb48f6ef54afdc746711436a82
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Aug 26 12:28:51 2015 -0400
+
+    Programas de Estado Soporte y Finalizacion de Solicitud de Soporte Tecnico
+
+commit 47a64c5f26ea4f61ab997e3b518eceac6770dec2
+Merge: 9ff7b07 278bddc
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 25 18:32:19 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit 9ff7b07fb51a3d0946d74e09d756fff7eb23e7c6
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 25 18:31:15 2015 -0400
+
+    correcciones y porgrama asignacion y devolucion
+
+commit 278bddcbf7d000d4a71c6599e4aa53ad3b109e20
+Merge: f83b343 540fc3b
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 25 18:27:24 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit f83b343c44678905244e0af67c9ce423bc2c9325
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 25 18:26:59 2015 -0400
+
+    Programa de parametros de Tipos de Soporte e Interfaz Grafica de Soporte
+
+commit 540fc3bca35f6149b03dce4ae82339cb1b687199
+Merge: 7c31154 bc58d52
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 25 11:07:44 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit 7c311545935346686409ed5b7b16faafb19f9cd9
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 25 11:07:18 2015 -0400
+
+    coreccion de codigo de movimiento segun la BD real
+
+commit bc58d5212692000f29a947659db8a2c604aa5d8f
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 25 11:05:54 2015 -0400
+
+    Reporte Word
+
+commit c5b77c2c668374132e5e1d10d7055d0a3c021811
+Merge: 047d4d0 cca9f78
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 25 08:55:15 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 047d4d0ae5998fe7afa50a30ea9eba3420a7936b
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 25 08:54:58 2015 -0400
+
+    Recuperar Clase ConnectionActivos
+
+commit cca9f786f39a0cfc58b7456304f4f2410f903a74
+Merge: a8062ae a94769e
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 24 16:59:33 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit a8062ae049e0efee171d567e27ee139450f1d4de
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 24 16:57:45 2015 -0400
+
+    correccion codigo movimiento
+
+commit a94769ef80f001e7cf0eb52853abfed86ea13f89
+Merge: 8e08429 b4ba776
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Aug 24 16:51:10 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 8e084290374a8f0887e428a2e47cc3fef454b084
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Aug 24 16:50:56 2015 -0400
+
+    Reporte Dinamico Execel En Proceso
+
+commit b4ba776bc35e6e8687ba72cf3115499c342de393
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 24 15:28:04 2015 -0400
+
+    programa solicitud devolucion y asignacion
+
+commit faa57165ac9b0b9630da0c096256ddb391d99e37
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 21 17:11:12 2015 -0400
+
+    programa actas asignacion en dearrollo
+
+commit 1547dcd9d07a23c3ee26b77254f163f8a8eddbf9
+Merge: fb24b37 9e5664f
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 21 16:43:10 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit fb24b371f432eb7e96d119a391227e6f4c59300e
+Merge: 19322b3 3fc74a0
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 21 16:42:43 2015 -0400
+
+    clase activos corregida
+
+commit 9e5664fa934469866b7e1b285728039553efeb21
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 21 16:39:52 2015 -0400
+
+    Añadio la clase de coneccion Basica
+
+commit 19322b3f3c2ecd8b3c4db25150868d480e1f6e07
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 21 14:52:24 2015 -0400
+
+    prograqma actas en desarrollo
+
+commit 3fc74a0b2c2ea49480839c892b0e0e33a1cd9004
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 21 12:08:19 2015 -0400
+
+    Termino del Programa de Mantenimiento  y la coneccino a Bajo Nivel
+
+commit db311e907445eec6440aad119a6baa11a0289e74
+Merge: 6a203bb 10a5e7c
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 18 17:32:43 2015 -0400
+
+    Resolviendo conflictos
+
+commit 6a203bb0b96243c34de960f6410bc20e2b4db628
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 18 17:31:26 2015 -0400
+
+    Modificaciones dentro la base de datos Tabla Tipo_Autorizacion
+
+commit 10a5e7cd64d0bdc8dde7d0c97e31ec68fc263cb0
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 18 17:21:28 2015 -0400
+
+    programa actualizacion baja completo
+
+commit 7b10a5607b46aaed7124b1bb231272e5eeb561a1
+Merge: b36617c 79cd9ce
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 18 10:53:28 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit b36617c921aa8bf7e87655b9f4ce826b0bfb421b
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 18 10:51:49 2015 -0400
+
+    programa actualizacio baja en desarrollo
+
+commit 79cd9ce20c7e38151ff10a0671d415c186e28d3e
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Aug 17 16:58:35 2015 -0400
+
+    Modifico los Tipos de Cambios dentro de Tab de Caracteristicas Generales Programa de Añadir Activos
+
+commit 2dda231045f2233451ce77c213e6021584d19b8b
+Merge: 881f76e 81dbdd4
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Aug 13 18:32:37 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit 881f76e91804c3d059a551de16e470389d20a16b
+Merge: 96cfdb7 54d1758
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Aug 13 18:32:11 2015 -0400
+
+    Finalizo el Grid de Resoluciones
+
+commit 81dbdd438393616e1950feae1ab28cbd4b6a8a79
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Aug 13 18:07:54 2015 -0400
+
+    Programa de Autorizaciones en Desarrollo
+
+commit 96cfdb7cabe5e899fab49dbe149877cbeade21ab
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Aug 13 15:25:27 2015 -0400
+
+    programa actualizacion bajas en desarrollo
+
+commit 54d1758d28fd77f56d204892c10f09a65bea5ac1
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Aug 13 15:21:25 2015 -0400
+
+    Cambios en las unidades de medida de Sass
+
+commit 0ff21022a9254f1a0437e49dbf110d8f2d6d85c4
+Merge: 1cf1533 9d7f14d
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Aug 12 18:12:16 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 9d7f14d430403e2675a5a40dafa19d0d7b0b546e
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Aug 12 18:08:49 2015 -0400
+
+    Termino el Programa de REgistro de Bajas de Activos
+
+commit 39c0a46d80705d53e6ac21537fd6febf7cd0348c
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Aug 12 08:53:56 2015 -0400
+
+    programa informe-baja (incompleto)
+
+commit b643e5d5c66981ae7d9a7360fadf70de6967dd31
+Merge: b22cd52 6ab3c49
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Aug 12 08:52:58 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit b22cd52b04542aab9454621b15551229d7815d3e
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 11 16:30:48 2015 -0400
+
+    programa motivos de baja
+
+commit 1cf15334829f5a4eb2b81a01de032242c4cb20a4
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 11 14:38:12 2015 -0400
+
+    Añadido el gitignore
+
+commit 6ab3c49ec34876081b3933ae96930bd1aa4921a6
+Merge: e7da29c 8e4f5dd
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 11 14:35:46 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit e7da29cd8762c2e5cd3f664c12d2ff5f188f9e2a
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 11 14:35:17 2015 -0400
+
+    Finalizo el Programa de Autorizacion
+
+commit 8e4f5dd4ded279647e222cd75b97742eb5187012
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Aug 11 09:26:38 2015 -0400
+
+    programa devolucion fallando
+
+commit 276c1c65879dc102545bc4a6dde77819c24cbe68
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 10 14:58:11 2015 -0400
+
+    clases PK eliminadas
+
+commit 09bf03afaf6f7e92cb4f202a156de4acfef4d271
+Merge: 25a1ee5 4705b44
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 10 14:43:30 2015 -0400
+
+    programa devolucion correccion
+
+commit 25a1ee5cd0879c2e99d8f78c0f002df14633ba58
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 10 13:44:02 2015 -0400
+
+    programa devolucion
+
+commit 4705b441453f1de854dc85e1ba0089b01ccfe35d
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Aug 10 13:39:25 2015 -0400
+
+    Generico de Movimientos
+
+commit 20bfe898c349325f600a5a690047e4fdcd2231e0
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Aug 10 12:27:21 2015 -0400
+
+    Finalizo el programa de Asignacion de Activos
+
+commit 05d9ae5367ec377d39d152122db415eda68a6456
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Aug 10 09:22:33 2015 -0400
+
+    Clase Activo Grid
+
+commit 156d5e4894f3b3d20fb54b2fdeee754567388deb
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 7 16:51:53 2015 -0400
+
+    Clases de Movimientos
+
+commit 92b733019b07a1ca6405e381914eaf24b582ed2f
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 7 16:13:12 2015 -0400
+
+    Formulario Solicitud de Activos
+
+commit 5adc32c05252e0ed4672a0efef564dd96b07be40
+Merge: 5cc6ed7 8e7ca5b
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 7 15:47:18 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 5cc6ed7550838279c381a5417f9599a4b60e43e9
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Aug 7 15:46:56 2015 -0400
+
+    Archivos Base para Solicitud de Activos
+
+commit 8e7ca5b3e9ccfe2f5e43ca3cbd8d18464ccc841d
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 7 15:28:19 2015 -0400
+
+    reporte inventario consolidacion
+
+commit 8ac82b6619a25fbcda59b15d928ff517f0d176c8
+Merge: 32631c3 4beee06
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 7 11:51:44 2015 -0400
+
+    resolviendo confictos union
+
+commit 32631c3a7adf369e94ef88e9d6531783d7ca25d4
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Aug 7 11:48:11 2015 -0400
+
+    inventario activos
+
+commit 4beee06c3dcf784cb6762ead200d29bb9abd5203
+Merge: 9bda754 c3ace7c
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 4 17:51:16 2015 -0400
+
+    Resolvieron los Conflictos
+
+commit 9bda7541e39fb9452ead7b4b26e6d75032d7cc36
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Aug 4 17:48:04 2015 -0400
+
+    Finalizo el TabSheet de Activos
+
+commit c3ace7c66d755fec1f60977dcaf5fb9a4bb3b663
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Mon Aug 3 16:44:55 2015 -0400
+
+    Se finalizo el Kardex de Activos :)
+
+commit 42fe81e0828ca8c9b081b0fe4411d681e75776f5
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Fri Jul 31 16:56:54 2015 -0400
+
+    mitad del reporte kardex
+
+commit 43af2cb488730941c6f674fe66a874a22467d83e
+Merge: 4887bc7 f1c070f
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Jul 30 15:20:06 2015 -0400
+
+    union ActivsoImpl
+
+commit 4887bc7428d5b057577cfa2de070c96da86f3e62
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Jul 30 15:15:33 2015 -0400
+
+    creacion de activos model
+
+commit f1c070f74a4bb26b21fe4a910508d6b7470e42c0
+Merge: 20e6995 b1d5a81
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Jul 30 12:29:52 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 20e69958b3cb4179cb8b78f59e9304d740e3aefa
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Jul 30 12:29:31 2015 -0400
+
+    Finalizado Caracteristicas Generales
+
+commit b1d5a81c7e59cb821fd4eba700f23a9f069b87fd
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Jul 30 10:46:14 2015 -0400
+
+    correccion proveedores model nit
+
+commit 84161488185e344d5c515a3a70ff7321137cca3d
+Merge: 9756deb 2cbbe6f
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Jul 30 10:38:33 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit 9756deb84ad1dbcf7bd5a556f9f02bfca9f1faca
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Thu Jul 30 10:37:28 2015 -0400
+
+    vista reporte kardex
+
+commit 2cbbe6fc3e26226374d009602f4a16b9dca414ea
+Merge: 27b2409 d9fe5c1
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Jul 29 16:33:04 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 27b24099baa55cd5f309a976659249a31d5b5c6e
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Jul 29 16:32:44 2015 -0400
+
+    Se realizo la validacion del Formulario de Datos generales de Activos
+
+commit d9fe5c1dc9ed1da04572c88ea677cb064013a2ff
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Jul 29 10:58:14 2015 -0400
+
+    ubicaciones fisicas con los reportes
+
+commit e66a025706fe07592a9b6e2f925e14e2b2cf9272
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Jul 29 10:46:30 2015 -0400
+
+    Agregaron Validadiones en el Formulario de Activos
+
+commit 893f4d90bd613b7dd656f925968c557dc22b2e60
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Jul 29 10:44:46 2015 -0400
+
+    ubicacion fisica corregida y completa
+
+commit 69c18872c2128ef1ab0f81ebb7cf66260219776e
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Wed Jul 29 09:10:39 2015 -0400
+
+    correccion base de datos inmuebles. devolucion de datos segun la dependencia donde el usuario se encuentre
+
+commit 5a69656474eccf1e7cc328ff99df732dd469b08c
+Merge: 6ede13e cc03c8b
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Jul 28 16:40:42 2015 -0400
+
+    Merge branch 'master' of https://bitbucket.org/franzemil35/proyecto_ait
+
+commit 6ede13e1951f2cb4a121f4d8b777f05b1e1f51ed
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Jul 28 16:39:19 2015 -0400
+
+    inmueble model
+
+commit cc03c8bd72734e79222934dd7c5b2962459f1342
+Merge: 86f6124 588bb92
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 28 16:31:43 2015 -0400
+
+    Union de los componentes de ImageUploader
+
+commit 86f6124f8bd9f64437e17b06da5f8bfc0bbef1e1
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 28 16:31:21 2015 -0400
+
+    Termino los componente para subir imagenes
+
+commit 588bb92209cc0e38eecaaf3794bcb548851c7ca4
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Jul 28 16:03:54 2015 -0400
+
+    inmuebles y variable dependencia de porveedores
+
+commit a217c9654ac4c7343ab74935b9d49559480224a5
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Jul 28 10:12:07 2015 -0400
+
+    jalar variables de sesion al reporte con una sola tabla
+
+commit 420aeb36cf6f5c7f21aa6d6ae014033a6d5b8376
+Merge: 02e9d56 f81629d
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 28 09:54:33 2015 -0400
+
+    Merge branch 'master' of bitbucket.org:franzemil35/proyecto_ait
+
+commit 02e9d56b3379ec12ac7244b76eaf232a5656ee88
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 28 09:52:48 2015 -0400
+
+    Test
+
+commit f81629d949ed05a70375ea2d09a1fbbf452ebe37
+Author: kimberly <kimx100pre@hotmail.es>
+Date:   Tue Jul 28 09:42:36 2015 -0400
+
+    jalar las variables de sesion al reporte
+
+commit e9aa1efdeeda5dd9611b1482e392aeb1475b6a40
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 28 08:50:57 2015 -0400
+
+    Se termino el reporte de Multi Tablas
+
+commit 417fab3056be8ccac2cf3fc8b3ca5b6dea8e8c3d
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 27 10:59:38 2015 -0400
+
+    Termino de integrar modulos de Recursos humanos
+
+commit 8e10d281d8123f095e1174f4ef5497f2fbc37ec2
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 27 09:19:14 2015 -0400
+
+    Antes de Unir
+
+commit 4add281aaad32584b6d7806433773c38e340aafd
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Jul 24 14:41:20 2015 -0400
+
+    Se realizo llos mejodos necesarioa para la autenticacion
+
+commit 1e9d75e15dee376365ab6ef5d791cb6c5cc9a4e0
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Jul 23 15:37:51 2015 -0400
+
+    Termino el programa de baja de Opciones por Perfil
+
+commit ada250cd05905b31b0c94e2735473d36cea2238b
+Author: franzemil <franzemil35@gmail.com>
+Date:   Thu Jul 23 09:57:38 2015 -0400
+
+    Se termino le programa de otorgar y Revocar Permisos
+
+commit 4e271c50b2a75ba1e0f37b00245022e52c85cbc0
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 21 17:15:50 2015 -0400
+
+    Se realizo el progama de otorgar Permisos por Perfil
+
+commit de0906c14399dc7e7169ad5c568ae9bbcf800e80
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 21 14:13:16 2015 -0400
+
+    Se realizaron lo programas de Alta y Baja de Usuarios
+
+commit afdc4db9962ecf709e47a1615ebe88a3a03d76be
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 20 15:48:15 2015 -0400
+
+    Se realizo la union con los modulos de Activos y Recursos Humanos
+
+commit d9093f0f9c966b86177491cae453321c806c70c9
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 20 15:33:16 2015 -0400
+
+    Se realizo en Programa de Agregar Opciones por Perfil
+
+commit 890cf0c2a9ddd47c118a9676190929940f48727d
+Author: franzemil <franzemil35@gmail.com>
+Date:   Fri Jul 17 17:01:48 2015 -0400
+
+    Finalizando los Reportes
+
+commit e5e63090fc72ded9058d5f81dc06e8827decf390
+Author: franzemil <franzemil35@gmail.com>
+Date:   Wed Jul 15 08:23:35 2015 -0400
+
+    Formulario de Opciones por Perfil
+
+commit 5777887c4440f59b865eefee9ab6014080e06acc
+Author: franzemil <franzemil35@gmail.com>
+Date:   Tue Jul 14 17:18:09 2015 -0400
+
+    Terminado el reporte
+
+commit 7fb09c6e7131931f64c5f3380e1c3b187ad6bfd1
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 13 12:25:33 2015 -0400
+
+    Se añadio los metodos recursivos paara la obtension de los datos en el reportes de Estructura del Sistema
+
+commit c8b16f830ea80378dc5f8c7ff9aaf81915a022cc
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 13 11:31:47 2015 -0400
+
+    Cambios en el Formulario
+
+commit e997d43abb7403def7ffbbfa89a86eedfe59092b
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 13 11:16:47 2015 -0400
+
+    Empezo a utilizar PDFBox
+
+commit ee3030f5f4ac09c4bd3a69d1556f06567d67e8f9
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 13 09:03:41 2015 -0400
+
+    Se realizo el programa de  Eliminar Opcion
+
+commit 93fa79796d386f22bbcb4f49c62fcff75b11db69
+Author: franzemil <franzemil35@gmail.com>
+Date:   Mon Jul 13 08:46:17 2015 -0400
+
+    Initial Commit
