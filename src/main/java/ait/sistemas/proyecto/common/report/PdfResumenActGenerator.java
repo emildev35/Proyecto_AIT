@@ -2,7 +2,6 @@ package ait.sistemas.proyecto.common.report;
 
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -16,8 +15,9 @@ import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.ui.UI;
 
+
 @SuppressWarnings({ "deprecation", "unused" })
-public class PDFInventarioGenerator {
+public class PdfResumenActGenerator {
 
 	private PDDocument doc;
 
@@ -113,22 +113,11 @@ public class PDFInventarioGenerator {
 					tableTopY -= table.getRowHeight();
 					// drawTableGridContables(table, new String[] { "", "" },
 					// contentStream, tableTopY);
-					
-					double valors_auxiliar_contable = Double.parseDouble(String.valueOf(can_auxiliares_contables) == null ? "0" : String.valueOf(can_auxiliares_contables));
-					DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
-					String str_aux_cont = formater.format(valors_auxiliar_contable);
-					
-					double s_total = Double.parseDouble(String.valueOf(sum_auxiliares_contables) == null ? "0" : String.valueOf(sum_auxiliares_contables));
-					String str_s_total = formater.format(s_total);
-					
-					double s_total_neto = Double.parseDouble(String.valueOf(sum_neto_auxiliares_contables) == null ? "0" : String.valueOf(sum_neto_auxiliares_contables));
-					String str_s_total_neto = formater.format(s_total_neto);
-					
 					drawCurrentPageCorte(
 							table,
-							new String[] { "Cantidad por Auxiliar Contable", str_aux_cont,			
-									"Total", str_s_total, 
-									"Total Neto", str_s_total_neto}, contentStream, tableTopY);
+							new String[] { "Cantidad por Auxiliar Contable", String.valueOf(can_auxiliares_contables),
+									"Total", String.valueOf(sum_auxiliares_contables), "Total Neto",
+									String.valueOf(sum_neto_auxiliares_contables) }, contentStream, tableTopY);
 					tableTopY -= table.getRowHeight();
 					r += 2;
 				}
@@ -147,21 +136,11 @@ public class PDFInventarioGenerator {
 
 						// drawTableGridContables(table, new String[] { "", ""
 						// }, contentStream, tableTopY);
-						double valors_grupo_contable = Double.parseDouble(String.valueOf(can_grupo_contable));
-						DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
-						String str_grup_cont = formater.format(valors_grupo_contable);
-						
-						double s_grp_total = Double.parseDouble(String.valueOf(sum_grupo_contable));
-						String str_s_grup_total = formater.format(s_grp_total);
-						
-						double s_gruptotal_neto = Double.parseDouble(String.valueOf(sum_neto_grupo_contable));
-						String str_s_grup_total_neto = formater.format(s_gruptotal_neto);
-						
 						drawCurrentPageCorte(
 								table,
-								new String[] { "Cantidad por Grupo Contable", str_grup_cont,
-										"Total", str_s_grup_total, 
-										"Total Neto", str_s_grup_total_neto }, contentStream, tableTopY);
+								new String[] { "Cantidad por Grupo Contable", String.valueOf(can_grupo_contable),
+										"Total", String.valueOf(sum_grupo_contable), "Total Neto",
+										String.valueOf(sum_neto_grupo_contable) }, contentStream, tableTopY);
 						tableTopY -= table.getRowHeight();
 						r++;
 					}
@@ -175,12 +154,12 @@ public class PDFInventarioGenerator {
 				grupo_contable = table.getContent()[i][1];
 				auxiliar_contable = table.getContent()[i][2];
 
-				r++;
-//				drawTableGridContables(table, new String[] { "Grupo Contable", grupo_contable, "Auxiliar Contable",
+//				r++;
+////				drawTableGridContables(table, new String[] { "Grupo Contable", grupo_contable, "Auxiliar Contable",
+////						auxiliar_contable }, contentStream, tableTopY);
+//				drawCurrentPageContable(table, new String[] { "Grupo Contable:", grupo_contable, "Auxiliar Contable:",
 //						auxiliar_contable }, contentStream, tableTopY);
-				drawCurrentPageContable(table, new String[] { "Grupo Contable:", grupo_contable, "Auxiliar Contable:",
-						auxiliar_contable }, contentStream, tableTopY);
-				tableTopY -= table.getRowHeight();
+//				tableTopY -= table.getRowHeight();
 			}
 
 			String[] current = Arrays.copyOfRange(table.getContent()[i], 3, table.getContent()[i].length);
@@ -191,7 +170,7 @@ public class PDFInventarioGenerator {
 					: table.getContent()[i][6].replace(".", "").replace(",", "."));
 			sum_neto_auxiliares_contables += Float.parseFloat(table.getContent()[i][7].replace(".", "").replace(",", ".") == "null" ? "0" : table
 					.getContent()[i][7].replace(".", "").replace(",", "."));
-			can_auxiliares_contables++;;
+			can_auxiliares_contables++;
 
 			drawCurrentPage(table, current, contentStream, tableTopY);
 			tableTopY -= table.getRowHeight();
@@ -220,52 +199,22 @@ public class PDFInventarioGenerator {
 		sum_dependencia += sum_grupo_contable;
 		sum_neto_dependencia += sum_neto_dependencia;
 
-		double valorf_aux = Double.parseDouble(String.valueOf(can_auxiliares_contables));
-		DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
-		String str_f_aux = formater.format(valorf_aux);
+//		drawCurrentPageCorte(table,
+//				new String[] { "Cantidad por Auxiliar Contable", String.valueOf(can_auxiliares_contables), "Total",
+//						String.valueOf(sum_auxiliares_contables), "Total Neto",
+//						String.valueOf(sum_neto_auxiliares_contables) }, contentStream, tableTopY);
 		
-		double f_aux_total = Double.parseDouble(String.valueOf(sum_auxiliares_contables));
-		String str_f_aux_total = formater.format(f_aux_total);
-		
-		double f_auxtotal_neto = Double.parseDouble(String.valueOf(sum_neto_auxiliares_contables));
-		String str_f_aux_total_neto = formater.format(f_auxtotal_neto);
-		
-		drawCurrentPageCorte(
-				table,
-				new String[] { "Cantidad por Auxiliar Contable", str_f_aux, 
-						"Total",str_f_aux_total, 
-						"Total Neto",str_f_aux_total_neto }, contentStream, tableTopY);
-		tableTopY -= table.getRowHeight();
-		
-		double valorf_grupo_contable = Double.parseDouble(String.valueOf(can_grupo_contable));
-		String str_f_grup_cont = formater.format(valorf_grupo_contable);
-		
-		double f_grp_total = Double.parseDouble(String.valueOf(sum_grupo_contable));
-		String str_f_grup_total = formater.format(f_grp_total);
-		
-		double f__gruptotal_neto = Double.parseDouble(String.valueOf(sum_neto_grupo_contable));
-		String str_f_grup_total_neto = formater.format(f__gruptotal_neto);
-		
-		drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", str_f_grup_cont,
-				"Total", str_f_grup_total, 
-				"Total Neto", str_f_grup_total_neto },
-				contentStream, tableTopY);
 		tableTopY -= table.getRowHeight();
 
-		double valorf_sep_contable = Double.parseDouble(String.valueOf(can_dependencia));
-		String str_f_sep_cont = formater.format(valorf_sep_contable);
-		
-		double f_sep_total = Double.parseDouble(String.valueOf(sum_dependencia));
-		String str_f_sep_total = formater.format(f_sep_total);
-		
-		double f_septotal_neto = Double.parseDouble(String.valueOf(sum_neto_dependencia));
-		String str_f_sep_total_neto = formater.format(f_septotal_neto);
-		
-		drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", str_f_sep_cont,
-				"Total", str_f_sep_total,
-				"Total Neto", str_f_sep_total_neto },
-				contentStream, tableTopY);
-		tableTopY -= table.getRowHeight();
+//		drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", String.valueOf(can_grupo_contable),
+//				"Total", String.valueOf(sum_grupo_contable), "Total Neto", String.valueOf(sum_neto_grupo_contable) },
+//				contentStream, tableTopY);
+//		tableTopY -= table.getRowHeight();
+
+//		drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", String.valueOf(can_dependencia),
+//				"Total", String.valueOf(sum_dependencia), "Total Neto", String.valueOf(sum_neto_dependencia) },
+//				contentStream, tableTopY);
+//		tableTopY -= table.getRowHeight();
 
 		contentStream.close();
 

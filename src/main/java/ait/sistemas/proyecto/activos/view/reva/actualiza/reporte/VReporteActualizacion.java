@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.view.reva.actualiza.reporte;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -107,21 +108,50 @@ public class VReporteActualizacion extends VerticalLayout implements View, Click
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
+			//TODO Eliminar las Validaciones de null
+			double d_valor = Double.parseDouble(String.valueOf(activo.getACT_Valor_Neto() == null ? "0" : activo.getACT_Valor_Neto()));
+			DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
+			String valor_str = formater.format(d_valor);
+			
+			double d_valor_compra = Double.parseDouble(String.valueOf(activo.getACT_Valor() == null ? "0" : activo.getACT_Valor()));
+			String valor_str_compra = formater.format(d_valor_compra);
+
+			double valor_actualizado_GAn = Double.parseDouble(String.valueOf(activo.getACT_Actualizacion_Acumulada_Gestion_Anterior() == null ? "0" : 
+				activo.getACT_Actualizacion_Acumulada_Gestion_Anterior()));
+			String str_acrualizacion_GAn = formater.format(valor_actualizado_GAn);
+
+			double depreciacion_GAn = Double.parseDouble(String.valueOf(activo.getACT_Depreciacion_Acumulada_Gestion_Anterior() == null ? "0" : 
+				activo.getACT_Depreciacion_Acumulada_Gestion_Anterior()));
+			String str_depreciacion_GAn = formater.format(depreciacion_GAn);
+			
+			double valor_actualizado_GA = Double.parseDouble(String.valueOf(activo.getACT_Actualizacion_Acumulada() == null ? "0" : 
+				activo.getACT_Actualizacion_Acumulada()));
+			String str_acrualizacion_GA = formater.format(valor_actualizado_GA);
+
+			double depreciacion_GA = Double.parseDouble(String.valueOf(activo.getACT_Depresiacion_Acumulada() == null ? "0" : 
+				activo.getACT_Depresiacion_Acumulada()));
+			String str_depreciacion_GA = formater.format(depreciacion_GA);
+			
+			double valor_CA = Double.parseDouble(String.valueOf(activo.getACT_CA() == null ? "0" : activo.getACT_CA()));
+			String str_CA = formater.format(valor_CA);
+			
+			double valor_DAA = Double.parseDouble(String.valueOf(activo.getACT_DAA() == null ? "0" : activo.getACT_DAA()));
+			String str_DAA = formater.format(valor_DAA);
 			String[] row = { activo.getACT_Dependencia(), 
 					activo.getACT_Grupo_Contable(), 
 					activo.getACT_Auxiliar_Contable(), 
 					activo.getACT_Codigo_Activo(), 
 					activo.getACT_Nombre_Activo(),
 					String.valueOf(activo.getACT_Fecha_Compra()) ,
-					String.valueOf(activo.getACT_Valor()), 
+					valor_str_compra, 
 					String.valueOf(activo.getACT_Vida_Util()), 
-					String.valueOf(activo.getACT_Actualizacion_Acumulada_Gestion_Anterior()), 
-					String.valueOf(activo.getACT_Depreciacion_Acumulada_Gestion_Anterior()),
-					String.valueOf(activo.getACT_Actualizacion_Acumulada()),
-					String.valueOf(activo.getACT_Depresiacion_Acumulada()),
-					String.valueOf(activo.getACT_CA()),
-					String.valueOf(activo.getACT_DAA()),
-					String.valueOf(activo.getACT_Valor_Neto())
+					str_acrualizacion_GAn,
+					str_depreciacion_GAn,
+					str_acrualizacion_GA,
+					str_depreciacion_GA,
+					str_CA,
+					str_DAA, 
+					valor_str
 					};
 			
 			data[r] = row;

@@ -71,9 +71,9 @@ public class ReportPdf {
 
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
-		columns.add(new Column("Nombre del Activo", 350));
+		columns.add(new Column("Nombre del Activo", 345));
 		columns.add(new Column("Fecha Compra", 45));
-		columns.add(new Column("Valor Compra", 45));
+		columns.add(new Column("Valor Compra", 50));
 		columns.add(new Column("Vida Util", 22));
 		columns.add(new Column("Valor Actualizado Gestion Anterior", 60));
 		columns.add(new Column("Depreciacion Actualizada Gestion Anterior", 60));
