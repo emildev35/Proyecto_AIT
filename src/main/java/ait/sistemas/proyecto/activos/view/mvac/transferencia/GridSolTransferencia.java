@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.devolucion;
+package ait.sistemas.proyecto.activos.view.mvac.transferencia;
 
 import java.util.Locale;
 
@@ -11,13 +11,13 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.renderers.DateRenderer;
 
-public class GridSoldevolucion extends Grid{
+public class GridSolTransferencia extends Grid{
 
 	private ActasImpl acta_impl = new ActasImpl();
 	private static final long serialVersionUID = 1L;
 	private BeanItemContainer<Movimiento> bean_Movimiento;
 
-	public GridSoldevolucion() {
+	public GridSolTransferencia() {
 		buildGrid();
 	}
 	public void update() {
@@ -28,8 +28,8 @@ public class GridSoldevolucion extends Grid{
 	public void buildGrid(){
 		bean_Movimiento = new BeanItemContainer<Movimiento>(Movimiento.class);
 		Movimiento movimiento = new Movimiento();
-		movimiento.setTipo_movimiento((short) 3);
-		bean_Movimiento.addAll(acta_impl.getSolicitudDevolucion(movimiento));
+		movimiento.setTipo_movimiento((short) 5);
+		bean_Movimiento.addAll(acta_impl.getSolicitudAsignacion(movimiento));
 		setContainerDataSource(bean_Movimiento);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);

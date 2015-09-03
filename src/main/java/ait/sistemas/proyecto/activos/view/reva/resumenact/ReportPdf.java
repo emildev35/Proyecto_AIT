@@ -10,7 +10,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.PDFInventarioGenerator;
+import ait.sistemas.proyecto.common.report.PdfResumenActGenerator;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
@@ -62,7 +62,7 @@ public class ReportPdf {
 
 	public boolean getPdf(String[][] data, String strDependencia) throws IOException {
 
-		return new PDFInventarioGenerator().generatePDF(createContent(data, strDependencia), SAVE_PATH);
+		return new PdfResumenActGenerator().generatePDF(createContent(data, strDependencia), SAVE_PATH);
 
 	}
 
@@ -71,9 +71,9 @@ public class ReportPdf {
 
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
-		columns.add(new Column("Grupo Contable", 340));
+		columns.add(new Column("Grupo Contable", 325));
 		columns.add(new Column("Cantidad Items", 45));
-		columns.add(new Column("Valor Compra", 45));
+		columns.add(new Column("Valor Compra", 55));
 		columns.add(new Column("Vida Util (Años)", 33));
 		columns.add(new Column("Valor Actualizado Gestion Anterior", 60));
 		columns.add(new Column("Depreciacion Actualizada Gestion Anterior", 60));

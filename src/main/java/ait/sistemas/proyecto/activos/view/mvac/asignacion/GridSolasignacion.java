@@ -47,6 +47,11 @@ public class GridSolasignacion extends Grid{
 		removeColumn("usuario");
 		removeColumn("no_acta");
 		removeColumn("fecha_acta");
+		removeColumn("id_estado_soporte");
+		removeColumn("id_subsistema");
+		removeColumn("tipo_soporte");
+		removeColumn("tipo_movimiento_referencia");
+		removeColumn("dependencia");
 		
 		setColumnOrder("fecha_registro","nro_documento", "solicitante");
 		

@@ -18,11 +18,13 @@ import javax.persistence.SqlResultSetMapping;
 @SqlResultSetMapping(name = "cmovimiento", entities = { @EntityResult(entityClass = Movimiento.class, fields = {
 	@FieldResult(name = "id_cmovimiento", column = "id_cmovimiento"),
 	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
+	@FieldResult(name = "dependencia", column = "dependencia"),
 	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
 	@FieldResult(name = "nro_documento", column = "nro_documento"),
 	@FieldResult(name = "id_usuario", column = "id_usuario"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
 	@FieldResult(name = "tipo_movimiento_referencia", column = "tipo_movimiento_referencia"),
+	@FieldResult(name = "tipo_movimiento_nuevo", column = "tipo_movimiento_nuevo"),
 	@FieldResult(name = "nro_documento_referencia", column = "nro_documento_referencia"),
 	@FieldResult(name = "fecha_nro_referencia", column = "fecha_nro_referencia"),
 	@FieldResult(name = "fecha_registro", column = "fecha_registro"),
@@ -39,10 +41,12 @@ public class Movimiento {
 	@Id
 	private String id_cmovimiento;
 	private short id_dependencia;
+	private String dependencia;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private String id_usuario;
 	private short tipo_movimiento;
+	private short tipo_movimiento_nuevo;
 	private String nro_documento_referencia;
 	private short tipo_movimiento_referencia;
 	private Date fecha_nro_referencia;
@@ -93,6 +97,14 @@ public class Movimiento {
 
 	public void setId_dependencia(short id_dependencia) {
 		this.id_dependencia = id_dependencia;
+	}
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
 	}
 
 	public short getId_unidad_organizacional_origen() {
@@ -214,6 +226,14 @@ public class Movimiento {
 
 	public void setTipo_movimiento_referencia(short tipo_movimiento_referencia) {
 		this.tipo_movimiento_referencia = tipo_movimiento_referencia;
+	}
+
+	public short getTipo_movimiento_nuevo() {
+		return tipo_movimiento_nuevo;
+	}
+
+	public void setTipo_movimiento_nuevo(short tipo_movimiento_nuevo) {
+		this.tipo_movimiento_nuevo = tipo_movimiento_nuevo;
 	}
 
 	

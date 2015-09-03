@@ -27,6 +27,11 @@ import com.vaadin.ui.Grid;
 			removeColumn("id_motivo_baja");
 			removeColumn("motivo_baja");
 			removeColumn("observacion");
+			removeColumn("nro_garantia");
+			removeColumn("nro_seguro");
+			removeColumn("vto_garantia");
+			removeColumn("vto_seguro");
+			
 			setColumnOrder("id_activo", "nombre_activo");
 			 	
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
@@ -57,6 +62,10 @@ import com.vaadin.ui.Grid;
 			removeColumn("id_motivo_baja");
 			removeColumn("motivo_baja");
 			removeColumn("observacion");
+			removeColumn("nro_garantia");
+			removeColumn("nro_seguro");
+			removeColumn("vto_garantia");
+			removeColumn("vto_seguro");
 			setColumnOrder("id_activo", "nombre_activo");
 			 	
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
@@ -81,7 +90,10 @@ import com.vaadin.ui.Grid;
 			removeColumn("id_motivo_baja");
 			removeColumn("motivo_baja");
 			removeColumn("observacion");
-			
+			removeColumn("nro_garantia");
+			removeColumn("nro_seguro");
+			removeColumn("vto_garantia");
+			removeColumn("vto_seguro");
 
 			setColumnOrder("id_activo", "nombre_activo");
 			

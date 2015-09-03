@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.devolucion;
+package ait.sistemas.proyecto.activos.view.mvac.transferencia;
 
 import java.util.List;
 
@@ -25,29 +25,29 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VDevolucionA extends VerticalLayout implements View, ClickListener,
+public class VTransferenciaA extends VerticalLayout implements View, ClickListener,
 		SelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private FormDevolucion frm_asignacion;
+	private FormTransferencia frm_transferencia;
 	private CssLayout hl_errores;
 	private Button btn_asignacion;
 	private Button btn_imprimir;
-	private GridSoldevolucion grid_asignacion;
+	private GridSolTransferencia grid_transferencia;
 	private GridDetalle grid_Detalle = new  GridDetalle();
 	private ActasImpl acta_impl = new ActasImpl();
 	private Movimiento data;
 
-	public VDevolucionA() {
+	public VTransferenciaA() {
 
-		this.frm_asignacion = new FormDevolucion();
+		this.frm_transferencia = new FormTransferencia();
 		this.btn_imprimir = new Button("Imprimir");
-		this.btn_asignacion = new Button("Generar Activos");
+		this.btn_asignacion = new Button("Generar Transferencia");
 		this.btn_asignacion.addClickListener(this);
 		this.btn_imprimir.addClickListener(this);
-		this.grid_asignacion = new GridSoldevolucion();
-		this.grid_asignacion.addSelectionListener(this);
+		this.grid_transferencia = new GridSolTransferencia();
+		this.grid_transferencia.addSelectionListener(this);
 		this.hl_errores = new CssLayout();
 
 		addComponent(buildNavBar());
@@ -61,17 +61,17 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 		
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Solicitudes de Devoluciones");
-		gridPanel.setContent(this.grid_asignacion);
+		gridPanel.setCaption("Solicitudes Pendientes de Transferencia");
+		gridPanel.setContent(this.grid_transferencia);
 	//	formContent.setMargin(true);
 		Panel grid2Panel = new Panel();
 		grid2Panel.setWidth("100%");
-		grid2Panel.setCaption("Detalle de activos para devolucion");
+		grid2Panel.setCaption("Detalle de Activos");
 		grid2Panel.setContent(this.grid_Detalle);
 		//formContent.setMargin(true);
 		
 		formContent.addComponent(gridPanel);
-		formContent.addComponent(this.frm_asignacion);
+		formContent.addComponent(this.frm_transferencia);
 		formContent.addComponent(grid2Panel);
 		Responsive.makeResponsive(formContent);
 		return formContent;
@@ -84,7 +84,7 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos >>"));
 		nav.addComponent(new Label("Movimiento de Activos >>"));
-		nav.addComponent(new Label("Devolucion >>"));
+		nav.addComponent(new Label("Transferencia de Activos Fijos >>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>",ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -122,31 +122,30 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 	@Override
 	public void select(SelectionEvent event) {
 
-		if ((Movimiento) this.grid_asignacion.getSelectedRow() != null) {
-			this.frm_asignacion.setData((Movimiento) 
-			this.grid_asignacion.getSelectedRow());
+		if ((Movimiento) this.grid_transferencia.getSelectedRow() != null) {
+			this.frm_transferencia.setData((Movimiento) this.grid_transferencia.getSelectedRow());
 			
-			data =(Movimiento)this.grid_asignacion.getSelectedRow();
-			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia(),data.getTipo_movimiento());
+			data =(Movimiento)this.grid_transferencia.getSelectedRow();
+			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia(), data.getTipo_movimiento());
 		}
 	}
 
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_asignacion) {
-			if (this.frm_asignacion.validate()) {
-				this.acta_impl.addActa(this.frm_asignacion.getData());
+			if (this.frm_transferencia.validate()) {
+				this.acta_impl.addActa(this.frm_transferencia.getData());
 				this.grid_Detalle.vaciar();
-				this.frm_asignacion.update();
-				this.frm_asignacion.buidId();
-				this.grid_asignacion.update();
+				this.frm_transferencia.update();
+				this.frm_transferencia.buidId();
+				this.grid_transferencia.update();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE,
 						Type.ERROR_MESSAGE);
 			}
-			buildMessages(this.frm_asignacion.getMensajes());
-			this.frm_asignacion.clearMessages();
+			buildMessages(this.frm_transferencia.getMensajes());
+			this.frm_transferencia.clearMessages();
 		}
 		if (event.getButton() == this.btn_imprimir) {
 		}
