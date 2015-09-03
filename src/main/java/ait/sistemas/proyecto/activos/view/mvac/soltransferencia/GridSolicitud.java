@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.soltrasferencia;
+package ait.sistemas.proyecto.activos.view.mvac.soltransferencia;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;

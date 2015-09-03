@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.soltrasferencia;
+package ait.sistemas.proyecto.activos.view.mvac.soltransferencia;
 
 import java.util.ArrayList;
 import java.util.Date;

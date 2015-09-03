@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.devolucion;
+package ait.sistemas.proyecto.activos.view.mvac.transferencia;
 
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
@@ -31,6 +31,8 @@ import com.vaadin.ui.Grid;
 			removeColumn("nro_seguro");
 			removeColumn("vto_garantia");
 			removeColumn("vto_seguro");
+			
+			
 			setColumnOrder("id_activo", "nombre_activo");
 			 	
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
@@ -65,6 +67,7 @@ import com.vaadin.ui.Grid;
 			removeColumn("nro_seguro");
 			removeColumn("vto_garantia");
 			removeColumn("vto_seguro");
+			
 			setColumnOrder("id_activo", "nombre_activo");
 			 	
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
