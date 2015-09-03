@@ -52,6 +52,8 @@ public class AitViewProvider implements ViewProvider {
 	
 	@Override
 	public String getViewName(String viewAndParameters) {
+		if(viewAndParameters==null)
+			return "";
 		return viewAndParameters;
 	}
 	

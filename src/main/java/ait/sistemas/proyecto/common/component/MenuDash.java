@@ -103,7 +103,8 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
         settingsItem.addItem("Cerrar Session", new Command() {
 		    @Override
 		    public void menuSelected(final MenuItem selectedItem) {
-		        
+		    	UI.getCurrent().getSession().close();
+		    	UI.getCurrent().getPage().reload();
 		    }
 		});
 		return settings;
@@ -142,9 +143,10 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 
 	@Override
 	public void itemClick(ItemClickEvent event) {
-	//TODO TERMINAR NAVEGACION
-		if((Arbol_menus)event.getItem()!= null){
-			Notification.show(((Arbol_menus)event.getItem()).getAME_Programa());
+		if((Arbol_menus)event.getItemId() != null){
+			if(((Arbol_menus)event.getItemId()).getAME_Programa() != null && !((Arbol_menus)event.getItemId()).getAME_Programa().equals("")){
+				UI.getCurrent().getNavigator().navigateTo(((Arbol_menus)event.getItemId()).getAME_Programa());
+			}
 		}
 	}
 }
