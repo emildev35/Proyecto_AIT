@@ -107,7 +107,7 @@ public class VSubSistemaM extends VerticalLayout implements View, ClickListener,
 		VerticalLayout vl_content = new VerticalLayout();
 		vl_content.setMargin(true);
 		GridLayout frmAddSubsistema = new GridLayout(4, 2);
-		frmAddSubsistema.setWidth("100	%");
+		frmAddSubsistema.setWidth("100%");
 		frmAddSubsistema.setSpacing(true);
 		frmAddSubsistema.setColumnExpandRatio(0, 1f);
 		frmAddSubsistema.setColumnExpandRatio(1, 1f);

@@ -228,10 +228,10 @@ public class FormOpcion extends GridLayout implements Property.ValueChangeListen
 
 	public void GenerarIds() {
 		if(this.cbMenus.getValue()!=null){
-		this.txt_id_codigo.setValue(this.menuimpl.generateOpcionId(
-				(int) (long) this.cbSubsistema.getValue(),
-				(int) (long) this.cbMenus.getValue(),
-				(int) (long) this.cbSubMenus.getValue()));
+			this.txt_id_codigo.setValue(this.menuimpl.generateOpcionId(
+					(int) (long) this.cbSubsistema.getValue(),
+					(int) (long) this.cbMenus.getValue(),
+					(int) (long) this.cbSubMenus.getValue()));
 		}
 	}
 	public Arbol_menus getData(){

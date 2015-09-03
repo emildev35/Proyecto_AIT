@@ -12,6 +12,7 @@ import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Component;
@@ -77,6 +78,9 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 		menuContent.addStyleName("ait-menu-items");
 		for (Arbol_menus menu : this.menuelements) {
 			Treemenu.addItem(menu);
+			if(menu.getAME_Icono()!=null && !menu.getAME_Icono().equals("")){
+				Treemenu.setItemIcon(menu, FontAwesome.valueOf(menu.getAME_Icono()));
+			}
 		}
 		for (Arbol_menus menu : this.menuelements) {
 			if(menu.getArbolMenus()!=null){
@@ -138,6 +142,9 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 
 	@Override
 	public void itemClick(ItemClickEvent event) {
-		
+	//TODO TERMINAR NAVEGACION
+		if((Arbol_menus)event.getItem()!= null){
+			Notification.show(((Arbol_menus)event.getItem()).getAME_Programa());
+		}
 	}
 }

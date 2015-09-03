@@ -224,7 +224,7 @@ public class FormSubMenu extends GridLayout implements Property.ValueChangeListe
 	public void setData(Arbol_menus data){	
 		this.cbMenus.removeValueChangeListener(this);
 		this.cbSubsistema.removeValueChangeListener(this);
-		
+			
 		this.txt_identificador.setValue(String.valueOf(data.getAME_Id_Identificador()));
 		this.txt_id_submenu.setValue(String.valueOf(data.getAME_Id_SubMenu()));
 		this.cbMenus.setValue((long)data.getAME_Id_Menus());
