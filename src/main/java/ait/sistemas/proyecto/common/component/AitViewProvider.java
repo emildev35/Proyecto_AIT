@@ -1,7 +1,5 @@
 package ait.sistemas.proyecto.common.component;
 
-import java.util.StringTokenizer;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewProvider;
 
@@ -54,6 +52,8 @@ public class AitViewProvider implements ViewProvider {
 	
 	@Override
 	public String getViewName(String viewAndParameters) {
+		if(viewAndParameters==null)
+			return "";
 		return viewAndParameters;
 	}
 	

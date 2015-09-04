@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.seguridad.data.service.Impl;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,9 @@ import ait.sistemas.proyecto.seguridad.component.model.UsuarioGridModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.model.Usuario;
 
-public class UsuarioImpl implements Dao<Usuario> {
+public class UsuarioImpl implements Dao<Usuario>, Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private EntityManagerFactory emf;
 	private EntityManager em;
 	
@@ -129,14 +131,10 @@ public class UsuarioImpl implements Dao<Usuario> {
 	 * usuario espesifico, posterior a ello realiza la insersion de los nuevos
 	 * permisos.
 	 * 
-	 * @param usuario
-	 *            Identificador del Usuario
-	 * @param permisos
-	 *            Lista de permisos que seran asignados
-	 * @param id_padre
-	 *            El Identificador del Menu padre
-	 * @param fechaRegistro
-	 *            Fecha de Registro
+	 * @param usuario           Identificador del Usuario
+	 * @param permisos          Lista de permisos que seran asignados
+	 * @param id_padre          El Identificador del Menu padre
+	 * @param fechaRegistro     Fecha de Registro
 	 * @return integer
 	 */
 	public int otortgarPermisos(String usuario, List<PermisosUsuario> permisos, long id_padre,
@@ -166,7 +164,12 @@ public class UsuarioImpl implements Dao<Usuario> {
 		}
 		return result;
 	}
-	
+	/**
+	 * Este Metodo Verifica si el Usuario es nuevo mediante al campo de Password
+	 * En caso que sea Nuevo Retorna 1 y 0 si no existe 
+	 * @param id_usuario
+	 * @return int
+	 */
 	public int isNewUser(String id_usuario) {
 		String str_new_user = "EXEC Usua_IsNewUser_P @Id_Usuario=?1";
 		Query query = this.em.createNativeQuery(str_new_user).setParameter(1, id_usuario);

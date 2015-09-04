@@ -34,13 +34,13 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeListener, ClickListener {
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_submit;
 	private Button btn_limpiar;
 	private TextField txt_identificador;
-	private TextField txt_id_subsistema;	
+	private TextField txt_id_subsistema;
 	private TextField txt_nombre_subsistema;
 	private TextField txt_nombre_programa;
 	private ComboBoxIcons cb_icons;
@@ -72,7 +72,6 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		pitmSubSistema.addItemProperty("nombre_programa", new ObjectProperty<String>(""));
 		pitmSubSistema.addItemProperty("iconos", new ObjectProperty<String>(""));
 		
-		
 		binderSubSistema = new FieldGroup(pitmSubSistema);
 		binderSubSistema.bind(this.txt_identificador, "identificador");
 		binderSubSistema.bind(this.txt_id_subsistema, "id_subsistema");
@@ -85,10 +84,10 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		
 		this.txt_nombre_subsistema.setRequired(true);
 		this.txt_nombre_subsistema.setWidth("100%");
-		this.txt_nombre_subsistema.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 25), 3, 25, false));
+		this.txt_nombre_subsistema.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3, 50, false));
 		this.txt_nombre_programa.setRequired(true);
 		this.txt_nombre_programa.setWidth("100%");
-		this.txt_nombre_programa.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 25), 3 ,25, false));
+		this.txt_nombre_programa.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3, 50, false));
 		this.cb_icons.setWidth("100%");
 		
 		generarIdentificador();
@@ -100,26 +99,26 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		Responsive.makeResponsive(this);
 	}
 	
-
 	private Component buildFormContent() {
 		VerticalLayout vl_content = new VerticalLayout();
 		vl_content.setStyleName("ait-content-form");
 		vl_content.setMargin(true);
-		GridLayout frmAddSubsistema = new GridLayout(4,2);
+		GridLayout frmAddSubsistema = new GridLayout(4, 2);
 		frmAddSubsistema.setWidth("85%");
 		frmAddSubsistema.setSpacing(true);
 		frmAddSubsistema.setColumnExpandRatio(2, 2);
 		frmAddSubsistema.setColumnExpandRatio(3, 2);
-		frmAddSubsistema.addComponent(this.txt_identificador,0,0);
+		frmAddSubsistema.addComponent(this.txt_identificador, 0, 0);
 		frmAddSubsistema.addComponent(this.txt_id_subsistema, 1, 0);
-		frmAddSubsistema.addComponent(this.txt_nombre_subsistema,2,0);
-		frmAddSubsistema.addComponent(this.txt_nombre_programa,2,1);
-		frmAddSubsistema.addComponent(this.cb_icons,3,0);
+		frmAddSubsistema.addComponent(this.txt_nombre_subsistema, 2, 0);
+		frmAddSubsistema.addComponent(this.txt_nombre_programa, 2, 1);
+		frmAddSubsistema.addComponent(this.cb_icons, 3, 0);
 		
 		vl_content.addComponent(frmAddSubsistema);
-
+		
 		return vl_content;
 	}
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
@@ -131,6 +130,7 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		navPanel.setContent(nav);
 		return navPanel;
 	}
+	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_submit);
@@ -142,31 +142,31 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		this.btn_limpiar.addClickListener(this);
 		return buttonContent;
 	}
-
-	private void  generarIdentificador() {
+	
+	private void generarIdentificador() {
 		this.txt_identificador.setValue(this.menuImpl.generateId());
 	}
+	
 	private void generarIdSubsistema() {
 		this.txt_id_subsistema.setValue(this.menuImpl.generateSubSistemaId());
 	}
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
-	
+		
 	}
-
-
+	
 	@Override
 	public void containerItemSetChange(ItemSetChangeEvent event) {
 		Notification.show("XD");
 	}
-
-
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_submit) {			
+		if (event.getButton() == this.btn_submit) {
 			this.txt_nombre_subsistema.setValue(this.txt_nombre_subsistema.getValue().replaceAll("\\s+", ""));
 			this.txt_nombre_programa.setValue(this.txt_nombre_programa.getValue().replaceAll("\\s+", ""));
-			try{
+			try {
 				this.binderSubSistema.commit();
 				
 				subsistema = new Arbol_menus();
@@ -178,23 +178,22 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 				subsistema.setAME_Fecha_Registro(new java.sql.Date(lnMilis));
 				subsistema.setAME_Icono(this.cb_icons.getValue().toString());
 				Arbol_menus result = this.menuImpl.addSubSistema(subsistema);
-				if (result == null){
+				if (result == null) {
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-				}else{
+				} else {
 					Notification.show(Messages.SUCCESS_MESSAGE);
 					this.binderSubSistema.clear();
 					generarIdentificador();
 					generarIdSubsistema();
 				}
 				
-			}catch(CommitException e){
+			} catch (CommitException e) {
 				buildError(e.getMessage());
-			}
-			catch (InvalidValueException  e) {
+			} catch (InvalidValueException e) {
 				buildError(e.getMessage());
 			}
 			
-		} 	
+		}
 		if (event.getButton() == this.btn_limpiar) {
 			this.binderSubSistema.clear();
 			generarIdentificador();
@@ -210,5 +209,5 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		this.hl_errores.addComponent(lbError);
 		
 	}
-
+	
 }

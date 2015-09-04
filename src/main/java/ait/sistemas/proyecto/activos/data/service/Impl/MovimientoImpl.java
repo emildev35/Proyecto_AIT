@@ -249,6 +249,7 @@ public class MovimientoImpl {
 		return result;
 	}
 	
+	@SuppressWarnings("unused")
 	public int update(CmovimientoDocumento table) {
 		String strQuery = String.format("EXEC Mvac_ActaBaja_I " + "@id_dependencia=?1, " + "@nro_documento_referencia=?2, "
 				+ "@nombre_documento=?3, " + "@direccion_documento=?4, " + "@fecha_resolucion=?5, "

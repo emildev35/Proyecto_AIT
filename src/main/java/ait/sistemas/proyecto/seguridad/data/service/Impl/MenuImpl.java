@@ -276,8 +276,7 @@ public class MenuImpl implements Dao<Arbol_menus> {
 	}
 	public String generateId(){
 		long result = 1;
-		Query query = this.em
-				.createQuery("select max(m.AME_Id_Identificador) from Arbol_menus m");
+		Query query = this.em.createQuery("select max(m.AME_Id_Identificador) from Arbol_menus m");
 		result += (Long) query.getSingleResult();
 		return String.valueOf(result);
 	}

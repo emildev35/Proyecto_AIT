@@ -9,7 +9,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TiposmovImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
-	import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.EmptyValueException;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -20,9 +20,7 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 
 	public class FormTiposmov extends GridLayout implements ValueChangeListener{
