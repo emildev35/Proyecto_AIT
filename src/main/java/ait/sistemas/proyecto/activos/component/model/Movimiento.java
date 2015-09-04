@@ -19,6 +19,8 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "id_cmovimiento", column = "id_cmovimiento"),
 	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
 	@FieldResult(name = "dependencia", column = "dependencia"),
+	@FieldResult(name = "id_dependencia_destino", column = "id_dependencia_destino"),
+	@FieldResult(name = "dependencia_destino", column = "dependencia_destino"),
 	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
 	@FieldResult(name = "nro_documento", column = "nro_documento"),
 	@FieldResult(name = "id_usuario", column = "id_usuario"),
@@ -42,6 +44,8 @@ public class Movimiento {
 	private String id_cmovimiento;
 	private short id_dependencia;
 	private String dependencia;
+	private short id_dependencia_destino;
+	private String dependencia_destino;
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private String id_usuario;
@@ -105,6 +109,22 @@ public class Movimiento {
 
 	public void setDependencia(String dependencia) {
 		this.dependencia = dependencia;
+	}
+
+	public short getId_dependencia_destino() {
+		return id_dependencia_destino;
+	}
+
+	public void setId_dependencia_destino(short id_dependencia_destino) {
+		this.id_dependencia_destino = id_dependencia_destino;
+	}
+	
+	public String getDependencia_destino() {
+		return dependencia_destino;
+	}
+
+	public void setDependencia_destino(String dependencia_destino) {
+		this.dependencia_destino = dependencia_destino;
 	}
 
 	public short getId_unidad_organizacional_origen() {

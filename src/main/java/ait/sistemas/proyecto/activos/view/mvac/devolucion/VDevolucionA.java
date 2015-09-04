@@ -135,7 +135,7 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_asignacion) {
 			if (this.frm_asignacion.validate()) {
-				this.acta_impl.addActa(this.frm_asignacion.getData());
+				this.acta_impl.addActaTransferencia(this.frm_asignacion.getData());
 				this.grid_Detalle.vaciar();
 				this.frm_asignacion.update();
 				this.frm_asignacion.buidId();

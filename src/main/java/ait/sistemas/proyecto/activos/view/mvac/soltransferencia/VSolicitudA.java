@@ -44,10 +44,9 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
-
+		addComponent(buildButtonBar());
 	}
 	
-	@SuppressWarnings("unused")
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		this.btn_agregar.setStyleName("ait-buttons-btn");
@@ -107,8 +106,9 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
 			if (this.frm_solicitud.validate()) {
-				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
+				if (movimientoimpl.addMovimientoTransferencia(this.frm_solicitud.getData())>0) {
 					this.frm_solicitud.clear();
+					
 					Notification.show(Messages.SUCCESS_MESSAGE);
 				}
 				else{

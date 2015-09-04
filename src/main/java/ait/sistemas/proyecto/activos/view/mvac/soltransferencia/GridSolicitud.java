@@ -25,9 +25,9 @@ public class GridSolicitud extends Grid{
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
 	}
-	public void update(String grupo_contable, String auxiliar_contable){
+	public void update(short dependencia,String grupo_contable, String auxiliar_contable){
 		removeAllColumns();
-		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getDisponibles(grupo_contable, auxiliar_contable));
+		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getActivosDisponibles(dependencia, grupo_contable, auxiliar_contable));
 		setContainerDataSource(bean_activos);
 		setSelectionMode(SelectionMode.MULTI);
 		

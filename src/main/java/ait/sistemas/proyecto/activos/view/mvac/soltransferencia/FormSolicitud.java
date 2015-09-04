@@ -67,7 +67,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		
 		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
 		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
-		pitm_solicitud.addItemProperty("dependencia", new ObjectProperty<Short>((short) 1));
+		pitm_solicitud.addItemProperty("dependencia", new ObjectProperty<Dependencia>(new Dependencia()));
 		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
 		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
 				new AuxiliaresContablesModel()));
@@ -128,8 +128,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		cb_dependnecia.setNullSelectionAllowed(false);
 		
 		for (Dependencia dependencia : dependencia_impl.getall()) {
-			cb_dependnecia.addItem(dependencia.getDEP_Dependencia());
-			cb_dependnecia.setItemCaption(dependencia.getDEP_Dependencia(), dependencia.getDEP_Nombre_Dependencia());
+			cb_dependnecia.addItem(dependencia);
+			cb_dependnecia.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
 		}
 	}
 	private void fillcbGrupoContable() {
@@ -235,6 +235,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
 		
 		result.setId_dependencia((short)this.cb_dependnecia.getValue());
+		result.setId_dependencia_destino(usuario.getId_dependecia());
 		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 		result.setFecha_movimiento(fecha_registro);
@@ -272,8 +273,9 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void buildGrid(String auc_Auxiliar_Contable) {
+		Dependencia dependencia = (Dependencia) cb_dependnecia.getValue();
 		GruposContablesModel grupo = (GruposContablesModel) cb_grupo_contable.getValue();
-		this.grid_solicitud.update(grupo.getGRC_Grupo_Contable(), auc_Auxiliar_Contable);
+		this.grid_solicitud.update(dependencia.getDEP_Dependencia(),grupo.getGRC_Grupo_Contable(), auc_Auxiliar_Contable);
 	}
 	
 	public Component getgrid_solicitud() {
@@ -283,8 +285,8 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	public void clear() {
 	
 		this.binder_solicitud.clear();
-		buildId();
 		this.grid_solicitud = new GridSolicitud();
+		buildId();
 		
 	}
 }
