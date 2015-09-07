@@ -18,17 +18,17 @@ public class GridMenu extends Grid{
 	private BeanItemContainer<Arbol_menus> bean_subsistema;
 
 	public GridMenu() {
-		buildGrid();
+		buildGrid(0);
 	}
-	public void update() {
+	public void update(long id_subsistema) {
 		this.removeAllColumns();
 		bean_subsistema = null;
-		buildGrid();
+		buildGrid(id_subsistema);
 	}
-	public void buildGrid(){
+	public void buildGrid(long id_subsistema){
 		menuImpl = new MenuImpl();
 		bean_subsistema = new BeanItemContainer<Arbol_menus>(Arbol_menus.class);		
-		bean_subsistema.addAll(menuImpl.getallMenu());
+		bean_subsistema.addAll(menuImpl.getallMenus(id_subsistema));
 		setContainerDataSource(bean_subsistema);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);

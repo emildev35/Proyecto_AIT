@@ -289,8 +289,17 @@ public class FormOpcion extends GridLayout implements Property.ValueChangeListen
 			}
 			if (this.cbSubMenus.getValue() == event.getProperty().getValue() && this.cbSubMenus.getValue() != null) {
 				GenerarIds();
+				
 			}
 		}
+	}
+
+	public long getSubMenu() {
+		if (this.cbSubMenus.getValue() != null) {
+			GenerarIds();
+			return (Long)cbSubMenus.getValue();
+		}
+		return 0;
 	}
 	
 }

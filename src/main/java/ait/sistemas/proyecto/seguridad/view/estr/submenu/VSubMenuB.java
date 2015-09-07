@@ -9,6 +9,8 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -27,7 +29,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSubMenuB extends VerticalLayout implements View, ClickListener, SelectionListener,org.vaadin.dialogs.ConfirmDialog.Listener{
+public class VSubMenuB extends VerticalLayout implements View, ValueChangeListener, ClickListener, SelectionListener,org.vaadin.dialogs.ConfirmDialog.Listener{
  
 	private static final long serialVersionUID = 1L;
 	
@@ -52,6 +54,8 @@ public class VSubMenuB extends VerticalLayout implements View, ClickListener, Se
 		this.frm_subMenu.cbSubsistema.setEnabled(false);
 		this.frm_subMenu.txt_nombre_menu.setEnabled(false);
 		this.frm_subMenu.txt_nombre_programa.setEnabled(false);
+		
+		this.frm_subMenu.cbMenus.addValueChangeListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
@@ -139,7 +143,7 @@ public class VSubMenuB extends VerticalLayout implements View, ClickListener, Se
 			this.menu.deleteSubsistema(this.frm_subMenu.getData().getAME_Id_Identificador());
 			Notification.show(Messages.SUCCESS_MESSAGE);
 			this.frm_subMenu.update();
-			this.grid_subMenu.update();
+			this.grid_subMenu.update(frm_subMenu.getMenu());
 			Notification.show(Messages.SUCCESS_MESSAGE);
 		} catch (Exception e) {
 			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -154,6 +158,10 @@ public class VSubMenuB extends VerticalLayout implements View, ClickListener, Se
 		}else{
 			
 		}
+	}
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		grid_subMenu.update(frm_subMenu.getMenu());
 	}
 
 }

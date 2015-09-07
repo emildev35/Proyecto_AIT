@@ -7,6 +7,8 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -25,7 +27,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSubmenuM extends VerticalLayout implements View, ClickListener, SelectionListener{
+public class VSubmenuM extends VerticalLayout implements View, ValueChangeListener, ClickListener, SelectionListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -44,6 +46,9 @@ public class VSubmenuM extends VerticalLayout implements View, ClickListener, Se
 		this.hl_errores = new CssLayout();
 		this.grid_subMenu = new GridSubMenu();
 		this.grid_subMenu.addSelectionListener(this);
+		
+		this.frm_subMenu.cbMenus.addValueChangeListener(this);
+		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
@@ -115,7 +120,7 @@ public class VSubmenuM extends VerticalLayout implements View, ClickListener, Se
 			if(this.frm_subMenu.validate()){
 				this.menu.updatesubmenu(this.frm_subMenu.getData());
 				this.frm_subMenu.update();
-				this.grid_subMenu.update();
+				this.grid_subMenu.update(frm_subMenu.getMenu());
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -132,6 +137,10 @@ public class VSubmenuM extends VerticalLayout implements View, ClickListener, Se
 		if(this.grid_subMenu.getSelectedRow()!=null){
 		this.frm_subMenu.setData((Arbol_menus)this.grid_subMenu.getSelectedRow());
 		}
+	}
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		grid_subMenu.update(frm_subMenu.getMenu());
 	}
 
 }

@@ -84,9 +84,7 @@ public class VSubSistemaM extends VerticalLayout implements View, ClickListener,
 		this.txt_nombre_subsistema.setRequired(true);
 		this.txt_nombre_subsistema.setWidth("90%");
 		this.txt_nombre_subsistema.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3, 50, false));
-		this.txt_nombre_programa.setRequired(true);
 		this.txt_nombre_programa.setWidth("90%");
-		this.txt_nombre_programa.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3, 50, false));
 		this.cb_icons.setWidth("100%");
 		
 		generarIdentificador();
@@ -170,7 +168,7 @@ public class VSubSistemaM extends VerticalLayout implements View, ClickListener,
 				this.binderSubSistema.commit();
 				
 				subsistema.setAME_Nombre(this.txt_nombre_subsistema.getValue());
-				subsistema.setAME_Programa(this.txt_nombre_programa.getValue());
+				subsistema.setAME_Programa(this.txt_nombre_programa.getValue()==null?"":this.txt_nombre_programa.getValue());
 				if (this.cb_icons.getValue() != null) {
 					subsistema.setAME_Icono(this.cb_icons.getValue().toString());
 				}
@@ -214,7 +212,11 @@ public class VSubSistemaM extends VerticalLayout implements View, ClickListener,
 			this.txt_identificador.setValue(subsistema.getAME_Id_Identificador() + "");
 			this.txt_id_subsistema.setValue(subsistema.getAME_Id_Subsistema() + "");
 			this.txt_nombre_subsistema.setValue(subsistema.getAME_Nombre());
-			this.txt_nombre_programa.setValue(subsistema.getAME_Programa());
+			this.txt_nombre_programa.setValue(subsistema.getAME_Programa()==null?"":subsistema.getAME_Programa());
+			if(subsistema.getAME_Icono()!=null){
+				this.cb_icons.setValue(subsistema.getAME_Icono());
+			}
+			
 		}
 	}
 	

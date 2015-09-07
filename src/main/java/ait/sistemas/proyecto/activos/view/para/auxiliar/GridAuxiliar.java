@@ -5,7 +5,6 @@ import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Responsive;
-import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 

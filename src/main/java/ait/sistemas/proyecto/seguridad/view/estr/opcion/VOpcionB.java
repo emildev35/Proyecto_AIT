@@ -9,6 +9,8 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -27,7 +29,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VOpcionB extends VerticalLayout implements View, ClickListener, SelectionListener,org.vaadin.dialogs.ConfirmDialog.Listener{
+public class VOpcionB extends VerticalLayout implements View, ValueChangeListener, ClickListener, SelectionListener,org.vaadin.dialogs.ConfirmDialog.Listener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -54,10 +56,13 @@ public class VOpcionB extends VerticalLayout implements View, ClickListener, Sel
 		this.frm_opcion.cbSubMenus.setEnabled(false);
 		this.frm_opcion.txt_nombre_menu.setEnabled(false);
 		this.frm_opcion.txt_nombre_programa.setEnabled(false);
-			
+		
+		this.frm_opcion.cbSubMenus.addValueChangeListener(this);
+		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		
 	}
 	private Component buildFormContent() {
 		
@@ -151,12 +156,17 @@ public class VOpcionB extends VerticalLayout implements View, ClickListener, Sel
 			this.menu.deleteSubsistema(this.frm_opcion.getData().getAME_Id_Identificador());
 			Notification.show(Messages.SUCCESS_MESSAGE);
 			this.frm_opcion.update();
-			this.grid_opcion.update();
+			this.grid_opcion.update(frm_opcion.getSubMenu());
 			Notification.show(Messages.SUCCESS_MESSAGE);
 		} catch (Exception e) {
 			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 		}buildMessages(this.frm_opcion.getMensajes());		
 		this.frm_opcion.clearMessages();
+	}
+	
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		grid_opcion.update(frm_opcion.getSubMenu());
 	}
 
 }

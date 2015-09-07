@@ -7,6 +7,8 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -25,7 +27,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VOpcionM extends VerticalLayout implements View, ClickListener, SelectionListener{
+public class VOpcionM extends VerticalLayout implements View, ClickListener, SelectionListener, ValueChangeListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -44,6 +46,8 @@ public class VOpcionM extends VerticalLayout implements View, ClickListener, Sel
 		this.hl_errores = new CssLayout();
 		this.grid_opcion = new GridOpcion();
 		this.grid_opcion.addSelectionListener(this);
+		
+		this.frm_opcion.cbSubMenus.addValueChangeListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
@@ -113,9 +117,9 @@ public class VOpcionM extends VerticalLayout implements View, ClickListener, Sel
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_submit) {
 			if(this.frm_opcion.validate()){
-				this.menu.addOpcion(this.frm_opcion.getData());
+				this.menu.updatesubmenu(this.frm_opcion.getData());
 				this.frm_opcion.update();
-				this.grid_opcion.update();
+				this.grid_opcion.update(frm_opcion.getSubMenu());
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -132,6 +136,10 @@ public class VOpcionM extends VerticalLayout implements View, ClickListener, Sel
 		if((Arbol_menus)this.grid_opcion.getSelectedRow() != null){
 			this.frm_opcion.setData((Arbol_menus)this.grid_opcion.getSelectedRow());
 		}
+	}
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		grid_opcion.update(frm_opcion.getSubMenu());
 	}
 
 }

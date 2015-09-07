@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.QueryHint;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.seguridad.component.model.FullMenu;
 import ait.sistemas.proyecto.seguridad.data.dao.Dao;
@@ -48,21 +52,27 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		return resultlist;
 	}
 	@SuppressWarnings("unchecked")
-	public List<Arbol_menus> getallMenu() {
+	public List<Arbol_menus> getallMenus(long id_subsistema) {
 		
-		Query query = em.createNativeQuery("EXEC  Estr_Menu_Q", Arbol_menus.class);
+		Query query = em.createNativeQuery("EXEC  Estr_Menu_Q @Id_Subsistema=?1", Arbol_menus.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_subsistema);
 		List<Arbol_menus> resultlist = query.getResultList();
 		return resultlist;
 	}
 	@SuppressWarnings("unchecked")
-	public List<Arbol_menus> getallSubMenu() {
-		Query query = em.createNativeQuery("EXEC  Estr_SubMenus_Q", Arbol_menus.class);
+	public List<Arbol_menus> getallSubMenu(long id_menu) {
+		Query query = em.createNativeQuery("EXEC  Estr_SubMenus_Q @Id_Menu=?1", Arbol_menus.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_menu);
 		List<Arbol_menus> resultlist = query.getResultList();
 		return resultlist;
 	}
 	@SuppressWarnings("unchecked")
-	public List<Arbol_menus> getallOpcion() {
-		Query query = em.createNativeQuery("EXEC  Estr_Opcion_Q", Arbol_menus.class);
+	public List<Arbol_menus> getallOpcion(long id_submenu) {
+		Query query = em.createNativeQuery("EXEC  Estr_Opcion_Q @Id_SubMenu=?1", Arbol_menus.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_submenu);
 		List<Arbol_menus> resultlist = query.getResultList();
 		return resultlist;
 	}
@@ -146,6 +156,8 @@ public class MenuImpl implements Dao<Arbol_menus> {
 		Arbol_menus result = (Arbol_menus) query.getSingleResult();
 		return result;
 	}
+	
+	
 	public Arbol_menus addOpcion(Arbol_menus table) {
 		String strQuery = String.format("exec  Estr_Opcion_I "
 				+ "@AME_Id_Identificador = ?1, "

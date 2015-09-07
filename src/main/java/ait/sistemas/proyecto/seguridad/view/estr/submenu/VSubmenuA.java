@@ -6,6 +6,8 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
@@ -22,7 +24,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSubmenuA extends VerticalLayout implements View, ClickListener{
+public class VSubmenuA extends VerticalLayout implements View, ClickListener, ValueChangeListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -40,6 +42,9 @@ public class VSubmenuA extends VerticalLayout implements View, ClickListener{
 		this.btn_limpiar = new Button("Limpiar");
 		this.hl_errores = new CssLayout();
 		this.grid_subMenu = new GridSubMenu();
+		
+		this.frm_subMenu.cbMenus.addValueChangeListener(this);
+		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
@@ -111,7 +116,7 @@ public class VSubmenuA extends VerticalLayout implements View, ClickListener{
 			if(this.frm_subMenu.validate()){
 				this.menu.addSubMenu(this.frm_subMenu.getData());
 				this.frm_subMenu.update();
-				this.grid_subMenu.update();
+				this.grid_subMenu.update(frm_subMenu.getMenu());
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -122,6 +127,12 @@ public class VSubmenuA extends VerticalLayout implements View, ClickListener{
 		if (event.getButton() == this.btn_limpiar) {
 			
 		}	
+	}
+	
+	
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		grid_subMenu.update(frm_subMenu.getMenu());
 	}
 
 }

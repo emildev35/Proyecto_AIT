@@ -9,6 +9,8 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
@@ -28,7 +30,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 
-public class VMenuB extends VerticalLayout implements View, ClickListener, SelectionListener, org.vaadin.dialogs.ConfirmDialog.Listener{
+public class VMenuB extends VerticalLayout implements View, ValueChangeListener, ClickListener, SelectionListener, org.vaadin.dialogs.ConfirmDialog.Listener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -52,6 +54,8 @@ public class VMenuB extends VerticalLayout implements View, ClickListener, Selec
 		this.hl_errores = new CssLayout();
 		this.grid_menu = new GridMenu();
 		this.grid_menu.addSelectionListener(this);
+		
+		this.frm_menu.cbSubsistema.addValueChangeListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
@@ -122,7 +126,7 @@ public class VMenuB extends VerticalLayout implements View, ClickListener, Selec
 			this.menu.deleteSubsistema(this.frm_menu.getData().getAME_Id_Identificador());
 			Notification.show(Messages.SUCCESS_MESSAGE);
 			this.frm_menu.update();
-			this.grid_menu.update();
+			this.grid_menu.update(frm_menu.getSubsistema());
 			Notification.show(Messages.SUCCESS_MESSAGE);
 		} catch (Exception e) {
 			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -156,4 +160,9 @@ public class VMenuB extends VerticalLayout implements View, ClickListener, Selec
 		}
 	}
 
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		grid_menu.update(frm_menu.getSubsistema());
+		
+	}
 }
