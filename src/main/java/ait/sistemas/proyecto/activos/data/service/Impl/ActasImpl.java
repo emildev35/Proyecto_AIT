@@ -37,8 +37,16 @@ public class ActasImpl {
 		List<Movimiento> resultlist = query.getResultList();		
 		return resultlist;
 	}
-	public int addActa(Movimiento table){
-		String str_proc = String.format("EXEC Mvac_Acta_I "
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getSolTransferencia(Movimiento table) {
+//		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
+		Query query = this.em.createNativeQuery("EXEC Mvac_SolTransferencia_Q "+"@tipo_movimiento=?1 ", "cmovimiento");
+		query.setParameter(1, table.getTipo_movimiento());
+		List<Movimiento> resultlist = query.getResultList();		
+		return resultlist;
+	}
+	public int addActaAsignacion(Movimiento table){
+		String str_proc = String.format("EXEC Mvac_ActaAsignacion_I "
 				+ "@nro_documento=%d, "
 				+ "@no_acta=%d, "
 				+ "@fecha_acta='%s', "
@@ -49,6 +57,44 @@ public class ActasImpl {
 		new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()), 
 		table.getTipo_movimiento(),
 		table.getTipo_movimiento_nuevo());
+		try {
+			return conn.callproc(str_proc);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int addActaDevolucion(Movimiento table){
+		String str_proc = String.format("EXEC Mvac_ActaDevolucion_I "
+				+ "@nro_documento=%d, "
+				+ "@no_acta=%d, "
+				+ "@fecha_acta='%s', "
+				+ "@Tipo_Movimiento=%d,"
+				+ "@Tipo_Movimiento_Nuevo=%d ",
+				table.getNro_documento(), 
+				table.getNo_acta(), 
+				new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()), 
+				table.getTipo_movimiento(),
+				table.getTipo_movimiento_nuevo());
+		try {
+			return conn.callproc(str_proc);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int addActaTransferencia(Movimiento table){
+		String str_proc = String.format("EXEC Mvac_ActaTransferencia_I "
+				+ "@nro_documento=%d, "
+				+ "@no_acta=%d, "
+				+ "@fecha_acta='%s', "
+				+ "@Tipo_Movimiento=%d,"
+				+ "@Tipo_Movimiento_Nuevo=%d ",
+				table.getNro_documento(), 
+				table.getNo_acta(), 
+				new SimpleDateFormat("yyyy-dd-MM").format(table.getFecha_acta()), 
+				table.getTipo_movimiento(),
+				table.getTipo_movimiento_nuevo());
 		try {
 			return conn.callproc(str_proc);
 		} catch (SQLException e) {

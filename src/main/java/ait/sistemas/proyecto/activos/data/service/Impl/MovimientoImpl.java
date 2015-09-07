@@ -93,6 +93,55 @@ public class MovimientoImpl {
 			return 0;
 		}
 	}
+	public int addMovimientoTransferencia(Movimiento data) {
+		this.emf = null;
+		this.em = null;
+		EntityManagerFactory emfdos = Persistence.createEntityManagerFactory("AIT-Activos");
+		EntityManager emdos = emfdos.createEntityManager();
+		String str_cabezera = "EXEC Mvac_CMovimiento_Transferencia_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
+				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6,"
+				+ "@Tipo_Movimiento=?7," + "@Observaciones=?8,"
+						+ "@id_Dependencia_Destino=?9 ";
+		Query query_cabezera = emdos.createNativeQuery(str_cabezera);
+		query_cabezera.setParameter(1, data.getId_dependencia());
+		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(3, data.getNro_documento());
+		query_cabezera.setParameter(4, data.getFecha_registro());
+		query_cabezera.setParameter(5, data.getFecha_movimiento());
+		query_cabezera.setParameter(6, data.getUsuario());
+		query_cabezera.setParameter(7, data.getTipo_movimiento());
+		query_cabezera.setParameter(8, data.getObservacion());
+		query_cabezera.setParameter(9, data.getId_dependencia_destino());
+		int result_cabezera = (Integer) query_cabezera.getSingleResult();
+		int result_detalle = 0;
+		if (result_cabezera > 0) {
+			for (Detalle detalle : data.getDetalles()) {
+				
+				String str_detalle = "EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
+						+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Tipo_Movimiento=?5," + "@Activo_Id=?6,"
+						+ "@Observaciones=?7";
+				Query query_detalle = emdos.createNativeQuery(str_detalle);
+				query_detalle.setParameter(1, detalle.getId_dependencia());
+				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+				query_detalle.setParameter(3, detalle.getNro_documento());
+				query_detalle.setParameter(4, detalle.getFecha_registro());
+				query_detalle.setParameter(5, detalle.getTipo_movimiento());
+				query_detalle.setParameter(6, detalle.getId_activo());
+				query_detalle.setParameter(7, detalle.getObservacion());
+				result_detalle += (Integer) query_detalle.getSingleResult();
+			}
+			
+			if (result_detalle == data.getDetalles().size()) {
+				return 1;
+			} else {
+				dropmovimiento(data);
+				return 0;
+			}
+			
+		} else {
+			return 0;
+		}
+	}
 	
 	public int addMovimiento_Baja(Movimiento data) {
 		
@@ -222,9 +271,13 @@ public class MovimientoImpl {
 		
 		String Sql = String.format("exec [dbo].[Mvac_CMovimiento_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
 				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s'," + "@Tipo_Movimiento=%d," + "@Observaciones='%s'",
-				movimiento.getId_dependencia(), movimiento.getId_unidad_organizacional_origen(),
-				movimiento.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_registro()),
-				new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_movimiento()), movimiento.getUsuario(), movimiento.getTipo_movimiento(), movimiento.getObservacion());
+				movimiento.getId_dependencia(), 
+				movimiento.getId_unidad_organizacional_origen(),
+				movimiento.getNro_documento(), 
+				new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_movimiento()), 
+				movimiento.getUsuario(), movimiento.getTipo_movimiento(), 
+				movimiento.getObservacion());
 		int resultado_cabecera = conn.callproc(Sql);
 		int result_detalle = 0;
 		if (resultado_cabecera > 0) {

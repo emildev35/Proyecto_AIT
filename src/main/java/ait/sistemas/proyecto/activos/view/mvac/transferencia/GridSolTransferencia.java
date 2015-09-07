@@ -29,7 +29,7 @@ public class GridSolTransferencia extends Grid{
 		bean_Movimiento = new BeanItemContainer<Movimiento>(Movimiento.class);
 		Movimiento movimiento = new Movimiento();
 		movimiento.setTipo_movimiento((short) 5);
-		bean_Movimiento.addAll(acta_impl.getSolicitudAsignacion(movimiento));
+		bean_Movimiento.addAll(acta_impl.getSolTransferencia(movimiento));
 		setContainerDataSource(bean_Movimiento);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
@@ -52,6 +52,9 @@ public class GridSolTransferencia extends Grid{
 		removeColumn("tipo_soporte");
 		removeColumn("tipo_movimiento_referencia");
 		removeColumn("dependencia");
+		removeColumn("dependencia_destino");
+		removeColumn("id_dependencia_destino");
+		removeColumn("tipo_movimiento_nuevo");
 		
 		setColumnOrder("fecha_registro","nro_documento", "solicitante");
 		

@@ -182,8 +182,19 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getDisponibles(String grupo_contable, String auxiliar_contable) {
 		String str_query_act_disponibles = "EXEC Mvact_Select_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2";
-		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple").setParameter(1, grupo_contable)
+		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple")
+				.setParameter(1, grupo_contable)
 				.setParameter(2, auxiliar_contable);
+		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivoGrid> getActivosDisponibles(short dependencia, String grupo_contable, String auxiliar_contable) {
+		String str_query_act_disponibles = "EXEC Mvact_Activos_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2,@Dependencia_Id=?3";
+		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple")
+				.setParameter(1, grupo_contable)
+				.setParameter(2, auxiliar_contable)
+		.setParameter(3, dependencia);
 		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
 		return result;
 	}

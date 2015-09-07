@@ -134,7 +134,7 @@ public class VTransferenciaA extends VerticalLayout implements View, ClickListen
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_asignacion) {
 			if (this.frm_transferencia.validate()) {
-				this.acta_impl.addActa(this.frm_transferencia.getData());
+				this.acta_impl.addActaTransferencia(this.frm_transferencia.getData());
 				this.grid_Detalle.vaciar();
 				this.frm_transferencia.update();
 				this.frm_transferencia.buidId();
