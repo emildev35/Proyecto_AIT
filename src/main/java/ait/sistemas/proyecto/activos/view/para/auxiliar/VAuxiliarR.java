@@ -116,7 +116,6 @@ public class VAuxiliarR extends VerticalLayout implements View, ClickListener {
 		}
 		
 	}
-	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
