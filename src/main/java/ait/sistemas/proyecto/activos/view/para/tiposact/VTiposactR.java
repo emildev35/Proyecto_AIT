@@ -1,12 +1,13 @@
-package ait.sistemas.proyecto.activos.view.rrhh.ciudad.reporte;
+package ait.sistemas.proyecto.activos.view.para.tiposact;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
-import ait.sistemas.proyecto.activos.data.service.Impl.CiudadImpl;
+import ait.sistemas.proyecto.activos.data.model.Tipos_Activo;
+import ait.sistemas.proyecto.activos.data.service.Impl.TiposactImpl;
+import ait.sistemas.proyecto.activos.view.para.tiposact.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -26,17 +27,17 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VTiposactR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final CiudadImpl ciudad_impl = new CiudadImpl();
+	private final TiposactImpl tiposact_impl = new TiposactImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VTiposactR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -63,8 +64,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Recursos Humanos » "));
-		nav.addComponent(new Label("Ciudad » "));
+		nav.addComponent(new Label("Parametros » "));
+		nav.addComponent(new Label("Tipos de Activos » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -77,14 +78,13 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 
 	public String[][] getData() {
-		List<Ciudade> result = this.ciudad_impl.getall();
+		List<Tipos_Activo> result = this.tiposact_impl.getall();
 		
-		this.data = new String[result.size()][2];
+		this.data = new String[result.size()][3];
 		this.r = 0;
-		for(Ciudade row_mov : result){
-			String[] row = {String.valueOf(row_mov.getCIU_Ciudad()),
-					row_mov.getCIU_Nombre_Ciudad()
-			};
+		for(Tipos_Activo row_mov : result){
+			String[] row = {String.valueOf(row_mov.getTAC_Id_Tipo_Activo()),
+					row_mov.getTAC_Nombre_Tipo_Activo()	};
 			this.data[r] = row;
 			this.r++;
 		}
@@ -118,7 +118,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Ciudad");
+			Window subWindow = new Window("Reporte Tipos de Activos");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);

@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.unidad.reporte;
+package ait.sistemas.proyecto.activos.view.rrhh.unidad;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
+import ait.sistemas.proyecto.activos.view.rrhh.unidad.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -26,7 +27,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VUnidadR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +37,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 	private final UnidadImpl unidad_impl = new UnidadImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VUnidadR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -104,6 +105,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		}
 
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();

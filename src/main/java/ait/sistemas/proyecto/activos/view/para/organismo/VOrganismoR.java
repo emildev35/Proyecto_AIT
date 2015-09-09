@@ -1,15 +1,14 @@
-package ait.sistemas.proyecto.activos.view.rrhh.ubicacion.reporte;
+package ait.sistemas.proyecto.activos.view.para.organismo;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel;
-import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
+import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
+import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
+import ait.sistemas.proyecto.activos.view.para.organismo.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
-import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -25,29 +24,26 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VOrganismoR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final UbicacionImpl ubicacion_impl = new UbicacionImpl();
-	private DependenciaImpl dependencia_impl = new DependenciaImpl();
+	private final OrganismoImpl organismo_impl = new OrganismoImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VOrganismoR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		List<BarMessage> mensajes = new ArrayList<BarMessage>();
-		mensajes.add(new BarMessage("",
-				"Pulsar el Boton Imprimir para generar el reporte", "success"));
+		mensajes.add(new BarMessage("", "Pulsar el Boton Imprimir para generar el reporte", "success"));
 		buildMessages(mensajes);
 	}
 
@@ -67,8 +63,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Recursos Humanos » "));
-		nav.addComponent(new Label("Ubicacion Fisica » "));
+		nav.addComponent(new Label("Parametros » "));
+		nav.addComponent(new Label("Organismo Financiador » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -80,19 +76,13 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 	}
 
 	public String[][] getData() {
-		SessionModel usuario = (SessionModel) UI.getCurrent().getSession()
-				.getAttribute("user");
+		List<Organismo_Financiador> result = this.organismo_impl.getall();
 
-		short dependencia = dependencia_impl.getdependencia_ID(usuario
-				.getDependecia());
-		List<UbicacionesFisicasModel> result = this.ubicacion_impl.getalls(dependencia);
-
-		this.data = new String[result.size()][5];
+		this.data = new String[result.size()][3];
 		this.r = 0;
-		for (UbicacionesFisicasModel row_mov : result) {
-			String[] row = { String.valueOf(row_mov.getUBF_Ubicacion_Fisica()),
-					row_mov.getUBF_Nombre_Ubicacion_Fisica(), 
-					row_mov.getUBF_Inmueble() };
+		for (Organismo_Financiador row_mov : result) {
+			String[] row = { String.valueOf(row_mov.getORF_Organismo_Financiador()),
+					row_mov.getORF_Nombre_Organismo_Financiador() };
 			this.data[r] = row;
 			this.r++;
 		}
@@ -105,14 +95,14 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		this.addComponent(this.hl_errores);
 
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(barMessage.getComponetName()
-					+ barMessage.getErrorName());
+			Label lbError = new Label(barMessage.getComponetName() + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();
@@ -128,7 +118,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Ubicacion Fisica");
+			Window subWindow = new Window("Reporte Organismo Financiador");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);

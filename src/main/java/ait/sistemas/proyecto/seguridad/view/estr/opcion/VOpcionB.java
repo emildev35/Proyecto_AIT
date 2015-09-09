@@ -51,9 +51,6 @@ public class VOpcionB extends VerticalLayout implements View, ValueChangeListene
 		
 		
 		this.frm_opcion.cb_icons.setEnabled(false);
-		this.frm_opcion.cbMenus.setEnabled(false);
-		this.frm_opcion.cbSubsistema.setEnabled(false);
-		this.frm_opcion.cbSubMenus.setEnabled(false);
 		this.frm_opcion.txt_nombre_menu.setEnabled(false);
 		this.frm_opcion.txt_nombre_programa.setEnabled(false);
 		

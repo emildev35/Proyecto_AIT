@@ -1,12 +1,13 @@
-package ait.sistemas.proyecto.activos.view.para.motivobaja.reporte;
+package ait.sistemas.proyecto.activos.view.rrhh.dependencia;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.Motivo_Baja;
-import ait.sistemas.proyecto.activos.data.service.Impl.MotivobajaImpl;
+import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
+import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
+import ait.sistemas.proyecto.activos.view.rrhh.dependencia.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -26,17 +27,17 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VDependenciaR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final MotivobajaImpl motivobaja_impl = new MotivobajaImpl();
+	private final DependenciaImpl dependencia_impl = new DependenciaImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VDependenciaR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -63,8 +64,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Motivo de Baja » "));
+		nav.addComponent(new Label("Recursos Humanos » "));
+		nav.addComponent(new Label("Dependencia » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -77,13 +78,17 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 
 	public String[][] getData() {
-		List<Motivo_Baja> result = this.motivobaja_impl.getall();
+		List<Dependencia> result = this.dependencia_impl.getall();
 		
-		this.data = new String[result.size()][3];
+		this.data = new String[result.size()][5];
 		this.r = 0;
-		for(Motivo_Baja row_mov : result){
-			String[] row = {String.valueOf(row_mov.getMBA_Motivo_Baja()),
-					row_mov.getMBA_Descripcion()	};
+		for(Dependencia row_mov : result){
+			String[] row = {String.valueOf(row_mov.getDEP_Dependencia()),
+					row_mov.getDEP_Nombre_Dependencia(),
+					row_mov.getDEP_Sigla(),
+					row_mov.getDEP_Domicilio(),
+					String.valueOf(row_mov.getDEP_Telefono())
+			};
 			this.data[r] = row;
 			this.r++;
 		}
@@ -117,7 +122,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Motivo de Baja");
+			Window subWindow = new Window("Reporte Dependencias");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);

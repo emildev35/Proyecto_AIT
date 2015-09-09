@@ -1,12 +1,13 @@
-package ait.sistemas.proyecto.activos.view.para.partida.reporte;
+package ait.sistemas.proyecto.activos.view.para.motivobaja;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
-import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
+import ait.sistemas.proyecto.activos.data.model.Motivo_Baja;
+import ait.sistemas.proyecto.activos.data.service.Impl.MotivobajaImpl;
+import ait.sistemas.proyecto.activos.view.para.motivobaja.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -26,23 +27,23 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VMotivobajaR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final PartidaImpl partida_impl = new PartidaImpl();
+	private final MotivobajaImpl motivobaja_impl = new MotivobajaImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VMotivobajaR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		List<BarMessage> mensajes = new ArrayList<BarMessage>();
-		mensajes.add(new BarMessage("", "Pulsar el Boton Imprimir para generar el reporte", "success"));
+		mensajes.add(new BarMessage("","Pulsar el Boton Imprimir para generar el reporte", "success"));
 		buildMessages(mensajes);
 	}
 
@@ -57,13 +58,14 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		return buttonContent;
 	}
 
+
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Partidas Presupuestarias » "));
+		nav.addComponent(new Label("Motivo de Baja » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -74,19 +76,20 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	}
 
-	public String[][] getData() {
-		List<Partidas_Presupuestaria> result = this.partida_impl.getall();
 
+	public String[][] getData() {
+		List<Motivo_Baja> result = this.motivobaja_impl.getall();
+		
 		this.data = new String[result.size()][3];
 		this.r = 0;
-		for (Partidas_Presupuestaria row_mov : result) {
-			String[] row = { String.valueOf(row_mov.getPAP_Partida()), row_mov.getPAP_Nombre_Partida() };
+		for(Motivo_Baja row_mov : result){
+			String[] row = {String.valueOf(row_mov.getMBA_Motivo_Baja()),
+					row_mov.getMBA_Descripcion()	};
 			this.data[r] = row;
 			this.r++;
 		}
 		return data;
 	}
-
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
@@ -99,7 +102,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		}
 
 	}
-
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();
@@ -115,7 +118,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Partidas Presupuestarias");
+			Window subWindow = new Window("Reporte Motivo de Baja");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);

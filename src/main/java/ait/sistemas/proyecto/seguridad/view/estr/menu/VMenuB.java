@@ -47,7 +47,7 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		this.frm_menu.txt_nombre_menu.setEnabled(false);
 		this.frm_menu.txt_nombre_programa.setEnabled(false);
 		this.frm_menu.cb_icons.setEnabled(false);
-		this.frm_menu.cbSubsistema.setEnabled(false);
+//		this.frm_menu.cbSubsistema.setEnabled(false);
 		this.menu = new MenuImpl();
 		this.btn_submit = new Button("Eliminar");
 		this.btn_limpiar = new Button("Limpiar");
@@ -87,7 +87,7 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
 		nav.addComponent(new Label("Estructura del Sistema » "));
-		nav.addComponent(new Label("Su-Sistema » "));
+		nav.addComponent(new Label("Menu » "));
 		nav.addComponent(new Label("<strong>Eliminar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;

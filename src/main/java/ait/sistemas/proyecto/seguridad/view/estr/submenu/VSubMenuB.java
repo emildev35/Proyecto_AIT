@@ -50,8 +50,6 @@ public class VSubMenuB extends VerticalLayout implements View, ValueChangeListen
 		this.grid_subMenu = new GridSubMenu();
 		this.grid_subMenu.addSelectionListener(this);
 		this.frm_subMenu.cb_icons.setEnabled(false);
-		this.frm_subMenu.cbMenus.setEnabled(false);
-		this.frm_subMenu.cbSubsistema.setEnabled(false);
 		this.frm_subMenu.txt_nombre_menu.setEnabled(false);
 		this.frm_subMenu.txt_nombre_programa.setEnabled(false);
 		
@@ -87,8 +85,8 @@ public class VSubMenuB extends VerticalLayout implements View, ValueChangeListen
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
 		nav.addComponent(new Label("Estructura del Sistema » "));
-		nav.addComponent(new Label("Sun-Menu » "));
-		nav.addComponent(new Label("<strong>Modificar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("Sub-Menu » "));
+		nav.addComponent(new Label("<strong>Eliminar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

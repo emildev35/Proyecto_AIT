@@ -22,7 +22,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VOtorgaryR extends VerticalLayout implements View, ClickListener {
+public class VOtorgaryRA extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class VOtorgaryR extends VerticalLayout implements View, ClickListener {
 	private CssLayout hl_errores = new CssLayout();
 	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
 
-	public VOtorgaryR() {
+	public VOtorgaryRA() {
 		this.frm_otorgar = new FormOtorgar();
 		this.btn_submit = new Button("Guardar");
 		this.btn_limpiar = new Button("Limpiar");

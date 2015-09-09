@@ -1,13 +1,15 @@
-package ait.sistemas.proyecto.seguridad.view.estr.reporte;
+package ait.sistemas.proyecto.seguridad.view.estr.estructura;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -23,7 +25,7 @@ public class ReportPdf {
     /**
      * false Orientacion Vertical true Horizontal
      */
-    private static final boolean IS_LANDSCAPE = false;
+    private static final boolean IS_LANDSCAPE = true;
 
     /**
      * Fuente el Texto
@@ -62,7 +64,7 @@ public class ReportPdf {
     /**
      * Distancia entre las lineas
      */
-    private static final float CELL_MARGIN = 2;
+    private static final float CELL_MARGIN = 5;
     /**
      * Tamaño del header expesado en alto de las filas de la tabla
      */
@@ -71,7 +73,7 @@ public class ReportPdf {
     /**
      * Ruta donde se guardara el reporte
      */
-    private static final String SAVE_PATH = "Documentos/InformeMenus.pdf";
+    public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new Date().getTime())+".pdf";
     
     
     public boolean getPdf(String[][] data, String subsistema) throws IOException{
@@ -85,11 +87,11 @@ public class ReportPdf {
          * La suma del ancho de las colmunas debe rondar 400
          */
     	List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("ID", 35));	
-        columns.add(new Column("COD", 35));
-        columns.add(new Column("NOMBRE DEL MENU", 230));
-        columns.add(new Column("NIVEL", 40));
-        columns.add(new Column("PROGRAMA", 180));
+        columns.add(new Column("ID", 45));	
+        columns.add(new Column("COD", 45));
+        columns.add(new Column("NOMBRE DEL MENU", 240));
+        columns.add(new Column("NIVEL", 50));
+        columns.add(new Column("PROGRAMA", 300));
  
         String[][] content = data;
 

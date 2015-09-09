@@ -1,12 +1,13 @@
-package ait.sistemas.proyecto.activos.view.para.organismo.reporte;
+package ait.sistemas.proyecto.activos.view.para.partida;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
-import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
+import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
+import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
+import ait.sistemas.proyecto.activos.view.para.partida.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -26,17 +27,17 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VPartidaR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final OrganismoImpl organismo_impl = new OrganismoImpl();
+	private final PartidaImpl partida_impl = new PartidaImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VPartidaR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -63,7 +64,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Organismo Financiador » "));
+		nav.addComponent(new Label("Partidas Presupuestarias » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -75,13 +76,12 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 	}
 
 	public String[][] getData() {
-		List<Organismo_Financiador> result = this.organismo_impl.getall();
+		List<Partidas_Presupuestaria> result = this.partida_impl.getall();
 
 		this.data = new String[result.size()][3];
 		this.r = 0;
-		for (Organismo_Financiador row_mov : result) {
-			String[] row = { String.valueOf(row_mov.getORF_Organismo_Financiador()),
-					row_mov.getORF_Nombre_Organismo_Financiador() };
+		for (Partidas_Presupuestaria row_mov : result) {
+			String[] row = { String.valueOf(row_mov.getPAP_Partida()), row_mov.getPAP_Nombre_Partida() };
 			this.data[r] = row;
 			this.r++;
 		}
@@ -101,6 +101,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();
@@ -116,7 +117,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Organismo Financiador");
+			Window subWindow = new Window("Reporte Partidas Presupuestarias");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);
