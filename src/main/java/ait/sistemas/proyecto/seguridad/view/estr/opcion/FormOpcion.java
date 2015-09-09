@@ -256,7 +256,7 @@ public class FormOpcion extends GridLayout implements Property.ValueChangeListen
 	
 	public void setData(Arbol_menus data) {
 		this.cbSubsistema.removeValueChangeListener(this);
-		this.cbMenus.setValue((long) data.getAME_Id_Menus());
+//		this.cbMenus.setValue((long) data.getAME_Id_Menus());
 		
 		this.cbMenus.removeValueChangeListener(this);
 		this.cbSubsistema.removeValueChangeListener(this);
@@ -264,10 +264,11 @@ public class FormOpcion extends GridLayout implements Property.ValueChangeListen
 		
 		this.txt_identificador.setValue(String.valueOf(data.getAME_Id_Identificador()));
 		
-		this.cbSubMenus.setValue((long) data.getAME_Id_SubMenu());
+//		this.cbSubMenus.setValue((long) data.getAME_Id_SubMenu());
+		
 		this.txt_id_codigo.setValue(String.valueOf(data.getAME_Id_Opcion()));
 		this.txt_nombre_menu.setValue(data.getAME_Nombre());
-		this.cbSubsistema.setValue((long) data.getAME_Id_Subsistema());
+//		this.cbSubsistema.setValue((long) data.getAME_Id_Subsistema());
 		this.txt_nombre_programa.setValue(data.getAME_Programa());
 		
 		if (data.getAME_Icono() != null)
@@ -289,8 +290,17 @@ public class FormOpcion extends GridLayout implements Property.ValueChangeListen
 			}
 			if (this.cbSubMenus.getValue() == event.getProperty().getValue() && this.cbSubMenus.getValue() != null) {
 				GenerarIds();
+				
 			}
 		}
+	}
+
+	public long getSubMenu() {
+		if (this.cbSubMenus.getValue() != null) {
+			GenerarIds();
+			return (Long)cbSubMenus.getValue();
+		}
+		return 0;
 	}
 	
 }

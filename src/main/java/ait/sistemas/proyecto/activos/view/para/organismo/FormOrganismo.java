@@ -4,7 +4,6 @@ package ait.sistemas.proyecto.activos.view.para.organismo;
 import java.util.Date;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
 import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;

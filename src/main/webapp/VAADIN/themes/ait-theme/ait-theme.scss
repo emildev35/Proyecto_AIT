@@ -39,7 +39,7 @@ $v-unit-size: 25px;
 @import "components/ait-button-bar.scss";
 @import "common.scss";
 @mixin ait-theme {
-  @include valo;
+  	@include valo;
 	@include ait-dashboard-menu;
 	@include ait-content-bar-button;
 	@include ait-theme-common;

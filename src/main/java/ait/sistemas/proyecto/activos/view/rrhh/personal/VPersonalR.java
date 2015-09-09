@@ -1,11 +1,13 @@
-package ait.sistemas.proyecto.activos.view.para.auxiliar.reporte;
+package ait.sistemas.proyecto.activos.view.rrhh.personal;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
-import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
+import ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.PersonalImpl;
+import ait.sistemas.proyecto.activos.view.rrhh.personal.reporte.FormReporte;
+import ait.sistemas.proyecto.activos.view.rrhh.personal.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -25,17 +27,18 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VPersonalR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
+	public static final String ID = "/act/rrhh/personal/reporte";
 
 	private Button btn_imprimir;
 	private FormReporte frmReporte = new FormReporte();
 	private String[][] data;
 	int r = 0;
-	private final AuxiliarImpl auxiliar_impl = new AuxiliarImpl();
+	private final PersonalImpl personal_impl = new PersonalImpl();
 	private CssLayout hl_errores = new CssLayout();
-	public VReporteP() {
+	public VPersonalR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -73,8 +76,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Auxiliares Contables » "));
+		nav.addComponent(new Label("Recursos Humanos » "));
+		nav.addComponent(new Label("Personal » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -87,17 +90,22 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 	public String[][] getData() {
 		
-		List<AuxiliaresContablesModel> lista = auxiliar_impl.getreporte((String) this.frmReporte.cb_grupo.getValue());
+		List<PersonalModel> lista = personal_impl.getallreporte((Short) this.frmReporte.cbDependencia.getValue());
 		
-		this.data = new String[lista.size()][4];
+		this.data = new String[lista.size()][6];
 		this.r = 0;
-		for (AuxiliaresContablesModel auxiliar : lista) {
-			
+		for (PersonalModel personal : lista) {
+			String fullname = String.format("%s %s %s",
+					personal.getPER_Apellido_Paterno(),
+					personal.getPER_Apellido_Materno(),
+					personal.getPER_Nombres());
 			String[] row = { 
-					auxiliar.getAUC_Grupo_Contable_ID(),
-					auxiliar.getAUC_Grupo_Contable(),
-					auxiliar.getAUC_Auxiliar_Contable(),
-					auxiliar.getAUC_Nombre_Auxiliar_Contable() };
+					personal.getPER_CI_Empleado(), 
+					fullname,
+					personal.getPER_Dependencia(),
+					personal.getPER_Unidad_Organizacional(),
+					personal.getPER_No_Telefono_Oficina(),
+					personal.getPER_No_Interno() };
 			this.data[r] = row;
 			this.r++;
 		}
@@ -122,8 +130,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
-				reporte.getPdf(getData(), this.frmReporte.cb_grupo
-						.getItemCaption(this.frmReporte.cb_grupo
+				reporte.getPdf(getData(), this.frmReporte.cbDependencia
+						.getItemCaption(this.frmReporte.cbDependencia
 								.getValue()));
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
 
@@ -135,7 +143,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 				vl_pdf.setSizeFull();
 				vl_pdf.addComponent(pdf);
 
-				Window subWindow = new Window("Reporte Auxiliares Contables");
+				Window subWindow = new Window("Reporte Personal");
 				VerticalLayout subContent = new VerticalLayout();
 				subContent.setMargin(true);
 				subWindow.setContent(vl_pdf);

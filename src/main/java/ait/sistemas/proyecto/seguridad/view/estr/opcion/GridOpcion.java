@@ -17,15 +17,15 @@ public class GridOpcion  extends Grid{
 	private static final long serialVersionUID = 1L;
 
 	public GridOpcion() {
-		buildGrid();
+		buildGrid(0);
 	}
-	public void update() {
+	public void update(long id_submenu) {
 		this.removeAllColumns();
-		buildGrid();
+		buildGrid(id_submenu);
 	}
-	public void buildGrid(){
+	public void buildGrid(long id_submenu){
 		BeanItemContainer<Arbol_menus> bean_subsistema = new BeanItemContainer<Arbol_menus>(
-				Arbol_menus.class, this.menuImpl.getallOpcion	());
+				Arbol_menus.class, this.menuImpl.getallOpcion(id_submenu));
 		setContainerDataSource(bean_subsistema);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);

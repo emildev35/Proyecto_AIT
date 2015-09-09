@@ -233,10 +233,10 @@ public class FormSubMenu extends GridLayout implements Property.ValueChangeListe
 		
 		this.txt_identificador.setValue(String.valueOf(data.getAME_Id_Identificador()));
 		this.txt_id_submenu.setValue(String.valueOf(data.getAME_Id_SubMenu()));
-		this.cbMenus.setValue((long) data.getAME_Id_Menus());
+//		this.cbMenus.setValue((long) data.getAME_Id_Menus());
 		this.txt_nombre_menu.setValue(data.getAME_Nombre());
-		this.cbSubsistema.setValue((long) data.getAME_Id_Subsistema());
-		this.txt_nombre_programa.setValue(data.getAME_Programa());
+//		this.cbSubsistema.setValue((long) data.getAME_Id_Subsistema());
+		this.txt_nombre_programa.setValue(data.getAME_Programa()==null?"":data.getAME_Programa());
 		if (data.getAME_Icono() != null)
 			this.cb_icons.setValue(data.getAME_Icono());
 		this.cbMenus.addValueChangeListener(this);
@@ -253,5 +253,12 @@ public class FormSubMenu extends GridLayout implements Property.ValueChangeListe
 			}
 			
 		}
+	}
+
+	public long getMenu() {
+		if (cbMenus.getValue()!=null) {
+			return (Long)cbMenus.getValue();
+		}
+		return 0;
 	}
 }

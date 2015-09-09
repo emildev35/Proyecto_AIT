@@ -2,12 +2,14 @@ package ait.sistemas.proyecto.activos.view.para.tiposmov.reporte;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -52,7 +54,7 @@ public class ReportPdf {
     
     private static final int HEADER_SIZE = 5;
     
-    static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Tipos-Movimientos.pdf";
+    public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new Date().getTime())+".pdf";
     
     
     public boolean getPdf(String[][] data) throws IOException{

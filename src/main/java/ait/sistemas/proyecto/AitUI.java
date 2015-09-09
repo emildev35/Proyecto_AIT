@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
@@ -24,6 +25,7 @@ import com.vaadin.ui.UI;
  *
  */
 @Theme("ait-theme")
+@Title("Autoridad de Inpugnacion Tributaria")
 @Widgetset("ait.sistemas.proyecto.AitWidgetset")
 public class AitUI extends UI {
 	

@@ -1,12 +1,13 @@
-package ait.sistemas.proyecto.activos.view.para.fuente.reporte;
+package ait.sistemas.proyecto.activos.view.rrhh.ciudad;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento;
-import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
+import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
+import ait.sistemas.proyecto.activos.data.service.Impl.CiudadImpl;
+import ait.sistemas.proyecto.activos.view.rrhh.ciudad.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -26,17 +27,17 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VCiudadR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
 	private String[][] data;
 	int r = 0;
-	private final FuenteImpl fuente_impl = new FuenteImpl();
+	private final CiudadImpl ciudad_impl = new CiudadImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteP() {
+	public VCiudadR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -63,8 +64,8 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Fuentes de Financiamiento » "));
+		nav.addComponent(new Label("Recursos Humanos » "));
+		nav.addComponent(new Label("Ciudad » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -77,13 +78,14 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 
 
 	public String[][] getData() {
-		List<Fuentes_Financiamiento> result = this.fuente_impl.getall();
+		List<Ciudade> result = this.ciudad_impl.getall();
 		
-		this.data = new String[result.size()][3];
+		this.data = new String[result.size()][2];
 		this.r = 0;
-		for(Fuentes_Financiamiento row_mov : result){
-			String[] row = {String.valueOf(row_mov.getFFI_Fuente_Financiamiento()),
-					row_mov.getFFI_Nombre_Fuente_Financiamiento()	};
+		for(Ciudade row_mov : result){
+			String[] row = {String.valueOf(row_mov.getCIU_Ciudad()),
+					row_mov.getCIU_Nombre_Ciudad()
+			};
 			this.data[r] = row;
 			this.r++;
 		}
@@ -101,6 +103,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		}
 
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		ReportPdf reporte = new ReportPdf();
@@ -116,7 +119,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
 
-			Window subWindow = new Window("Reporte Fuentes de Financiamiento");
+			Window subWindow = new Window("Reporte Ciudad");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);

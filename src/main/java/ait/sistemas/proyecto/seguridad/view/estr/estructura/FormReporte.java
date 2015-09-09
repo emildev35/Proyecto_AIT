@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.seguridad.view.estr.reporte;
+package ait.sistemas.proyecto.seguridad.view.estr.estructura;
 
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
