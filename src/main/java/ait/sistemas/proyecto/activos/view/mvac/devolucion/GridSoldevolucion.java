@@ -52,6 +52,9 @@ public class GridSoldevolucion extends Grid{
 		removeColumn("tipo_soporte");
 		removeColumn("tipo_movimiento_referencia");
 		removeColumn("dependencia");
+		removeColumn ("dependencia_destino");
+		removeColumn ("id_dependencia_destino");
+		removeColumn ("tipo_movimiento_nuevo");
 		
 		setColumnOrder("fecha_registro","nro_documento", "solicitante");
 		

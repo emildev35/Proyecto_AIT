@@ -116,6 +116,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 		}
 			
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (this.frmReporte.validate()) {

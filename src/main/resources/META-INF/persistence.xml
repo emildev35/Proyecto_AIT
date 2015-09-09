@@ -33,6 +33,7 @@
 		<class>ait.sistemas.proyecto.activos.component.model.DocumentoPendiente</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Detalle</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Movimiento</class>
+		<class>ait.sistemas.proyecto.activos.component.model.MovimientoReporte</class>
 		<class>ait.sistemas.proyecto.activos.component.model.TipoCambio</class>
 		<class>ait.sistemas.proyecto.activos.component.model.SolicitudSoporte</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoSoporte</class>

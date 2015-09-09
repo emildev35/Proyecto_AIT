@@ -1,16 +1,26 @@
 package ait.sistemas.proyecto.activos.view.mvac.asignacion;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
+import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.Acta;
+import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.Firma;
+import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.ReportPdf;
+import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.TablaActivos;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.report.Column;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -18,12 +28,14 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		SelectionListener {
@@ -38,6 +50,8 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	private GridDetalle grid_Detalle = new  GridDetalle();
 	private ActasImpl acta_impl = new ActasImpl();
 	private Movimiento data;
+//	private MovimientoReporte data_reporte;
+	int r = 0;
 
 	public VAsignacionA() {
 
@@ -130,6 +144,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_asignacion) {
@@ -148,7 +163,76 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 			this.frm_asignacion.clearMessages();
 		}
 		if (event.getButton() == this.btn_imprimir) {
+			ReportPdf reporte = new ReportPdf();
+			List<MovimientoReporte> data_reporte = acta_impl.ReporteActa(frm_asignacion.txt_no_acta.getValue(),(short)2);
+			try {
+				reporte.getPdf(getActa(data_reporte),Short.parseShort(frm_asignacion.txt_no_acta.getValue()),(short)2);
+			} catch (NumberFormatException | IOException e) {
+				e.printStackTrace();
+			}
+			File pdfFile = new File(ReportPdf.SAVE_PATH);
+			
+			VerticalLayout vl_pdf = new VerticalLayout();
+			Embedded pdf = new Embedded("", new FileResource(pdfFile));
+			pdf.setMimeType("application/pdf");
+			pdf.setType(Embedded.TYPE_BROWSER);
+			pdf.setSizeFull();
+			vl_pdf.setSizeFull();
+			vl_pdf.addComponent(pdf);
+			
+			Window subWindow = new Window("Reporte Acta");
+			VerticalLayout subContent = new VerticalLayout();
+			subContent.setMargin(true);
+			subWindow.setContent(vl_pdf);
+			
+			subWindow.setWidth("90%");
+			subWindow.setHeight("90%");
+			subWindow.center();
+			
+			// Open it in the UI
+			getUI().addWindow(subWindow);
 		}
 	}
 
+	
+	public Acta getActa(List<MovimientoReporte> data){	
+		
+		Acta acta = new Acta();
+		acta.setDependencia_origen(data.get(0).getDependencia_Origen());
+		acta.setDependencia_destino(data.get(0).getDependencia_Destino());
+		acta.setUnidad_origen(data.get(0).getUnidad_organizacional_Origen());
+		acta.setUnidad_destino(data.get(0).getUnidad_organizacional_Destino());
+		acta.setUsuario_origen(data.get(0).getUsuario_Origen());
+		acta.setUsuario_destino(data.get(0).getUsuario_Destino());
+		acta.setNro_acta_entrega(String.valueOf(data.get(0).getCMV_No_Documento()));
+		acta.setFecha(data.get(0).getCMV_Fecha_Registro().toString());
+		
+		TablaActivos tabla = new TablaActivos();
+		
+		String[][] activos = new String[data.size()][3];
+		List<Column> columns = new ArrayList<Column>();
+        columns.add(new Column("Codigo", 30));	
+        columns.add(new Column("Nombre del Activo", 245));
+        columns.add(new Column("Caracteriticas y Componentes", 250));
+        
+        List<Firma> firmas = new ArrayList<Firma>();
+        firmas.add(new Firma("Funcionario Encargado", 50)); 
+        firmas.add(new Firma("", 50)); 
+        firmas.add(new Firma("", 50));       
+        acta.setFirmas(firmas);
+        acta.setColumns(columns);
+		int r = 0;
+		
+		for (MovimientoReporte movimientoReporte : data) {
+			activos[r][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
+			activos[r][1] = String.valueOf(movimientoReporte.getNombre_Activo());
+			activos[r][2] = String.valueOf(movimientoReporte.getComponentes());
+		//	activos[r][2] = String.valueOf(movimientoReporte.getCaracteristicas());
+			r++;
+		}
+		tabla.setData(activos);
+		tabla.setRowheigth(15);
+		acta.setTb_activos(tabla);
+		return acta;
+	}
 }

@@ -18,7 +18,7 @@ public class ReportPdf {
 	// Page configuration
 	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
 	private static final float MARGIN = 60;
-	private static final boolean IS_LANDSCAPE = true;
+	private static final boolean IS_LANDSCAPE = false;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
@@ -85,12 +85,26 @@ public class ReportPdf {
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 
-		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
-				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
-				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
-				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
-				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)
-				.setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE)
+		Table Inventario = new TableBuilder()
+		.setCellMargin(CELL_MARGIN)
+		.setColumns(columns).setContent(content)
+		.setHeight(tableHeight)
+				.setNumberOfRows(content.length)
+				.setRowHeight(ROW_HEIGHT)
+				.setMargin(MARGIN)
+				.setPageSize(PAGE_SIZE)
+				.setLandscape(IS_LANDSCAPE)
+				.setTextFont(TEXT_FONT)
+				.setFontSize(FONT_SIZE)
+				.setHeaderFont(HEADER_FONT)
+				.setFontSizeHeader(HEADER_FONT_SIZE)
+				.setFooterFont(FOOTER_FONT)
+				.setFontSizeFooter(FOOTER_FONT_SIZE)
+				.setTitleFont(TITLE_FONT)
+				.setFontSizeTitle(TITLE_FONT_SIZE)
+				.setSubTitleFont(SUBTITLE_FONT)
+				.setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
+				.setHeaderSize(HEADER_SIZE)
 				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("        ACTUALIZACION DE ACTIVOS FIJOS")
 				.build();
 		return Inventario;
