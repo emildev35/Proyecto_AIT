@@ -1,11 +1,9 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte;
+package ait.sistemas.proyecto.common.report.pdf.movimiento;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.eclipse.persistence.internal.oxm.StrBuffer;
 
 import ait.sistemas.proyecto.common.report.Column;
 

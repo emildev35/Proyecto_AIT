@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte;
+package ait.sistemas.proyecto.activos.view.mvac.devolucion.reporte;
 
 import java.io.IOException;
 

@@ -1,15 +1,15 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte;
+package ait.sistemas.proyecto.common.report.pdf.movimiento;
 
-public class KardexElement {
+public class ActaElement {
 
 	private String titulo;
 	private int ancho;
 	private String contenido;
 	private int fila;
 	private int columna;
-	public KardexElement() {
+	public ActaElement() {
 	}
-	public KardexElement(String titulo, int ancho, String contenido, int fila,
+	public ActaElement(String titulo, int ancho, String contenido, int fila,
 			int columna) {
 		super();
 		this.titulo = titulo;

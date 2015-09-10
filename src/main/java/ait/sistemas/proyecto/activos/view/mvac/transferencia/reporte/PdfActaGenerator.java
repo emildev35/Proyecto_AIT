@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte;
+package ait.sistemas.proyecto.activos.view.mvac.transferencia.reporte;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -88,19 +88,16 @@ public class PdfActaGenerator {
 
 	private void dibujarfirmas(PDPageContentStream contentStream, float nextTextX, float nextTextY, Acta table)
 			throws IOException {
-		String footertitulotext = String.format("Responsabilidad por el manejo de bienes:");
+		String footertitulotext = String.format("Liberacion de  responsabilidades:");
 		String footertext1 = String
-				.format("Numero III art. 116 del DS 0181, todos los servidores publicos son responsables por el debido uso, custodia, preservacion y solicitud de servicios de mantenimiento"
-						+ " de los bienes que les fueron asignados de acuerdo al regimen de Responsabilidad por la funcion");
+				.format("Art. 148 del DS 0181.I. Para ser liberado de la responsabilidad el servidor publico debera devolver a la Unidad de Responsable de Activos Fijos, el o los bienes que "
+						+ "estaban a su cargo, debiendo recabar la conformidad escrita de esta Unidad Responsable.");
 		String footertext2 = String
-				.format("Publica establecido en la Ley N° 1178 y sus reglamentos.Asimismo el art. 157 numerales I.Los servidores publicos quedan prohibidos de a) Usar los bienes para benficio "
-						+ "particular o privado. b) Permitir el uso para beneficio particular o privado. c) Prestar o");
+				.format("Mientras no lo haga, estara sujeto al regimen de Responsabilidad por la Funcion Publica establecida en la Ley N° 1178 y sus reglamentos. II. El servidor publico "
+						+ "mientras se encuentre en instalaciones de la entidad publica prestando servicios sera responsable");
 		String footertext3 = String
-				.format("transferir el bien a otro empleado publico. d) Enajenar el bien por cuenta propia e) Dañar o alterar sus caracteristicas fisicas o tecnicas f) Poner en riesgo el bien."
-						+ " g) Ingresar bienes particulares sin autorizacion de la Unidad Responsable de Activos Fijos. h) Sacar");
-		String footertext4 = String
-				.format("bienes  de la entidad sin autoizacion de la Unidad o Responsable de Activos Fijos y II.La no observacion a estas prohibiciones generara responsabilidades "
-						+ "establecidas en la Ley 1178 y sus reglamentos.");
+				.format("por el debido uso y custodia de los bienes a su cargo. III. La Unidad Administrativa es responsable de ejecutar las acciones necesarias para proporcionar "
+						+ "los mecanismos para asegurar la custodia de los bienes asignados a los servidores publicos.");
 
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
@@ -126,13 +123,6 @@ public class PdfActaGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(footertext3);
-		contentStream.endText();
-
-		nextTextY -= table.getRowHeight() * 0.5;
-
-		contentStream.beginText();
-		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText(footertext4);
 		contentStream.endText();
 
 		nextTextY -= (table.getRowHeight() + table.getMargin());
@@ -236,12 +226,12 @@ public class PdfActaGenerator {
 
 		contentStream.setFont(table.getTextFont(), 16);
 		long text_width = (long) ((table.getTitleFont().getStringWidth(
-				"Acta de Entrega de Activos N°" + table.getNro_acta_entrega()) / 1000.0f) * 16);
+				"Acta de Transferencia de Activos N°" + table.getNro_acta_entrega()) / 1000.0f) * 16);
 		nextTextX = table.getWidth() / 2 - text_width / 2;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
-		contentStream.showText("Acta de Entrega de Activos N°" + table.getNro_acta_entrega());
+		contentStream.showText("Acta de Transferencia de Activos N°" + table.getNro_acta_entrega());
 		contentStream.endText();
 
 		nextTextY -= table.getTb_activos().getRowheigth();
@@ -328,7 +318,7 @@ public class PdfActaGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream
-				.showText("En la Ciudad de La Paz se procedio a la entrega de los bienes de uso verificando el estado de cada uno de los activos que se detallan a continuacion: ");
+				.showText("El Responsable de Activos Fijos hace constar por el presente documento que ha recibido a conformidad la entrga de los activos que a continuacion se detallan: ");
 		contentStream.endText();
 		nextTextY -= 2 * table.getTb_activos().getRowHeight();
 	}
