@@ -28,16 +28,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VLoginP extends VerticalLayout implements View, ClickListener {
-
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	private LoginForm frm_login = new LoginForm();
 	private Button btn_submit = new Button("Login");
 	private Button btn_limpiar = new Button("Limpiar");
 	private CssLayout hl_errores = new CssLayout();
-
-	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
 	
+	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
 	
 	public VLoginP() {
 		setWidth("100%");
@@ -47,7 +46,7 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 		addComponent(buildButtonBar());
 		addComponent(buildForm());
 	}
-
+	
 	private Component buildForm() {
 		final VerticalLayout vl_content = new VerticalLayout();
 		vl_content.setMargin(true);
@@ -56,7 +55,7 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 		vl_content.addComponent(pn_frm);
 		return vl_content;
 	}
-
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
@@ -66,7 +65,7 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-
+	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_submit);
@@ -79,40 +78,52 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
-
+	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
-
+		
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(barMessage.getComponetName() + ":"
-					+ barMessage.getErrorName());
+			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
 	}
-
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		
 	}
-
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_submit) {
 			if (this.frm_login.validate()) {
+				SessionModel result;
 				if (this.frm_login.isNew()) {
 					this.usuarioimpl.addPassword(this.frm_login.getUsuario(), this.frm_login.getPassword());
-				}else{
-					SessionModel result;
 					try {
 						result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
-						if(result!=null){
+						if (result != null) {
 							UI.getCurrent().getSession().setAttribute("user", result);
 							UI.getCurrent().getPage().reload();
 							UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
-						}else{
+						} else {
+							Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
+						}
+					} catch (SQLException e) {
+						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						result = Auth.login(this.frm_login.getUsuario(), this.frm_login.getPassword());
+						if (result != null) {
+							UI.getCurrent().getSession().setAttribute("user", result);
+							UI.getCurrent().getPage().reload();
+							UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+						} else {
 							Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 						}
 					} catch (SQLException e) {
@@ -123,8 +134,8 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 			}
 			buildMessages(this.frm_login.getMessages());
 		}
-		if(event.getButton()==this.btn_limpiar){
-			Notification.show(((SessionModel)getUI().getSession().getAttribute("user")).getId());
+		if (event.getButton() == this.btn_limpiar) {
+			Notification.show(((SessionModel) getUI().getSession().getAttribute("user")).getId());
 		}
 	}
 }

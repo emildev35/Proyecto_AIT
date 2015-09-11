@@ -85,9 +85,7 @@ public class VSubSistemaA extends VerticalLayout implements View, ItemSetChangeL
 		this.txt_nombre_subsistema.setRequired(true);
 		this.txt_nombre_subsistema.setWidth("100%");
 		this.txt_nombre_subsistema.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3, 50, false));
-		this.txt_nombre_programa.setRequired(true);
 		this.txt_nombre_programa.setWidth("100%");
-		this.txt_nombre_programa.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3, 50, false));
 		this.cb_icons.setWidth("100%");
 		
 		generarIdentificador();

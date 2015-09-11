@@ -8,9 +8,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
-import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.pdf.Table;
-
 @SuppressWarnings("deprecation")
 public class PdfActaGenerator {
 

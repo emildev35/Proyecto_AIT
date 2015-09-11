@@ -80,6 +80,29 @@ public class ActivoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getactivosbydependencia(short id_dependencia) {
+		Query query = em.createNativeQuery("Mvac_ActivobyDependencia_Q @Id_Dependencia=?1 ", "mapeo-activo");
+		query.setParameter(1, id_dependencia);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getactivos(short id_unidad_organizacional) {
+		Query query = em.createNativeQuery("Mvac_ActivobyUnidad_Q @Id_Unidad=?1 ", "mapeo-activo");
+		query.setParameter(1, id_unidad_organizacional);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getactivos(String ci_usuario) {
+		Query query = em.createNativeQuery("Mvac_ActivobyUsuario_Q @CI_Usuario=?1", "mapeo-activo");
+		query.setParameter(1, ci_usuario);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getall(long id_activo) {
 		Query query = em.createNativeQuery("Mvac_Activo_Cod " + "@ACT_Codigo_Activo=?1 ", "mapeo-activo");
 		query.setParameter(1, id_activo);

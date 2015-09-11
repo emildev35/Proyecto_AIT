@@ -6,9 +6,11 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.common.component.PathValues;
+
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
 	private static final float MARGIN = 60;
 	private static final boolean IS_LANDSCAPE = true;
 
@@ -48,7 +50,7 @@ public class ReportPdf {
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 3;
-	public static String SAVE_PATH = "C:\\Reporte-Acta-Movimiento" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
 

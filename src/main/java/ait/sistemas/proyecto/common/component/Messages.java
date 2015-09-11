@@ -29,7 +29,7 @@ public class Messages {
 	 * @return	String
 	 */
 	public static final String STRING_LENGTH_MESSAGE(int min, int max)
-	{return String.format("La longitud de caracteres debe ser menor a %d y superior a %d", min, max);};
+	{return String.format("La longitud de caracteres debe ser menor a %d y superior a %d", max, min);};
 	/**
 	 * Mensaje Confirmacion en el dialogo
 	 * @param value

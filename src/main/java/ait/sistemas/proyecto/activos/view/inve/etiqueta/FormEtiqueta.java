@@ -4,24 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
-import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
-import ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable;
-import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
-import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
+import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
+import ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel;
+import ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale;
+import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.PersonalImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.CodeBar;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.UI;
 
 /**
  * Formulario que Para la impresion de Etiquetas de Activos contiene los
@@ -35,75 +34,54 @@ public class FormEtiqueta extends GridLayout implements ValueChangeListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static final int ALL = 0;
-	
-	public ComboBox cb_grupo_contable = new ComboBox("Grupo Contable");
-	public ComboBox cb_auxiliar_contable = new ComboBox("Auxliar Contable");
-	public ComboBox cb_activos = new ComboBox("Activo");
+	public ComboBox cb_dependencia = new ComboBox("Dependencia");
+	public ComboBox cb_unidad_organizacional = new ComboBox("Unidad Organizacional");
+	public ComboBox cb_usuario = new ComboBox("Personal");
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	final private GrupoImpl grupoimpl = new GrupoImpl();
-	final private AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
-	final private ActivoImpl activoimpl = new ActivoImpl();
+	final private DependenciaImpl dependenciaimpl = new DependenciaImpl();
+	final private UnidadImpl unidadimpl = new UnidadImpl();
+	final private PersonalImpl personalimpl = new PersonalImpl();
 	
-	final PropertysetItem pitm_Inventario = new PropertysetItem();
-	private FieldGroup binder_etiqueta;
+	private GridActivos grid_activos = new GridActivos();
+	
+	SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	
 	public FormEtiqueta() {
-		super(1, 3);
+		super(2, 3);
 		setWidth("100%");
 		setMargin(true);
 		setSpacing(true);
 		
-		pitm_Inventario.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
-		pitm_Inventario.addItemProperty("auxiliar_contable", new ObjectProperty<Auxiliares_Contable>(new Auxiliares_Contable()));
-		pitm_Inventario.addItemProperty("activo", new ObjectProperty<ActivosModel>(new ActivosModel()));
+		this.cb_dependencia.addValidator(new NullValidator("", false));
+		this.cb_unidad_organizacional.addValidator(new NullValidator("", false));
+		this.cb_usuario.addValidator(new NullValidator("", false));
+		this.cb_dependencia.setWidth("100%");
+		this.cb_unidad_organizacional.setWidth("100%");
+		this.cb_usuario.setWidth("100%");
 		
-		this.binder_etiqueta = new FieldGroup(pitm_Inventario);
+		this.cb_dependencia.addValueChangeListener(this);
+		this.cb_unidad_organizacional.addValueChangeListener(this);
+		this.cb_usuario.addValueChangeListener(this);
 		
-		this.binder_etiqueta.bind(this.cb_grupo_contable, "grupo_contable");
-		this.binder_etiqueta.bind(this.cb_auxiliar_contable, "auxiliar_contable");
-		this.binder_etiqueta.bind(this.cb_activos, "activo");
+		cb_unidad_organizacional.setInputPrompt("Seleccione una Unidad Organizacional");
+		cb_usuario.setInputPrompt("Seleccione el Personal");
 		
-		this.cb_grupo_contable.addValidator(new NullValidator("", false));
-		this.cb_auxiliar_contable.addValidator(new NullValidator("", false));
-		this.cb_activos.addValidator(new NullValidator("", false));
-		
-		this.cb_grupo_contable.setWidth("100%");
-		this.cb_auxiliar_contable.setWidth("100%");
-		this.cb_activos.setWidth("100%");
-		
-		this.binder_etiqueta.clear();
-		
-		this.cb_grupo_contable.addValueChangeListener(this);
-		this.cb_auxiliar_contable.addValueChangeListener(this);
-		
-		fillcbGrupo();
+		fillcbDependencia();
 		buildContent();
 	}
 	
-	public void init() {
-		update();
-	}
-	
 	/**
-	 * Actulizacion de los Campo del Formulario
+	 * Llenado del Combo Box de Dependencia
 	 */
-	public void update() {
-		this.binder_etiqueta.clear();
-	}
-	
-	/**
-	 * Llenado del Combo Box Grupo Contable
-	 */
-	private void fillcbGrupo() {
-		cb_grupo_contable.removeAllItems();
-		cb_grupo_contable.setNullSelectionAllowed(false);
-		cb_grupo_contable.setInputPrompt("Seleccione un Grupo Contable");
-		for (GruposContablesModel grupo_contable : grupoimpl.getalls()) {
-			cb_grupo_contable.addItem(grupo_contable);
-			cb_grupo_contable.setItemCaption(grupo_contable, grupo_contable.getGRC_Nombre_Grupo_Contable());
+	private void fillcbDependencia() {
+		cb_dependencia.removeAllItems();
+		cb_dependencia.setNullSelectionAllowed(false);
+		cb_dependencia.setInputPrompt("Seleccione una Dependencia");
+		for (Dependencia dependencia : dependenciaimpl.getall()) {
+			cb_dependencia.addItem(dependencia);
+			cb_dependencia.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
 		}
 	}
 	
@@ -112,9 +90,9 @@ public class FormEtiqueta extends GridLayout implements ValueChangeListener {
 	 */
 	private void buildContent() {
 		
-		addComponent(this.cb_grupo_contable, 0, 0);
-		addComponent(this.cb_auxiliar_contable, 0, 1);
-		addComponent(this.cb_activos, 0, 2);
+		addComponent(this.cb_dependencia, 0, 0);
+		addComponent(this.cb_unidad_organizacional, 0, 1);
+		addComponent(this.cb_usuario, 0, 2);
 		
 	}
 	
@@ -125,26 +103,11 @@ public class FormEtiqueta extends GridLayout implements ValueChangeListener {
 	 * @return boolean
 	 */
 	public boolean validate() {
-		try {
-			this.binder_etiqueta.commit();
-			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
+		if (this.grid_activos.getSelectedRows().size() > 0) {
 			return true;
-		} catch (CommitException e) {
-			try {
-				this.cb_grupo_contable.validate();
-			} catch (Exception ex) {
-				this.mensajes.add(new BarMessage(this.cb_grupo_contable.getCaption(), Messages.EMPTY_MESSAGE));
-			}
-			try {
-				this.cb_auxiliar_contable.validate();
-			} catch (Exception ex) {
-				this.mensajes.add(new BarMessage(this.cb_auxiliar_contable.getCaption(), Messages.EMPTY_MESSAGE));
-			}
-			try {
-				this.cb_activos.validate();
-			} catch (Exception ex) {
-				this.mensajes.add(new BarMessage(this.cb_activos.getCaption(), Messages.EMPTY_MESSAGE));
-			}
+		} else {
+			
+			this.mensajes.add(new BarMessage("Formulario", Messages.EMPTY_GRID));
 			
 			return false;
 		}
@@ -156,27 +119,74 @@ public class FormEtiqueta extends GridLayout implements ValueChangeListener {
 	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		if (event.getProperty().getValue() == cb_grupo_contable.getValue() && cb_grupo_contable.getValue() != null) {
-			fillcbAuxiliarContable(((GruposContablesModel)cb_grupo_contable.getValue()).getGRC_Grupo_Contable());
+		if (event.getProperty().getValue() == cb_dependencia.getValue() && cb_dependencia.getValue() != null) {
+			fillcbUnidades(((Dependencia) cb_dependencia.getValue()).getDEP_Dependencia());
+			grid_activos.buildGrid(((Dependencia) cb_dependencia.getValue()).getDEP_Dependencia());
 		}
 		
-		if (event.getProperty().getValue() == cb_auxiliar_contable.getValue() && cb_auxiliar_contable.getValue() != null) {
-			
+		if (event.getProperty().getValue() == cb_unidad_organizacional.getValue() && cb_unidad_organizacional.getValue() != null) {
+			fillcbPersonal(((Unidades_Organizacionale) cb_unidad_organizacional.getValue()).getUNO_Unidad_Organizacional());
+			grid_activos.buildGrid(((Unidades_Organizacionale) cb_unidad_organizacional.getValue()).getUNO_Dependencia(),
+					((Unidades_Organizacionale) cb_unidad_organizacional.getValue()).getUNO_Unidad_Organizacional());
+		}
+		if (event.getProperty().getValue() == cb_usuario.getValue() && cb_usuario.getValue() != null) {
+			grid_activos.buildGrid(((PersonalModel) cb_usuario.getValue()).getPER_CI_Empleado());
 		}
 	}
-
+	
 	/**
-	 * Se encarga de llenar los datos del ComboBox cb_auxiliar_contable
-	 * mediante el Id del Grupo Contable
-	 * @param grupo_contable Id del Grupo Auxilaar
+	 * Se encarga de llenar los datos del ComboBox cb_usuario mediante el Id del
+	 * Auxiliar Contable
+	 * 
+	 * @param AuxiliaresContablesModel
+	 *            Auxiliar Contable
 	 */
-	private void fillcbAuxiliarContable(String grupo_contable) {
-		cb_auxiliar_contable.removeAllItems();
-		cb_auxiliar_contable.setNullSelectionAllowed(false);
-		cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
-		for (AuxiliaresContablesModel auxiliar_contable : auxiliarimpl.getreporte(grupo_contable)) {
-			cb_auxiliar_contable.addItem(auxiliar_contable);
-			cb_auxiliar_contable.setItemCaption(auxiliar_contable, auxiliar_contable.getAUC_Nombre_Auxiliar_Contable());
+	private void fillcbPersonal(short unidad_organizacional) {
+		cb_usuario.removeAllItems();
+		cb_usuario.setNullSelectionAllowed(false);
+		cb_usuario.setInputPrompt("Seleccione el Personal");
+		for (PersonalModel personal : personalimpl.getbyUnidad(unidad_organizacional)) {
+			cb_usuario.addItem(personal);
+			cb_usuario.setItemCaption(personal, personal.getPER_Apellido_Paterno() + " " + personal.getPER_Apellido_Materno()
+					+ " " + personal.getPER_Nombres());
 		}
+		
+	}
+	
+	/**
+	 * Se encarga de llenar los datos del ComboBox cb_unidad_organizacional
+	 * mediante el Id de la Dependencia
+	 * 
+	 * @param dependencia
+	 *            Id de la Dependencia
+	 */
+	private void fillcbUnidades(short id_dependencia) {
+		cb_unidad_organizacional.removeAllItems();
+		cb_unidad_organizacional.setNullSelectionAllowed(false);
+		cb_unidad_organizacional.setInputPrompt("Seleccione una Unidad Organizacional");
+		for (Unidades_Organizacionale unidad : unidadimpl.getunidad(id_dependencia)) {
+			cb_unidad_organizacional.addItem(unidad);
+			cb_unidad_organizacional.setItemCaption(unidad, unidad.getUNO_Nombre_Unidad_Organizacional());
+		}
+	}
+	
+	public GridActivos getGrid() {
+		return this.grid_activos;
+	}
+	
+	public List<CodeBar> getActivos() {
+		List<CodeBar> result = new ArrayList<CodeBar>();
+		for (Object row : grid_activos.getSelectedRows()) {
+			if (row != null) {
+				ActivosModel activo = (ActivosModel) row;
+				CodeBar codigo = new CodeBar();
+				codigo.setAuxiliar_contable(activo.getACT_Auxiliar_Contable_ID());
+				codigo.setGrupo_contable(activo.getACT_Grupo_Contable_ID());
+				codigo.setCodigo(activo.getACT_Codigo_Activo());
+				codigo.setNombre(activo.getACT_Nombre_Activo());
+				result.add(codigo);
+			}
+		}
+		return result;
 	}
 }

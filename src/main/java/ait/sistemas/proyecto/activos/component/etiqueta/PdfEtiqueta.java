@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.common.report;
+package ait.sistemas.proyecto.activos.component.etiqueta;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -9,25 +9,35 @@ import java.util.Date;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.eclipse.persistence.internal.oxm.StrBuffer;
 
+import ait.sistemas.proyecto.common.component.CodeBar;
+import ait.sistemas.proyecto.common.report.pdf.Table;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.ui.UI;
+import com.vaadin.ui.PopupView.Content;
 
-@SuppressWarnings("deprecation")
-public class PDFTableGenerator {
+/**
+ * Clase encargada de la generacion del documentos que contiene todos los
+ * codigos de barras de los activos listos para su impresion
+ * 
+ * @author franzemil
+ *
+ */
+public class PdfEtiqueta {
 	
 	private PDDocument doc;
 	
 	private int intNumberPages = 5;
 	
-	// Generates document from Table object
-	public boolean generatePDF(Table table, String savePath) throws IOException {
+	public boolean generatePDF(Etiqueta etiqueta, String savePath) throws IOException {
 		boolean result = false;
 		doc = null;
 		try {
 			doc = new PDDocument();
-			drawTable(doc, table);
+			drawDocument(doc, etiqueta);
 			doc.save(savePath);
 			result = true;
 		} finally {
@@ -38,69 +48,35 @@ public class PDFTableGenerator {
 		return result;
 	}
 	
-	// Configures basic setup for the table and draws it page by page
-	public void drawTable(PDDocument doc, Table table) throws IOException {
-		// Calculate pagination
-		Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue() - 1;
-		
-		Integer numberOfPages = new Double(
-				Math.ceil((table.getNumberOfRows().floatValue() + table.getHeaderSize()) / rowsPerPage)).intValue();
-		this.intNumberPages = numberOfPages;
-		// Generate each page, get the content and draw it
-		for (int pageCount = 0; pageCount < numberOfPages; pageCount++) {
-			PDPage page = generatePage(doc, table);
-			PDPageContentStream contentStream = generateContentStream(doc, page, table);
-			String[][] currentPageContent;
-			currentPageContent = getContentForCurrentPage(table, rowsPerPage, pageCount);
-			drawCurrentPage(table, currentPageContent, contentStream, pageCount);
+	public void drawDocument(PDDocument doc, Etiqueta etiqueta) throws IOException {
+		float nextY;
+		float nextX;
+		for (CodeBar codigo : etiqueta.getCodigos()) {
+			PDPage page = generatePage(doc, etiqueta);
+			PDPageContentStream contentStream = generateContentStream(doc, page, etiqueta);
+			PDImageXObject pdImage = PDImageXObject.createFromFile(codigo.getPathCode(), doc);
+			contentStream.drawImage(pdImage, 150, 150, etiqueta.getWidthCode(), etiqueta.getHeigthCode());
+			contentStream.beginText();
+			contentStream.showText(codigo.getNombre());
+			contentStream.endText();
+			contentStream.close();
 		}
+		
+	}
+	
+	public String separeString(String data){
+		String[] row = new String[data.length()/40];
+		for (int i = 0; i <= data.length()/40; i++) {
+			row[i] = data.substring(i, 40);
+		}
+		return null;
 	}
 	
 	// Draws current page table grid and border lines and content
-	private void drawCurrentPage(Table table, String[][] currentPageContent, PDPageContentStream contentStream, int pageCount)
-			throws IOException {
-		float tableTopY;
+	private void drawCurrentPage(Etiqueta etiqueta, PDPageContentStream contentStream) throws IOException {
 		
-		tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize().getHeight()
-				- table.getMargin();
-		
-		if (pageCount == 0) {
-			tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin()
-					- (table.getRowHeight() * table.getHeaderSize()) : table.getPageSize().getHeight() - table.getMargin()
-					- table.getRowHeight() - (table.getRowHeight() * table.getHeaderSize());
-			
-		}
-		// Draws grid and borders
-		drawTableGrid(table, currentPageContent, contentStream, tableTopY);
-		
-		// Position cursor to start drawing content
-		float nextTextX = table.getMargin() + table.getCellMargin();
-		// Calculate center alignment for text in cell considering font height
-		float nextTextY = tableTopY - (table.getRowHeight() / 2)
-				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
-		
-		// Write column headers
-		writeContentLine(table.getColumnsNamesAsArray(), contentStream, nextTextX, nextTextY, table);
-		nextTextY -= table.getRowHeight();
-		
-		nextTextX = table.getMargin() + table.getCellMargin();
-		
-		// Write content
-		for (int i = 0; i < currentPageContent.length; i++) {
-			writeContentLine(currentPageContent[i], contentStream, nextTextX, nextTextY, table);
-			nextTextY -= table.getRowHeight();
-			nextTextX = table.getMargin() + table.getCellMargin();
-		}
-		
-		if (pageCount == 0) {
-			writeHeader(contentStream, nextTextX, nextTextY, table);
-		}
-		// Se dibuja el footer
-		writeFooter(contentStream, nextTextX, nextTextY, table, pageCount);
-		contentStream.close();
 	}
 	
-	// Writes the content for one line
 	private void writeContentLine(String[] lineContent, PDPageContentStream contentStream, float nextTextX, float nextTextY,
 			Table table) throws IOException {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
@@ -108,7 +84,7 @@ public class PDFTableGenerator {
 			String text = lineContent[i];
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.showText(text != null && !text.equals("null") ? text : "No Disponible");
+			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
 			nextTextX += table.getColumns().get(i).getWidth();
 		}
@@ -133,6 +109,7 @@ public class PDFTableGenerator {
 		final float tableBottomY = tableTopY - table.getRowHeight();
 		
 		float nextX = table.getMargin();
+		
 		// Modificado para solo el tititulo para grilla completa modificar por
 		for (int i = 0; i < table.getNumberOfColumns(); i++) {
 			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
@@ -144,14 +121,10 @@ public class PDFTableGenerator {
 	private String[][] getContentForCurrentPage(Table table, Integer rowsPerPage, int pageCount) {
 		int startRange = pageCount * rowsPerPage;
 		
-		startRange = pageCount * rowsPerPage;
 		int endRange = (pageCount * rowsPerPage) + rowsPerPage;
 		
 		if (pageCount == 0) {
 			endRange = (pageCount * rowsPerPage) - table.getHeaderSize() + rowsPerPage;
-		} else {
-			startRange -= table.getHeaderSize();
-			endRange -= table.getHeaderSize();
 		}
 		if (endRange > table.getNumberOfRows()) {
 			endRange = table.getNumberOfRows();
@@ -159,19 +132,15 @@ public class PDFTableGenerator {
 		return Arrays.copyOfRange(table.getContent(), startRange, endRange);
 	}
 	
-	private PDPage generatePage(PDDocument doc, Table table) {
+	private PDPage generatePage(PDDocument doc, Etiqueta table) {
 		PDPage page = new PDPage();
 		page.setMediaBox(table.getPageSize());
-		page.setRotation(table.isLandscape() ? 90 : 0);
 		doc.addPage(page);
 		return page;
 	}
 	
-	private PDPageContentStream generateContentStream(PDDocument doc, PDPage page, Table table) throws IOException {
+	private PDPageContentStream generateContentStream(PDDocument doc, PDPage page, Etiqueta table) throws IOException {
 		PDPageContentStream contentStream = new PDPageContentStream(doc, page, false, false);
-		if (table.isLandscape()) {
-			contentStream.concatenate2CTM(0, 1, -1, 0, table.getPageSize().getWidth(), 0);
-		}
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		return contentStream;
 	}
@@ -183,7 +152,7 @@ public class PDFTableGenerator {
 		
 		nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
 		nextTextY -= (table.getRowHeight() * 2.5);
-		contentStream.drawLine(nextTextX, (nextTextY + table.getRowHeight()), table.getWidth() - table.getCellMargin(),
+		contentStream.drawLine(nextTextX, (nextTextY + table.getRowHeight()), table.getWidth(),
 				(nextTextY + table.getRowHeight()));
 		
 		contentStream.beginText();
@@ -205,34 +174,36 @@ public class PDFTableGenerator {
 		float nextTextXCopy = nextTextX;
 		nextTextY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize().getHeight()
 				- table.getMargin();
+		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		
-		contentStream.showText(usuario.getDependecia());
+		contentStream.showText("Dependencia : " + usuario.getDependecia());
 		
 		contentStream.endText();
 		
 		Date date = new Date();
 		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
 		String fecha = fechaHora.format(date);
-		nextTextX = (table.isLandscape() ? table.getPageSize().getHeight() : table.getPageSize().getWidth()) - 2
-				* table.getMargin() - 20;
+		
+		nextTextX = table.getWidth() - table.getFontSizeheader() * 2;
+		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText("Fecha : " + fecha);
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText(usuario.getUnidad());
+		contentStream.showText("Unidad : " + usuario.getUnidad());
 		contentStream.endText();
+		
 		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
 		String strhora = hora.format(date);
 		
-		nextTextX = (table.isLandscape() ? table.getPageSize().getHeight() : table.getPageSize().getWidth()) - 2
-				* table.getMargin() - 20;
+		nextTextX = table.getWidth() - table.getFontSizeheader() * 2;
 		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
@@ -240,10 +211,10 @@ public class PDFTableGenerator {
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText(usuario.getFull_name());
+		contentStream.showText("Usuario : " + usuario.getFull_name());
 		contentStream.endText();
 		
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
@@ -256,20 +227,16 @@ public class PDFTableGenerator {
 		
 		contentStream.setFont(table.getSubtitleFont(), table.getFontSizesubtitle());
 		nextTextY -= table.getRowHeight();
-		contentStream.beginText();
-		long sub_width = (long) (((table.getSubtitleFont().getStringWidth(table.getSubtitle()) / 1000.0f) * table
-				.getFontSizesubtitle()));
-		if (table.isLandscape()) {
-			sub_width = (long) ((long) 1.35 * ((table.getSubtitleFont().getStringWidth(table.getSubtitle()) / 1000.0f) * table
-					.getFontSizesubtitle()));
-			
-			text_width = (long) ((long) 1.35 * ((table.getTitleFont().getStringWidth(table.getTitle()) / 1000.0f) * table
-					.getFontSizetitle()));
-		}
 		
-		contentStream.moveTextPositionByAmount((table.getWidth() / 2) - (sub_width / 2) + (table.getMargin() / 2), nextTextY);
-		contentStream.showText(table.getSubtitle());
-		contentStream.endText();
+		// contentStream.beginText();
+		// long sub_width = (long)
+		// ((table.getSubtitleFont().getStringWidth(table.getSubtitle()) /
+		// 1000.0f) * table
+		// .getFontSizesubtitle());
+		// contentStream.moveTextPositionByAmount((table.getWidth() / 2) -
+		// (sub_width / 2) + (table.getMargin() / 2), nextTextY);
+		// contentStream.showText(table.getSubtitle());
+		// contentStream.endText();
 		
 	}
 }

@@ -27,48 +27,51 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-
 @SuppressWarnings("deprecation")
 public class VPerfilA extends VerticalLayout implements View, ClickListener {
-
+	
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_perfil;
 	private DateField fecha_registro;
 	private TextField nombre_perfil;
 	private PerfilImpl perfilimpl;
-
+	
 	private Form form;
-
+	
 	public VPerfilA() {
-
-		this.perfilimpl = new PerfilImpl();
-
-		this.txt_id_perfil = new TextField("Id. Perfil: ");
-		this.txt_id_perfil.setEnabled(false);
-
-		this.fecha_registro = new DateField("Fecha Creacion: ");
-
-		this.fecha_registro.setEnabled(false);
-
-		this.nombre_perfil = new TextField("Nombre del Peril: ");
-		this.nombre_perfil.setRequired(true);
-		this.nombre_perfil.addValidator(new StringLengthValidator("Error el tamaño del campo debe ser entre 3 y 15 caracteres", 3,
-				15, false));
-		this.nombre_perfil.addValidator(new NullValidator("El campo no debe ser nulo", false));
 		
+		setMargin(true);
+		setSpacing(true);
+		this.perfilimpl = new PerfilImpl();
+		
+		this.txt_id_perfil = new TextField("Id. Perfil");
+		this.txt_id_perfil.setEnabled(false);
+		
+		this.fecha_registro = new DateField("Fecha Creacion");
+		
+		this.fecha_registro.setEnabled(false);
+		
+		this.nombre_perfil = new TextField("Nombre del Peril");
+		this.nombre_perfil.setRequired(true);
+		this.nombre_perfil.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(15, 25)));
+		this.nombre_perfil.addValidator(new NullValidator(Messages.EMPTY_MESSAGE, false));
+		
+		this.nombre_perfil.setWidth("40%");
 		updateId();
 		updateDate();
 		addComponent(buildNavBar());
 		addComponent(buildForm());
 		addComponent(buildButtonBar());
 	}
-	private void updateId(){
+	
+	private void updateId() {
 		this.txt_id_perfil.setValue(perfilimpl.generateId() + "");
 	}
-	private void updateDate(){
+	
+	private void updateDate() {
 		this.fecha_registro.setValue(new Date());
 	}
-
+	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addStyleName("ait-buttons");
@@ -81,7 +84,7 @@ public class VPerfilA extends VerticalLayout implements View, ClickListener {
 		buttonContent.addComponent(btnlimpiar);
 		return buttonContent;
 	}
-
+	
 	private Component buildForm() {
 		// FormLayout formContent = new FormLayout();
 		this.form = new Form();
@@ -90,7 +93,7 @@ public class VPerfilA extends VerticalLayout implements View, ClickListener {
 		form.addField("fecha_creacion", this.fecha_registro);
 		return form;
 	}
-
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
@@ -102,27 +105,26 @@ public class VPerfilA extends VerticalLayout implements View, ClickListener {
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
 	}
-
-
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		try {
 			
 			this.nombre_perfil.validate();
-
+			
 			Perfil perfil = new Perfil();
 			perfil.setPRF_Id_Perfil(Integer.parseInt(this.txt_id_perfil.getValue()));
 			perfil.setPRF_Nombre_Perfil(this.nombre_perfil.getValue().toString());
 			long lnMilis = new Date().getTime();
 			perfil.setPRF_Fecha_Registro(new java.sql.Date(lnMilis));
 			Perfil resultado = perfilimpl.add(perfil);
-			if(resultado == null){
+			if (resultado == null) {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-			}else{
+			} else {
 				Notification.show(Messages.SUCCESS_MESSAGE);
 				this.form.clear();
 				updateId();
@@ -134,5 +136,5 @@ public class VPerfilA extends VerticalLayout implements View, ClickListener {
 		}
 		
 	}
-
+	
 }

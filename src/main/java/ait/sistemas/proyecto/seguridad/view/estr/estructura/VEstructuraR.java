@@ -90,8 +90,13 @@ public class VEstructuraR extends VerticalLayout implements View, ClickListener 
 			preNombre += "    ";
 		}
 		for (Arbol_menus menu : lista) {
-			String[] row = { String.valueOf(menu.getAME_Id_Identificador()), String.valueOf(menu.getAME_Id_Menus()),
-					preNombre + menu.getAME_Nombre(), String.valueOf(this.r), menu.getAME_Programa() };
+			String[] row = {
+					String.valueOf(menu.getAME_Id_Identificador()),
+					String.valueOf(menu.getAME_Id_Subsistema()) + "." + String.valueOf(menu.getAME_Id_Menus()) + "."
+							+ String.valueOf(menu.getAME_Id_SubMenu()) + "." + String.valueOf(menu.getAME_Id_Opcion()),
+					preNombre + menu.getAME_Nombre(), 
+					String.valueOf(nivel + 1), menu.getAME_Programa(),
+					String.valueOf(menu.getArbolMenus().getAME_Id_Identificador())};
 			this.data[this.r] = row;
 			this.r++;
 			List<Arbol_menus> hijos = this.menuiml.getallMenu(menu.getAME_Id_Identificador());
@@ -105,7 +110,7 @@ public class VEstructuraR extends VerticalLayout implements View, ClickListener 
 	public String[][] getData() {
 		int rowNumber = this.menuiml.CountItemSubmenu((long) this.frmReporte.cbSusSistema.getValue());
 		rowNumber = (rowNumber < 0) ? 0 : rowNumber;
-		this.data = new String[rowNumber][5];
+		this.data = new String[rowNumber][6];
 		this.r = 0;
 		buildrow(this.menuiml.getallMenu((long) this.frmReporte.cbSusSistema.getValue()), 1);
 		return data;
