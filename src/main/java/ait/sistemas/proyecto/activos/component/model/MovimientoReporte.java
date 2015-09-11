@@ -27,6 +27,7 @@ import javax.persistence.SqlResultSetMapping;
 public class MovimientoReporte {
 	
 
+	@Id
 	private String id_cmovimiento;
 	private String Dependencia_Origen;
 	private String Dependencia_Destino;
@@ -36,7 +37,6 @@ public class MovimientoReporte {
 	private String Usuario_Destino;
 	private long CMV_No_Documento;
 	private Date CMV_Fecha_Registro;
-	@Id
 	private long Codigo_Activo;
 	private String Nombre_Activo;
 	private String Componentes;

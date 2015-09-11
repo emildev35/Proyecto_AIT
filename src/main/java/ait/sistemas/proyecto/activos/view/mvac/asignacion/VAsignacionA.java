@@ -8,10 +8,10 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
-import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.Acta;
-import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.Firma;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.Firma;
 import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.ReportPdf;
-import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.TablaActivos;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.TablaActivos;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.report.Column;
@@ -37,8 +37,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VAsignacionA extends VerticalLayout implements View, ClickListener,
-		SelectionListener {
+public class VAsignacionA extends VerticalLayout implements View, ClickListener, SelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,10 +46,10 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	private Button btn_asignacion;
 	private Button btn_imprimir;
 	private GridSolasignacion grid_asignacion;
-	private GridDetalle grid_Detalle = new  GridDetalle();
+	private GridDetalle grid_Detalle = new GridDetalle();
 	private ActasImpl acta_impl = new ActasImpl();
 	private Movimiento data;
-//	private MovimientoReporte data_reporte;
+	// private MovimientoReporte data_reporte;
 	int r = 0;
 
 	public VAsignacionA() {
@@ -72,18 +71,18 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	private Component buildFormContent() {
 
 		VerticalLayout formContent = new VerticalLayout();
-		
+
 		Panel gridPanel = new Panel();
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Solicitudes Pendientes de Asignacio");
 		gridPanel.setContent(this.grid_asignacion);
-	//	formContent.setMargin(true);
+		// formContent.setMargin(true);
 		Panel grid2Panel = new Panel();
 		grid2Panel.setWidth("100%");
 		grid2Panel.setCaption("Activos Fijos Solicitados");
 		grid2Panel.setContent(this.grid_Detalle);
-		//formContent.setMargin(true);
-		
+		// formContent.setMargin(true);
+
 		formContent.addComponent(gridPanel);
 		formContent.addComponent(this.frm_asignacion);
 		formContent.addComponent(grid2Panel);
@@ -99,7 +98,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		nav.addComponent(new Label("Activos >>"));
 		nav.addComponent(new Label("Movimiento de Activos >>"));
 		nav.addComponent(new Label("Asignacion >>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>",ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -126,7 +125,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		this.addComponent(this.hl_errores);
 
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(barMessage.getComponetName() + ":"+ barMessage.getErrorName());
+			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
@@ -138,9 +137,9 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 
 		if ((Movimiento) this.grid_asignacion.getSelectedRow() != null) {
 			this.frm_asignacion.setData((Movimiento) this.grid_asignacion.getSelectedRow());
-			
-			data =(Movimiento)this.grid_asignacion.getSelectedRow();
-			grid_Detalle.update(data.getNro_documento(),data.getId_dependencia(), data.getTipo_movimiento());
+
+			data = (Movimiento) this.grid_asignacion.getSelectedRow();
+			grid_Detalle.update(data.getNro_documento(), data.getId_dependencia(), data.getTipo_movimiento());
 		}
 	}
 
@@ -156,22 +155,23 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 				this.grid_asignacion.update();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			} else {
-				Notification.show(Messages.NOT_SUCCESS_MESSAGE,
-						Type.ERROR_MESSAGE);
+				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
 			buildMessages(this.frm_asignacion.getMensajes());
 			this.frm_asignacion.clearMessages();
 		}
 		if (event.getButton() == this.btn_imprimir) {
 			ReportPdf reporte = new ReportPdf();
-			List<MovimientoReporte> data_reporte = acta_impl.ReporteActa(frm_asignacion.txt_no_acta.getValue(),(short)2);
+			List<MovimientoReporte> data_reporte = acta_impl.ReporteActa(frm_asignacion.txt_no_acta.getValue(),
+					(short) 2);
 			try {
-				reporte.getPdf(getActa(data_reporte),Short.parseShort(frm_asignacion.txt_no_acta.getValue()),(short)2);
+				reporte.getPdf(getActa(data_reporte), Short.parseShort(frm_asignacion.txt_no_acta.getValue()),
+						(short) 2);
 			} catch (NumberFormatException | IOException e) {
 				e.printStackTrace();
 			}
 			File pdfFile = new File(ReportPdf.SAVE_PATH);
-			
+
 			VerticalLayout vl_pdf = new VerticalLayout();
 			Embedded pdf = new Embedded("", new FileResource(pdfFile));
 			pdf.setMimeType("application/pdf");
@@ -179,24 +179,23 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 			pdf.setSizeFull();
 			vl_pdf.setSizeFull();
 			vl_pdf.addComponent(pdf);
-			
-			Window subWindow = new Window("Reporte Acta");
+
+			Window subWindow = new Window("Reporte Acta Asignacion");
 			VerticalLayout subContent = new VerticalLayout();
 			subContent.setMargin(true);
 			subWindow.setContent(vl_pdf);
-			
+
 			subWindow.setWidth("90%");
 			subWindow.setHeight("90%");
 			subWindow.center();
-			
+
 			// Open it in the UI
 			getUI().addWindow(subWindow);
 		}
 	}
 
-	
-	public Acta getActa(List<MovimientoReporte> data){	
-		
+	public Acta getActa(List<MovimientoReporte> data) {
+
 		Acta acta = new Acta();
 		acta.setDependencia_origen(data.get(0).getDependencia_Origen());
 		acta.setDependencia_destino(data.get(0).getDependencia_Destino());
@@ -206,29 +205,47 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		acta.setUsuario_destino(data.get(0).getUsuario_Destino());
 		acta.setNro_acta_entrega(String.valueOf(data.get(0).getCMV_No_Documento()));
 		acta.setFecha(data.get(0).getCMV_Fecha_Registro().toString());
-		
+
 		TablaActivos tabla = new TablaActivos();
-		
-		String[][] activos = new String[data.size()][3];
+
+		String[][] activos = new String[data.size()*2][3];
 		List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("Codigo", 30));	
-        columns.add(new Column("Nombre del Activo", 245));
-        columns.add(new Column("Caracteriticas y Componentes", 250));
-        
-        List<Firma> firmas = new ArrayList<Firma>();
-        firmas.add(new Firma("Funcionario Encargado", 50)); 
-        firmas.add(new Firma("", 50)); 
-        firmas.add(new Firma("", 50));       
-        acta.setFirmas(firmas);
-        acta.setColumns(columns);
+		columns.add(new Column("Codigo", 30));
+		columns.add(new Column("Nombre del Activo", 345));
+		columns.add(new Column("Caracteriticas y Componentes", 550));
+
+		List<Firma> firmas = new ArrayList<Firma>();
+		firmas.add(new Firma("Funcionario Encargado", 50));
+		firmas.add(new Firma("", 50));
+		firmas.add(new Firma("", 50));
+		acta.setFirmas(firmas);
+		acta.setColumns(columns);
 		int r = 0;
-		
+		String oldval = "";
 		for (MovimientoReporte movimientoReporte : data) {
 			activos[r][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
 			activos[r][1] = String.valueOf(movimientoReporte.getNombre_Activo());
 			activos[r][2] = String.valueOf(movimientoReporte.getComponentes());
-		//	activos[r][2] = String.valueOf(movimientoReporte.getCaracteristicas());
-			r++;
+			
+			activos[r+1][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
+			activos[r+1][1] = String.valueOf(movimientoReporte.getNombre_Activo());
+			activos[r+1][2] = String.valueOf(movimientoReporte.getCaracteristicas());
+
+			if (oldval.equals(activos[r][0])) {
+				activos[r][0] = "";
+				activos[r][1] = "";
+			}else{
+				oldval = activos[r][0];
+			}
+			
+			if (oldval.equals(activos[r+1][0])) {
+				activos[r+1][0] = "";
+				activos[r+1][1] = "";
+			}else{
+				oldval = activos[r+1][0];
+			}
+
+			r+=2;
 		}
 		tabla.setData(activos);
 		tabla.setRowheigth(15);

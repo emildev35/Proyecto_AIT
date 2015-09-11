@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte;
+package ait.sistemas.proyecto.common.report.pdf.movimiento;
 
 import java.util.List;
 
