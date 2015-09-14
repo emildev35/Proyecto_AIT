@@ -7,21 +7,44 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 
 import ait.sistemas.proyecto.common.component.CodeBar;
 
+/**
+ * Clase donde se almcacena los parametros para la impresion del documento 
+ * PDF de las etiquetas
+ * @author franzemil
+ *
+ */
 public class Etiqueta {
-	
+	/**
+	 * Margen de la pagina
+	 */
 	private float margin;
+	/**
+	 * Tamaño de la Pagina ej: LETTER, A4, etc.
+	 */
 	private PDRectangle pageSize;
-	// Font Settings
+	/**
+	 * Fuente de los nombre del Activo
+	 */
 	private PDFont textFont;
+	/**
+	 * Tamaño de la Fuente de los nombre del Activo
+	 */
 	private float fontSize;
-	
-	// Content attributes
+	/**
+	 * Codigos a ser impresos
+	 */
 	private List<CodeBar> codigos;
 	private String[][] content;
+	
 	private float cellMargin;
 	
-	
+	/**
+	 * Alto de los codigos
+	 */
 	private float heigthCode;
+	/**
+	 * Ancho de los codigos
+	 */
 	private float widthCode;
 	
 	

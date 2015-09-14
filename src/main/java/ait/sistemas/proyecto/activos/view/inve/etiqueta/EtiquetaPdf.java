@@ -18,11 +18,11 @@ public class EtiquetaPdf {
 	
 
 	private static final PDRectangle PAGE_SIZE = PDRectangle.A4;
-	private static final float MARGIN = 60;
+	private static final float MARGIN = 40;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 7;
+	private static final float FONT_SIZE = 6;
 
 
 	private static final float CELL_MARGIN = 2;

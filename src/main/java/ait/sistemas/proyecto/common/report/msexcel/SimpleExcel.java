@@ -18,10 +18,12 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import ait.sistemas.proyecto.common.component.PathValues;
+
 @SuppressWarnings("deprecation")
 public class SimpleExcel {
 	
-	public final String SAVE_PATH = "/tmp/" + String.valueOf(new java.util.Date().getTime()) + ".xlsx";
+	public final String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".xlsx";
 	XSSFWorkbook workbook = new XSSFWorkbook();
 	public void save(String[][] data, List<String> columns, String titulo) {
 		

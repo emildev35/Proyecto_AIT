@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFInventarioGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -17,7 +18,7 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 public class ReportPdf {
 	// Page configuration
 	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-	private static final float MARGIN = 60;
+	private static final float MARGIN = 40;
 	private static final boolean IS_LANDSCAPE = false;
 
 	// Font for textFont
@@ -28,13 +29,13 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-	private static final float FOOTER_FONT_SIZE = 9;
+	private static final float FOOTER_FONT_SIZE = 7;
 
 	/**
 	 * Font for footer report
 	 */
 	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-	private static final float HEADER_FONT_SIZE = 10;
+	private static final float HEADER_FONT_SIZE = 8;
 
 	/**
 	 * Font for footer report
@@ -46,15 +47,15 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-	private static final float SUBTITLE_FONT_SIZE = 11;
+	private static final float SUBTITLE_FONT_SIZE = 12;
 
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 5;
 
-	public static String SAVE_PATH = "Informe-Inventario-Activos" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
-
+	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	
 	final ActivoImpl activoimpl = new ActivoImpl();
 
 	String[][] contables;
@@ -70,9 +71,9 @@ public class ReportPdf {
 
 
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Codigo", 60));
-		columns.add(new Column("Serie", 80));
-		columns.add(new Column("Nombre del Activo", 240));
+		columns.add(new Column("Codigo", 50));
+		columns.add(new Column("Serie", 50));
+		columns.add(new Column("Nombre del Activo", 320));
 		columns.add(new Column("Valor Compra", 60));
 		columns.add(new Column("Valor Neto", 60));
 

@@ -27,7 +27,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteKardex extends VerticalLayout implements View, ClickListener {
+public class VKardexR extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -37,7 +37,7 @@ public class VReporteKardex extends VerticalLayout implements View, ClickListene
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
 	
-	public VReporteKardex() {
+	public VKardexR() {
 		
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());

@@ -12,6 +12,7 @@ import ait.sistemas.proyecto.activos.data.model.ComponentesModel;
 import ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 
 public class ReportPdf {
@@ -31,13 +32,13 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-	private static final float FOOTER_FONT_SIZE = 9;
+	private static final float FOOTER_FONT_SIZE = 7;
 
 	/**
 	 * Font for footer report
 	 */
 	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-	private static final float HEADER_FONT_SIZE = 10;
+	private static final float HEADER_FONT_SIZE = 8;
 
 	/**
 	 * Font for footer report
@@ -49,14 +50,14 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-	private static final float SUBTITLE_FONT_SIZE = 11;
+	private static final float SUBTITLE_FONT_SIZE = 12;
 
 	private static final float ROW_HEIGHT = 15;
 	private static final float ROW_TITLE_HEIGHT = 20;
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 3;
-	static String SAVE_PATH = "C:\\Informe-Kardex-final" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ProveedorImpl provedorimpl = new ProveedorImpl();
 	final ActivoImpl activoimpl = new ActivoImpl();

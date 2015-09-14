@@ -69,6 +69,10 @@ public class Messages {
 	 * Utilizado en casos donde el String que se desee utilizar tenga el valor de null
 	 */
 	public static final String NOT_FOUND_STRING = "No Disponible";
+	/**
+	 * Mesaje para la impresion del etiquetas de Activos
+	 */
+	public static final String CODE_BAR_INFO = "Debe seleccionar almenos un Activo del grid";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}
