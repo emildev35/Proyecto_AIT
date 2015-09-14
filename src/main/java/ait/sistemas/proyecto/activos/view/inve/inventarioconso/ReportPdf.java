@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFMultiInventarioGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -22,7 +23,7 @@ public class ReportPdf {
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 8;
+	private static final float FONT_SIZE = 10;
 
 	/**
 	 * Font for footer report
@@ -34,7 +35,7 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-	private static final float HEADER_FONT_SIZE = 10;
+	private static final float HEADER_FONT_SIZE = 8;
 
 	/**
 	 * Font for footer report
@@ -46,14 +47,14 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-	private static final float SUBTITLE_FONT_SIZE = 11;
+	private static final float SUBTITLE_FONT_SIZE = 12;
 
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 5;
 
-	static String SAVE_PATH = "Informe-Inventario-Consolidado-Activos" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	static String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Inventario-Consolidado-Activos" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 

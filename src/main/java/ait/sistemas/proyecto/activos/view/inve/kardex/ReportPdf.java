@@ -12,6 +12,7 @@ import ait.sistemas.proyecto.activos.data.model.ComponentesModel;
 import ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 
 public class ReportPdf {
@@ -56,7 +57,7 @@ public class ReportPdf {
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 3;
-	static String SAVE_PATH = "C:\\Informe-Kardex-final" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	static String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Kardex-final" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ProveedorImpl provedorimpl = new ProveedorImpl();
 	final ActivoImpl activoimpl = new ActivoImpl();

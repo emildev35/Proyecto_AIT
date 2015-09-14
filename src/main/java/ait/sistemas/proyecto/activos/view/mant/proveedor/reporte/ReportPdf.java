@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFMultiTableGenerator;
 import ait.sistemas.proyecto.common.report.PDFTableGenerator;
@@ -56,7 +57,7 @@ public class ReportPdf {
     private static final int HEADER_SIZE = 5;
     
    
-    static String SAVE_PATH = "Informe-Proveedor.pdf";
+    public static String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Proveedor"+ String.valueOf(new java.util.Date().getTime()) + ".pdf";
     
     final ProveedorImpl provedorimpl = new ProveedorImpl();
     public boolean getPdf(String[][] data, String strCiudad,String strDependencia) throws IOException{

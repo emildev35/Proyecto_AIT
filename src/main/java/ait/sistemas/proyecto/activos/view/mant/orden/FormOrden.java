@@ -30,7 +30,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormOrdenSalida extends GridLayout implements SelectionListener {
+public class FormOrden extends GridLayout implements SelectionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private GridSolMantenimientoAprobadas grid_solmanapr = new GridSolMantenimientoAprobadas();
@@ -55,7 +55,7 @@ public class FormOrdenSalida extends GridLayout implements SelectionListener {
 	private DocumentoPendiente sol_mantenimiento;
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	public FormOrdenSalida() {
+	public FormOrden() {
 		super(6, 5);
 		this.grid_solmanapr.update(session.getId_dependecia());
 		

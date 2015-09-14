@@ -11,7 +11,7 @@ import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.model.TipoSoporte;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoSoporteImpl;
-import ait.sistemas.proyecto.activos.view.mvac.solmantenimiento.GridMantenimiento;
+import ait.sistemas.proyecto.activos.view.mvac.solmantenimiento.GridSolmantenimiento;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
@@ -48,7 +48,7 @@ public class FormSoporte extends GridLayout {
 	private TextField txt_hora = new TextField("Hora");
 	private ComboBox cb_tipo_soporte = new ComboBox("Tipo de Soporte Utilizado");
 	private ComboBox cb_nombre_sistema = new ComboBox("Nombre del Sistema Aplicativo");
-	private GridMantenimiento grid_activos_asignados = new GridMantenimiento();
+	private GridSolmantenimiento grid_activos_asignados = new GridSolmantenimiento();
 	private TextArea tarea_descripcion = new TextArea("Descripcion del Problema Reportado");
 	
 	private PropertysetItem pitm_Grupo = new PropertysetItem();

@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
 
 public class ReportPdf {
@@ -50,7 +51,7 @@ public class ReportPdf {
 //	private static final float CELL_MARGIN = 2;
 //
 //	private static final int HEADER_SIZE = 3;
-	public static String SAVE_PATH = "C:\\Reporte-Acta-Movimiento" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Acta-Movimiento" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
 

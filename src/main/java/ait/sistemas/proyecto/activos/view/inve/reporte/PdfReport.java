@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.pdf.Table;
 import ait.sistemas.proyecto.common.report.pdf.TableBuilder;
@@ -53,7 +54,7 @@ public class PdfReport {
 	
 	private static final int HEADER_SIZE = 3	;
 	
-	static String SAVE_PATH = "/tmp/" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Dinamico" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 	
 	final ActivoImpl activoimpl = new ActivoImpl();
 	

@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.devolucion.reporte;
+package ait.sistemas.proyecto.activos.view.inve.activoxfun.reporte;
 
 import java.io.IOException;
 
@@ -51,9 +51,9 @@ public class ReportPdf {
 //	private static final float CELL_MARGIN = 2;
 //
 //	private static final int HEADER_SIZE = 3;
-	public static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Acta-Movimiento" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Activos-x-Funcionario" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
-	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
+	public boolean getPdf(Acta data) throws IOException {
 
 		return new PdfActaGenerator().generatePDF(build(data), SAVE_PATH);
 

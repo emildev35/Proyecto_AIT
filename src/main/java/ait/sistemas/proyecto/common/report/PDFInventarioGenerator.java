@@ -603,30 +603,32 @@ public class PDFInventarioGenerator {
 		nextTextY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
 				.getHeight() - table.getMargin();
 
+		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
-		contentStream.showText("Dependencia : " + usuario.getDependecia());
+		contentStream.showText(usuario.getDependecia());
 
 		contentStream.endText();
 
+		
 		long size_header = table.isLandscape() ? 800 : 400;
 		Date date = new Date();
 		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
 		String fecha = fechaHora.format(date);
 
 		nextTextX += size_header;
-
+		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText("Fecha : " + fecha);
 		contentStream.endText();
 
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight()* 0.5;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Unidad : " + usuario.getUnidad());
+		contentStream.showText(usuario.getUnidad());
 		contentStream.endText();
 
 		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
@@ -640,11 +642,11 @@ public class PDFInventarioGenerator {
 		contentStream.endText();
 
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight()* 0.5;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
-		contentStream.showText("Usuario : " + usuario.getFull_name());
+		contentStream.showText(usuario.getFull_name());
 		contentStream.endText();
 
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());

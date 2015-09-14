@@ -24,7 +24,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
-public class FormReporte extends GridLayout implements ValueChangeListener{
+public class FormResumenact extends GridLayout implements ValueChangeListener{
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 	private FieldGroup binder_Actualizacion;
 	
 	
-	public FormReporte() {
+	public FormResumenact() {
 		setColumns(1);
 		setRows(3);
 		setWidth("40%");

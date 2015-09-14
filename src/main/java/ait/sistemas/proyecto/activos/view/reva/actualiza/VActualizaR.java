@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.reva.resumenact;
+package ait.sistemas.proyecto.activos.view.reva.actualiza;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
+import ait.sistemas.proyecto.activos.view.reva.actualiza.reporte.FormReporte;
+import ait.sistemas.proyecto.activos.view.reva.actualiza.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;
@@ -27,7 +29,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteResumenAct extends VerticalLayout implements View, ClickListener {
+public class VActualizaR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +41,7 @@ public class VReporteResumenAct extends VerticalLayout implements View, ClickLis
 	private final ActualizacionImpl actualizacion_impl = new ActualizacionImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VReporteResumenAct() {
+	public VActualizaR() {
 
 		this.btn_imprimir = new Button("Imprimir Actualizacion");
 		addComponent(buildNavBar());
@@ -74,7 +76,7 @@ public class VReporteResumenAct extends VerticalLayout implements View, ClickLis
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Revalorizacion Depreciacion » "));
-		nav.addComponent(new Label("Resumen Actualizacion y Depreciacion de Activos » "));
+		nav.addComponent(new Label("Actualizacion » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -102,8 +104,8 @@ public class VReporteResumenAct extends VerticalLayout implements View, ClickLis
 
 	public String[][] getDatos() {
 
-		List<ActivosModel> lista = actualizacion_impl.getResumenActualizacion((Short) this.frmReporte.cb_Dependencia
-				.getValue());
+		List<ActivosModel> lista = actualizacion_impl
+				.getActualizacion((Short) this.frmReporte.cb_Dependencia.getValue());
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
@@ -137,46 +139,43 @@ public class VReporteResumenAct extends VerticalLayout implements View, ClickLis
 			
 			double valor_DAA = Double.parseDouble(String.valueOf(activo.getACT_DAA() == null ? "0" : activo.getACT_DAA()));
 			String str_DAA = formater.format(valor_DAA);
-			
-			String[] row = { activo.getACT_Dependencia(), " ", " ", 
-					activo.getACT_Dependencia_Codigo_Activo(),
+			String[] row = { activo.getACT_Dependencia(), 
 					activo.getACT_Grupo_Contable(), 
-					String.valueOf(activo.getACT_Codigo_Activo()),
-					valor_str_compra,
-					String.valueOf(activo.getACT_Vida_Util()),
+					activo.getACT_Auxiliar_Contable(), 
+					activo.getACT_Codigo_Activo(), 
+					activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Fecha_Compra()) ,
+					valor_str_compra, 
+					String.valueOf(activo.getACT_Vida_Util()), 
 					str_acrualizacion_GAn,
 					str_depreciacion_GAn,
 					str_acrualizacion_GA,
 					str_depreciacion_GA,
 					str_CA,
 					str_DAA, 
-					valor_str };
-
+					valor_str
+					};
+			
 			data[r] = row;
 			r++;
 		}
 		return data;
 	}
-
-	// public String[][] getDatosALL() {
-	//
-	// List<ActivosModel> lista = activo_impl.getactivos();
-	//
-	// String[][] data = new String[lista.size()][5];
-	// r = 0;
-	// for (ActivosModel activo : lista) {
-	// String[] row = { activo.getACT_Dependencia(),
-	// activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(),
-	// activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(),
-	// activo.getACT_Nombre_Activo(),
-	// String.valueOf(activo.getACT_Valor()),
-	// String.valueOf(activo.getACT_Valor_Neto()) };
-	//
-	// data[r] = row;
-	// r++;
-	// }
-	// return data;
-	// }
+//	public String[][] getDatosALL() {
+//		
+//		List<ActivosModel> lista = activo_impl.getactivos();
+//		
+//		String[][] data = new String[lista.size()][5];
+//		r = 0;
+//		for (ActivosModel activo : lista) {
+//			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(), activo.getACT_Nombre_Activo(),
+//					String.valueOf(activo.getACT_Valor()), String.valueOf(activo.getACT_Valor_Neto()) };
+//			
+//			data[r] = row;
+//			r++;
+//		}
+//		return data;
+//	}
 
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
@@ -197,15 +196,15 @@ public class VReporteResumenAct extends VerticalLayout implements View, ClickLis
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
-				// short a =0;
-				// if ( (Short)this.frmReporte.cb_Dependencia.getValue() == a) {
-				// // int [][] datas = activo_impl.getProvedoreCuidad();
-				// reporte.getPdf(getDatosALL(),
-				// this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
-				// } else {
-				reporte.getPdf(getDatos(),
-						this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
-				// }
+//				short a =0;
+//				if ( (Short)this.frmReporte.cb_Dependencia.getValue() == a) {
+//					// int [][] datas = activo_impl.getProvedoreCuidad();
+//					 reporte.getPdf(getDatosALL(),
+//								this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
+//				} else {
+					reporte.getPdf(getDatos(),
+							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
+//				}
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
 
 				VerticalLayout vl_pdf = new VerticalLayout();
@@ -217,7 +216,7 @@ public class VReporteResumenAct extends VerticalLayout implements View, ClickLis
 				vl_pdf.setSizeFull();
 				vl_pdf.addComponent(pdf);
 
-				Window subWindow = new Window("Reporte Resumen Actualizacion");
+				Window subWindow = new Window("Reporte Actualizacion");
 				VerticalLayout subContent = new VerticalLayout();
 				subContent.setMargin(true);
 				subWindow.setContent(vl_pdf);

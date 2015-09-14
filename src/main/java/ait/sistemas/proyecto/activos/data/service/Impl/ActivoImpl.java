@@ -15,6 +15,7 @@ import ait.sistemas.proyecto.activos.component.model.CaracteristicasActivo;
 import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
 import ait.sistemas.proyecto.activos.component.model.Documento;
+import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.model.ComponentesModel;
@@ -199,12 +200,19 @@ public class ActivoImpl {
 		return result;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getAsignados(String ci_usuario) {
 		Query query = em.createNativeQuery("exec Mvac_ActivoAsignadobyUsuario @CI_Usuario=?1", "activo-simple").setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, ci_usuario);
 		List<ActivoGrid> resultlist = query.getResultList();		
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MovimientoReporte> ActivosbyUsuario(String ci_usuario) {
+		Query query = em.createNativeQuery("exec Mvac_ActivosbyFuncionario_Q @CI_Usuario=?1 ", "reporte-movimiento").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, ci_usuario);
+		List<MovimientoReporte> resultlist = query.getResultList();		
 		return resultlist;
 	}
 	
