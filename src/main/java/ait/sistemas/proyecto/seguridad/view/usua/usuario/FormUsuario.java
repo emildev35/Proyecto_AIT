@@ -99,7 +99,7 @@ public class FormUsuario extends GridLayout implements ValueChangeListener {
 			usuario += nombre.substring(0, 1);
 		}
 		String strIdentificador = String.format("%s%s%s", usuario, value.getPER_Apellido_Paterno().replace(" ", ""),
-				value.getPER_Apellido_Materno().substring(0, 1)).toUpperCase();
+				value.getPER_Apellido_Materno().substring(0, 1)).toLowerCase();
 		this.txtIdenticadorUsuario.setValue(strIdentificador);
 	}
 	

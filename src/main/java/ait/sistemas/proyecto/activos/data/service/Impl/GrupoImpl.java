@@ -24,7 +24,12 @@ public class GrupoImpl implements Dao<Grupos_Contable> {
 		this.emf = Persistence.createEntityManagerFactory("AIT-Activos");
 		this.em = emf.createEntityManager();
 	}
-	
+	public String getId() {
+		String str_id = "EXEC Para_Grupo_Getid ";
+		Query query = this.em.createNativeQuery(str_id);
+		return (String) query.getSingleResult();
+		//return result;
+	}
 	public List<GruposContablesModel> getalls() {
 		this.em.getEntityManagerFactory().getCache().evict(GruposContablesModel.class);
 		Query query = em.createNativeQuery("exec Para_Grupo_Q", "archive-map-g").setHint(QueryHints.REFRESH,

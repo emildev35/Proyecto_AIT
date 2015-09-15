@@ -22,6 +22,11 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
+/**
+ * Formulario de Login 
+ * @author franzemil
+ *
+ */
 public class LoginForm extends GridLayout implements TextChangeListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -37,7 +42,7 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
 	
 	public LoginForm() {
-		super(1, 3);
+		super(3, 3);
 		setWidth("100%");
 		setMargin(true);
 		this.pitm_login.addItemProperty("usuario", new ObjectProperty<String>(""));
@@ -59,14 +64,17 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 		this.pwd_password.addValidator(new RegexpValidator("^(?=^.{8,}$)(?=.*\\d)(?=.*\\W+)(?=.*[a-z])(?=.*[A-Z])(?!^.*\\n).*$",
 				Messages.PASSWORD_MESSAGE));
 		
+		this.txt_id_usuario.setWidth("50%");
+		this.pwd_password.setWidth("50%");
+		this.pwd_password_verification.setWidth("50%");
 		buildForm();
 		Responsive.makeResponsive(this);
 	}
 	
 	private void buildForm() {
 		this.binder_login.clear();
-		addComponent(this.txt_id_usuario, 0, 0);
-		addComponent(this.pwd_password, 0, 1);
+		addComponent(this.txt_id_usuario, 1, 0);
+		addComponent(this.pwd_password, 1, 1);
 	}
 	
 	public boolean validate() {

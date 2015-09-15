@@ -12,6 +12,7 @@ import ait.sistemas.proyecto.common.report.msword.SimpleWord;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -71,12 +72,15 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 		buttonContent.addStyleName("ait-buttons");
 		
 		this.btn_imprimir_excel.setStyleName("ait-buttons-btn");
+		this.btn_imprimir_excel.setIcon(FontAwesome.FILE_EXCEL_O);
 		buttonContent.addComponent(this.btn_imprimir_excel);
 		
 		this.btn_imprimir_word.setStyleName("ait-buttons-btn");
+		this.btn_imprimir_word.setIcon(FontAwesome.FILE_WORD_O);
 		buttonContent.addComponent(this.btn_imprimir_word);
 		
 		this.btn_imprimir_pdf.setStyleName("ait-buttons-btn");
+		this.btn_imprimir_pdf.setIcon(FontAwesome.FILE_PDF_O);
 		buttonContent.addComponent(this.btn_imprimir_pdf);
 		
 		return buttonContent;

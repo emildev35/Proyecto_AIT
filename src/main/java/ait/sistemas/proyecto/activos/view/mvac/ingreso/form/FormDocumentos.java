@@ -112,6 +112,9 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		grid_activo.setColumnExpandRatio(1, 3);
 		grid_activo.addComponent(this.txt_codigo_activo, 0, 0);
 		grid_activo.addComponent(this.txt_nombre_activo, 1, 0);
+		grid_activo.setColumnExpandRatio(0, 1);
+		grid_activo.setColumnExpandRatio(1, 5);
+		
 		pn_activo.setContent(grid_activo);
 		addComponent(pn_activo, 0, 0, 2, 0);
 		

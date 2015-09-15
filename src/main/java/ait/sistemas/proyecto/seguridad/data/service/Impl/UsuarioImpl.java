@@ -183,14 +183,24 @@ public class UsuarioImpl implements Dao<Usuario>, Serializable{
 				.setParameter(2, password);
 		return (Integer) query.getSingleResult();
 	}
-	
+	/**
+	 * Retorna el un Session Model en caso que la usuario y el password +
+	 * existan en la base de datos
+	 * @param usuario
+	 * @param password
+	 * @return
+	 */
 	public SessionModel login(String usuario, String password) {
 		String str_find_user = "EXEC Usua_FindUser_P @Id_Usuario=?1, @Password=?2";
 		Query query = this.em.createNativeQuery(str_find_user, "session-usuario").setParameter(1, usuario)
 				.setParameter(2, password);
 		return (SessionModel) query.getSingleResult();
 	}
-	
+	/**
+	 * Retorna una lista con a los que el Usuario tiene Acceso
+	 * @param usuario
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Arbol_menus> getMenus(String usuario) {
 		List<Arbol_menus> result = new ArrayList<Arbol_menus>();
@@ -204,13 +214,32 @@ public class UsuarioImpl implements Dao<Usuario>, Serializable{
 		}
 		return result;
 	}
-	
+	/**
+	 * Actualiza el Password del usuario
+	 * @param id_usuario
+	 * @param password
+	 * @return
+	 */
 	public boolean changePassword(String id_usuario, String password) {
 		password = Auth.hash(password);
 		String str_query = "EXEC Perm_ChangePassword_P @Id_Usuario=?1, @New_Password=?2";
 		Query query = this.em.createNativeQuery(str_query);
 		query.setParameter(1, id_usuario);
 		query.setParameter(2, password);
+		int result = (Integer) query.getSingleResult();
+		return (result > 0) ? true : false;
+	}
+	/**
+	 * Retorna true encaso que el usuario tenga permiso a la vista
+	 * @param id_usuario
+	 * @param path_view
+	 * @return
+	 */
+	public boolean checkpermission(String id_usuario, String path_view){
+		String str_query = "EXEC Seg_CheckPerm @Id_Usuario=?1, @View_Path=?2";
+		Query query = this.em.createNativeQuery(str_query);
+		query.setParameter(1, id_usuario);
+		query.setParameter(2, path_view);
 		int result = (Integer) query.getSingleResult();
 		return (result > 0) ? true : false;
 	}

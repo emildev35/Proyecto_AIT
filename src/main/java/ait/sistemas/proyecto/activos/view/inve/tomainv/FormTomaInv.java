@@ -19,6 +19,8 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextArea;
@@ -50,6 +52,9 @@ public class FormTomaInv extends GridLayout {
 	
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
+	private Button btn_scaner = new Button("Escanear Codigo de Barras");
+	private Button btn_act_previo = new Button("Activo sin Registro Previo");
+	
 	public FormTomaInv() {
 		
 		super(6, 5);
@@ -57,7 +62,7 @@ public class FormTomaInv extends GridLayout {
 		setMargin(true);
 		setWidth("100%");
 		setMargin(true);
-
+		
 		pitm_tomainv.addItemProperty("nro_socumento_ref", new ObjectProperty<Integer>(0));
 		pitm_tomainv.addItemProperty("fecha_ref", new ObjectProperty<Date>(new Date()));
 		pitm_tomainv.addItemProperty("codigo_activo", new ObjectProperty<Integer>(0));
@@ -97,7 +102,6 @@ public class FormTomaInv extends GridLayout {
 		txt_usuario_asignado.setWidth("100%");
 		txt_nombre_activo_no.setWidth("100%");
 		
-		
 		update();
 		enabled();
 		buildContent();
@@ -110,16 +114,18 @@ public class FormTomaInv extends GridLayout {
 		addComponent(this.dtf_fecha, 1, 0);
 		addComponent(this.txt_nro_documento, 5, 0);
 		
-		addComponent(this.txt_codigo_activo, 0, 1);
+		addComponent(this.txt_ci_usuario, 0, 1, 1, 1);
+		addComponent(this.txt_usuario_asignado, 2, 1, 4, 1);
 		addComponent(this.dtf_fecha_documento, 5, 1);
 		
-		addComponent(this.txt_ci_usuario, 0, 2, 1, 2);
-		addComponent(this.txt_usuario_asignado, 2, 2, 4, 2);
-		
+		addComponent(this.txt_codigo_activo, 0, 2);
+		addComponent(this.btn_scaner, 1, 2);
+		addComponent(this.btn_act_previo, 2, 2);
+		addComponent(this.txt_nombre_activo_no, 3, 2);
 		addComponent(this.tarea_observacion, 0, 3, 5, 3);
 		
-		addComponent(this.txt_nombre_activo_no, 0, 4, 3, 4);
-		
+		setComponentAlignment(btn_scaner, Alignment.BOTTOM_CENTER);
+		setComponentAlignment(txt_nombre_activo_no, Alignment.BOTTOM_CENTER);
 	}
 	
 	public void update() {
@@ -127,14 +133,14 @@ public class FormTomaInv extends GridLayout {
 	}
 	
 	public void enabled() {
-		this.txt_codigo_activo.setEnabled(false);
+		// this.txt_codigo_activo.setEnabled(false);
 		this.dtf_fecha.setEnabled(false);
 		this.txt_nro_documento_ref.setEnabled(false);
 		this.txt_usuario_asignado.setEnabled(false);
 		this.txt_codigo_activo.setValue("");
 		this.dtf_fecha.setValue(new Date());
 		this.txt_usuario_asignado.setValue(session.getFull_name());
-		this.txt_nro_documento_ref.setValue(String.valueOf(this.movimientoimpl.getId((short)14)));
+		this.txt_nro_documento_ref.setValue(String.valueOf(this.movimientoimpl.getId((short) 14)));
 	}
 	
 	public List<BarMessage> getMensajes() {

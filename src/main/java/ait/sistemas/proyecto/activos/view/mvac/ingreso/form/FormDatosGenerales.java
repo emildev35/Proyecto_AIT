@@ -77,7 +77,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public ComboBox cb_organismo_financiador = new ComboBox("Organismo Financiador");
 	public ComboBox cb_ubicacion_fisica = new ComboBox("Ubicacion Fisica");
 	public ComboBox cb_inmueble = new ComboBox("Inmueble");
-	public DateField dtf_fecha_comodato = new DateField("Fecha Como Dato");
+	public DateField dtf_fecha_comodato = new DateField("Fecha ComoDato");
 	
 	final PropertysetItem pitmDatosGenerales = new PropertysetItem();
 	private FieldGroup binderDatosGeneraler;

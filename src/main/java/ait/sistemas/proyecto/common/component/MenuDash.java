@@ -105,6 +105,7 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 		    public void menuSelected(final MenuItem selectedItem) {
 		    	UI.getCurrent().getSession().close();
 		    	UI.getCurrent().getPage().reload();
+		    	UI.getCurrent().getNavigator().navigateTo("");
 		    }
 		});
 		return settings;
