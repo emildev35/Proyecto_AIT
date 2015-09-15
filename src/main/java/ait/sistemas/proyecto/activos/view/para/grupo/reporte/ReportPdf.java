@@ -52,7 +52,7 @@ public class ReportPdf {
     
     private static final int HEADER_SIZE = 5;
     
-    static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Grupos-Contables.pdf";
+    public static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Grupos-Contables.pdf";
     
     
     public boolean getPdf(String[][] data) throws IOException{

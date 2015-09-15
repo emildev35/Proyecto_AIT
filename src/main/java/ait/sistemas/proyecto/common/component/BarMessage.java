@@ -1,9 +1,24 @@
 package ait.sistemas.proyecto.common.component;
 
+/**
+ * Clase encargada de almacenar los mensajes de Error, Succes de
+ * las Pantallas
+ * @author franzemil
+ *
+ */
 public class BarMessage {
 
+	/**
+	 * Nombre del Componente que genero el Error
+	 */
 	private String componetName;
+	/**
+	 * Mensaje de error
+	 */
 	private String errorName;
+	/**
+	 * Tipo de Error : failure, success
+	 */
 	private String type;
 	
 	public BarMessage() {

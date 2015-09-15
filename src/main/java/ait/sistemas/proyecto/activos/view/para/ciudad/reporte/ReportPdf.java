@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.ciudad.reporte;
+package ait.sistemas.proyecto.activos.view.para.ciudad.reporte;
 
 import java.io.IOException;
 import java.util.ArrayList;

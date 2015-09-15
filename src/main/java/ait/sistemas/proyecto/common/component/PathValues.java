@@ -1,5 +1,10 @@
 package ait.sistemas.proyecto.common.component;
 
+/**
+ * Clase donde se almacenan las rutas donde se almacenar las rutas para los
+ * @author franzemil
+ *
+ */
 public class PathValues {
 	
 //	public static final String PATH_REPORTS = "C:\\Reportes\\";

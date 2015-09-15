@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.ciudad;
+package ait.sistemas.proyecto.activos.view.para.ciudad;
 
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
 import ait.sistemas.proyecto.activos.data.service.Impl.CiudadImpl;

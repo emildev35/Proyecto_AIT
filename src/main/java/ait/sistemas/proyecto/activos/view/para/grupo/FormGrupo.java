@@ -95,7 +95,7 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 		txt_coeficiente.setWidth("90%");
 		cb_partida.setWidth("90%");
 
-		updateId();
+//		updateId();
 		fillsigla();
 		buildContent();
 		Responsive.makeResponsive(this);
