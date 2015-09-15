@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.ciudad;
+package ait.sistemas.proyecto.activos.view.para.ciudad;
 
 import java.util.ArrayList;
 import java.util.Date;

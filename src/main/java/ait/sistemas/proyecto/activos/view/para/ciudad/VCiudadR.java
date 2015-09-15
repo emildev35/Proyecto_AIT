@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.ciudad;
+package ait.sistemas.proyecto.activos.view.para.ciudad;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model_rrhh.Ciudade;
 import ait.sistemas.proyecto.activos.data.service.Impl.CiudadImpl;
-import ait.sistemas.proyecto.activos.view.rrhh.ciudad.reporte.ReportPdf;
+import ait.sistemas.proyecto.activos.view.para.ciudad.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;

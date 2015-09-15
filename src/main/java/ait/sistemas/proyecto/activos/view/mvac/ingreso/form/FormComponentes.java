@@ -89,7 +89,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		this.txt_codigo_activo.setEnabled(false);
 		this.txt_nombre_activo.setEnabled(false);
 		this.txt_codigo_activo.setWidth("90%");
-		this.txt_nombre_activo.setWidth("90%");
+		this.txt_nombre_activo.setWidth("100%");
 		this.txt_nombre_componente.setWidth("90%");
 		this.txt_caracteristica_componente.setWidth("90%");
 		buildForm();
@@ -110,6 +110,8 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		grid_activo.setColumnExpandRatio(1, 3);
 		grid_activo.addComponent(this.txt_codigo_activo, 0, 0);
 		grid_activo.addComponent(this.txt_nombre_activo, 1, 0);
+		grid_activo.setColumnExpandRatio(0, 1);
+		grid_activo.setColumnExpandRatio(1, 4);
 		pn_activo.setContent(grid_activo);
 		addComponent(pn_activo, 0, 0, 2, 0);
 		

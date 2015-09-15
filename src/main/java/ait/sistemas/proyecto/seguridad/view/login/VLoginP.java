@@ -50,7 +50,7 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 	private Component buildForm() {
 		final VerticalLayout vl_content = new VerticalLayout();
 		vl_content.setMargin(true);
-		Panel pn_frm = new Panel();
+		Panel pn_frm = new Panel("REGISTRE SU INFORMACION PARA SU AUTENTICACION");
 		pn_frm.setContent(this.frm_login);
 		vl_content.addComponent(pn_frm);
 		return vl_content;

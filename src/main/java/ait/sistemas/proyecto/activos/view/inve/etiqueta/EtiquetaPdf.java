@@ -14,17 +14,17 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
 import ait.sistemas.proyecto.common.component.CodeBar;
 import ait.sistemas.proyecto.common.component.PathValues;
 
+/**
+ * Clase de Gestion para la impresion del pdf
+ * @author franzemil
+ *
+ */
 public class EtiquetaPdf {
 	
-
 	private static final PDRectangle PAGE_SIZE = PDRectangle.A4;
 	private static final float MARGIN = 40;
-
-	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
 	private static final float FONT_SIZE = 6;
-
-
 	private static final float CELL_MARGIN = 2;
 
 
@@ -38,7 +38,11 @@ public class EtiquetaPdf {
 		return new PdfEtiqueta().generatePDF(createContent(codigos), SAVE_PATH);
 
 	}
-
+	/**
+	 * Encarga de Generar el Objeto Etiqueta
+	 * @param codigos
+	 * @return
+	 */
 	private Etiqueta createContent(List<CodeBar> codigos) {
 		Etiqueta etiqueta = new  Etiqueta();
 		etiqueta.setCellMargin(CELL_MARGIN);

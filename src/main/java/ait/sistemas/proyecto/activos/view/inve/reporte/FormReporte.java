@@ -36,6 +36,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		super(2, 2);
 		setSizeFull();
 		setMargin(true);
+		setSpacing(true);
 		tw_campos.setNullSelectionAllowed(false);
 		tw_campos.setMultiSelect(true);
 		tw_campos.setLeftColumnCaption("Columnas del Reporte");
@@ -44,7 +45,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		txt_nombre_reporte.addTextChangeListener(this);
 		tb_vista_previa.setSizeFull();
 		txt_nombre_reporte.setWidth("90%");
-//		tb_vista_previa.setColumnReorderingAllowed(true);
+		// tb_vista_previa.setColumnReorderingAllowed(true);
 		tb_vista_previa.setResponsive(true);
 		tb_vista_previa.setWidth("100%");
 		tw_campos.setWidth("100%");
@@ -58,8 +59,8 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 	}
 	
 	private void buildFormContent() {
-		setColumnExpandRatio(0, 1f);
-		setColumnExpandRatio(1, 3);
+		setColumnExpandRatio(0, 1.9f);
+		setColumnExpandRatio(1, 2f);
 		addComponent(txt_nombre_reporte, 0, 0);
 		addComponent(this.tw_campos, 0, 1);
 		addComponent(tb_vista_previa, 1, 0, 1, 1);
@@ -84,15 +85,18 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		tb_vista_previa.setCaption(this.txt_nombre_reporte.getValue().toUpperCase());
 	}
 	
+	@SuppressWarnings("unchecked")
 	public boolean validate() {
-		if (txt_nombre_reporte.getValue() != null && !txt_nombre_reporte.getValue().equals("") && tw_campos.getValue() != null) {
+		List<String> data = new ArrayList<String>((Collection<? extends String>) this.tb_vista_previa.getContainerPropertyIds());
+		if (txt_nombre_reporte.getValue() != null && !txt_nombre_reporte.getValue().equals("") && tw_campos.getValue() != null
+				&& data.size() > 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public List<BarMessage> getMensajes() {
-		this.mensajes.add(new BarMessage("Formulario", Messages.EMPTY_MESSAGE));
+		this.mensajes.add(new BarMessage("Formulario", Messages.REPORT_MESSAGE));
 		return this.mensajes;
 	}
 	
@@ -111,6 +115,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		List<String> data = new ArrayList<String>((Collection<? extends String>) this.tb_vista_previa.getContainerPropertyIds());
 		return StringHelper.implode(data, ",");
 	}
+	
 	@SuppressWarnings("unchecked")
 	public int[] getColumnssizes() {
 		List<String> data = new ArrayList<String>((Collection<? extends String>) this.tb_vista_previa.getContainerPropertyIds());

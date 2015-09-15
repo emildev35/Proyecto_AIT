@@ -1,12 +1,17 @@
 package ait.sistemas.proyecto.common.component;
 
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
+import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewProvider;
+import com.vaadin.ui.UI;
 
 public class AitViewProvider implements ViewProvider {
 	
 	private static final long serialVersionUID = 1L;
-	
+	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
+	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 	@Override
 	@SuppressWarnings("rawtypes")
 	public View getView(String viewName) {
@@ -52,8 +57,12 @@ public class AitViewProvider implements ViewProvider {
 	
 	@Override
 	public String getViewName(String viewAndParameters) {
-		if(viewAndParameters==null)
+		if(viewAndParameters==null || viewAndParameters.equals("null"))
 			return "";
+		
+//		if(!usuarioimpl.checkpermission(session.getId(), viewAndParameters)){
+//			return "";
+//		}
 		return viewAndParameters;
 	}
 	

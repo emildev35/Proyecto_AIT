@@ -31,17 +31,12 @@ public class AitUI extends UI {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private AitViewProvider viewprovider = new AitViewProvider();
+
 	Navigator navigator;
 	
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
-		// Comentado para motivo de pruebas
-		/*
-		 * if(((SessionModel)getUI().getSession().getAttribute("user"))==null){
-		 * SessionModel result = Auth.getDefaultUser();
-		 * getUI().getSession().setAttribute("user", result); }
-		 */
+
 		if (((SessionModel) getUI().getSession().getAttribute("user")) == null) {
 			SessionModel result;
 			try {
@@ -51,6 +46,14 @@ public class AitUI extends UI {
 				e.printStackTrace();
 			}
 		}
+		/**
+		 * Cuenta de Invitado
+		 */
+		if (((SessionModel) getUI().getSession().getAttribute("user")) == null) {
+			SessionModel result = Auth.getDefaultUser();
+			getUI().getSession().setAttribute("user", result);
+		}
+		AitViewProvider viewprovider = new AitViewProvider();
 		CssLayout layout = new CssLayout();
 		setContent(new MainView(layout));
 		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(layout);
@@ -58,10 +61,11 @@ public class AitUI extends UI {
 		this.navigator.addProvider(viewprovider);
 		
 	}
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = AitUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+	
+	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = AitUI.class, productionMode = false)
+	public static class MyUIServlet extends VaadinServlet {
 		private static final long serialVersionUID = 1L;
-    }
+	}
 	
 }

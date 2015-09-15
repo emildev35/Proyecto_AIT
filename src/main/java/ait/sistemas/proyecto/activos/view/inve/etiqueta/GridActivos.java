@@ -8,6 +8,11 @@ import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 
+/**
+ * Grid de Activos generados a partir del la clase ActivoModel
+ * @author franzemil
+ *
+ */
 public class GridActivos extends Grid {
 	
 	private ActivoImpl activoimpl = new ActivoImpl();
@@ -19,6 +24,9 @@ public class GridActivos extends Grid {
 		buildGrid();
 	}
 	
+	/**
+	 * Carga nuevamente los datos al grid
+	 */
 	public void update() {
 		this.removeAllColumns();
 		bean_activos = null;
@@ -92,7 +100,10 @@ public class GridActivos extends Grid {
 		
 		Responsive.makeResponsive(this);
 	}
-	
+	/**
+	 * Carga los activos por dependencia
+	 * @param dependencia
+	 */
 	public void buildGrid(short dependencia) {
 		bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class);
 		bean_activos.addAll(activoimpl.getactivosbydependencia(dependencia));
@@ -102,7 +113,11 @@ public class GridActivos extends Grid {
 		setSelectionMode(SelectionMode.MULTI);
 		Responsive.makeResponsive(this);
 	}
-	
+	/**
+	 * Carga los activo dependiendo de la unidad organizacional a la que pertenece
+	 * @param dependencia
+	 * @param unidad_organizacional
+	 */
 	public void buildGrid(short dependencia, short unidad_organizacional) {
 		bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class);
 		bean_activos.addAll(activoimpl.getactivos(unidad_organizacional));
@@ -113,7 +128,10 @@ public class GridActivos extends Grid {
 		
 		Responsive.makeResponsive(this);
 	}
-	
+	/**
+	 * Carga los activos dependiendo al usuario al que se asigno
+	 * @param ci_usuario
+	 */
 	public void buildGrid(String ci_usuario) {
 		bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class);
 		bean_activos.addAll(activoimpl.getactivos(ci_usuario));

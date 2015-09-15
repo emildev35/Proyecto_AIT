@@ -7,6 +7,7 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.model.Grupos_Contable;
 import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
+import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
@@ -37,6 +38,7 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 	private List<BarMessage> mensajes;
 
 	private PartidaImpl partida_impl=new PartidaImpl();
+	private GrupoImpl grupo_impl = new GrupoImpl();
 	private PropertysetItem pitm_Grupo = new PropertysetItem();
 	private FieldGroup binder_Grupo;
 
@@ -74,6 +76,7 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 		this.txt_id_grupo.setRequired(true);
 		this.txt_id_grupo.addValidator(new NullValidator("No Nulo", false));
 		this.txt_id_grupo.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(1, 2), 1,2,false));
+		this.txt_id_grupo.setEnabled(false);
 		this.txt_nombre_grupo.setRequired(true);
 		this.txt_nombre_grupo.addValidator(new NullValidator("No Nulo", false));
 		this.txt_nombre_grupo.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3,50,false));
@@ -92,9 +95,14 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 		txt_coeficiente.setWidth("90%");
 		cb_partida.setWidth("90%");
 
+//		updateId();
 		fillsigla();
 		buildContent();
 		Responsive.makeResponsive(this);
+	}
+	private void updateId() {
+		this.txt_id_grupo.setValue(grupo_impl.getId() + "");
+		
 	}
 	private void fillsigla() {
 		cb_partida.setNullSelectionAllowed(false);
@@ -115,7 +123,6 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 		addComponent(this.txt_nombre_grupo, 2,0);
 		addComponent(this.txt_vida_util, 3,0);
 		addComponent(this.txt_coeficiente, 3,1);
-
 	}
 	
 	public void update(){
