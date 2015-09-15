@@ -21,7 +21,7 @@ public class ReportPdf {
     /**
      * Escala 30:1 1cm = 30
      */
-    private static final float MARGIN = 60;
+    private static final float MARGIN = 50;
     /**
      * false Orientacion Vertical true Horizontal
      */
@@ -31,19 +31,19 @@ public class ReportPdf {
      * Fuente el Texto
      */
     private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-    private static final float FONT_SIZE = 12;
+    private static final float FONT_SIZE = 10;
     
     /**
      * Font for footer report
      */
     private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-    private static final float FOOTER_FONT_SIZE = 10;
+    private static final float FOOTER_FONT_SIZE = 9;
     
     /**
      * Font for header report
      */
     private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-    private static final float HEADER_FONT_SIZE = 10;
+    private static final float HEADER_FONT_SIZE = 8;
     
     /**
      * Font for title report
@@ -55,7 +55,7 @@ public class ReportPdf {
      * Font for subtitle report
      */
     private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-    private static final float SUBTITLE_FONT_SIZE = 11;
+    private static final float SUBTITLE_FONT_SIZE = 12;
     
     /**
      * Distancia en entre las lineas de texto
@@ -64,7 +64,7 @@ public class ReportPdf {
     /**
      * Distancia entre las lineas
      */
-    private static final float CELL_MARGIN = 5;
+    private static final float CELL_MARGIN = 4;
     /**
      * Tamaño del header expesado en alto de las filas de la tabla
      */
@@ -88,10 +88,11 @@ public class ReportPdf {
          */
     	List<Column> columns = new ArrayList<Column>();
         columns.add(new Column("ID", 45));	
-        columns.add(new Column("COD", 45));
-        columns.add(new Column("NOMBRE DEL MENU", 240));
-        columns.add(new Column("NIVEL", 50));
-        columns.add(new Column("PROGRAMA", 300));
+        columns.add(new Column("COD", 50));
+        columns.add(new Column("NOMBRE DEL MENU", 260));
+        columns.add(new Column("NVL", 30));
+        columns.add(new Column("PROGRAMA", 280));
+        columns.add(new Column("PADRE", 50));
  
         String[][] content = data;
 
@@ -121,8 +122,8 @@ public class ReportPdf {
             .setUnidad("XXXXXX")
             .setDependencia("XXXXX")
             .setUsuario("XXXXXX")
-            .setTitle("Reporte de Estructura del Sistema")
-            .setSubTitle("Reporte del SubSistema : " + subsistema)
+            .setTitle("REPORTE DE ESTRUCTURA DEL SISTEMA")
+            .setSubTitle("SUBSISTEMA : " + subsistema)
             .build();
         return table;
     }   

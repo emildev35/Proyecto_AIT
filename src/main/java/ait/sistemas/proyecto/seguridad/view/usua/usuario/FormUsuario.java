@@ -60,8 +60,7 @@ public class FormUsuario extends GridLayout implements ValueChangeListener {
 		this.txtCI.setEnabled(false);
 		this.cbPersonal.addValidator(new NullValidator("", false));
 		this.txtIdenticadorUsuario.addValidator(new NullValidator("", false));
-		this.txtIdenticadorUsuario.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(10,
-				12), 10, 12, false));
+		this.txtIdenticadorUsuario.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(5, 12), 5, 12, false));
 		this.cbPersonal.setRequired(true);
 		this.txtIdenticadorUsuario.setRequired(true);
 		buildForm();
@@ -86,17 +85,21 @@ public class FormUsuario extends GridLayout implements ValueChangeListener {
 		PersonalImpl personalimpl = new PersonalImpl();
 		for (PersonalModel personal : personalimpl.getalls()) {
 			this.cbPersonal.addItem(personal);
-			String strNombreCompleto = String.format("%s %s %s", personal.getPER_Nombres(),
-					personal.getPER_Apellido_Paterno(), personal.getPER_Apellido_Materno());
+			String strNombreCompleto = String.format("%s %s %s", personal.getPER_Apellido_Paterno(),
+					personal.getPER_Apellido_Materno(), personal.getPER_Nombres());
 			this.cbPersonal.setItemCaption(personal, strNombreCompleto);
 		}
 	}
 	
 	private void fillData(PersonalModel value) {
 		this.txtCI.setValue(value.getPER_CI_Empleado());
-		String strIdentificador = String.format("%s-%s-%s", value.getPER_Nombres().substring(0, 2),
-				value.getPER_Apellido_Paterno().substring(0, 4),
-				value.getPER_Apellido_Materno().substring(0, 2)).toUpperCase();
+		String[] nombres = value.getPER_Nombres().split(" ");
+		String usuario = "";
+		for (String nombre : nombres) {
+			usuario += nombre.substring(0, 1);
+		}
+		String strIdentificador = String.format("%s%s%s", usuario, value.getPER_Apellido_Paterno().replace(" ", ""),
+				value.getPER_Apellido_Materno().substring(0, 1)).toUpperCase();
 		this.txtIdenticadorUsuario.setValue(strIdentificador);
 	}
 	

@@ -54,8 +54,9 @@ public class PdfReport {
 	
 	private static final int HEADER_SIZE = 3	;
 	
-	static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Dinamico" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
-	
+
+	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+
 	final ActivoImpl activoimpl = new ActivoImpl();
 	
 	String[][] data;

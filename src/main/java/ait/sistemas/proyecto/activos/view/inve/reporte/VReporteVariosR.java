@@ -26,7 +26,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VReporteP extends VerticalLayout implements View, ClickListener {
+public class VReporteVariosR extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,7 +39,7 @@ public class VReporteP extends VerticalLayout implements View, ClickListener {
 	
 	private ReporteImpl reporteimpl = new ReporteImpl();
 	
-	public VReporteP() {
+	public VReporteVariosR() {
 		this.btn_imprimir_excel.addClickListener(this);
 		this.btn_imprimir_word.addClickListener(this);
 		this.btn_imprimir_pdf.addClickListener(this);

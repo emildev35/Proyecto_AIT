@@ -42,8 +42,9 @@ public class PDFTableGenerator {
 	public void drawTable(PDDocument doc, Table table) throws IOException {
 		// Calculate pagination
 		Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue() - 1;
-
-		Integer numberOfPages = new Double(Math.ceil((table.getNumberOfRows().floatValue() + table.getHeaderSize()) / rowsPerPage)).intValue();
+		
+		Integer numberOfPages = new Double(
+				Math.ceil((table.getNumberOfRows().floatValue() + table.getHeaderSize()) / rowsPerPage)).intValue();
 		this.intNumberPages = numberOfPages;
 		// Generate each page, get the content and draw it
 		for (int pageCount = 0; pageCount < numberOfPages; pageCount++) {
@@ -112,6 +113,7 @@ public class PDFTableGenerator {
 			nextTextX += table.getColumns().get(i).getWidth();
 		}
 	}
+	
 	private void drawTableGrid(Table table, String[][] currentPageContent, PDPageContentStream contentStream, float tableTopY)
 			throws IOException {
 		// Draw row lines
@@ -129,7 +131,7 @@ public class PDFTableGenerator {
 		// (table.getRowHeight() * currentPageContent.length);
 		// final float tableBottomY = tableTopY - tableYLength;
 		final float tableBottomY = tableTopY - table.getRowHeight();
-
+		
 		float nextX = table.getMargin();
 		// Modificado para solo el tititulo para grilla completa modificar por
 		for (int i = 0; i < table.getNumberOfColumns(); i++) {
@@ -138,6 +140,7 @@ public class PDFTableGenerator {
 		}
 		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
 	}
+	
 	private String[][] getContentForCurrentPage(Table table, Integer rowsPerPage, int pageCount) {
 		int startRange = pageCount * rowsPerPage;
 		
@@ -148,7 +151,7 @@ public class PDFTableGenerator {
 			endRange = (pageCount * rowsPerPage) - table.getHeaderSize() + rowsPerPage;
 		} else {
 			startRange -= table.getHeaderSize();
-			endRange-=table.getHeaderSize();
+			endRange -= table.getHeaderSize();
 		}
 		if (endRange > table.getNumberOfRows()) {
 			endRange = table.getNumberOfRows();
@@ -163,6 +166,7 @@ public class PDFTableGenerator {
 		doc.addPage(page);
 		return page;
 	}
+	
 	private PDPageContentStream generateContentStream(PDDocument doc, PDPage page, Table table) throws IOException {
 		PDPageContentStream contentStream = new PDPageContentStream(doc, page, false, false);
 		if (table.isLandscape()) {
@@ -171,6 +175,7 @@ public class PDFTableGenerator {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		return contentStream;
 	}
+	
 	private void writeFooter(PDPageContentStream contentStream, float nextTextX, float nextTextY, Table table, int pagecount)
 			throws IOException {
 		
@@ -178,7 +183,7 @@ public class PDFTableGenerator {
 		
 		nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
 		nextTextY -= (table.getRowHeight() * 2.5);
-		contentStream.drawLine(nextTextX, (nextTextY + table.getRowHeight()), nextTextX * table.getNumberOfColumns(),
+		contentStream.drawLine(nextTextX, (nextTextY + table.getRowHeight()), table.getWidth() - table.getCellMargin(),
 				(nextTextY + table.getRowHeight()));
 		
 		contentStream.beginText();
@@ -191,6 +196,7 @@ public class PDFTableGenerator {
 		contentStream.endText();
 		
 	}
+	
 	private void writeHeader(PDPageContentStream contentStream, float nextTextX, float nextTextY, Table table) throws IOException {
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		
@@ -202,7 +208,7 @@ public class PDFTableGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		
-		contentStream.showText("Dependencia : " + usuario.getDependecia());
+		contentStream.showText(usuario.getDependecia());
 		
 		contentStream.endText();
 		
@@ -220,7 +226,7 @@ public class PDFTableGenerator {
 		nextTextY -= table.getRowHeight();
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Unidad : " + usuario.getUnidad());
+		contentStream.showText(usuario.getUnidad());
 		contentStream.endText();
 		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
 		String strhora = hora.format(date);
@@ -237,7 +243,7 @@ public class PDFTableGenerator {
 		nextTextY -= table.getRowHeight();
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Usuario : " + usuario.getFull_name());
+		contentStream.showText(usuario.getFull_name());
 		contentStream.endText();
 		
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());

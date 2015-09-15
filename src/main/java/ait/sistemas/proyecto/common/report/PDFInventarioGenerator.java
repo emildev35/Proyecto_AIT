@@ -663,6 +663,7 @@ public class PDFInventarioGenerator {
 
 		nextTextX = nextTextXCopy;
 		nextTextY -= table.getRowHeight() * 0.5;
+
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(usuario.getUnidad());
@@ -687,7 +688,9 @@ public class PDFInventarioGenerator {
 		contentStream.endText();
 
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
+
 		nextTextY -= table.getRowHeight() * 0.75;
+
 		contentStream.beginText();
 		long text_width = (long) ((table.getTitleFont().getStringWidth(table.getTitle()) / 1000.0f) * table
 				.getFontSizetitle());
@@ -697,7 +700,9 @@ public class PDFInventarioGenerator {
 		contentStream.endText();
 
 		contentStream.setFont(table.getSubtitleFont(), table.getFontSizesubtitle());
+
 		nextTextY -= table.getRowHeight() * 0.75;
+
 		contentStream.beginText();
 		contentStream.endText();
 	}

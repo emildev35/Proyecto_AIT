@@ -11,10 +11,8 @@ public class Acta {
 
 	private float numberofcell = 50;
 	private float margin;
-	private float height;
 	private PDRectangle pageSize;
 	private boolean isLandscape;
-	private float rowHeight;
 	private float rowTitleHeight;
 	private float sizeofcell;
 	private int headerSize;
@@ -93,9 +91,6 @@ public class Acta {
 		return pageSize.getHeight();
 	}
 
-	public void setHeight(float height) {
-		this.height = height;
-	}
 
 	public PDRectangle getPageSize() {
 		return pageSize;
@@ -117,9 +112,6 @@ public class Acta {
 		return tb_activos.getRowHeight();
 	}
 
-	public void setRowHeight(float rowHeight) {
-		this.rowHeight = rowHeight;
-	}
 
 	public int getHeaderSize() {
 		return headerSize;

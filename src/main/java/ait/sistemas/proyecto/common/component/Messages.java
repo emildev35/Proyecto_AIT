@@ -29,7 +29,7 @@ public class Messages {
 	 * @return	String
 	 */
 	public static final String STRING_LENGTH_MESSAGE(int min, int max)
-	{return String.format("La longitud de caracteres debe ser menor a %d y superior a %d", min, max);};
+	{return String.format("La longitud de caracteres debe ser menor a %d y superior a %d", max, min);};
 	/**
 	 * Mensaje Confirmacion en el dialogo
 	 * @param value
@@ -69,6 +69,10 @@ public class Messages {
 	 * Utilizado en casos donde el String que se desee utilizar tenga el valor de null
 	 */
 	public static final String NOT_FOUND_STRING = "No Disponible";
+	/**
+	 * Mesaje para la impresion del etiquetas de Activos
+	 */
+	public static final String CODE_BAR_INFO = "Debe seleccionar almenos un Activo del grid";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}

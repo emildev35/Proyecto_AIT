@@ -17,6 +17,7 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
+
 	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
 	private static final float MARGIN = 60;
 	private static final boolean IS_LANDSCAPE = true;
@@ -29,7 +30,7 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-	private static final float FOOTER_FONT_SIZE = 9;
+	private static final float FOOTER_FONT_SIZE = 7;
 
 	/**
 	 * Font for footer report
@@ -54,8 +55,9 @@ public class ReportPdf {
 
 	private static final int HEADER_SIZE = 5;
 
-	static String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Inventario-Activos" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
+	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	
 	final ActivoImpl activoimpl = new ActivoImpl();
 
 	String[][] contables;
@@ -73,7 +75,7 @@ public class ReportPdf {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
 		columns.add(new Column("Serie", 80));
-		columns.add(new Column("Nombre del Activo", 620));
+
 		columns.add(new Column("Valor Compra", 60));
 		columns.add(new Column("Valor Neto", 60));
 

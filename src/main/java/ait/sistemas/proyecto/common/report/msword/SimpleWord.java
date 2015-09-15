@@ -12,9 +12,11 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
+import ait.sistemas.proyecto.common.component.PathValues;
+
 public class SimpleWord {
 	
-	public final String SAVE_PATH = "C://" + String.valueOf(new java.util.Date().getTime()) + ".docx";
+	public final String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".docx";
 	private XWPFDocument word_document = new XWPFDocument();
 	
 	public void save(String[][] data, List<String> columns, String titulo) {

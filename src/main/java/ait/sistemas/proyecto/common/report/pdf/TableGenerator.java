@@ -208,7 +208,7 @@ public class TableGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		
-		contentStream.showText("Dependencia : " + usuario.getDependecia());
+		contentStream.showText(usuario.getDependecia());
 		
 		contentStream.endText();
 		
@@ -227,7 +227,7 @@ public class TableGenerator {
 		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Unidad : " + usuario.getUnidad());
+		contentStream.showText(usuario.getUnidad());
 		contentStream.endText();
 		
 		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
@@ -244,7 +244,7 @@ public class TableGenerator {
 		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Usuario : " + usuario.getFull_name());
+		contentStream.showText(usuario.getFull_name());
 		contentStream.endText();
 		
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
