@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.soporte;
+package ait.sistemas.proyecto.activos.view.mvac.solsoporte;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormSoporte extends GridLayout {
+public class FormSolsoporte extends GridLayout {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -60,7 +60,7 @@ public class FormSoporte extends GridLayout {
 	private final TipoSoporteImpl tipo_soporteimpl = new TipoSoporteImpl();
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
-	public FormSoporte() {
+	public FormSolsoporte() {
 		
 		super.setColumns(6);
 		super.setRows(4);

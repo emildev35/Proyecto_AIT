@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.solactivo;
+package ait.sistemas.proyecto.activos.view.mvac.solactivos;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +34,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormSolactivo extends GridLayout implements ValueChangeListener {
+public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_solicitud = new TextField("Id. Solicitud");
 	public DateField dtf_fecha_soliciud = new DateField("Fecha Solicitud");
@@ -51,9 +51,9 @@ public class FormSolactivo extends GridLayout implements ValueChangeListener {
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
-	private GridSolactivo grid_solicitud = new GridSolactivo();
+	private GridSolactivos grid_solicitud = new GridSolactivos();
 	
-	public FormSolactivo() {
+	public FormSolactivos() {
 		
 		super(6, 3);
 		setSpacing(true);
@@ -239,7 +239,7 @@ public class FormSolactivo extends GridLayout implements ValueChangeListener {
 	
 		this.binder_solicitud.clear();
 		buildId();
-		this.grid_solicitud = new GridSolactivo();
+		this.grid_solicitud = new GridSolactivos();
 		
 	}
 }

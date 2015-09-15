@@ -25,7 +25,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VGenerardorpinP extends VerticalLayout implements View, ClickListener{
+public class VGeneradorpinP extends VerticalLayout implements View, ClickListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -35,7 +35,7 @@ public class VGenerardorpinP extends VerticalLayout implements View, ClickListen
 	private TextField txt_nombre_servidor = new TextField("Servidor Publico");
 	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 	private final PinImpl pinimpl = new PinImpl();
-	public VGenerardorpinP() {
+	public VGeneradorpinP() {
 		this.btn_agregar= new Button("Agregar");
 		this.btn_agregar.addClickListener(this);
 

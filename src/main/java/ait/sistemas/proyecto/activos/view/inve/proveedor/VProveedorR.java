@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.proveedor;
+package ait.sistemas.proyecto.activos.view.inve.proveedor;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +8,8 @@ import java.util.Map;
 
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
-import ait.sistemas.proyecto.activos.view.mant.proveedor.reporte.FormReporte;
-import ait.sistemas.proyecto.activos.view.mant.proveedor.reporte.ReportPdf;
+import ait.sistemas.proyecto.activos.view.inve.proveedor.reporte.FormReporte;
+import ait.sistemas.proyecto.activos.view.inve.proveedor.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 
 import com.vaadin.navigator.View;

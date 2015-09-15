@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.orden;
+package ait.sistemas.proyecto.activos.view.mvac.solsoporte;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,18 +25,19 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VOrdenA extends VerticalLayout implements View, ClickListener{
+public class VSolsoporteA extends VerticalLayout implements View, ClickListener {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormOrden frm_soporte = new FormOrden();
+	private FormSolsoporte frm_soporte = new FormSolsoporte();
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VOrdenA() {
+	public VSolsoporteA() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
@@ -92,7 +93,7 @@ public class VOrdenA extends VerticalLayout implements View, ClickListener{
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_soporte.validate()) {
 				try {
-					if(soporteimpl.addInforme(frm_soporte.getData())>0){
+					if (soporteimpl.add(frm_soporte.getData())>0) {
 						Notification.show(Messages.SUCCESS_MESSAGE);
 						frm_soporte.clean();
 					}else{
@@ -114,6 +115,5 @@ public class VOrdenA extends VerticalLayout implements View, ClickListener{
 	public void enter(ViewChangeEvent event) {
 		
 	}
-	
 	
 }

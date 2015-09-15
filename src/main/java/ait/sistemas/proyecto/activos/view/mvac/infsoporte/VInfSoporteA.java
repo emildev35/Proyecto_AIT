@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.infsoporte;
+package ait.sistemas.proyecto.activos.view.mvac.infsoporte;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,7 +25,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VInfSoporteP extends VerticalLayout implements View, ClickListener{
+public class VInfSoporteA extends VerticalLayout implements View, ClickListener{
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
@@ -36,7 +36,7 @@ public class VInfSoporteP extends VerticalLayout implements View, ClickListener{
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VInfSoporteP() {
+	public VInfSoporteA() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);

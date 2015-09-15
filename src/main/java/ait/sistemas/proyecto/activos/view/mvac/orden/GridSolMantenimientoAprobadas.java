@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.orden;
+package ait.sistemas.proyecto.activos.view.mvac.orden;
 
 import ait.sistemas.proyecto.activos.component.model.DocumentoPendiente;
 import ait.sistemas.proyecto.activos.data.service.Impl.MantenimientoImpl;

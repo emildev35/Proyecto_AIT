@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.solactivo;
+package ait.sistemas.proyecto.activos.view.mvac.solactivos;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
@@ -6,14 +6,14 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Grid;
 
-public class GridSolactivo extends Grid{
+public class GridSolactivos extends Grid{
 
 	private static final long serialVersionUID = 1L;
 	private BeanItemContainer<ActivoGrid> bean_activos;
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 	
-	public GridSolactivo() {
+	public GridSolactivos() {
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
 		setSizeFull();

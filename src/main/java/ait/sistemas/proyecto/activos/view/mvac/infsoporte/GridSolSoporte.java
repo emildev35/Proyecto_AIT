@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.infsoporte;
+package ait.sistemas.proyecto.activos.view.mvac.infsoporte;
 
 import java.util.Locale;
 
