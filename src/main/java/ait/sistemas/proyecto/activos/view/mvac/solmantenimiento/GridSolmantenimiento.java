@@ -7,7 +7,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Grid;
 
 
-public class GridMantenimiento extends Grid{
+public class GridSolmantenimiento extends Grid{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,7 @@ public class GridMantenimiento extends Grid{
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 	
-	public GridMantenimiento() {
+	public GridSolmantenimiento() {
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
 		setSizeFull();

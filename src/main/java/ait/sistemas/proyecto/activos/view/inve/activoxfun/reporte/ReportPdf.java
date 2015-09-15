@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte;
+package ait.sistemas.proyecto.activos.view.inve.activoxfun.reporte;
 
 import java.io.IOException;
 
@@ -9,10 +9,9 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
 
-
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
 	private static final float MARGIN = 60;
 	private static final boolean IS_LANDSCAPE = true;
 
@@ -43,12 +42,18 @@ public class ReportPdf {
 
 	/**
 	 * Font for footer report
-	 */
-	public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+//	 */
+//	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
+//	private static final float SUBTITLE_FONT_SIZE = 11;
+//
+//	private static final float ROW_HEIGHT = 15;
+//	private static final float ROW_TITLE_HEIGHT = 20;
+//	private static final float CELL_MARGIN = 2;
+//
+//	private static final int HEADER_SIZE = 3;
+	public static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Activos-x-Funcionario" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
-
-
-	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
+	public boolean getPdf(Acta data) throws IOException {
 
 		return new PdfActaGenerator().generatePDF(build(data), SAVE_PATH);
 

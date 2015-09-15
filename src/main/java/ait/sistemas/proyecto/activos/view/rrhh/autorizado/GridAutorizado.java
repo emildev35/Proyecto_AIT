@@ -8,12 +8,12 @@ import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 
-public class GridAutorizacion extends Grid {
+public class GridAutorizado extends Grid {
 	private TipoAutorizacionImpl tipo_autorizacion_impl = new TipoAutorizacionImpl();
 	private static final long serialVersionUID = 1L;
 	private BeanItemContainer<TipoAutorizacionModel> bean_tipo_autorizacion;
 
-	public GridAutorizacion() {
+	public GridAutorizado() {
 		buildGrid();
 	}
 	public void update() {

@@ -36,7 +36,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormSolicitud extends GridLayout implements ValueChangeListener {
+public class FormSoltransferencia extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
 	private TextField txt_id_solicitud = new TextField("Id. Solicitud");
 	public DateField dtf_fecha_soliciud = new DateField("Fecha Solicitud");
@@ -57,9 +57,9 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
-	private GridSolicitud grid_solicitud = new GridSolicitud();
+	private GridSoltransferencia grid_solicitud = new GridSoltransferencia();
 	
-	public FormSolicitud() {
+	public FormSoltransferencia() {
 		
 		super(7, 4);
 		setSpacing(true);
@@ -285,7 +285,7 @@ public class FormSolicitud extends GridLayout implements ValueChangeListener {
 	public void clear() {
 	
 		this.binder_solicitud.clear();
-		this.grid_solicitud = new GridSolicitud();
+		this.grid_solicitud = new GridSoltransferencia();
 		buildId();
 		
 	}

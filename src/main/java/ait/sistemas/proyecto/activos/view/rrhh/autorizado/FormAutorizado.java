@@ -30,7 +30,7 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
-public class FormAutorizacion extends GridLayout implements ValueChangeListener {
+public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
 	
 	public ComboBox cb_tipo_movimiento = new ComboBox("Tipo de  Movimiento");
@@ -50,7 +50,7 @@ public class FormAutorizacion extends GridLayout implements ValueChangeListener 
 	private PropertysetItem pitm_autorizacion = new PropertysetItem();
 	private FieldGroup binder_autorizacion;
 	
-	public FormAutorizacion() {
+	public FormAutorizado() {
 		
 		super.setColumns(4);
 		super.setRows(2);

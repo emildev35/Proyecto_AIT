@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -52,7 +53,7 @@ public class ReportPdf {
     
     private static final int HEADER_SIZE = 5;
     
-    public static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Grupos-Contables.pdf";
+    public static final String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Grupos-Contables.pdf";
     
     
     public boolean getPdf(String[][] data) throws IOException{

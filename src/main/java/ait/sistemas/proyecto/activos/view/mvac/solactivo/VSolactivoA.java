@@ -1,8 +1,8 @@
-package ait.sistemas.proyecto.activos.view.rrhh.autorizado;
+package ait.sistemas.proyecto.activos.view.mvac.solactivo;
 
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.TipoAutorizacionImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -22,25 +22,30 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VAutorizadoA extends VerticalLayout implements View, ClickListener {
+public class VSolactivoA extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormAutorizado frm_autorizacion = new FormAutorizado();
-	private CssLayout hl_errores = new CssLayout();
-	private Button btn_limpiar = new Button("Limpiar");
-	private Button btn_agregar = new Button("Guardar");
-	private GridAutorizado grid_autorizacion = new GridAutorizado();
-	private final TipoAutorizacionImpl tipo_autorizacionimpl = new TipoAutorizacionImpl();
+	private FormSolactivo frm_solicitud;
+	private CssLayout hl_errores;
+	private Button btn_limpiar;
+	private Button btn_agregar;
 	
-	public VAutorizadoA() {
+	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
+	
+	public VSolactivoA() {
+		frm_solicitud = new FormSolactivo();
+		this.btn_limpiar = new Button("Limpiar");
+		this.btn_agregar = new Button("Agregar");
 		this.btn_agregar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
+		
 		this.hl_errores = new CssLayout();
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		Responsive.makeResponsive(this);
 	}
 	
 	private Component buildButtonBar() {
@@ -57,18 +62,12 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel();
-		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario Ciudad");
-		frmPanel.setContent(this.frm_autorizacion);
-		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
-		Panel gridPanel = new Panel();
+		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Grid Ciudad");
-		gridPanel.setContent(this.grid_autorizacion);
+		gridPanel.setCaption("Activos Disponibles");
+		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
+		formContent.addComponent(frm_solicitud);
 		formContent.addComponent(gridPanel);
 		Responsive.makeResponsive(formContent);
 		return formContent;
@@ -79,8 +78,8 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Recursos Humanos>>"));
-		nav.addComponent(new Label("Ciudad>>"));
+		nav.addComponent(new Label("Movimiento de Activos >>"));
+		nav.addComponent(new Label("Solicitud de Asignacion>>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -100,28 +99,30 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
+		
 	}
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
-			if (this.frm_autorizacion.validate()) {
-				if (this.tipo_autorizacionimpl.add(this.frm_autorizacion.getData())) {
-					grid_autorizacion.update();
-					this.frm_autorizacion.update();
-					
+			if (this.frm_solicitud.validate()) {
+				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
+					this.frm_solicitud.clear();
 					Notification.show(Messages.SUCCESS_MESSAGE);
-				} else {
+				}
+				else{
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 				}
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
-			buildMessages(this.frm_autorizacion.getMensajes());
-			this.frm_autorizacion.clearMessages();
+			buildMessages(this.frm_solicitud.getMensajes());
+			this.frm_solicitud.clearMessages();
 		}
 		if (event.getButton() == this.btn_limpiar) {
-			this.frm_autorizacion.update();
+			frm_solicitud.update();
+			// this.frm_solicitud.updateId();
+			
 		}
 	}
 	

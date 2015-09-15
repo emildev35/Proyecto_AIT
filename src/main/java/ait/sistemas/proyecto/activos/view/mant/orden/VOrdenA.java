@@ -25,18 +25,18 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSalidaA extends VerticalLayout implements View, ClickListener{
+public class VOrdenA extends VerticalLayout implements View, ClickListener{
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormOrdenSalida frm_soporte = new FormOrdenSalida();
+	private FormOrden frm_soporte = new FormOrden();
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VSalidaA() {
+	public VOrdenA() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);

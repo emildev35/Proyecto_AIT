@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.solactivo;
+package ait.sistemas.proyecto.activos.view.mvac.soltransferencia;
 
 import java.util.List;
 
@@ -22,19 +22,19 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSolicitudA extends VerticalLayout implements View, ClickListener {
+public class VSoltransferenciaA extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormSolicitud frm_solicitud;
+	private FormSoltransferencia frm_solicitud;
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
 	private Button btn_agregar;
 	
-	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
-	public VSolicitudA() {
-		frm_solicitud = new FormSolicitud();
+	public VSoltransferenciaA() {
+		frm_solicitud = new FormSoltransferencia();
 		this.btn_limpiar = new Button("Limpiar");
 		this.btn_agregar = new Button("Agregar");
 		this.btn_agregar.addClickListener(this);
@@ -45,7 +45,6 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
-		Responsive.makeResponsive(this);
 	}
 	
 	private Component buildButtonBar() {
@@ -64,11 +63,12 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		formContent.setSpacing(true);
 		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Activos Disponibles");
+		gridPanel.setCaption("Activos Fijos Disponibles");
 		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 		formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
 		formContent.addComponent(gridPanel);
+		formContent.addComponent(this.frm_solicitud.getObservaciones());
 		Responsive.makeResponsive(formContent);
 		return formContent;
 	}
@@ -78,8 +78,8 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Movimiento de Activos >>"));
-		nav.addComponent(new Label("Solicitud de Asignacion>>"));
+		nav.addComponent(new Label("Movimiento de Activos>>"));
+		nav.addComponent(new Label("Solicitud de Transferencia>>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -95,7 +95,7 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 		this.addComponent(this.hl_errores);
 		
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
+			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
@@ -106,12 +106,14 @@ public class VSolicitudA extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
 			if (this.frm_solicitud.validate()) {
-				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
+				if (movimientoimpl.addMovimientoTransferencia(this.frm_solicitud.getData())>0) {
 					this.frm_solicitud.clear();
+					
 					Notification.show(Messages.SUCCESS_MESSAGE);
 				}
 				else{
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+					
 				}
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);

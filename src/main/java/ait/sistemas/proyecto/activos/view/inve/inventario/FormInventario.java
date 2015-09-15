@@ -18,7 +18,7 @@ import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 
-public class FormReporte extends GridLayout implements ValueChangeListener{
+public class FormInventario extends GridLayout implements ValueChangeListener{
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 	private FieldGroup binder_Inventario;
 	
 	
-	public FormReporte() {
+	public FormInventario() {
 		setColumns(1);
 		setRows(3);
 		setWidth("40%");

@@ -7,14 +7,14 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 
-public class GridSolicitud extends Grid{
+public class GridSoltransferencia extends Grid{
 
 	private static final long serialVersionUID = 1L;
 	private BeanItemContainer<ActivoGrid> bean_activos;
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 	
-	public GridSolicitud() {
+	public GridSoltransferencia() {
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
 		setSizeFull();

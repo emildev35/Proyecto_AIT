@@ -25,7 +25,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class FormMantenimiento extends GridLayout {
+public class FormSolmantenimiento extends GridLayout {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,11 +39,11 @@ public class FormMantenimiento extends GridLayout {
 	
 	private final MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
-	private GridMantenimiento grid_mantenimiento = new GridMantenimiento();
+	private GridSolmantenimiento grid_mantenimiento = new GridSolmantenimiento();
 	
 	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 	
-	public FormMantenimiento() {
+	public FormSolmantenimiento() {
 		
 		super(6, 3);
 		setSpacing(true);
