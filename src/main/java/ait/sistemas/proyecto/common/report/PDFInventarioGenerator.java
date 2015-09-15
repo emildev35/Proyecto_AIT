@@ -292,10 +292,10 @@ public class PDFInventarioGenerator {
 		for (PDPage page : doc.getPages()) {
 			try {
 				PDPageContentStream contentStream = new PDPageContentStream(doc, page, true, true);
-				contentStream.drawLine(table.getMargin(), table.getMargin(), table.getWidth(), table.getMargin());
+				contentStream.drawLine(table.getMargin(), table.getMargin()-4, table.getWidth(), table.getMargin()-4);
 				contentStream.beginText();
-				contentStream.setFont(table.getFooterFont(), table.getFontSize());
-				contentStream.moveTextPositionByAmount(table.getMargin(), table.getMargin() - 10);
+				contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
+				contentStream.moveTextPositionByAmount(table.getMargin(), table.getMargin() - 12);
 				contentStream.showText(new String().format("Página %d de %d", actual_row, numofPages));
 				contentStream.endMarkedContent();
 				contentStream.close();
@@ -509,7 +509,7 @@ public class PDFInventarioGenerator {
 
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		int pos = 2;
-		nextTextX = table.getColumns().get(2).getWidth() - 6 * table.getMargin();
+		nextTextX = table.getColumns().get(2).getWidth() - 4 * table.getMargin();
 		for (int i = 0; i < lineContent.length; i++) {
 			String text = lineContent[i];
 			contentStream.beginText();
@@ -524,7 +524,7 @@ public class PDFInventarioGenerator {
 
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
-			nextTextX += (1.8) * table.getColumns().get(4).getWidth();
+			nextTextX += 2*table.getColumns().get(4).getWidth();
 			if (i == 3) {
 				nextTextX = table.getMargin() + table.getWidth() - table.getColumns().get(4).getWidth();
 			}

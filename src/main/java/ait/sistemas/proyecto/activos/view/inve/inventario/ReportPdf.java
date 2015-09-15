@@ -74,10 +74,10 @@ public class ReportPdf {
 
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
-		columns.add(new Column("Serie", 80));
-
-		columns.add(new Column("Valor Compra", 60));
-		columns.add(new Column("Valor Neto", 60));
+		columns.add(new Column("Serie", 100));
+		columns.add(new Column("Nombre del Activo", 600));
+		columns.add(new Column("Valor Compra", 75));
+		columns.add(new Column("Valor Neto", 75));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 
