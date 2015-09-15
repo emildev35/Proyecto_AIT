@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.generardorpin;
+package ait.sistemas.proyecto.activos.view.rrhh.generadorpin;
 
 import java.util.Date;
 
