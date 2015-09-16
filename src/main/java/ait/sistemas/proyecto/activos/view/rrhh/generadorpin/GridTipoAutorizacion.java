@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.rrhh.generardorpin;
+package ait.sistemas.proyecto.activos.view.rrhh.generadorpin;
 
 import ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoAutorizacionImpl;

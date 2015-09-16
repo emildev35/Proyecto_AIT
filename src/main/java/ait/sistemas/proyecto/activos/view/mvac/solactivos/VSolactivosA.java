@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.solactivo;
+package ait.sistemas.proyecto.activos.view.mvac.solactivos;
 
 import java.util.List;
 
@@ -22,19 +22,19 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSolactivoA extends VerticalLayout implements View, ClickListener {
+public class VSolactivosA extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormSolactivo frm_solicitud;
+	private FormSolactivos frm_solicitud;
 	private CssLayout hl_errores;
 	private Button btn_limpiar;
 	private Button btn_agregar;
 	
 	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
 	
-	public VSolactivoA() {
-		frm_solicitud = new FormSolactivo();
+	public VSolactivosA() {
+		frm_solicitud = new FormSolactivos();
 		this.btn_limpiar = new Button("Limpiar");
 		this.btn_agregar = new Button("Agregar");
 		this.btn_agregar.addClickListener(this);

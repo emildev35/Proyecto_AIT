@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.orden;
+package ait.sistemas.proyecto.activos.view.mvac.infsoporte;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,18 +25,18 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VOrdenA extends VerticalLayout implements View, ClickListener{
+public class VInfSoporteA extends VerticalLayout implements View, ClickListener{
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar = new Button("GENERAR SOLICITUD");
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormOrden frm_soporte = new FormOrden();
+	private FormInfSoporte frm_soporte = new FormInfSoporte();
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VOrdenA() {
+	public VInfSoporteA() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
@@ -58,7 +58,7 @@ public class VOrdenA extends VerticalLayout implements View, ClickListener{
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Mantenimiento>>"));
-		nav.addComponent(new Label("<strong>Orden de Mantenimiento</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Informe de Soporte Tecnico</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -113,6 +113,5 @@ public class VOrdenA extends VerticalLayout implements View, ClickListener{
 	public void enter(ViewChangeEvent event) {
 		
 	}
-	
 	
 }

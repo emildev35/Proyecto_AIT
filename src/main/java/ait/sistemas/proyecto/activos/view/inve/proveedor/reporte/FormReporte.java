@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.proveedor.reporte;
+package ait.sistemas.proyecto.activos.view.inve.proveedor.reporte;
 
 import java.util.ArrayList;
 import java.util.List;

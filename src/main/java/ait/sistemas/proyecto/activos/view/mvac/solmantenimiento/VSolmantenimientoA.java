@@ -79,7 +79,7 @@ public class VSolmantenimientoA extends VerticalLayout implements View, ClickLis
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Movimiento de Activos>>"));
-		nav.addComponent(new Label("Solicitud Devolucion>>"));
+		nav.addComponent(new Label("Solicitud Mantenimiento>>"));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;

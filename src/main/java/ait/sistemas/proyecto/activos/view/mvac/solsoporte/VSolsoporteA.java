@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mant.soporte;
+package ait.sistemas.proyecto.activos.view.mvac.solsoporte;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,7 +25,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VSoporteP extends VerticalLayout implements View, ClickListener {
+public class VSolsoporteA extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -33,11 +33,11 @@ public class VSoporteP extends VerticalLayout implements View, ClickListener {
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormSoporte frm_soporte = new FormSoporte();
+	private FormSolsoporte frm_soporte = new FormSolsoporte();
 	
 	private final SoporteImpl soporteimpl = new SoporteImpl();
 	
-	public VSoporteP() {
+	public VSolsoporteA() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
