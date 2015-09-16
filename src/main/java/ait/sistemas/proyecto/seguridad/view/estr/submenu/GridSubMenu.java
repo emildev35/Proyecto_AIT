@@ -38,10 +38,9 @@ public class GridSubMenu  extends Grid{
 		removeColumn("arbolMenus");
 		removeColumn("arbolMenuses");
 		
-		
 		setWidth("100%");
 		setColumnOrder("AME_Id_Identificador", "AME_Id_SubMenu",
-				"AME_Nombre","AME_Icono","AME_Programa","AME_Fecha_Registro");
+				"AME_Nombre","AME_Icono","AME_NavegacionRedireccion","AME_Fecha_Registro");
 
 		Grid.Column identificadorColumn = this.getColumn("AME_Id_Identificador");
 		Grid.Column id_submenuColumn = this.getColumn("AME_Id_SubMenu");
@@ -50,12 +49,12 @@ public class GridSubMenu  extends Grid{
 		Grid.Column programaColumn = this.getColumn("AME_Programa");
 		Grid.Column fechaRegistroColumn = this.getColumn("AME_Fecha_Registro");
 		
-		identificadorColumn.setHeaderCaption("Identificador");
-		id_submenuColumn.setHeaderCaption("Id. Sub-Menu");
-		nombreColumn.setHeaderCaption("Nombre Sub-Menu");
-		iconlColumn.setHeaderCaption("Icono");
-		programaColumn.setHeaderCaption("Programa");
-		fechaRegistroColumn.setHeaderCaption("Fecha Registro");
+		identificadorColumn.setHeaderCaption("Identificador").setExpandRatio(1);
+		id_submenuColumn.setHeaderCaption("Id. Sub-Menu").setExpandRatio(1);
+		nombreColumn.setHeaderCaption("Nombre Sub-Menu").setExpandRatio(7);
+		iconlColumn.setHeaderCaption("Icono").setExpandRatio(1);
+		programaColumn.setHeaderCaption("Programa").setExpandRatio(6);
+		fechaRegistroColumn.setHeaderCaption("Fecha Registro").setExpandRatio(1);
 		fechaRegistroColumn.setRenderer(new DateRenderer("%1$tB de %1$te, %1$tY",
 				new Locale("es", "BO")));
 		Responsive.makeResponsive(this);

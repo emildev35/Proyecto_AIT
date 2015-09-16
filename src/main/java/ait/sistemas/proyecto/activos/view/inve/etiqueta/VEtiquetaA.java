@@ -42,7 +42,6 @@ public class VEtiquetaA extends VerticalLayout implements View, ClickListener {
 	
 	private FormEtiqueta frmEtiqueta = new FormEtiqueta();
 	
-	int r = 0;
 	private CssLayout hl_errores = new CssLayout();
 	
 	public VEtiquetaA() {
@@ -95,8 +94,7 @@ public class VEtiquetaA extends VerticalLayout implements View, ClickListener {
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Inventarios » "));
-		nav.addComponent(new Label("Etiquetas» "));
-		nav.addComponent(new Label("<strong>Generar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Generacion de Etiquetas</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

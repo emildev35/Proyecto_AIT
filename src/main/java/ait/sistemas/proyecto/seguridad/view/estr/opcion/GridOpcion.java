@@ -37,7 +37,7 @@ public class GridOpcion  extends Grid{
 		removeColumn("AME_Id_SubMenu");
 		removeColumn("arbolMenus");
 		removeColumn("arbolMenuses");
-		
+		removeColumn("AME_NavegacionRedireccion");
 		
 		setWidth("100%");
 		setColumnOrder("AME_Id_Identificador", "AME_Id_Opcion",
@@ -50,12 +50,12 @@ public class GridOpcion  extends Grid{
 		Grid.Column programaColumn = this.getColumn("AME_Programa");
 		Grid.Column fechaRegistroColumn = this.getColumn("AME_Fecha_Registro");
 		
-		identificadorColumn.setHeaderCaption("Identificador");
-		id_opcionColumn.setHeaderCaption("Id. Opcion");
-		nombreColumn.setHeaderCaption("Nombre Opcion	");
-		iconlColumn.setHeaderCaption("Icono");
-		programaColumn.setHeaderCaption("Programa");
-		fechaRegistroColumn.setHeaderCaption("Fecha Registro");
+		identificadorColumn.setHeaderCaption("Identificador").setExpandRatio(1);
+		id_opcionColumn.setHeaderCaption("Id. Opcion").setExpandRatio(1);
+		nombreColumn.setHeaderCaption("Nombre Opcion").setExpandRatio(7);
+		iconlColumn.setHeaderCaption("Icono").setExpandRatio(2);
+		programaColumn.setHeaderCaption("Programa").setExpandRatio(7);
+		fechaRegistroColumn.setHeaderCaption("Fecha Registro").setExpandRatio(1);
 		fechaRegistroColumn.setRenderer(new DateRenderer("%1$tB de %1$te, %1$tY",
 				new Locale("es", "BO")));
 		Responsive.makeResponsive(this);

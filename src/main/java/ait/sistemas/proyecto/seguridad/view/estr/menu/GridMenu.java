@@ -40,6 +40,7 @@ public class GridMenu extends Grid{
 		removeColumn("AME_Id_Opcion");
 		removeColumn("arbolMenus");
 		removeColumn("arbolMenuses");
+		removeColumn("AME_NavegacionRedireccion");
 		
 		
 		setWidth("100%");
@@ -53,14 +54,13 @@ public class GridMenu extends Grid{
 		Grid.Column programaColumn = this.getColumn("AME_Programa");
 		Grid.Column fechaRegistroColumn = this.getColumn("AME_Fecha_Registro");
 		
-		identificadorColumn.setHeaderCaption("Identificador");
-		id_menuColumn.setHeaderCaption("Id. Menu");
-		nombreColumn.setHeaderCaption("Nombre Menu");
-		iconlColumn.setHeaderCaption("Icono");
-		programaColumn.setHeaderCaption("Programa");
-		fechaRegistroColumn.setHeaderCaption("Fecha Registro");
-		fechaRegistroColumn.setRenderer(new DateRenderer("%1$tB de %1$te, %1$tY",
-				new Locale("es", "BO")));
+		identificadorColumn.setHeaderCaption("Identificador").setExpandRatio(1);
+		id_menuColumn.setHeaderCaption("Id. Menu").setExpandRatio(1);
+		nombreColumn.setHeaderCaption("Nombre Menu").setExpandRatio(7);
+		iconlColumn.setHeaderCaption("Icono").setExpandRatio(2);
+		programaColumn.setHeaderCaption("Programa").setExpandRatio(5);
+		fechaRegistroColumn.setHeaderCaption("Fecha Registro").setExpandRatio(1);
+		fechaRegistroColumn.setRenderer(new DateRenderer("%1$tB de %1$te, %1$tY", new Locale("es", "BO")));
 		Responsive.makeResponsive(this);
 	}
 }

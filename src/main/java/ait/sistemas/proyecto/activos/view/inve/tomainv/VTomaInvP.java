@@ -62,9 +62,8 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Mantenimiento>>"));
-		nav.addComponent(new Label("Solicitud de Soporte>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("Inventario>>"));
+		nav.addComponent(new Label("<strong>Toma de Inventario Fisico</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

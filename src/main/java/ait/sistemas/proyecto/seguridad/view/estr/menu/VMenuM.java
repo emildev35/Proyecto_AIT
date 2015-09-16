@@ -82,7 +82,7 @@ public class VMenuM extends VerticalLayout implements View, ClickListener, Value
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
 		nav.addComponent(new Label("Estructura del Sistema » "));
-		nav.addComponent(new Label("Su-Sistema » "));
+		nav.addComponent(new Label("Menu » "));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;

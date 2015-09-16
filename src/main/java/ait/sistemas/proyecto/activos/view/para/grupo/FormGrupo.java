@@ -102,7 +102,7 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 	}
 	private void updateId() {
 		this.txt_id_grupo.setValue(grupo_impl.getId() + "");
-		
+		//TODO Verificar el uso del Metodo
 	}
 	private void fillsigla() {
 		cb_partida.setNullSelectionAllowed(false);

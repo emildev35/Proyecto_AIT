@@ -58,8 +58,7 @@ public class VInfSoporteP extends VerticalLayout implements View, ClickListener{
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Mantenimiento>>"));
-		nav.addComponent(new Label("Solicitud de Soporte>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Informe de Soporte Tecnico</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
