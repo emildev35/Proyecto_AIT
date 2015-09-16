@@ -51,8 +51,8 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		tw_campos.addValueChangeListener(this);
 		txt_nombre_reporte.addTextChangeListener(this);
 		tb_vista_previa.setSizeFull();
-		txt_nombre_reporte.setWidth("100%");
-		cb_dependencia.setWidth("100%");
+		txt_nombre_reporte.setWidth("70%");
+		cb_dependencia.setWidth("60%");
 		// tb_vista_previa.setColumnReorderingAllowed(true);
 		tb_vista_previa.setResponsive(true);
 		tb_vista_previa.setColumnReorderingAllowed(true);
@@ -81,7 +81,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 	
 	private void buildFormContent() {
 		setColumnExpandRatio(0, 1);
-		setColumnExpandRatio(1, 3.5f);
+		setColumnExpandRatio(1, 4.5f);
 		setColumnExpandRatio(2, 1);
 		addComponent(cb_dependencia, 0, 0, 1, 0);
 		addComponent(this.tw_campos, 1, 1);
