@@ -27,7 +27,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VResumenactR extends VerticalLayout implements View, ClickListener {
+public class VResumenActR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class VResumenactR extends VerticalLayout implements View, ClickListener 
 	private final ActualizacionImpl actualizacion_impl = new ActualizacionImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VResumenactR() {
+	public VResumenActR() {
 
 		this.btn_imprimir = new Button("Imprimir Actualizacion");
 		addComponent(buildNavBar());

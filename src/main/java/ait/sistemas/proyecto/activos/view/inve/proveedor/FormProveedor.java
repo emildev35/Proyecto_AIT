@@ -22,7 +22,6 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
-import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
@@ -85,13 +84,13 @@ public class FormProveedor extends GridLayout implements ValueChangeListener{
 
 		this.txt_NIT.setRequired(true);
 		this.txt_NIT.addValidator(new NullValidator("No Nulo", false));
-		this.txt_NIT.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(5, 12), 5,12,false));
+//		this.txt_NIT.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(5, 12), 5,12,false));
 		this.txt_nombre_proveedor.setRequired(true);
 		this.txt_nombre_proveedor.addValidator(new NullValidator("No Nulo", false));
 		this.txt_nombre_proveedor.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3,50,false));
 		this.txt_domicilio.setRequired(true);
 		this.txt_domicilio.addValidator(new NullValidator("No Nulo", false));
-		this.txt_domicilio.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3,50,false));
+		this.txt_domicilio.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 80), 3,80,false));
 		this.txt_nombre_contacto.setRequired(true);
 		this.txt_nombre_contacto.addValidator(new NullValidator("No Nulo", false));
 		this.txt_nombre_contacto.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 50), 3,50,false));
@@ -99,10 +98,10 @@ public class FormProveedor extends GridLayout implements ValueChangeListener{
 		this.cb_ciudad.select((long)1);
 		this.txt_telefono.setRequired(true);
 		this.txt_telefono.addValidator(new NullValidator("No Nulo", false));
-		this.txt_telefono.addValidator(new RegexpValidator("[0-9]{7}", "Campo solo de numeros"));
+//		this.txt_telefono.addValidator(new RegexpValidator("[0-9]{7}", "Campo solo de numeros"));
 		this.txt_celular.setRequired(true);
 		this.txt_celular.addValidator(new NullValidator("No Nulo", false));
-		this.txt_celular.addValidator(new RegexpValidator("[0-9]{8}", "Campo solo de numeros"));
+//		this.txt_celular.addValidator(new RegexpValidator("[0-9]{8}", "Campo solo de numeros"));
 		
 		
 		cb_ciudad.setWidth("90%");

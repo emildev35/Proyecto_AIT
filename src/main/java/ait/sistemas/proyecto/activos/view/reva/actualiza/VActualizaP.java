@@ -22,7 +22,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class VActualizaA extends VerticalLayout implements View, ClickListener {
+public class VActualizaP extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +31,7 @@ public class VActualizaA extends VerticalLayout implements View, ClickListener {
 	private Button btn_agregar;
 	private final ActualizacionImpl actualiza_impl = new ActualizacionImpl();
 	
-	public VActualizaA() {
+	public VActualizaP() {
 		frm_Actualiza = new FormActualiza();
 		this.btn_agregar = new Button("Actualiza Activos");
 		this.btn_agregar.addClickListener(this);

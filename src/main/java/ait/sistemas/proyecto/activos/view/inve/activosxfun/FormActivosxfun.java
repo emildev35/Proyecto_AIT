@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.inve.activoxfun;
+package ait.sistemas.proyecto.activos.view.inve.activosxfun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 
-public class FormActivoxfun extends GridLayout implements ValueChangeListener {
+public class FormActivosxfun extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
 	
 	public ComboBox cb_unidad_organizacional = new ComboBox("Unidad Organizacional");
@@ -38,7 +38,7 @@ public class FormActivoxfun extends GridLayout implements ValueChangeListener {
 	private final PersonalImpl personal_impl = new PersonalImpl();
 	
 	
-	public FormActivoxfun() {
+	public FormActivosxfun() {
 		
 		super(7, 4);
 		setSpacing(true);
