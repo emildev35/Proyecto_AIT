@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.inve.activoxfun.reporte;
+package ait.sistemas.proyecto.activos.view.inve.activosxfun.reporte;
 
 import java.io.IOException;
 

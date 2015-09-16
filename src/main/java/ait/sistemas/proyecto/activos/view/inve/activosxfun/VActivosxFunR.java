@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.inve.activoxfun;
+package ait.sistemas.proyecto.activos.view.inve.activosxfun;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.data.model_rrhh.PersonalModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
-import ait.sistemas.proyecto.activos.view.inve.activoxfun.reporte.ReportPdf;
+import ait.sistemas.proyecto.activos.view.inve.activosxfun.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.report.Column;
@@ -34,18 +34,18 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VActivoxfunR extends VerticalLayout implements View, ClickListener {
+public class VActivosxFunR extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormActivoxfun frm_activoxfun;
+	private FormActivosxfun frm_activoxfun;
 	private CssLayout hl_errores;
 	private Button btn_imprimir;
 	private ActivoImpl personal_impl = new ActivoImpl();
 	
 	
-	public VActivoxfunR() {
-		frm_activoxfun = new FormActivoxfun();
+	public VActivosxFunR() {
+		frm_activoxfun = new FormActivosxfun();
 		this.btn_imprimir = new Button("Imprimir");
 		this.btn_imprimir.addClickListener(this);
 		
