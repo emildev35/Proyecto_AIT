@@ -30,4 +30,19 @@ public class StringHelper {
 		}
 		return null;
 	}
+
+	public static String implode(String[] data, String separator) {
+		StringBuilder str_builder = new StringBuilder();
+		boolean first = true;
+		for (Object s : data) {
+			if (s == null)
+				continue;
+			if (first)
+				first = false;
+			else
+				str_builder.append(separator);
+			str_builder.append(s);
+		}
+		return str_builder.toString();
+	}
 }
