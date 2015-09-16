@@ -115,7 +115,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 			DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
 			String valor_str = formater.format(d_valor);
 			
-			double d_valor_compra = Double.parseDouble(String.valueOf(activo.getACT_Valor() == null ? "0" : activo.getACT_Valor()));
+			double d_valor_compra = Double.parseDouble(String.valueOf(activo.getACT_Valor_Compra() == null ? "0" : activo.getACT_Valor_Compra()));
 			String valor_str_compra = formater.format(d_valor_compra);
 
 			double valor_actualizado_GAn = Double.parseDouble(String.valueOf(activo.getACT_Actualizacion_Acumulada_Gestion_Anterior() == null ? "0" : 

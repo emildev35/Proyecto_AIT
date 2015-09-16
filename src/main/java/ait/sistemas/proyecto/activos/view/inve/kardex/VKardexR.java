@@ -164,7 +164,7 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 			kardex_elements[r][3][3]  = new KardexElement();
 			kardex_elements[r][3][3].setAncho(75);
 			kardex_elements[r][3][3].setTitulo("Valor Compra (Bs)");
-			kardex_elements[r][3][3].setContenido(String.valueOf(activos.getACT_Valor()));
+			kardex_elements[r][3][3].setContenido(String.valueOf(activos.getACT_Valor_Compra()));
 			
 			kardex_elements[r][3][4]  = new KardexElement();
 			kardex_elements[r][3][4].setAncho(75);

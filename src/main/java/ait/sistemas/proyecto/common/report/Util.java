@@ -22,7 +22,7 @@ public class Util {
 	public static String numberFormat(String string) {
 		try {
 			double d_valor = Double.parseDouble(string);
-			DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
+			DecimalFormat formater = new DecimalFormat("###,###,###,###.##");
 			String valor_str = formater.format(d_valor);
 			return valor_str;
 		} catch (NumberFormatException ex) {
