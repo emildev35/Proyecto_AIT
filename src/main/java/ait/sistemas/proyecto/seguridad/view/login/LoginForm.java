@@ -126,7 +126,7 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 			int result = this.usuarioimpl.isNewUser(event.getText());
 			switch (result) {
 			case -1:
-				if (getComponent(0, 2) != null) {
+				if (getComponent(1, 2) != null) {
 					removeComponent(this.pwd_password_verification);
 				}
 				this.pwd_password.setEnabled(false);
@@ -134,12 +134,12 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 			case 0:
 				this.pwd_password.setEnabled(true);
 				if (getComponent(0, 2) == null) {
-					addComponent(this.pwd_password_verification, 0, 2);
+					addComponent(this.pwd_password_verification, 1, 2);
 				}
 				break;
 			case 1:
 				this.pwd_password.setEnabled(true);
-				if (getComponent(0, 2) != null) {
+				if (getComponent(1, 2) != null) {
 					removeComponent(this.pwd_password_verification);
 				}
 				break;

@@ -80,7 +80,7 @@ public class VSubmenuM extends VerticalLayout implements View, ValueChangeListen
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
 		nav.addComponent(new Label("Estructura del Sistema » "));
-		nav.addComponent(new Label("Sun-Menu » "));
+		nav.addComponent(new Label("Sub-Menu » "));
 		nav.addComponent(new Label("<strong>Modificar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;

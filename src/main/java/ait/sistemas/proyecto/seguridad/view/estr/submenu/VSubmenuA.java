@@ -77,7 +77,7 @@ public class VSubmenuA extends VerticalLayout implements View, ClickListener, Va
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
 		nav.addComponent(new Label("Estructura del Sistema » "));
-		nav.addComponent(new Label("Su-Sistema » "));
+		nav.addComponent(new Label("SubMenu » "));
 		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -118,6 +118,7 @@ public class VSubmenuA extends VerticalLayout implements View, ClickListener, Va
 				this.frm_subMenu.update();
 				this.grid_subMenu.update(frm_subMenu.getMenu());
 				Notification.show(Messages.SUCCESS_MESSAGE);
+				this.frm_subMenu.setfocus();
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}

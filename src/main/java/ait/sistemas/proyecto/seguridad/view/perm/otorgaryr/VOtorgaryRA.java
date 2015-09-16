@@ -64,8 +64,7 @@ public class VOtorgaryRA extends VerticalLayout implements View, ClickListener {
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
 		nav.addComponent(new Label("Permisos » "));
-		nav.addComponent(new Label(
-				"<strong>Otorgar y Revocar Permisos</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Otorgar y Revocar Permisos</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

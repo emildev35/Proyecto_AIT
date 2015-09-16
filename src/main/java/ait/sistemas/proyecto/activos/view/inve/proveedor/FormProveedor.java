@@ -22,7 +22,6 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
-import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;

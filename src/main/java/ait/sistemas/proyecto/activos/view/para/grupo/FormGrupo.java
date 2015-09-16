@@ -7,7 +7,6 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.model.Grupos_Contable;
 import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
-import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
@@ -38,7 +37,7 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 	private List<BarMessage> mensajes;
 
 	private PartidaImpl partida_impl=new PartidaImpl();
-	private GrupoImpl grupo_impl = new GrupoImpl();
+//	private GrupoImpl grupo_impl = new GrupoImpl();
 	private PropertysetItem pitm_Grupo = new PropertysetItem();
 	private FieldGroup binder_Grupo;
 
@@ -100,10 +99,10 @@ public class FormGrupo extends GridLayout implements ValueChangeListener{
 		buildContent();
 		Responsive.makeResponsive(this);
 	}
-	private void updateId() {
-		this.txt_id_grupo.setValue(grupo_impl.getId() + "");
-		
-	}
+//	private void updateId() {
+//		this.txt_id_grupo.setValue(grupo_impl.getId() + "");
+//		//TODO Verificar el uso del Metodo
+//	}
 	private void fillsigla() {
 		cb_partida.setNullSelectionAllowed(false);
 		cb_partida.setInputPrompt("Seleccione la Partida Presupuestaria");

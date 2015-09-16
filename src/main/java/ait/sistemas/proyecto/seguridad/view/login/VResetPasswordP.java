@@ -56,7 +56,7 @@ public class VResetPasswordP extends VerticalLayout implements View, ClickListen
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
-		nav.addComponent(new Label("<strong>Login</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Cambiar Contraseña</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
