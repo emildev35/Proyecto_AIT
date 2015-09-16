@@ -97,7 +97,7 @@ public class Activo implements Serializable {
 
 	private String ACT_Ubicacion_Imagen;
 
-	private BigDecimal ACT_Valor;
+	private BigDecimal ACT_Valor_Compra;
 
 	private BigDecimal ACT_Valor_Neto;
 
@@ -416,11 +416,11 @@ public class Activo implements Serializable {
 	}
 
 	public BigDecimal getACT_Valor() {
-		return this.ACT_Valor;
+		return this.ACT_Valor_Compra;
 	}
 
 	public void setACT_Valor(BigDecimal ACT_Valor) {
-		this.ACT_Valor = ACT_Valor;
+		this.ACT_Valor_Compra = ACT_Valor;
 	}
 
 	public BigDecimal getACT_Valor_Neto() {

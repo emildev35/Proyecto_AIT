@@ -26,9 +26,9 @@ public class ReporteImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String[][] getData(String cols, String view_name, int numofColumns) {
+	public String[][] getData(String cols, String view_name, int numofColumns, String where) {
 		
-		String str_query = "SELECT " + cols + " FROM " + view_name;
+		String str_query = "SELECT " + cols + " FROM " + view_name + " WHERE ACT_DEPENDENCIA = '" + where + "'";
 		Query query = this.em.createNativeQuery(str_query);
 		Collection<Object> data = query.getResultList();
 		String[][] result = new String[data.size()][numofColumns];

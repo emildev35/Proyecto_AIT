@@ -116,9 +116,9 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 		
 		if (frm_reporte.validate()) {
 			List<String> columns_header = this.frm_reporte.getColumnsNames();
-			int[] columns_width = frm_reporte.getColumnssizes();
 			String sql = frm_reporte.getSQL();
-			String[][] data = reporteimpl.getData(sql, "Reporte_Activos", frm_reporte.getNumColumns());
+			int[] columns_width = frm_reporte.getColumnssizes();
+			String[][] data = reporteimpl.getData(sql, "Reporte_Activos", frm_reporte.getNumColumns(), frm_reporte.getDependencia());
 			if (event.getButton() == this.btn_imprimir_pdf) {
 				
 				PdfReport pdf_reporte = new PdfReport();

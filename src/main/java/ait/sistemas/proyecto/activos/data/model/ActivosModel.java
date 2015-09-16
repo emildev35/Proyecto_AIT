@@ -73,70 +73,40 @@ public class ActivosModel implements Serializable {
 
 	@Id
 	private String ACT_Dependencia_Codigo_Activo;
-
 	private short ACT_Dependencia_ID;
 	private String ACT_Dependencia;
-
 	private String ACT_Codigo_Activo;
-
 	private String ACT_Auxiliar_Contable_ID;
 	private String ACT_Auxiliar_Contable;
-
 	private String ACT_CI_Empleado_Asignado;
-
 	private Date ACT_Fecha_Asignacion;
-
 	private Date ACT_Fecha_Baja;
-
 	private Date ACT_Fecha_Comodato;
-
 	private Date ACT_Fecha_Compra;
-
 	private Date ACT_Fecha_Incorporacion;
-
 	private Date ACT_Fecha_Registro;
-
 	private Date ACT_Fecha_Vencimiento_Garantia;
-
 	private Date ACT_Fecha_Vencimiento_Mantenimiento;
-
 	private Date ACT_Fecha_Vencimiento_Seguro;
-
 	private int ACT_Fuente_Financiamiento_ID;
 	private String ACT_Fuente_Financiamiento;
-
 	private String ACT_Grupo_Contable_ID;
 	private String ACT_Grupo_Contable;
-
 	private long ACT_No_Acta_Entrega;
-
 	private long ACT_No_Comprobante_Gasto;
-
 	private String ACT_No_Contrato_Mantenimiento;
-
 	private String ACT_No_Folio_Real;
-
 	private String ACT_No_Garantia;
-
 	private long ACT_No_Informe_Baja;
-
 	private String ACT_No_Poliza_Seguro;
-
 	private String ACT_No_RUAT;
-
 	private String ACT_No_Serie;
-
 	private String ACT_Nombre_Activo;
-
 	private short ACT_Organismo_Financiador_ID;
 	private String ACT_Organismo_Financiador;
-
 	private String ACT_NIT_Proveedor;
-
 	private String ACT_Nombre_Proveedor;
-
 	private short ACT_Tipo_Activo;
-
 	private BigDecimal ACT_Tipo_Cambio_Dolar;
 	private BigDecimal ACT_Tipo_Cambio_UFV;
 	private BigDecimal ACT_Actualizacion_Acumulada_Gestion_Anterior;
@@ -145,25 +115,17 @@ public class ActivosModel implements Serializable {
 	private BigDecimal ACT_Depreciacion_Acumulada_Gestion_Anterior;
 	private BigDecimal ACT_DAA;
 	private BigDecimal ACT_CA;
-
 	private int ACT_Ubicacion_Fisica_Activo_ID;
 	private String ACT_Ubicacion_Fisica_Activo;
-
 	private String ACT_Ubicacion_Imagen;
-
 	private BigDecimal ACT_Valor_Compra;
 	private BigDecimal ACT_Valor_Neto;
-
 	private int ACT_Vida_Util;
-
 	private String ACT_Marca;
-
 	private String ACT_Partidas_Presupuestarias;
-
 	private String ACT_Nombre_Empleado;
 	private String ACT_APaterno_Empleado;
 	private String ACT_AMaterno_Empleado;
-
 	private String ACT_Inmueble;
 
 	public ActivosModel() {
