@@ -16,6 +16,7 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 
 public class FormInventario extends GridLayout implements ValueChangeListener{
@@ -25,6 +26,7 @@ public class FormInventario extends GridLayout implements ValueChangeListener{
 
 	
 	public ComboBox cb_Dependencia;
+	public DateField dt_fecha;
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	final private DependenciaImpl dependencia_impl = new DependenciaImpl();
@@ -40,6 +42,7 @@ public class FormInventario extends GridLayout implements ValueChangeListener{
 		setSpacing(true);
 		
 		this.cb_Dependencia = new ComboBox("Elija una Dependencia");
+		this.dt_fecha = new DateField("Fecha: ");
 		
 		pitm_Inventario.addItemProperty("dependencia", new ObjectProperty<Short>((short)1));
 		

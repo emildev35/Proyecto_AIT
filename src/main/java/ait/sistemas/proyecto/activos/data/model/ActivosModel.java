@@ -56,7 +56,7 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo_ID", column = "ACT_Ubicacion_Fisica_Activo_ID"),
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo", column = "ACT_Ubicacion_Fisica_Activo"),
 		@FieldResult(name = "ACT_Ubicacion_Imagen", column = "ACT_Ubicacion_Imagen"),
-		@FieldResult(name = "ACT_Valor", column = "ACT_Valor_Compra"),
+		@FieldResult(name = "ACT_Valor_Compra", column = "ACT_Valor_Compra"),
 		@FieldResult(name = "ACT_Valor_Neto", column = "ACT_Valor_Neto"),
 		@FieldResult(name = "ACT_Vida_Util", column = "ACT_Vida_Util"),
 		@FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
@@ -118,7 +118,7 @@ public class ActivosModel implements Serializable {
 	private int ACT_Ubicacion_Fisica_Activo_ID;
 	private String ACT_Ubicacion_Fisica_Activo;
 	private String ACT_Ubicacion_Imagen;
-	private BigDecimal ACT_Valor;
+	private BigDecimal ACT_Valor_Compra;
 	private BigDecimal ACT_Valor_Neto;
 	private int ACT_Vida_Util;
 	private String ACT_Marca;
@@ -499,12 +499,12 @@ public class ActivosModel implements Serializable {
 		this.ACT_Ubicacion_Imagen = ACT_Ubicacion_Imagen;
 	}
 
-	public BigDecimal getACT_Valor() {
-		return this.ACT_Valor;
+	public BigDecimal getACT_Valor_Compra() {
+		return this.ACT_Valor_Compra;
 	}
 
-	public void setACT_Valor(BigDecimal ACT_Valor) {
-		this.ACT_Valor = ACT_Valor;
+	public void setACT_Valor_Compra(BigDecimal ACT_Valor_Compra) {
+		this.ACT_Valor_Compra = ACT_Valor_Compra;
 	}
 
 	public BigDecimal getACT_Valor_Neto() {

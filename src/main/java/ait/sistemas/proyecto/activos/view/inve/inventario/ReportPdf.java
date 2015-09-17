@@ -1,7 +1,10 @@
 package ait.sistemas.proyecto.activos.view.inve.inventario;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -53,7 +56,7 @@ public class ReportPdf {
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 
-	private static final int HEADER_SIZE = 5;
+	private static final int HEADER_SIZE = 4;
 
 
 	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
@@ -80,14 +83,18 @@ public class ReportPdf {
 		columns.add(new Column("Valor Neto", 75));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
-
+		Date date = new Date();
+		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha = fechaHora.format(date);
 		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
 				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
 				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
 				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
 				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)
 				.setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE)
-				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("INVENTARIO DE ACTIVOS")
+				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
+				.setTitle("INVENTARIO DE ACTIVOS")
+				.setSubTitle("Realizado al : " + fecha)
 				.build();
 		return Inventario;
 
