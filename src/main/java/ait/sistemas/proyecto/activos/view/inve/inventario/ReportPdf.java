@@ -74,7 +74,10 @@ public class ReportPdf {
 
 	private Table createContent(String[][] content, String strDependencia) {
 
-
+		List<Column> columnsGA = new ArrayList<Column>();
+		columnsGA.add(new Column("Grupo Contable", 440));
+		columnsGA.add(new Column("Auxiliar Contable", 450));
+		
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
 		columns.add(new Column("Serie", 100));
@@ -86,8 +89,11 @@ public class ReportPdf {
 		Date date = new Date();
 		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
 		String fecha = fechaHora.format(date);
-		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
-				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
+		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN)
+				.setColumnsGA(columnsGA).setContent(content)
+				.setColumns(columns).setContent(content)
+				.setHeight(tableHeight).
+				setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
 				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
 				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
 				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)

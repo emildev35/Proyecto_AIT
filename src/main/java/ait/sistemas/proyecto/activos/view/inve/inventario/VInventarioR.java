@@ -149,6 +149,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
+		this.frmReporte.clearMessages();
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
