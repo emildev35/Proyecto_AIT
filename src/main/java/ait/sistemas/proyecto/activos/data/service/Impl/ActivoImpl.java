@@ -87,6 +87,7 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getactivos(short id_unidad_organizacional) {
 		Query query = em.createNativeQuery("Mvac_ActivobyUnidad_Q @Id_Unidad=?1 ", "mapeo-activo");
@@ -206,36 +207,49 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getDisponibles(String grupo_contable, String auxiliar_contable) {
 		String str_query_act_disponibles = "EXEC Mvact_Select_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2";
-		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple")
-				.setParameter(1, grupo_contable)
+		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple").setParameter(1, grupo_contable)
 				.setParameter(2, auxiliar_contable);
 		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
 		return result;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getActivosDisponibles(short dependencia, String grupo_contable, String auxiliar_contable) {
 		String str_query_act_disponibles = "EXEC Mvact_Activos_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2,@Dependencia_Id=?3";
-		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple")
-				.setParameter(1, grupo_contable)
-				.setParameter(2, auxiliar_contable)
-		.setParameter(3, dependencia);
+		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple").setParameter(1, grupo_contable)
+				.setParameter(2, auxiliar_contable).setParameter(3, dependencia);
 		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
 		return result;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getAsignados(String ci_usuario) {
-		Query query = em.createNativeQuery("exec Mvac_ActivoAsignadobyUsuario @CI_Usuario=?1", "activo-simple").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		Query query = em.createNativeQuery("exec Mvac_ActivoAsignadobyUsuario @CI_Usuario=?1", "activo-simple").setHint(
+				QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, ci_usuario);
-		List<ActivoGrid> resultlist = query.getResultList();		
+		List<ActivoGrid> resultlist = query.getResultList();
 		return resultlist;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<MovimientoReporte> ActivosbyUsuario(String ci_usuario) {
-		Query query = em.createNativeQuery("exec Mvac_ActivosbyFuncionario_Q @CI_Usuario=?1 ", "reporte-movimiento").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		Query query = em.createNativeQuery("exec Mvac_ActivosbyFuncionario_Q @CI_Usuario=?1 ", "reporte-movimiento").setHint(
+				QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, ci_usuario);
-		List<MovimientoReporte> resultlist = query.getResultList();		
+		List<MovimientoReporte> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	public ActivoGrid getone(long id_activo, long id_dependencia) {
+		Query query = em.createNativeQuery("exec Mvac_ActivosGetOne_Q @Id_Activo=?1 ", "activo-simple").setHint(
+				QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_activo);
+		ActivoGrid resultlist;
+		try {
+			resultlist = (ActivoGrid) query.getSingleResult();
+		} catch (Exception ex) {
+			return null;
+		}
 		return resultlist;
 	}
 	

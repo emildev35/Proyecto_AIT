@@ -120,4 +120,19 @@ public class PersonalImpl implements Dao<Personal> {
 		return result;
 	}
 
+	
+	
+	public Personal getbyCI(String ci) {
+		String strQuery = String.format("EXEC Rrrh_GetByCi @Ci=?1");
+		Query query = this.em.createNativeQuery(strQuery,Personal.class);
+		query.setParameter(1, ci);
+		try{
+			Personal result = (Personal) query.getSingleResult();
+			return result;
+		}catch(Exception e){
+			return null;
+		}
+		
+	}
+
 }
