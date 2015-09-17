@@ -1,9 +1,10 @@
 package ait.sistemas.proyecto.activos.view.inve.tomainv;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.SoporteImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.InventarioImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.HomeView;
@@ -33,9 +34,11 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormTomaInv frm_tomainv = new FormTomaInv();
+	private FormTomaInv frm_tomainv = new FormTomaInv(this);
 	
-	private final SoporteImpl soporteimpl = new SoporteImpl();
+	private final InventarioImpl inventarioimpl = new InventarioImpl();
+	
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
 	
 	public VTomaInvP() {
 		
@@ -46,14 +49,20 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
+		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+		buildMessages(msg);
 	}
 	
 	private Component buildFormContent() {
 		VerticalLayout vl_form = new VerticalLayout();
-		Panel pn_form = new Panel("TOMA DE INVENTARIO FISICO");
+		Panel pn_form = new Panel("TOMA DE INVENTARIO FISICO  :  " + Messages.REQUIED_FIELDS);
 		pn_form.setContent(this.frm_tomainv);
 		vl_form.setMargin(true);
 		vl_form.addComponent(pn_form);
+		
+		Panel pn_grid = new Panel("ACTIVOS INVENTARIADOS");
+		pn_grid.setContent(this.frm_tomainv.getGrid());
+		vl_form.addComponent(pn_grid);
 		return vl_form;
 	}
 	
@@ -78,7 +87,7 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		return buttonContent;
 	}
 	
-	private void buildMessages(List<BarMessage> mensages) {
+	public void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
@@ -96,7 +105,7 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_tomainv.validate()) {
 				try {
-					if (soporteimpl.add(frm_tomainv.getData())>0) {
+					if (inventarioimpl.add(frm_tomainv.getData())>0) {
 						Notification.show(Messages.SUCCESS_MESSAGE);
 						frm_tomainv.clean();
 					}else{
@@ -108,6 +117,7 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 			}
 			buildMessages(this.frm_tomainv.getMensajes());
 			this.frm_tomainv.clearMessages();
+			buildMessages(msg);
 		}
 		if (event.getButton() == this.btn_salir) {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);

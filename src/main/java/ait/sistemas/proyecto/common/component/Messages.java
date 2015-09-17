@@ -79,6 +79,14 @@ public class Messages {
 	 * Mensaje de error para el reporte varios
 	 */
 	public static final String REPORT_MESSAGE = "Dene introducir el nombre del Reporte y Seleccionar al menos una columna";
+	/**
+	 * Mensaje presionar tecla ENTER
+	 */
+	public static final String KEY_ENTER = "Para el registro del Activo debe presionar la tecla ENTER o INTRO";
+	/***
+	 * Mensaje de Campos requeridos
+	 */
+	public static final String REQUIED_FIELDS = "(Los campos con (*) son requeridos)";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}
