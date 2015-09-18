@@ -1,0 +1,14 @@
+@mixin ait-pn-grid{
+	
+	.v-panel-caption-ait-pn-frm {
+	    @include valo-panel-caption-style($background-color: #66CC00);
+	    color: black;
+	    font-weight: bold;
+	  }
+	
+	
+	.v-panel-caption-ait-pn-grid {
+	    @include valo-panel-caption-style($background-color: #3399FF);
+	  }
+
+}

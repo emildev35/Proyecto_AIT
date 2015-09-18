@@ -150,7 +150,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 				
 				try {
 					binder_tomainv.commit();
-					ActivoInventario activo = new ActivoInventario(Long.parseLong(txt_codigo_activo.getValue().replace(".", "")),
+					ActivoInventario activo = new ActivoInventario(Long.parseLong(txt_codigo_activo.getValue().replace(".", "").replace("'", "")),
 							txt_nombre_activo_no.getValue(), tarea_observacion.getValue(), txt_ci_usuario.getValue());
 					activos_invetariados.add(activo);
 					grid_inventario.buildGrid(activos_invetariados);
@@ -165,7 +165,8 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 					}
 				}
 				((VTomaInvP) layout_errores).buildMessages(mensajes);
-				
+				mensajes = new ArrayList<BarMessage>();
+				txt_codigo_activo.setValue("");
 			}
 		});
 		
@@ -178,12 +179,12 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		
 		addComponent(this.dtf_fecha_documento, 4, 1, 5, 1);
 		
-		addComponent(this.txt_codigo_activo, 0, 2);
-		addComponent(this.btn_scaner, 1, 2);
-		addComponent(this.btn_act_previo, 2, 2);
-		addComponent(this.txt_nombre_activo_no, 3, 2, 5, 2);
-		addComponent(this.tarea_observacion, 0, 3, 5, 3);
+		addComponent(this.tarea_observacion, 0, 2, 5, 2);
 		
+		addComponent(this.txt_codigo_activo, 0, 3);
+		addComponent(this.btn_scaner, 1, 3);
+		addComponent(this.btn_act_previo, 2, 3);
+		addComponent(this.txt_nombre_activo_no, 3, 3, 5, 3);
 		setComponentAlignment(btn_scaner, Alignment.BOTTOM_CENTER);
 		setComponentAlignment(btn_act_previo, Alignment.BOTTOM_CENTER);
 	}
@@ -272,13 +273,25 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 			}
 		}
 		if (event.getComponent() == txt_codigo_activo) {
-			if (event.getComponent().toString().length() > 0) {
-				try{
-				ActivoGrid activo = activoimpl.getone(Long.parseLong(event.getText()), session.getId_dependecia());
-				if (activo != null) {
-					txt_nombre_activo_no.setValue(activo.getNombre());
+			if (event.getComponent().toString().length() > 5) {
+				try {
+					String codigo = event.getText().substring(event.getText().length() - 4, event.getText().length());
+					ActivoGrid activo = activoimpl.getone(Long.parseLong(codigo), session.getId_dependecia());
+					if (activo != null) {
+						txt_nombre_activo_no.setValue(activo.getNombre());
+					}
+				} catch (NumberFormatException ex) {
 				}
-				}catch(NumberFormatException ex){}
+			} else {
+				if (event.getComponent().toString().length() > 0) {
+					try {
+						ActivoGrid activo = activoimpl.getone(Long.parseLong(event.getText()), session.getId_dependecia());
+						if (activo != null) {
+							txt_nombre_activo_no.setValue(activo.getNombre());
+						}
+					} catch (NumberFormatException ex) {
+					}
+				}
 			}
 		}
 	}
@@ -289,6 +302,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 			this.txt_codigo_activo.setEnabled(true);
 			this.txt_nombre_activo_no.setEnabled(false);
 			this.txt_nombre_activo_no.setValue("");
+			this.txt_codigo_activo.focus();
 		}
 		if (event.getButton() == btn_act_previo) {
 			this.txt_codigo_activo.setEnabled(false);
