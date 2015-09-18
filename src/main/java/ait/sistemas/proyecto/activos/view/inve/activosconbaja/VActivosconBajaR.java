@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.inve.inventario;
+package ait.sistemas.proyecto.activos.view.inve.activosconbaja;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,18 +25,18 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VInventarioR extends VerticalLayout implements View, ClickListener {
+public class VActivosconBajaR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
-	private FormInventario frmReporte = new FormInventario();
+	private FormActivosconBaja frmReporte = new FormActivosconBaja();
 	int r = 0;
 //	private String[][] data;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
 
-	public VInventarioR() {
+	public VActivosconBajaR() {
 
 		this.btn_imprimir = new Button("Imprimir");
 		addComponent(buildNavBar());
@@ -75,7 +75,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Inventarios » "));
-		nav.addComponent(new Label("Inventario de Activos » "));
+		nav.addComponent(new Label("Activos con Baja » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -175,7 +175,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 				vl_pdf.setSizeFull();
 				vl_pdf.addComponent(pdf);
 
-				Window subWindow = new Window("Reporte Inventario Activos");
+				Window subWindow = new Window("Reporte Activos con Baja");
 				VerticalLayout subContent = new VerticalLayout();
 				subContent.setMargin(true);
 				subWindow.setContent(vl_pdf);

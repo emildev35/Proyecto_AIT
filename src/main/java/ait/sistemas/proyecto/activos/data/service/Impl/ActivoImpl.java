@@ -56,7 +56,8 @@ public class ActivoImpl {
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activos_by_dependencia(short id_dependencia) {
-		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " + "@ACT_Dependencia=?1 ", ActivosModel.class);
+		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " 
+	+ "@ACT_Dependencia=?1 ", ActivosModel.class);
 		query.setParameter(1, id_dependencia);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;

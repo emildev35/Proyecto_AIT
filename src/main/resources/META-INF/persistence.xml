@@ -42,11 +42,11 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=Activos" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sistemas" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 
 		</properties>
 	</persistence-unit>
@@ -73,11 +73,11 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=Seguridad" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Seguridad" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sistemas" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
 
 		</properties>
@@ -99,11 +99,11 @@
 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=RecursosHumanos" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=RecursosHumanos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sistemas" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
 		</properties>
 	</persistence-unit>
