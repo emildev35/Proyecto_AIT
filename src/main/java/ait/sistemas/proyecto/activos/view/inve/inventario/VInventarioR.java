@@ -149,6 +149,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
+		this.frmReporte.clearMessages();
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
@@ -156,10 +157,12 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 				if ( (Short)this.frmReporte.cb_Dependencia.getValue() == a) {
 					// int [][] datas = activo_impl.getProvedoreCuidad();
 					 reporte.getPdf(getDatosALL(),
-								this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
+								this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
+								String.valueOf(this.frmReporte.dt_fecha.getValue()));
 				} else {
 					reporte.getPdf(getDatos(),
-							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
+							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
+							String.valueOf(this.frmReporte.dt_fecha.getValue()));
 				}
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
 

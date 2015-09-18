@@ -17,9 +17,9 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-	private static final float MARGIN = 60;
-	private static final boolean IS_LANDSCAPE = false;
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
+	private static final float MARGIN = 30;
+	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;

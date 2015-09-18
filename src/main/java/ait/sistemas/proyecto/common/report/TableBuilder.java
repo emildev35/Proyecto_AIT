@@ -34,7 +34,10 @@ public class TableBuilder {
         table.setColumns(columns);
         return this;
     }
-
+    public TableBuilder setColumnsGA(List<Column> columns) {
+        table.setColumnsGA(columns);
+        return this;
+    }
     public TableBuilder setCellMargin(float cellMargin) {
         table.setCellMargin(cellMargin);
         return this;

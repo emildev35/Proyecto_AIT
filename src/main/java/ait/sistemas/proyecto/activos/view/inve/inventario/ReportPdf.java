@@ -1,10 +1,7 @@
 package ait.sistemas.proyecto.activos.view.inve.inventario;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -66,15 +63,18 @@ public class ReportPdf {
 	String[][] contables;
 	String[][] activos;
 
-	public boolean getPdf(String[][] data, String strDependencia) throws IOException {
+	public boolean getPdf(String[][] data, String strDependencia, String fecha) throws IOException {
 
-		return new PDFInventarioGenerator().generatePDF(createContent(data, strDependencia), SAVE_PATH);
+		return new PDFInventarioGenerator().generatePDF(createContent(data, strDependencia, fecha ), SAVE_PATH);
 
 	}
 
-	private Table createContent(String[][] content, String strDependencia) {
+	private Table createContent(String[][] content, String strDependencia, String fecha) {
 
-
+		List<Column> columnsGA = new ArrayList<Column>();
+		columnsGA.add(new Column("Grupo Contable", 440));
+		columnsGA.add(new Column("Auxiliar Contable", 450));
+		
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
 		columns.add(new Column("Serie", 100));
@@ -83,11 +83,14 @@ public class ReportPdf {
 		columns.add(new Column("Valor Neto", 75));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
-		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
-		String fecha = fechaHora.format(date);
-		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
-				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
+//		Date date = new Date();
+//		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+//		String fecha = fechaHora.format(date);
+		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN)
+				.setColumnsGA(columnsGA).setContent(content)
+				.setColumns(columns).setContent(content)
+				.setHeight(tableHeight).
+				setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
 				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
 				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
 				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)

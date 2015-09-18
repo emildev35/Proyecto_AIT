@@ -27,7 +27,7 @@ public class BarMessage {
 	public BarMessage(String component, String error) {
 		this.componetName = component;
 		this.errorName = error;
-		this.type = "failure	";
+		this.type = "failure";
 	}
 	
 	public BarMessage(String component, String error, String type) {
