@@ -7,17 +7,21 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.service.Impl.InventarioImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -56,11 +60,16 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 	private Component buildFormContent() {
 		VerticalLayout vl_form = new VerticalLayout();
 		Panel pn_form = new Panel("TOMA DE INVENTARIO FISICO  :  " + Messages.REQUIED_FIELDS);
+		pn_form.setIcon(FontAwesome.EDIT);
+		pn_form.setStyleName(AitTheme.PANEL_FORM);
+		
 		pn_form.setContent(this.frm_tomainv);
 		vl_form.setMargin(true);
 		vl_form.addComponent(pn_form);
 		
 		Panel pn_grid = new Panel("ACTIVOS INVENTARIADOS");
+		pn_grid.setIcon(FontAwesome.TABLE);
+		pn_grid.setStyleName(AitTheme.PANEL_GRID);
 		pn_grid.setContent(this.frm_tomainv.getGrid());
 		vl_form.addComponent(pn_grid);
 		return vl_form;
@@ -79,11 +88,19 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_guardar.setStyleName("ait-buttons-btn");
-		buttonContent.addComponent(this.btn_guardar);
-		this.btn_salir.setStyleName("ait-buttons-btn");
+		GridLayout btn_grid = new GridLayout(2, 1);
+		btn_grid.setResponsive(true);
+		btn_grid.setSizeFull();
+		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_grid.addComponent(this.btn_guardar);
+		btn_grid.setComponentAlignment(btn_guardar, Alignment.TOP_CENTER);
+		btn_guardar.setIcon(FontAwesome.SAVE);
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
-		buttonContent.addComponent(this.btn_salir);
+		btn_grid.addComponent(this.btn_salir);
+		btn_salir.setIcon(FontAwesome.UNDO);
+		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
+		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 	
@@ -105,10 +122,10 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_tomainv.validate()) {
 				try {
-					if (inventarioimpl.add(frm_tomainv.getData())>0) {
+					if (inventarioimpl.add(frm_tomainv.getData()) > 0) {
 						Notification.show(Messages.SUCCESS_MESSAGE);
 						frm_tomainv.clean();
-					}else{
+					} else {
 						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 					}
 				} catch (SQLException e) {

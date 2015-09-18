@@ -26,6 +26,8 @@ $v-layout-margin-left:10px;
 /* $v-unit-size: round(2.8 * $v-font-size); */
 $v-unit-size: 25px;
 
+$v-app-loading-text: "Espere un momento por favor ...";
+
 @import "../valo/valo";
 @import "components/ait-menu.scss";
 @import "components/ait-panel.scss";

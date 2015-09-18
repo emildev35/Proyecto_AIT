@@ -10,6 +10,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
 		<!-- <class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class> -->
+		<class>ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Cierre_Gestion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ComponentesModel</class>
@@ -17,7 +18,6 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Documentos_Respaldo</class>
 		<class>ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento</class>
-		<class>ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Grupos_Contable</class>
 		<class>ait.sistemas.proyecto.activos.data.model.GruposContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Motivo_Baja</class>
@@ -107,7 +107,5 @@
 			<property name="eclipselink.cache.shared.default" value="false" />
 		</properties>
 	</persistence-unit>
-
-
-
+	
 </persistence>

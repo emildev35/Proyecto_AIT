@@ -1,7 +1,8 @@
 @mixin ait-content-bar-button { 
 
 	.ait-buttons { 
-		background-color: #2DB51E;
+		background-color: rgb(255, 255, 255);
+		border-top : 1px solid rgb(0, 0, 0);
 		padding: 4px;
 		position: fixed;
 		display: block;
@@ -11,21 +12,28 @@
 		z-index: 1 !important;
 	}
 
-	.ait-buttons-btn {
+	.ait-btn-submit {
 		padding: 4px;
 		height: 95%;
-		//background-color: #000e75;
-		@include valo-button-hover-style($background-color: #000e75);
-		//@include valo-button-active-style($background-color: #000); 
+
+		background-color: rgb(92, 184, 92);
+		border: 2px solid rgb(76, 174, 76);
+		color: white;
 	}
 	
-	.ait-buttons-btn-exit {
+	.ait-btn-exit {
 		padding: 4px;
 		height: 95%;
-		background-color: #33FF33;
+		background-color: rgb(255, 108, 96);
+		border-color: rgb(255, 108, 96);
+		color: white;
 	}
-	
-	
-	
+	.ait-btn-print{
+		padding: 4px;
+		height: 95%;
+	  	background-color: rgb(241, 197, 0);
+	    border-color: rgb(241, 197, 0);
+	    color: white;
+	}
 	
 }
