@@ -10,6 +10,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
 		<!-- <class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class> -->
+		<class>ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Cierre_Gestion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ComponentesModel</class>
@@ -17,7 +18,6 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Documentos_Respaldo</class>
 		<class>ait.sistemas.proyecto.activos.data.model.DocumentosRespaldoModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Fuentes_Financiamiento</class>
-		<class>ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Grupos_Contable</class>
 		<class>ait.sistemas.proyecto.activos.data.model.GruposContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Motivo_Baja</class>
@@ -42,11 +42,11 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=Activos" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sistemas" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 
 		</properties>
 	</persistence-unit>
@@ -73,11 +73,11 @@
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=Seguridad" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Seguridad" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sistemas" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
 
 		</properties>
@@ -99,15 +99,13 @@
 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=RecursosHumanos" />
+				value="jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=RecursosHumanos" />
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="sistemas" />
+			<property name="javax.persistence.jdbc.password" value="sa" />
 			<property name="eclipselink.cache.shared.default" value="false" />
 		</properties>
 	</persistence-unit>
-
-
-
+	
 </persistence>
