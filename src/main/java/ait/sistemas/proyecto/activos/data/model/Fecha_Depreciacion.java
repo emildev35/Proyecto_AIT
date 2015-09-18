@@ -4,7 +4,16 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
+
+@SqlResultSetMapping(name = "fecha-depre", entities = { @EntityResult(entityClass = Fecha_Depreciacion.class, fields = {
+	@FieldResult(name = "FDE_Id", column = "FDE_Id"),
+	@FieldResult(name = "FDE_Fecha_Depreciacion", column = "FDE_Fecha_Depreciacion")
+
+}) })
 
 @Entity
 public class Fecha_Depreciacion implements Serializable{

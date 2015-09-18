@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.FechaDepreciacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -35,6 +37,7 @@ public class FormInventario extends GridLayout {
 	//los List siempre se declaran asi 
 	//BarMessage --> clase para mandar:			 componente  mensaje   tipo
 	final private DependenciaImpl dependencia_impl = new DependenciaImpl();
+	final private FechaDepreciacionImpl fecha_depreciacion_impl = new FechaDepreciacionImpl();
 	final PropertysetItem pitm_Inventario = new PropertysetItem();
 	private FieldGroup binder_Inventario;
 	
@@ -65,14 +68,14 @@ public class FormInventario extends GridLayout {
 		//new NullValidator("", false) por es una clase de vaadin --> no da errores pero tampoco deja registrar
 		this.dt_fecha.setEnabled(false);
 		
-		fillfecha();
+		fillfecha((Fecha_Depreciacion) fecha_depreciacion_impl.getFechaDep());
 		fillcbGrupo();
 		buildContent();
 	}
 	
-	private void fillfecha() {
+	private void fillfecha(Fecha_Depreciacion data) {
 		
-//		this.dt_fecha.setValue(newFieldValue);
+		this.dt_fecha.setValue(data.getFDE_Fecha_Depreciacion());
 	}
 
 	public void init(){

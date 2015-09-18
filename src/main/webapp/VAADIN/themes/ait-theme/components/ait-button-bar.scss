@@ -1,6 +1,7 @@
 @mixin ait-content-bar-button { 
 
-	.ait-buttons { background-color:#e1e1e1;
+	.ait-buttons { 
+		background-color: #2DB51E;
 		padding: 4px;
 		position: fixed;
 		display: block;
@@ -12,6 +13,19 @@
 
 	.ait-buttons-btn {
 		padding: 4px;
-		height: 95%
+		height: 95%;
+		//background-color: #000e75;
+		@include valo-button-hover-style($background-color: #000e75);
+		//@include valo-button-active-style($background-color: #000); 
 	}
+	
+	.ait-buttons-btn-exit {
+		padding: 4px;
+		height: 95%;
+		background-color: #33FF33;
+	}
+	
+	
+	
+	
 }

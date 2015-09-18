@@ -1,4 +1,5 @@
-@import "ait-theme.scss";
+//@import "ait-theme.scss";
+@import "flat-ait.scss";
 @import "addons.scss";
 
 // This file prefixes all rules with the theme name to avoid causing conflicts with other themes.
@@ -7,5 +8,5 @@
 .ait-theme {
   @include addons;
   @include ait-theme;
-
+ 
 }

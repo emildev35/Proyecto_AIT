@@ -1,0 +1,46 @@
+
+$v-font-family: "Roboto", sans-serif;
+$v-font-weight: 400;
+$v-font-weight--header: 400;
+$v-background-color: #fff;
+$v-focus-color: rgb(150,190,90);
+$v-luminance-threshold: 180;
+$v-border: 2px solid v-shade;
+$v-border-radius: 6px;
+$v-bevel: false;
+$v-gradient: false;
+$v-shadow: false;
+$v-textfield-bevel: false;
+$v-textfield-shadow: false;
+$v-link-text-decoration: false;
+$v-selection-overlay-padding-horizontal: 0;
+$v-selection-overlay-padding-vertical: 6px;
+$v-selection-item-height: 30px;
+$v-selection-item-border-radius: 0;
+$valo-menu-background-color: #eee;
+
+$v-layout-margin-top:10px;
+$v-layout-margin-right:10px;
+$v-layout-margin-bottom:10px;
+$v-layout-margin-left:10px;
+/* $v-unit-size: round(2.8 * $v-font-size); */
+$v-unit-size: 25px;
+
+@import "../valo/valo";
+@import "components/ait-menu.scss";
+@import "components/ait-panel.scss";
+@import "components/ait-button-bar.scss";
+@import "common.scss";
+
+@mixin ait-theme {
+  	@include valo;
+	@include ait-dashboard-menu;
+	@include ait-content-bar-button;
+	@include ait-pn-grid;
+	@include ait-theme-common;
+	
+/* 	@mixin valo-panel-caption-style($background-color: $v-background-color,  */
+/* 	 $bevel: $v-bevel, */
+/* 	 $gradient: valo-gradient-style($v-gradient) valo-gradient-opacity($v-gradient)/4,  */
+/* 	 $border: $v-panel-border); */
+}
