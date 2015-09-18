@@ -27,13 +27,15 @@ public class ChangePasswordForm extends GridLayout {
 	private FieldGroup binder_reset_password;
 	
 	public ChangePasswordForm() {
-		super(1, 2);
+		super(3, 2);
 		setWidth("100%");
+		setMargin(true);
 		this.pitm_reset_password.addItemProperty("password", new ObjectProperty<String>(""));
 		this.pitm_reset_password.addItemProperty("password_confirm", new ObjectProperty<String>(""));
 		this.binder_reset_password = new FieldGroup(pitm_reset_password);
 		this.binder_reset_password.bind(this.pwd_password, "password");
 		this.binder_reset_password.bind(this.pwd_password_confirmation, "password_confirm");
+		
 		
 		this.pwd_password.setRequired(true);
 		this.pwd_password
@@ -41,12 +43,15 @@ public class ChangePasswordForm extends GridLayout {
 				"^(?=^.{8,}$)(?=.*\\d)(?=.*\\W+)(?=.*[a-z])(?=.*[A-Z])(?!^.*\\n).*$",
 				Messages.PASSWORD_MESSAGE));
 		this.pwd_password_confirmation.setRequired(true);
+		
+		this.pwd_password_confirmation.setWidth("100%");
+		this.pwd_password.setWidth("100%");
 		buildForm();
 	}
 	
 	private void buildForm() {
-		addComponent(this.pwd_password, 0, 0);
-		addComponent(this.pwd_password_confirmation, 0, 1);
+		addComponent(this.pwd_password, 1, 0);
+		addComponent(this.pwd_password_confirmation, 1, 1);
 	}
 	
 	public boolean validate() {

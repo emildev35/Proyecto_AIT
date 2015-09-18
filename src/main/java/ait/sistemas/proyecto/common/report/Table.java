@@ -6,38 +6,39 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
 public class Table {
-	 // Table attributes
-    private float margin;
-    private float height;
-    private PDRectangle pageSize;
-    private boolean isLandscape;
-    private float rowHeight;
-    
-    private int headerSize;
-    // font attributes
-    private PDFont textFont;
-    private PDFont headerFont;
-    private PDFont footerFont;
-    private PDFont titleFont;
-    private PDFont subtitleFont;
-    private float fontSize;
-    private float fontSizeheader;
-    private float fontSizefooter;
-    private float fontSizetitle;
-    private float fontSizesubtitle;
-    // Content attributes
-    private Integer numberOfRows;
-    private List<Column> columns;
-    private String[][] content;
-    private float cellMargin;
+	// Table attributes
+	private float margin;
+	private float height;
+	private PDRectangle pageSize;
+	private boolean isLandscape;
+	private float rowHeight;
 
-    private String usuario;
-    private String unidad;
-    private String dependencia;
-    private String title;
-    private String subtitle;
-    
-    public String getUsuario() {
+	private int headerSize;
+	// font attributes
+	private PDFont textFont;
+	private PDFont headerFont;
+	private PDFont footerFont;
+	private PDFont titleFont;
+	private PDFont subtitleFont;
+	private float fontSize;
+	private float fontSizeheader;
+	private float fontSizefooter;
+	private float fontSizetitle;
+	private float fontSizesubtitle;
+	// Content attributes
+	private Integer numberOfRows;
+	private List<Column> columns;
+	private List<Column> columnsGA;
+	private String[][] content;
+	private float cellMargin;
+
+	private String usuario;
+	private String unidad;
+	private String dependencia;
+	private String title;
+	private String subtitle;
+
+	public String getUsuario() {
 		return usuario;
 	}
 
@@ -78,119 +79,138 @@ public class Table {
 	}
 
 	public Table() {
-    }
+	}
 
-    public Integer getNumberOfColumns() {
-        return this.getColumns().size();
-    }
+	public Integer getNumberOfColumns() {
+		return this.getColumns().size();
+	}
+	public Integer getNumberOfColumnsGA() {
+		return this.getColumnsGA().size();
+	}
+	public float getWidth() {
+		float tableWidth = 0f;
+		for (Column column : columns) {
+			tableWidth += column.getWidth();
+		}
+		return tableWidth;
+	}
 
-    public float getWidth() {
-        float tableWidth = 0f;
-        for (Column column : columns) {
-            tableWidth += column.getWidth();
-        }
-        return tableWidth;
-    }
+	public float getMargin() {
+		return margin;
+	}
 
-    public float getMargin() {
-        return margin;
-    }
+	public void setMargin(float margin) {
+		this.margin = margin;
+	}
 
-    public void setMargin(float margin) {
-        this.margin = margin;
-    }
+	public PDRectangle getPageSize() {
+		return pageSize;
+	}
 
-    public PDRectangle getPageSize() {
-        return pageSize;
-    }
+	public void setPageSize(PDRectangle pageSize) {
+		this.pageSize = pageSize;
+	}
 
-    public void setPageSize(PDRectangle pageSize) {
-        this.pageSize = pageSize;
-    }
+	public PDFont getTextFont() {
+		return textFont;
+	}
 
-    public PDFont getTextFont() {
-        return textFont;
-    }
+	public void setTextFont(PDFont textFont) {
+		this.textFont = textFont;
+	}
 
-    public void setTextFont(PDFont textFont) {
-        this.textFont = textFont;
-    }
+	public float getFontSize() {
+		return fontSize;
+	}
 
-    public float getFontSize() {
-        return fontSize;
-    }
+	public void setFontSize(float fontSize) {
+		this.fontSize = fontSize;
+	}
 
-    public void setFontSize(float fontSize) {
-        this.fontSize = fontSize;
-    }
+	public String[] getColumnsNamesAsArray() {
+		String[] columnNames = new String[getNumberOfColumns()];
+		for (int i = 0; i < getNumberOfColumns(); i++) {
+			columnNames[i] = columns.get(i).getName();
+		}
+		return columnNames;
+	}
+	public String[] getColumnsNamesAsArrayGA() {
+		String[] columnNames = new String[getNumberOfColumnsGA()];
+		for (int i = 0; i < getNumberOfColumnsGA(); i++) {
+			columnNames[i] = columnsGA.get(i).getName();
+		}
+		return columnNames;
+	}
 
-    public String[] getColumnsNamesAsArray() {
-        String[] columnNames = new String[getNumberOfColumns()];
-        for (int i = 0; i < getNumberOfColumns(); i++) {
-            columnNames[i] = columns.get(i).getName();
-        }
-        return columnNames;
-    }
+	public List<Column> getColumns() {
+		return columns;
+	}
 
-    public List<Column> getColumns() {
-        return columns;
-    }
+	public void setColumns(List<Column> columns) {
+		this.columns = columns;
+	}
 
-    public void setColumns(List<Column> columns) {
-        this.columns = columns;
-    }
+	public List<Column> getColumnsGA() {
+		return columnsGA;
+	}
 
-    public Integer getNumberOfRows() {
-        return numberOfRows;
-    }
+	public void setColumnsGA(List<Column> columnsGA) {
+		this.columnsGA = columnsGA;
+	}
 
-    public void setNumberOfRows(Integer numberOfRows) {
-        this.numberOfRows = numberOfRows;
-    }
+	public Integer getNumberOfRows() {
+		return numberOfRows;
+	}
 
-    public float getHeight() {
-        return height;
-    }
+	public void setNumberOfRows(Integer numberOfRows) {
+		this.numberOfRows = numberOfRows;
+	}
 
-    public void setHeight(float height) {
-        this.height = height;
-    }
+	public float getHeight() {
+		return height;
+	}
 
-    public float getRowHeight() {
-        return rowHeight;
-    }
+	public void setHeight(float height) {
+		this.height = height;
+	}
 
-    public void setRowHeight(float rowHeight) {
-        this.rowHeight = rowHeight;
-    }
+	public float getRowHeight() {
+		return rowHeight;
+	}
 
-    public String[][] getContent() {
-        return content;
-    }
+	public void setRowHeight(float rowHeight) {
+		this.rowHeight = rowHeight;
+	}
 
-    public void setContent(String[][] content) {
-        this.content = content;
-    }
+	public String[][] getContent() {
+		return content;
+	}
 
-    public float getCellMargin() {
-        return cellMargin;
-    }
+	public void setContent(String[][] content) {
+		this.content = content;
+	}
 
-    public void setCellMargin(float cellMargin) {
-        this.cellMargin = cellMargin;
-    }
+	public float getCellMargin() {
+		return cellMargin;
+	}
 
-    public boolean isLandscape() {
-        return isLandscape;
-    }
+	public void setCellMargin(float cellMargin) {
+		this.cellMargin = cellMargin;
+	}
 
-    public void setLandscape(boolean isLandscape) {
-        this.isLandscape = isLandscape;
-    }
-    public int getHeaderSize() {
+	public boolean isLandscape() {
+		return isLandscape;
+	}
+
+	public void setLandscape(boolean isLandscape) {
+		this.isLandscape = isLandscape;
+	}
+
+	public int getHeaderSize() {
 		return headerSize;
 	}
-    public void setHeaderSize(int headerSize) {
+
+	public void setHeaderSize(int headerSize) {
 		this.headerSize = headerSize;
 	}
 
@@ -257,6 +277,5 @@ public class Table {
 	public void setFontSizesubtitle(float fontSizesubtitle) {
 		this.fontSizesubtitle = fontSizesubtitle;
 	}
-	
-    
+
 }

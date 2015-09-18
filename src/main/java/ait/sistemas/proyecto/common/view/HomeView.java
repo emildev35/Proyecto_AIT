@@ -9,9 +9,6 @@ import com.vaadin.ui.VerticalLayout;
 
 public class HomeView extends VerticalLayout implements View{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public static final String URL = "";
 

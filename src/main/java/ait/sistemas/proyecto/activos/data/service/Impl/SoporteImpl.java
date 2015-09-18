@@ -39,6 +39,7 @@ public class SoporteImpl {
 		int result_detalle = 0;
 		if (result_cabezera > 0) {
 			for (Detalle detalle : data.getDetalles()) {
+				//TODO revisar procedimeitno alamcenado
 				String str_detalle = String.format("EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=%d,"
 						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
 						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'", detalle.getId_dependencia(), detalle

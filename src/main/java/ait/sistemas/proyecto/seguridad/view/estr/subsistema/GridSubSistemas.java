@@ -11,21 +11,23 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.renderers.DateRenderer;
 
-public class GridSubSistemas extends Grid{
-
+public class GridSubSistemas extends Grid {
+	
 	private MenuImpl menuImpl = new MenuImpl();
 	private static final long serialVersionUID = 1L;
-
+	
 	public GridSubSistemas() {
 		buildGrid();
 	}
+	
 	public void update() {
 		this.removeAllColumns();
 		buildGrid();
 	}
-	public void buildGrid(){
-		BeanItemContainer<Arbol_menus> bean_subsistema = new BeanItemContainer<Arbol_menus>(
-				Arbol_menus.class, this.menuImpl.getallSubsistema());
+	
+	public void buildGrid() {
+		BeanItemContainer<Arbol_menus> bean_subsistema = new BeanItemContainer<Arbol_menus>(Arbol_menus.class,
+				this.menuImpl.getallSubsistema());
 		setContainerDataSource(bean_subsistema);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
@@ -37,12 +39,12 @@ public class GridSubSistemas extends Grid{
 		removeColumn("AME_Id_Opcion");
 		removeColumn("arbolMenus");
 		removeColumn("arbolMenuses");
-		
+		removeColumn("AME_NavegacionRedireccion");
 		
 		setWidth("100%");
-		setColumnOrder("AME_Id_Identificador", "AME_Id_Subsistema",
-				"AME_Nombre","AME_Icono","AME_Programa","AME_Fecha_Registro");
-
+		setColumnOrder("AME_Id_Identificador", "AME_Id_Subsistema", "AME_Nombre", "AME_Icono", "AME_Programa",
+				"AME_Fecha_Registro");
+		
 		Grid.Column identificadorColumn = this.getColumn("AME_Id_Identificador");
 		Grid.Column id_subsistemaColumn = this.getColumn("AME_Id_Subsistema");
 		Grid.Column nombreColumn = this.getColumn("AME_Nombre");
@@ -50,14 +52,13 @@ public class GridSubSistemas extends Grid{
 		Grid.Column programaColumn = this.getColumn("AME_Programa");
 		Grid.Column fechaRegistroColumn = this.getColumn("AME_Fecha_Registro");
 		
-		identificadorColumn.setHeaderCaption("Identificador");
-		id_subsistemaColumn.setHeaderCaption("Id. Subsistema");
-		nombreColumn.setHeaderCaption("Nombre SubSistema");
-		iconlColumn.setHeaderCaption("Icono");
-		programaColumn.setHeaderCaption("Programa");
-		fechaRegistroColumn.setHeaderCaption("Fecha Registro");
-		fechaRegistroColumn.setRenderer(new DateRenderer("%1$tB de %1$te, %1$tY",
-				new Locale("es", "BO")));
+		identificadorColumn.setHeaderCaption("Identificador").setExpandRatio(1);
+		id_subsistemaColumn.setHeaderCaption("Id. Subsistema").setExpandRatio(1);
+		nombreColumn.setHeaderCaption("Nombre SubSistema").setExpandRatio(7);
+		iconlColumn.setHeaderCaption("Icono").setExpandRatio(2);
+		programaColumn.setHeaderCaption("Programa").setExpandRatio(5);
+		fechaRegistroColumn.setHeaderCaption("Fecha Registro").setExpandRatio(1);
+		fechaRegistroColumn.setRenderer(new DateRenderer("%1$tB de %1$te, %1$tY", new Locale("es", "BO")));
 		Responsive.makeResponsive(this);
 	}
 }

@@ -57,6 +57,7 @@ public class ReportPdf {
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 3;
+
 	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ProveedorImpl provedorimpl = new ProveedorImpl();

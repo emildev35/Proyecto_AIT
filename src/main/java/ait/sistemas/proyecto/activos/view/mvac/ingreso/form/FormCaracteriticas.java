@@ -51,13 +51,13 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	public TextField txt_numero_serie = new TextField("Numero Serie");
 	public TextField txt_numero_garantia = new TextField("Numero Garantia");
 	public TextField txt_tiempo_garantia = new TextField("Tiempo Garantia");
-	public DateField dtf_vencimiento_garantia = new DateField("Venticimiento");
+	public DateField dtf_vencimiento_garantia = new DateField("Fecha de Vencimiento");
 	public TextField txt_numero_ruat = new TextField("N. de RUAT");
 	public TextField txt_numero_folio_real = new TextField("N. de Folio Real");
 	public TextField txt_numero_poliza_seguro = new TextField("N. de Poliza de Seguro");
-	public DateField dtf_vencimiento_seguro = new DateField("N. Vencimiento de Seguro");
+	public DateField dtf_vencimiento_seguro = new DateField("Fecha de  Vcto de Seguro");
 	public TextField txt_numero_contrato_mantenimiento = new TextField("N. de Contrato de Mantenimiento");
-	public DateField dtf_vcto_contrato_mantenimientno = new DateField("Vcto de Contrato");
+	public DateField dtf_vcto_contrato_mantenimientno = new DateField("Fecha de Vcto de Contrato");
 	public TextField txt_nombre_imagen = new TextField();
 	
 	private GridLayout grid_activo_fijo = new GridLayout(6, 1);
@@ -86,7 +86,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		setSpacing(true);
 		setMargin(true);
 		this.txt_codigo_activo.setWidth("90%");
-		this.txt_nombre_activo.setWidth("90%");
+		this.txt_nombre_activo.setWidth("100%");
 		this.cb_proveedor.setWidth("90%");
 		this.txt_marca.setWidth("90%");
 		this.txt_numero_serie.setWidth("90%");
@@ -150,8 +150,9 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		setColumnExpandRatio(5, 1);
 		setColumnExpandRatio(6, 5);
 		
-		grid_activo_fijo.addComponent(this.txt_codigo_activo, 0, 0, 2, 0);
-		grid_activo_fijo.addComponent(this.txt_nombre_activo, 3, 0, 5, 0);
+		grid_activo_fijo.addComponent(this.txt_codigo_activo, 0, 0);
+		grid_activo_fijo.addComponent(this.txt_nombre_activo, 1, 0, 5, 0);
+		
 		
 		final Panel pn_activo = new Panel();
 		grid_activo_fijo.setSizeFull();

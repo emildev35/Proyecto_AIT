@@ -6,7 +6,8 @@ import com.vaadin.navigator.ViewProvider;
 public class AitViewProvider implements ViewProvider {
 	
 	private static final long serialVersionUID = 1L;
-	
+//	private final UsuarioImpl usuarioimpl = new UsuarioImpl();
+//	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 	@Override
 	@SuppressWarnings("rawtypes")
 	public View getView(String viewName) {
@@ -52,8 +53,12 @@ public class AitViewProvider implements ViewProvider {
 	
 	@Override
 	public String getViewName(String viewAndParameters) {
-		if(viewAndParameters==null)
+		if(viewAndParameters==null || viewAndParameters.equals("null"))
 			return "";
+		
+//		if(!usuarioimpl.checkpermission(session.getId(), viewAndParameters)){
+//			return "";
+//		}
 		return viewAndParameters;
 	}
 	

@@ -17,13 +17,13 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-	private static final float MARGIN = 60;
-	private static final boolean IS_LANDSCAPE = false;
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
+	private static final float MARGIN = 30;
+	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 8;
+	private static final float FONT_SIZE = 10;
 
 	/**
 	 * Font for footer report
@@ -35,7 +35,7 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-	private static final float HEADER_FONT_SIZE = 10;
+	private static final float HEADER_FONT_SIZE = 8;
 
 	/**
 	 * Font for footer report
@@ -47,12 +47,13 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-	private static final float SUBTITLE_FONT_SIZE = 11;
+	private static final float SUBTITLE_FONT_SIZE = 12;
 
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 5;
+
 
 	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 	

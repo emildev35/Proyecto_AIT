@@ -13,7 +13,9 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "Id", column = "USU_Id_Usuario"),
 	@FieldResult(name = "CI", column = "USU_CI_Usuario"),
 	@FieldResult(name = "FechaAlta", column = "USU_Fecha_Alta"),
-	@FieldResult(name = "FullName", column = "USU_Nombre_Completo")}) })
+	@FieldResult(name = "FullName", column = "USU_Nombre_Completo"),
+	@FieldResult(name = "dependencia", column = "dependencia"),
+	@FieldResult(name = "unidad_organizacional", column = "unidad_organizacional")}) })
 @Entity
 public class UsuarioGridModel {
 
@@ -22,6 +24,8 @@ public class UsuarioGridModel {
 	private String CI;
 	private String FullName;
 	private Date FechaAlta;
+	private String dependencia;
+	private String unidad_organizacional;
 	
 	public UsuarioGridModel() {
 	
@@ -57,6 +61,22 @@ public class UsuarioGridModel {
 	}
 	public void setFechaAlta(Date fechaAlta) {
 		FechaAlta = fechaAlta;
+	}
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+
+	public String getUnidad_organizacional() {
+		return unidad_organizacional;
+	}
+
+	public void setUnidad_organizacional(String unidad_organizacional) {
+		this.unidad_organizacional = unidad_organizacional;
 	}
 	
 }

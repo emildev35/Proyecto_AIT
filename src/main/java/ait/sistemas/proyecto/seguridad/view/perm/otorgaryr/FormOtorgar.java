@@ -69,8 +69,7 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener, Sele
 		cbMenu.setInputPrompt("Seleccione un Menu");
 		cb_subMenu.setInputPrompt("Seleccione un Sub Menu");
 		
-		pitmOpcionPerfil.addItemProperty("usuario", new ObjectProperty<UsuarioGridModel>(
-				new UsuarioGridModel()));
+		pitmOpcionPerfil.addItemProperty("usuario", new ObjectProperty<UsuarioGridModel>(new UsuarioGridModel()));
 		pitmOpcionPerfil.addItemProperty("subSistema", new ObjectProperty<Long>((long) 0));
 		pitmOpcionPerfil.addItemProperty("menu", new ObjectProperty<Long>((long) 0));
 		pitmOpcionPerfil.addItemProperty("subMenu", new ObjectProperty<Long>((long) 0));
@@ -116,8 +115,8 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener, Sele
 		this.permisos_usuario = (List<PermisosUsuario>) usuarioimpl.listarPermisos(usuario, menu);
 		if (permisos_usuario.size() > 0) {
 			
-			BeanItemContainer<PermisosUsuario> bean_otorgar = new BeanItemContainer<PermisosUsuario>(
-					PermisosUsuario.class, permisos_usuario);
+			BeanItemContainer<PermisosUsuario> bean_otorgar = new BeanItemContainer<PermisosUsuario>(PermisosUsuario.class,
+					permisos_usuario);
 			this.grid_otorgar.setContainerDataSource(bean_otorgar);
 			this.grid_otorgar.setSelectionMode(SelectionMode.MULTI);
 			for (PermisosUsuario item : permisos_usuario) {
@@ -201,20 +200,19 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener, Sele
 			this.cbMenu.setEnabled(true);
 			try {
 				UsuarioGridModel usuario = (UsuarioGridModel) this.cb_usuario.getValue();
-				if (event.getProperty().getValue() == this.cbSubSistema.getValue()
-						&& this.cbSubSistema.getValue() != null) {
+				if (event.getProperty().getValue() == this.cbSubSistema.getValue() && this.cbSubSistema.getValue() != null) {
 					cb_subMenu.removeAllItems();
 					fillcbMenu((long) this.cbSubSistema.getValue());
 				}
-				if (event.getProperty().getValue() == this.cbMenu.getValue()
-						&& this.cbMenu.getValue() != null) {
+				if (event.getProperty().getValue() == this.cbMenu.getValue() && this.cbMenu.getValue() != null) {
 					fillcb_subMenu((long) this.cbMenu.getValue());
 				}
-				if (event.getProperty().getValue() == this.cb_subMenu.getValue()
-						&& this.cbSubSistema.getValue() != null) {
+				if (event.getProperty().getValue() == this.cb_subMenu.getValue() && this.cbSubSistema.getValue() != null) {
 					
 				}
-				
+				if (event.getProperty().getValue() == this.cb_usuario.getValue() && this.cb_usuario.getValue() != null) {
+					buildGrid(usuario.getId(), 0);
+				}
 				if (this.cbSubSistema.getValue() == null) {
 					buildGrid(usuario.getId(), 0);
 					this.id_padre = 0;

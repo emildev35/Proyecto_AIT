@@ -47,6 +47,7 @@ public class ReportPdf {
 	public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 
+
 	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
 
 		return new PdfActaGenerator().generatePDF(build(data), SAVE_PATH);

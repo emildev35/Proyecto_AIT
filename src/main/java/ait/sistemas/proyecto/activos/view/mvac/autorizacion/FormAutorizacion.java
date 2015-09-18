@@ -40,6 +40,7 @@ public class FormAutorizacion extends GridLayout {
 		
 		this.txt_pin.setRequired(true);
 		this.tarea_motivo.setRequired(true);
+		this.tarea_motivo.setRows(2);
 		
 		txt_pin.setWidth("90%");
 		tarea_motivo.setWidth("90%");

@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PdfResumenActGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -53,7 +54,7 @@ public class ReportPdf {
 
 	private static final int HEADER_SIZE = 5;
 
-	static String SAVE_PATH = "Informe-Resumen-Actualizacion" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	static String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Resumen-Actualizacion" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 

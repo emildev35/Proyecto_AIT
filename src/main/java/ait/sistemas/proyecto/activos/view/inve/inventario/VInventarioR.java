@@ -30,7 +30,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir;
-	private FormReporte frmReporte = new FormReporte();
+	private FormInventario frmReporte = new FormInventario();
 	int r = 0;
 	private String[][] data;
 	private final ActivoImpl activo_impl = new ActivoImpl();
@@ -110,7 +110,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 		r = 0;
 		for (ActivosModel activo : lista) {
 			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(), activo.getACT_Nombre_Activo(),
-					String.valueOf(activo.getACT_Valor()), String.valueOf(activo.getACT_Valor_Neto()) };
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()) };
 			
 			data[r] = row;
 			r++;
@@ -125,7 +125,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 		r = 0;
 		for (ActivosModel activo : lista) {
 			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(), activo.getACT_Nombre_Activo(),
-					String.valueOf(activo.getACT_Valor()), String.valueOf(activo.getACT_Valor_Neto()) };
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()) };
 			
 			data[r] = row;
 			r++;
@@ -149,6 +149,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
+		this.frmReporte.clearMessages();
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {

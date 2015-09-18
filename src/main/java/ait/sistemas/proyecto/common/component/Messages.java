@@ -49,8 +49,10 @@ public class Messages {
 	public static final String ERROR_EQUALS_PASSWORD = "Las contraseñas no son iguales";
 	public static final String LOGIN_ERROR = "Login Incorrecto";
 	public static final String NUMBER_VALUE = "El formato no es correcto";
+	
 	public static final String PIN_MESSAGES = "* El PIN Generado es de uso exclusivo para Autorizar Documentos de Movimientos de Activos Fijos";
 	public static final String PIN_MESSAGES_2 = "* El PIN Generado esta bajo su responsabilidad y no debe ser divulgado a terceros";
+	
 	public static final String SELECT_MOVIMIENTO = "Seleccione un Movimiento";
 	/**
 	 * Mensaje utilizado cuando no se encontro un tipo de cambio al momento
@@ -73,6 +75,18 @@ public class Messages {
 	 * Mesaje para la impresion del etiquetas de Activos
 	 */
 	public static final String CODE_BAR_INFO = "Debe seleccionar almenos un Activo del grid";
+	/**
+	 * Mensaje de error para el reporte varios
+	 */
+	public static final String REPORT_MESSAGE = "Dene introducir el nombre del Reporte y Seleccionar al menos una columna";
+	/**
+	 * Mensaje presionar tecla ENTER
+	 */
+	public static final String KEY_ENTER = "Para el registro del Activo debe presionar la tecla ENTER o INTRO";
+	/***
+	 * Mensaje de Campos requeridos
+	 */
+	public static final String REQUIED_FIELDS = "(Los campos con (*) son requeridos)";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}

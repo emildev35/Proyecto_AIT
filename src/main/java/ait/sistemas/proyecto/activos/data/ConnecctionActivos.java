@@ -10,10 +10,10 @@ public class ConnecctionActivos {
 	private final String str_conn = "jdbc:sqlserver://192.168.97.99;instanceName=ACTIVOS;databaseName=Activos;user=sa;password=sa";
 	
 	public int callproc(String str_proc) throws SQLException {
+		Connection conn = null;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			Connection conn = DriverManager.getConnection(str_conn);
-			System.out.println("Coneccion Realizada con Exito");
+			conn = DriverManager.getConnection(str_conn);
 			Statement sta = conn.createStatement();
 			ResultSet rs = sta.executeQuery(str_proc);
 			rs.next();
@@ -24,6 +24,7 @@ public class ConnecctionActivos {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		conn.close();
 		return 0;
 	}
 }

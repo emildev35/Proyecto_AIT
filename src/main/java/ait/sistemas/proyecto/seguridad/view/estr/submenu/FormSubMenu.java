@@ -261,4 +261,8 @@ public class FormSubMenu extends GridLayout implements Property.ValueChangeListe
 		}
 		return 0;
 	}
+
+	public void setfocus() {
+		this.txt_nombre_menu.focus();
+	}
 }

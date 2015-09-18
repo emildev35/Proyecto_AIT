@@ -9,28 +9,24 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 
-public class FormReporte extends GridLayout{
-	
+public class FormReporte extends GridLayout {
 	
 	private static final long serialVersionUID = 1L;
-
 	
 	public ComboBox cbSusSistema;
-	
 	
 	final private MenuImpl menuimpl = new MenuImpl();
 	
 	final PropertysetItem pitmSubSistema = new PropertysetItem();
 	private FieldGroup binderSubMenu;
 	
-	
 	public FormReporte() {
-		setColumns(1);
-		setRows(1);
+		super(1,1);
 		setMargin(true);
 		setSpacing(true);
-		
+		setWidth("100%");
 		this.cbSusSistema = new ComboBox("Elija Sub-Sistema");
+		cbSusSistema.setWidth("20%");
 		
 		pitmSubSistema.addItemProperty("subsistema", new ObjectProperty<Long>((long)1));
 		
@@ -42,32 +38,34 @@ public class FormReporte extends GridLayout{
 		buildContent();
 	}
 	
-	public void init(){
+	public void init() {
 		update();
 	}
+	
 	/**
 	 * Actualizacion de los Campos
 	 */
-	public void update(){
+	public void update() {
 		this.binderSubMenu.clear();
-		this.cbSusSistema.setValue((long)1);
-
+		this.cbSusSistema.setValue((long) 1);
+		
 	}
+	
 	/**
 	 * Llenado del Combo Box Subsistema
 	 */
-	private void fillSubsistema(){
+	private void fillSubsistema() {
 		cbSusSistema.setNullSelectionAllowed(false);
 		cbSusSistema.setInputPrompt("Seleccione un SubSistema");
-		for (Arbol_menus subSistema : menuimpl.getallSubsistema())
-		{
+		for (Arbol_menus subSistema : menuimpl.getallSubsistema()) {
 			cbSusSistema.addItem(subSistema.getAME_Id_Identificador());
 			cbSusSistema.setItemCaption(subSistema.getAME_Id_Identificador(), subSistema.getAME_Nombre());
 		}
 	}
+	
 	private void buildContent() {
-
-		addComponent(this.cbSusSistema, 0,0);
-
+		
+		addComponent(this.cbSusSistema, 0, 0);
+		
 	}
 }

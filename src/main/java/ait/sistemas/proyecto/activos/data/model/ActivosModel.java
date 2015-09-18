@@ -56,7 +56,7 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo_ID", column = "ACT_Ubicacion_Fisica_Activo_ID"),
 		@FieldResult(name = "ACT_Ubicacion_Fisica_Activo", column = "ACT_Ubicacion_Fisica_Activo"),
 		@FieldResult(name = "ACT_Ubicacion_Imagen", column = "ACT_Ubicacion_Imagen"),
-		@FieldResult(name = "ACT_Valor", column = "ACT_Valor"),
+		@FieldResult(name = "ACT_Valor_Compra", column = "ACT_Valor_Compra"),
 		@FieldResult(name = "ACT_Valor_Neto", column = "ACT_Valor_Neto"),
 		@FieldResult(name = "ACT_Vida_Util", column = "ACT_Vida_Util"),
 		@FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
@@ -73,70 +73,40 @@ public class ActivosModel implements Serializable {
 
 	@Id
 	private String ACT_Dependencia_Codigo_Activo;
-
 	private short ACT_Dependencia_ID;
 	private String ACT_Dependencia;
-
 	private String ACT_Codigo_Activo;
-
 	private String ACT_Auxiliar_Contable_ID;
 	private String ACT_Auxiliar_Contable;
-
 	private String ACT_CI_Empleado_Asignado;
-
 	private Date ACT_Fecha_Asignacion;
-
 	private Date ACT_Fecha_Baja;
-
 	private Date ACT_Fecha_Comodato;
-
 	private Date ACT_Fecha_Compra;
-
 	private Date ACT_Fecha_Incorporacion;
-
 	private Date ACT_Fecha_Registro;
-
 	private Date ACT_Fecha_Vencimiento_Garantia;
-
 	private Date ACT_Fecha_Vencimiento_Mantenimiento;
-
 	private Date ACT_Fecha_Vencimiento_Seguro;
-
 	private int ACT_Fuente_Financiamiento_ID;
 	private String ACT_Fuente_Financiamiento;
-
 	private String ACT_Grupo_Contable_ID;
 	private String ACT_Grupo_Contable;
-
 	private long ACT_No_Acta_Entrega;
-
 	private long ACT_No_Comprobante_Gasto;
-
 	private String ACT_No_Contrato_Mantenimiento;
-
 	private String ACT_No_Folio_Real;
-
 	private String ACT_No_Garantia;
-
 	private long ACT_No_Informe_Baja;
-
 	private String ACT_No_Poliza_Seguro;
-
 	private String ACT_No_RUAT;
-
 	private String ACT_No_Serie;
-
 	private String ACT_Nombre_Activo;
-
 	private short ACT_Organismo_Financiador_ID;
 	private String ACT_Organismo_Financiador;
-
 	private String ACT_NIT_Proveedor;
-
 	private String ACT_Nombre_Proveedor;
-
 	private short ACT_Tipo_Activo;
-
 	private BigDecimal ACT_Tipo_Cambio_Dolar;
 	private BigDecimal ACT_Tipo_Cambio_UFV;
 	private BigDecimal ACT_Actualizacion_Acumulada_Gestion_Anterior;
@@ -145,25 +115,17 @@ public class ActivosModel implements Serializable {
 	private BigDecimal ACT_Depreciacion_Acumulada_Gestion_Anterior;
 	private BigDecimal ACT_DAA;
 	private BigDecimal ACT_CA;
-
 	private int ACT_Ubicacion_Fisica_Activo_ID;
 	private String ACT_Ubicacion_Fisica_Activo;
-
 	private String ACT_Ubicacion_Imagen;
-
-	private BigDecimal ACT_Valor;
+	private BigDecimal ACT_Valor_Compra;
 	private BigDecimal ACT_Valor_Neto;
-
 	private int ACT_Vida_Util;
-
 	private String ACT_Marca;
-
 	private String ACT_Partidas_Presupuestarias;
-
 	private String ACT_Nombre_Empleado;
 	private String ACT_APaterno_Empleado;
 	private String ACT_AMaterno_Empleado;
-
 	private String ACT_Inmueble;
 
 	public ActivosModel() {
@@ -537,12 +499,12 @@ public class ActivosModel implements Serializable {
 		this.ACT_Ubicacion_Imagen = ACT_Ubicacion_Imagen;
 	}
 
-	public BigDecimal getACT_Valor() {
-		return this.ACT_Valor;
+	public BigDecimal getACT_Valor_Compra() {
+		return this.ACT_Valor_Compra;
 	}
 
-	public void setACT_Valor(BigDecimal ACT_Valor) {
-		this.ACT_Valor = ACT_Valor;
+	public void setACT_Valor_Compra(BigDecimal ACT_Valor_Compra) {
+		this.ACT_Valor_Compra = ACT_Valor_Compra;
 	}
 
 	public BigDecimal getACT_Valor_Neto() {

@@ -1,7 +1,10 @@
 package ait.sistemas.proyecto.activos.view.inve.inventario;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -17,13 +20,14 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-	private static final float MARGIN = 40;
-	private static final boolean IS_LANDSCAPE = false;
+
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
+	private static final float MARGIN = 60;
+	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 8;
+	private static final float FONT_SIZE = 10;
 
 	/**
 	 * Font for footer report
@@ -52,7 +56,8 @@ public class ReportPdf {
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 
-	private static final int HEADER_SIZE = 5;
+	private static final int HEADER_SIZE = 4;
+
 
 	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 	
@@ -69,23 +74,33 @@ public class ReportPdf {
 
 	private Table createContent(String[][] content, String strDependencia) {
 
-
+		List<Column> columnsGA = new ArrayList<Column>();
+		columnsGA.add(new Column("Grupo Contable", 440));
+		columnsGA.add(new Column("Auxiliar Contable", 450));
+		
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Codigo", 50));
-		columns.add(new Column("Serie", 50));
-		columns.add(new Column("Nombre del Activo", 320));
-		columns.add(new Column("Valor Compra", 60));
-		columns.add(new Column("Valor Neto", 60));
+		columns.add(new Column("Codigo", 40));
+		columns.add(new Column("Serie", 100));
+		columns.add(new Column("Nombre del Activo", 600));
+		columns.add(new Column("Valor Compra", 75));
+		columns.add(new Column("Valor Neto", 75));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
-
-		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
-				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
+		Date date = new Date();
+		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha = fechaHora.format(date);
+		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN)
+				.setColumnsGA(columnsGA).setContent(content)
+				.setColumns(columns).setContent(content)
+				.setHeight(tableHeight).
+				setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
 				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
 				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
 				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)
 				.setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE)
-				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("INVENTARIO DE ACTIVOS")
+				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
+				.setTitle("INVENTARIO DE ACTIVOS")
+				.setSubTitle("Realizado al : " + fecha)
 				.build();
 		return Inventario;
 

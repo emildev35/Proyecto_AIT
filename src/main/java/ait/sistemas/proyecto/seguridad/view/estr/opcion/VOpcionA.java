@@ -116,6 +116,7 @@ public class VOpcionA extends VerticalLayout implements View, ClickListener, Val
 				this.menu.addOpcion(this.frm_opcion.getData());
 				this.frm_opcion.update();
 				this.grid_opcion.update(this.frm_opcion.getSubMenu());
+				this.frm_opcion.txt_nombre_menu.focus();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			}else{
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);

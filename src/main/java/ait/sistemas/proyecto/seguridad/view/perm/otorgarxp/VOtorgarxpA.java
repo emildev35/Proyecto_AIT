@@ -57,9 +57,8 @@ public class VOtorgarxpA extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Seguridad » "));
-		nav.addComponent(new Label("Usuarios » "));
-		nav.addComponent(new Label("Perfiles » "));
-		nav.addComponent(new Label("<strong>Agregar Opciones</strong>",
+		nav.addComponent(new Label("Permisos » "));
+		nav.addComponent(new Label("<strong>Otorgar Permisos por Perfil</strong>",
 				ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;

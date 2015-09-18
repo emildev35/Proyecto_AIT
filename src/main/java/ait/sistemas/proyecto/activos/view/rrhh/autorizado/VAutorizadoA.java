@@ -26,11 +26,11 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormAutorizacion frm_autorizacion = new FormAutorizacion();
+	private FormAutorizado frm_autorizacion = new FormAutorizado();
 	private CssLayout hl_errores = new CssLayout();
 	private Button btn_limpiar = new Button("Limpiar");
 	private Button btn_agregar = new Button("Guardar");
-	private GridAutorizacion grid_autorizacion = new GridAutorizacion();
+	private GridAutorizado grid_autorizacion = new GridAutorizado();
 	private final TipoAutorizacionImpl tipo_autorizacionimpl = new TipoAutorizacionImpl();
 	
 	public VAutorizadoA() {
