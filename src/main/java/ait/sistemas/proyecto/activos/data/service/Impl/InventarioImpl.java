@@ -1,13 +1,19 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
+import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
@@ -83,5 +89,17 @@ public class InventarioImpl {
 		result_cabezera = (Integer) query_cabezera.getSingleResult();
 		return result_cabezera;
 		
+	}
+	
+	public List<ActivoInventario> getReport(short id_dependencia, String doc_referencia, Date fecha_ref) {
+		String str_detalle = "EXEC Inve_ReporteInvFisico_Q " + "@id_dependencia=?1," + "@nro_doc_ref=?2," + "@fecha_doc_ref=?3";
+		
+		Query query_r = this.em.createNativeQuery(str_detalle, "inv-activo");
+		query_r.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query_r.setParameter(1, id_dependencia);
+		query_r.setParameter(2, doc_referencia);
+		query_r.setParameter(3, fecha_ref);
+		List<ActivoInventario> result = (List<ActivoInventario>) query_r.getResultList();
+		return result;
 	}
 }

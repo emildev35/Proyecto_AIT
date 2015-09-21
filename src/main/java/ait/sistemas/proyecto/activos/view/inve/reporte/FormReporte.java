@@ -70,11 +70,11 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 	}
 	
 	private void buildcbDependencia() {
-		cb_dependencia.setInputPrompt("Seleccione una Dependencia");
-		cb_dependencia.setInvalidAllowed(false);
+		this.cb_dependencia.setInputPrompt("Seleccione una Dependencia");
+		this.cb_dependencia.setInvalidAllowed(false);
 		for (Dependencia dependencia : dependenciaimpl.getall()) {
-			cb_dependencia.addItem(dependencia);
-			cb_dependencia.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
+			this.cb_dependencia.addItem(dependencia);
+			this.cb_dependencia.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
 		}
 		
 	}

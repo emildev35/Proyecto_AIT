@@ -9,7 +9,6 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Autorizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
-		<!-- <class>ait.sistemas.proyecto.activos.data.model.C_Movimiento</class> -->
 		<class>ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Cierre_Gestion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
@@ -28,6 +27,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_Activo</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_Autorizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_Movimiento</class>
+		<class>ait.sistemas.proyecto.activos.component.model.ActivoInventario</class>
 		<class>ait.sistemas.proyecto.activos.component.model.ActivoGrid</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Actualizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel</class>
