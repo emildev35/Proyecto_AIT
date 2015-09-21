@@ -132,9 +132,9 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 					e.printStackTrace();
 				}
 			}
+				buildMessages(msg);
 			buildMessages(this.frm_tomainv.getMensajes());
 			this.frm_tomainv.clearMessages();
-			buildMessages(msg);
 		}
 		if (event.getButton() == this.btn_salir) {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);

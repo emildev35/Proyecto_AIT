@@ -172,12 +172,12 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		
 		addComponent(this.txt_nro_documento_ref, 0, 0);
 		addComponent(this.dtf_fecha_ref, 1, 0);
-		addComponent(this.txt_nro_documento, 4, 0, 5, 0);
+		addComponent(this.txt_nro_documento, 5, 0);
 		
 		addComponent(this.txt_ci_usuario, 0, 1);
 		addComponent(this.txt_usuario_asignado, 1, 1, 2, 1);
 		
-		addComponent(this.dtf_fecha_documento, 4, 1, 5, 1);
+		addComponent(this.dtf_fecha_documento, 5, 1);
 		
 		addComponent(this.tarea_observacion, 0, 2, 5, 2);
 		
