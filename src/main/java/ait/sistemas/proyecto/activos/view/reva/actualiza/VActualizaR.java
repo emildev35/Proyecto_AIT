@@ -6,7 +6,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
-import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
 import ait.sistemas.proyecto.activos.view.reva.actualiza.reporte.FormReporte;
 import ait.sistemas.proyecto.activos.view.reva.actualiza.reporte.ReportPdf;
@@ -36,8 +35,8 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 	private Button btn_imprimir;
 	private FormReporte frmReporte = new FormReporte();
 	int r = 0;
-	private String[][] data;
-	private final ActivoImpl activo_impl = new ActivoImpl();
+//	private String[][] data;
+//	private final ActivoImpl activo_impl = new ActivoImpl();
 	private final ActualizacionImpl actualizacion_impl = new ActualizacionImpl();
 	private CssLayout hl_errores = new CssLayout();
 
@@ -87,20 +86,20 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 
 	}
 
-	public String[][] getData() {
-
-		List<ActivosModel> lista = activo_impl
-				.activos_by_dependencia((Short) this.frmReporte.cb_Dependencia.getValue());
-
-		this.data = new String[lista.size()][2];
-		this.r = 0;
-		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable() };
-			this.data[r] = row;
-			this.r++;
-		}
-		return data;
-	}
+//	public String[][] getData() {
+//
+//		List<ActivosModel> lista = activo_impl
+//				.activos_by_dependencia((Short) this.frmReporte.cb_Dependencia.getValue());
+//
+//		this.data = new String[lista.size()][2];
+//		this.r = 0;
+//		for (ActivosModel activo : lista) {
+//			String[] row = { activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable() };
+//			this.data[r] = row;
+//			this.r++;
+//		}
+//		return data;
+//	}
 
 	public String[][] getDatos() {
 

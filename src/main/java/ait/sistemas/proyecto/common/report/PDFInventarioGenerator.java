@@ -128,7 +128,7 @@ public class PDFInventarioGenerator {
 					double valors_auxiliar_contable = Double
 							.parseDouble(String.valueOf(can_auxiliares_contables) == null ? "0" : String
 									.valueOf(can_auxiliares_contables));
-					DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
+					DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
 					String str_aux_cont = formater.format(valors_auxiliar_contable);
 
 					double s_total = Double.parseDouble(String.valueOf(sum_auxiliares_contables) == null ? "0" : String
@@ -164,7 +164,7 @@ public class PDFInventarioGenerator {
 						// drawTableGridContables(table, new String[] { "", ""
 						// }, contentStream, tableTopY);
 						double valors_grupo_contable = Double.parseDouble(String.valueOf(can_grupo_contable));
-						DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
+						DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
 						String str_grup_cont = formater.format(valors_grupo_contable);
 
 						double s_grp_total = Double.parseDouble(String.valueOf(sum_grupo_contable));
@@ -197,7 +197,7 @@ public class PDFInventarioGenerator {
 					// "Dependencia ", dependencia }, contentStream, tableTopY);
 
 					// calculo suma por Dependencia
-					DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
+					DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
 					double valorf_dep_contable = Double.parseDouble(String.valueOf(can_por_dependencia));
 					String str_f_dep_cont = formater.format(valorf_dep_contable);
 
@@ -303,7 +303,7 @@ public class PDFInventarioGenerator {
 
 		tableTopY -= table.getRowHeight();
 		double valorf_aux = Double.parseDouble(String.valueOf(can_auxiliares_contables));
-		DecimalFormat formater = new DecimalFormat("##,###,###,###.##");
+		DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
 		String str_f_aux = formater.format(valorf_aux);
 
 		double f_aux_total = Double.parseDouble(String.valueOf(sum_auxiliares_contables));
@@ -372,7 +372,7 @@ public class PDFInventarioGenerator {
 	private void drawCurrentPageHeaderGA(Table table, String[] columnsNamesAsArrayGA,
 			PDPageContentStream contentStream, float tableTopY) throws IOException {
 		// drawTableGrid(table, strings, contentStream, tableTopY);
-		float nextTextX = table.getMargin() * 3 + table.getCellMargin();
+		float nextTextX = table.getMargin() * 5/2 + table.getCellMargin();
 		float nextTextY = tableTopY
 				- (table.getRowHeight() / 2)
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table
@@ -396,7 +396,7 @@ public class PDFInventarioGenerator {
 					/ 2, copynextTextY);
 			contentStream.showText(text);
 			contentStream.endText();
-			nextTextX += table.getColumnsGA().get(i).getWidth();
+			nextTextX += table.getColumnsGA().get(i).getWidth() * 0.78;
 		}
 
 	}
@@ -734,7 +734,7 @@ public class PDFInventarioGenerator {
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
-			nextTextX += table.getColumns().get(2).getWidth() * 0.9;
+			nextTextX += table.getColumns().get(2).getWidth() * 0.63;
 		}
 	}
 
