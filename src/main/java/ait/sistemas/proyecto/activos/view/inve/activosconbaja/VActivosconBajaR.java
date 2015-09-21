@@ -2,70 +2,83 @@ package ait.sistemas.proyecto.activos.view.inve.activosconbaja;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VActivosconBajaR extends VerticalLayout implements View, ClickListener {
+public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private Button btn_imprimir;
+	private Button btn_imprimir=new Button("Imprimir");
 	private FormActivosconBaja frmReporte = new FormActivosconBaja();
 	int r = 0;
 //	private String[][] data;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
 
 	public VActivosconBajaR() {
 
-		this.btn_imprimir = new Button("Imprimir");
+		this.btn_imprimir.addClickListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
-
+		Responsive.makeResponsive(this);
+		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
-		this.btn_imprimir.addClickListener(this);
+		GridLayout btn_grid = new GridLayout(2, 1);
+		btn_grid.setResponsive(true);
+		btn_grid.setSizeFull();
+		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
+		btn_grid.addComponent(this.btn_imprimir);
+		btn_grid.setComponentAlignment(btn_imprimir, Alignment.TOP_CENTER);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
 		buttonContent.addStyleName("ait-buttons");
-
-		Responsive.makeResponsive(buttonContent);
+		
+		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 
 	private Component buildFormContent() {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel();
-		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario de Impresion");
+		Panel frmPanel = new Panel("Formulario de Impresion "+ Messages.REQUIED_FIELDS);
+		//los campos requeridos
+		frmPanel.setIcon(FontAwesome.PRINT);
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+//		frmPanel.setWidth("100%");
+//		frmPanel.setCaption("Formulario de Impresion");
 		frmPanel.setContent(this.frmReporte);
-		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
-		Responsive.makeResponsive(formContent);
+		
 		return formContent;
 	}
 
@@ -79,11 +92,6 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
-	}
-
-	@Override
-	public void enter(ViewChangeEvent event) {
-
 	}
 
 //	public String[][] getData() {
@@ -139,7 +147,7 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		this.addComponent(this.hl_errores);
 
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
+			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}

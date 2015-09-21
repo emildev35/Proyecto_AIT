@@ -14,7 +14,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 public class Util {
 
 	/**
-	 * Retorna un numero con formato ##.###.###,##
+	 * Retorna un numero con formato ##.###.###,00
 	 * 
 	 * @param string
 	 * @return
@@ -22,7 +22,7 @@ public class Util {
 	public static String numberFormat(String string) {
 		try {
 			double d_valor = Double.parseDouble(string);
-			DecimalFormat formater = new DecimalFormat("###,###,###,###.##");
+			DecimalFormat formater = new DecimalFormat("###,###,###,###.00");
 			String valor_str = formater.format(d_valor);
 			return valor_str;
 		} catch (NumberFormatException ex) {
