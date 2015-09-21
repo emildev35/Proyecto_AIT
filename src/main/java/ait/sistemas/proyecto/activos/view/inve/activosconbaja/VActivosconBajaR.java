@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.view.inve.activosconbaja;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,11 +167,11 @@ public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 					// int [][] datas = activo_impl.getProvedoreCuidad();
 					 reporte.getPdf(getDatosALL(),
 								this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
-								String.valueOf(this.frmReporte.dt_fecha.getValue()));
+								new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
 				} else {
 					reporte.getPdf(getDatos(),
 							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
-							String.valueOf(this.frmReporte.dt_fecha.getValue()));
+							new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
 				}
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
 

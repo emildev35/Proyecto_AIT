@@ -2,15 +2,16 @@ package ait.sistemas.proyecto.activos.view.inve.activosconbaja;//la carpeta actu
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion;
 import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
-import ait.sistemas.proyecto.activos.data.service.Impl.FechaDepreciacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
@@ -18,6 +19,7 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 
 public class FormActivosconBaja extends GridLayout {
@@ -37,7 +39,6 @@ public class FormActivosconBaja extends GridLayout {
 	//los List siempre se declaran asi 
 	//BarMessage --> clase para mandar:			 componente  mensaje   tipo
 	final private DependenciaImpl dependencia_impl = new DependenciaImpl();
-	final private FechaDepreciacionImpl fecha_depreciacion_impl = new FechaDepreciacionImpl();
 	final PropertysetItem pitm_Inventario = new PropertysetItem();
 	private FieldGroup binder_Inventario;
 	
@@ -66,27 +67,23 @@ public class FormActivosconBaja extends GridLayout {
 		
 		this.cb_Dependencia.addValidator(new NullValidator("", false));
 		//new NullValidator("", false) por es una clase de vaadin --> no da errores pero tampoco deja registrar
-		this.dt_fecha.setEnabled(false);
 		
-		fillfecha((Fecha_Depreciacion) fecha_depreciacion_impl.getFechaDep());
+		fillfecha();
 		fillcbGrupo();
 		buildContent();
 	}
 	
-	private void fillfecha(Fecha_Depreciacion data) {
+	private void fillfecha() {
 		
-		this.dt_fecha.setValue(data.getFDE_Fecha_Depreciacion());
+		this.dt_fecha.setValue(new Date());
 	}
 
-	public void init(){
-		update();
-	}
 	/**
 	 * Actualizacion de los Campos
 	 */
 	public void update(){
 		this.binder_Inventario.clear();
-		//this.cb_Dependencia.setValue((String)(""));
+		this.dt_fecha.setValue(new Date());
 	}
 	/**
 	 * Llenado del Combo Box 
@@ -116,19 +113,21 @@ public class FormActivosconBaja extends GridLayout {
 
 	}
 	public boolean validate(){
-		try{
-			this.binder_Inventario.commit();
-			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
+		try {
+			binder_Inventario.commit();
 			return true;
-		}catch(CommitException e){
-		try{
-			this.cb_Dependencia.validate();
-		}catch(Exception ex){
-			this.mensajes.add(new BarMessage(this.cb_Dependencia.getCaption(), Messages.EMPTY_MESSAGE));
 		}
-		
-		return false;
-		}
+			catch (CommitException ex) {
+				Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
+				Iterator<Field<?>> it = invalid_fields.keySet().iterator();
+				while (it.hasNext()) {
+					Field<?> key = (Field<?>) it.next();
+					mensajes.add(new BarMessage(key.getCaption(),
+							invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields.get(key)
+									.getMessage()));
+				}
+				return false;
+			}
 	}
 	public List<BarMessage> getMessage(){
 		return this.mensajes;

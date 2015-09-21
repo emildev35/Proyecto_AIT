@@ -19,12 +19,12 @@ public class ReportPdf {
 	// Page configuration
 
 	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
-	private static final float MARGIN = 60;
+	private static final float MARGIN = 30;
 	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 10;
+	private static final float FONT_SIZE = 9;
 
 	/**
 	 * Font for footer report
@@ -77,8 +77,8 @@ public class ReportPdf {
 		
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
-		columns.add(new Column("Serie", 100));
-		columns.add(new Column("Nombre del Activo", 600));
+		columns.add(new Column("Serie", 130));
+		columns.add(new Column("Nombre del Activo", 570));
 		columns.add(new Column("Valor Compra", 75));
 		columns.add(new Column("Valor Neto", 75));
 
