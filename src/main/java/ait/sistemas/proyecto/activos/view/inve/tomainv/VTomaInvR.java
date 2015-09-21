@@ -1,10 +1,13 @@
 package ait.sistemas.proyecto.activos.view.inve.tomainv;
 
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
 import ait.sistemas.proyecto.activos.data.service.Impl.InventarioImpl;
+import ait.sistemas.proyecto.activos.view.inve.tomainv.reporte.PdfReport;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
@@ -12,6 +15,7 @@ import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -21,30 +25,31 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
-public class VTomaInvP extends VerticalLayout implements View, ClickListener {
+public class VTomaInvR extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Button btn_guardar = new Button("GENERAR SOLICITUD");
+	private FormReporte frm_reporte = new FormReporte();
+	
+	private Button btn_guardar = new Button("IMPRIMIR");
 	private Button btn_salir = new Button("SALIR");
 	
 	private CssLayout hl_errores = new CssLayout();
-	private FormTomaInv frm_tomainv = new FormTomaInv(this);
 	
-	private final InventarioImpl inventarioimpl = new InventarioImpl();
+	private InventarioImpl inventarioimpl = new InventarioImpl();
 	
 	private List<BarMessage> msg = new ArrayList<BarMessage>();
 	
-	public VTomaInvP() {
+	public VTomaInvR() {
 		
 		this.btn_guardar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
@@ -59,19 +64,9 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 	
 	private Component buildFormContent() {
 		VerticalLayout vl_form = new VerticalLayout();
-		Panel pn_form = new Panel("TOMA DE INVENTARIO FISICO  :  " + Messages.REQUIED_FIELDS);
-		pn_form.setIcon(FontAwesome.EDIT);
-		pn_form.setStyleName(AitTheme.PANEL_FORM);
 		
-		pn_form.setContent(this.frm_tomainv);
-		vl_form.setMargin(true);
-		vl_form.addComponent(pn_form);
+		vl_form.addComponent(frm_reporte);
 		
-		Panel pn_grid = new Panel("ACTIVOS INVENTARIADOS");
-		pn_grid.setIcon(FontAwesome.TABLE);
-		pn_grid.setStyleName(AitTheme.PANEL_GRID);
-		pn_grid.setContent(this.frm_tomainv.getGrid());
-		vl_form.addComponent(pn_grid);
 		return vl_form;
 	}
 	
@@ -81,7 +76,7 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addComponent(new Label("Activos>>"));
 		nav.addComponent(new Label("Inventario>>"));
-		nav.addComponent(new Label("<strong>Toma de Inventario Fisico</strong>", ContentMode.HTML));
+		nav.addComponent(new Label("<strong>Reporte de Inventario Fisico</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -116,25 +111,62 @@ public class VTomaInvP extends VerticalLayout implements View, ClickListener {
 		}
 		
 	}
+	public String[][] getDatos(List<ActivoInventario> activos){
+		String [][] result =  new String[activos.size()][10];
+		for (int i = 0; i < result.length; i++) {
+			result[i][0] = String.valueOf(activos.get(i).getDependencia());
+			result[i][1] = String.valueOf(activos.get(i).getNumero_documento());
+			result[i][2] = String.valueOf(activos.get(i).getFecha_registro());
+			result[i][3] = String.valueOf(activos.get(i).getCodigo_activo());
+			result[i][4] = String.valueOf(activos.get(i).getNombre_activo());
+			result[i][5] = String.valueOf(activos.get(i).getNombre_funcionario());
+			result[i][6] = String.valueOf(activos.get(i).getObservacion());
+			result[i][7] = String.valueOf(activos.get(i).getSr().equals("-1")?"X":" ");
+			result[i][8] = String.valueOf(activos.get(i).getDr().equals("-1")?"X":" ");
+			result[i][9] = String.valueOf(activos.get(i).getMr().equals("-1")?"X":" ");
+		}
+		
+		return result;
+	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
-			if (this.frm_tomainv.validate()) {
+			if (this.frm_reporte.validate()) {
+				List<ActivoInventario> activos = inventarioimpl.getReport(frm_reporte.getDependencia(), frm_reporte.getDocRef(),
+						frm_reporte.getFechaRef());
+				PdfReport reporte = new PdfReport();
 				try {
-					if (inventarioimpl.add(frm_tomainv.getData()) > 0) {
-						Notification.show(Messages.SUCCESS_MESSAGE);
-						frm_tomainv.clean();
-					} else {
-						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-					}
-				} catch (SQLException e) {
+					reporte.getPdf(getDatos(activos));
+					File pdfFile = new File(PdfReport.SAVE_PATH);
+
+					VerticalLayout vl_pdf = new VerticalLayout();
+					Embedded pdf = new Embedded("", new FileResource(pdfFile));
+					pdf.setMimeType("application/pdf");
+					pdf.setType(Embedded.TYPE_BROWSER);
+					pdf.setSizeFull();
+					vl_pdf.setSizeFull();
+					vl_pdf.addComponent(pdf);
+
+					Window subWindow = new Window("Reporte Inmuebles");
+					VerticalLayout subContent = new VerticalLayout();
+					subContent.setMargin(true);
+					subWindow.setContent(vl_pdf);
+
+					subWindow.setWidth("90%");
+					subWindow.setHeight("90%");
+					subWindow.center();
+
+					// Open it in the UI
+					getUI().addWindow(subWindow);
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-				buildMessages(msg);
-			buildMessages(this.frm_tomainv.getMensajes());
-			this.frm_tomainv.clearMessages();
+			buildMessages(msg);
+			buildMessages(this.frm_reporte.getMensajes());
+			this.frm_reporte.clearMessages();
 		}
 		if (event.getButton() == this.btn_salir) {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
