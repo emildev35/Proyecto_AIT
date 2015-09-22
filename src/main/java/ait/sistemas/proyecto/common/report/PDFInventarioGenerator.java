@@ -23,7 +23,6 @@ public class PDFInventarioGenerator {
 	private int intactualpage = 0;
 	private int intNumberoftotalPages;
 
-	// Generates document from Table object
 	public boolean generatePDF(Table table, String savePath) throws IOException {
 		boolean result = false;
 		doc = null;

@@ -12,13 +12,14 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFInventarioGenerator;
+import ait.sistemas.proyecto.common.report.PageSize;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
 
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
+	private static final PDRectangle PAGE_SIZE = PageSize.OFICIO;
 	private static final float MARGIN = 30;
 	private static final boolean IS_LANDSCAPE = true;
 
