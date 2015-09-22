@@ -145,7 +145,7 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 				PdfReport reporte = new PdfReport();
 				try {
 					reporte.getPdf(getDatos(inventario));
-					File pdfFile = new File(PdfReport.SAVE_PATH);
+					File pdfFile = new File(reporte.SAVE_PATH);
 					
 					VerticalLayout vl_pdf = new VerticalLayout();
 					Embedded pdf = new Embedded("", new FileResource(pdfFile));

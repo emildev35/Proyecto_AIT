@@ -38,6 +38,13 @@ public class Dependencia implements Serializable {
 
 	public Dependencia() {
 	}
+	
+	
+	public Dependencia(short dEP_Dependencia, String dEP_Nombre_Dependencia) {
+		DEP_Dependencia = dEP_Dependencia;
+		DEP_Nombre_Dependencia = dEP_Nombre_Dependencia;
+	}
+
 
 	public short getDEP_Dependencia() {
 		return this.DEP_Dependencia;

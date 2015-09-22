@@ -26,7 +26,7 @@ import com.vaadin.ui.TwinColSelect;
 public class FormReporte extends GridLayout implements ValueChangeListener, TextChangeListener {
 	
 	private static final long serialVersionUID = 1L;
-	
+	public static final String ALL = "ALL";
 	ComboBox cb_dependencia = new ComboBox("Seleccione Dependencia");
 	TwinColSelect tw_campos = new TwinColSelect();
 	Table tb_vista_previa = new Table();
@@ -76,7 +76,9 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 			this.cb_dependencia.addItem(dependencia);
 			this.cb_dependencia.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
 		}
-		
+		Dependencia all = new Dependencia((short) 0, Messages.ALL_DEP);
+		this.cb_dependencia.addItem(all);
+		this.cb_dependencia.setItemCaption(all, Messages.ALL_DEP);
 	}
 	
 	private void buildFormContent() {

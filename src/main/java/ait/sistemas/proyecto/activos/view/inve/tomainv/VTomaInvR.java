@@ -9,7 +9,6 @@ import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
 import ait.sistemas.proyecto.activos.data.service.Impl.InventarioImpl;
 import ait.sistemas.proyecto.activos.view.inve.tomainv.reporte.PdfReport;
 import ait.sistemas.proyecto.common.component.BarMessage;
-import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.HomeView;
 
@@ -58,7 +57,6 @@ public class VTomaInvR extends VerticalLayout implements View, ClickListener {
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
 		buildMessages(msg);
 	}
 	
@@ -159,7 +157,6 @@ public class VTomaInvR extends VerticalLayout implements View, ClickListener {
 					subWindow.setHeight("90%");
 					subWindow.center();
 
-					// Open it in the UI
 					getUI().addWindow(subWindow);
 				} catch (IOException e) {
 					e.printStackTrace();

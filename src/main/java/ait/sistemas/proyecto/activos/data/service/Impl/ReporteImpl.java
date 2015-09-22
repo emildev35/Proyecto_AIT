@@ -8,6 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import ait.sistemas.proyecto.activos.view.inve.reporte.FormReporte;
+import ait.sistemas.proyecto.common.component.Messages;
+
 public class ReporteImpl {
 	private EntityManagerFactory emf;
 	private EntityManager em;
@@ -27,8 +30,10 @@ public class ReporteImpl {
 	
 	@SuppressWarnings("unchecked")
 	public String[][] getData(String cols, String view_name, int numofColumns, String where) {
-		
 		String str_query = "SELECT " + cols + " FROM " + view_name + " WHERE ACT_DEPENDENCIA = '" + where + "'";
+		if(where.equals(Messages.ALL_DEP)){
+			str_query = "SELECT " + cols + " FROM " + view_name;
+		}
 		Query query = this.em.createNativeQuery(str_query);
 		Collection<Object> data = query.getResultList();
 		String[][] result = new String[data.size()][numofColumns];

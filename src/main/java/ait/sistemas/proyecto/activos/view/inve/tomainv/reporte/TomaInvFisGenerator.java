@@ -76,6 +76,10 @@ public class TomaInvFisGenerator {
 				r++;
 				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+				tableTopY -= table.getRowHeight();
+				r++;
+				drawTableGridObservacion(table, new String[] { "Observaciones" }, contentStream, tableTopY);
+				drawCurrentPageHeaderObservacion(table, new String[] { "Observaciones" }, contentStream, tableTopY);
 				
 			}
 			if (!table.getContent()[i][1].equals(nro_resolucion)) {
@@ -102,30 +106,111 @@ public class TomaInvFisGenerator {
 			/**
 			 * Dibujado de los Datos
 			 */
-			String[] current = Arrays.copyOfRange(table.getContent()[i], 1, table.getContent()[i].length);
-			if (!table.getContent()[i][7].equals("Ninguna") && table.getContent()[i][7] != null) {
-				tableTopY -= table.getRowHeight();
-				drawCurrentPage(table, new String[] { table.getContent()[i][7] }, contentStream, tableTopY);
-				r++;
-			}
+			String[] current = Arrays.copyOfRange(table.getContent()[i], 2, table.getContent()[i].length);
 			tableTopY -= table.getRowHeight();
 			r++;
 			drawCurrentPage(table, current, contentStream, tableTopY);
-			
 			if (r >= rowsPerPage) {
-				contentStream.close();
-				r = table.getHeaderSize();
+				if (contentStream != null) {
+					contentStream.close();
+				}
 				page = generatePage(doc, table);
 				contentStream = generateContentStream(doc, page, table);
 				tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
 						.getHeight() - table.getMargin();
 				tableTopY -= table.getRowHeight() * table.getHeaderSize();
+				
+				dependencia = table.getContent()[i][0];
+				nro_resolucion = table.getContent()[i][1];
+				r = table.getHeaderSize();
+				writeHeader(contentStream, tableTopY, table);
+				drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia,
+						"Nro. Resolucion : " + nro_resolucion }, contentStream, tableTopY);
+				tableTopY -= table.getRowHeight();
+				r++;
+				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+				tableTopY -= table.getRowHeight();
+				r++;
+				drawTableGridObservacion(table, new String[] { "Observaciones" }, contentStream, tableTopY);
+				drawCurrentPageHeaderObservacion(table, new String[] { "Observaciones" }, contentStream, tableTopY);
 			}
+			if (!table.getContent()[i][7].equals("Ninguna") && table.getContent()[i][7] != null) {
+				tableTopY -= table.getRowHeight();
+				drawCurrentPage(table, new String[] { "", "", "", table.getContent()[i][7] }, contentStream, tableTopY);
+				r++;
+				if (r >= rowsPerPage) {
+					if (contentStream != null) {
+						contentStream.close();
+					}
+					page = generatePage(doc, table);
+					contentStream = generateContentStream(doc, page, table);
+					tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
+							.getHeight() - table.getMargin();
+					tableTopY -= table.getRowHeight() * table.getHeaderSize();
+					
+					dependencia = table.getContent()[i][0];
+					nro_resolucion = table.getContent()[i][1];
+					r = table.getHeaderSize();
+					writeHeader(contentStream, tableTopY, table);
+					drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia,
+							"Nro. Resolucion : " + nro_resolucion }, contentStream, tableTopY);
+					tableTopY -= table.getRowHeight();
+					r++;
+					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+					tableTopY -= table.getRowHeight();
+					r++;
+					drawTableGridObservacion(table, new String[] { "Observaciones" }, contentStream, tableTopY);
+					drawCurrentPageHeaderObservacion(table, new String[] { "Observaciones" }, contentStream, tableTopY);
+				}
+			}
+			
 		}
 		
 		contentStream.close();
 		drawFooter(doc, table);
 		
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void drawCurrentPageHeaderObservacion(Table table, String[] lineContent, PDPageContentStream contentStream,
+			float nextTextY) throws IOException {
+		contentStream.setFont(table.getTextFont(), table.getFontSize());
+		float copynextTextY = nextTextY;
+		
+		float finalnextX = table.getMargin() + table.getColumns().get(0).getWidth() + table.getColumns().get(1).getWidth()
+				+ table.getColumns().get(2).getWidth() + table.getColumns().get(3).getWidth()
+				+ table.getColumns().get(4).getWidth();
+		
+		String text = lineContent[0].replace("\n", "");
+		copynextTextY -= table.getRowHeight() - table.getCellMargin();
+		contentStream.beginText();
+		long text_width = (long) ((long) ((table.getTextFont().getStringWidth(text) / 1000.0f) * table.getFontSize()));
+		contentStream.moveTextPositionByAmount(finalnextX / 2 - text_width / 2, copynextTextY);
+		contentStream.showText(text);
+		contentStream.endText();
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void drawTableGridObservacion(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
+			throws IOException {
+		float nextY = tableTopY;
+		float nextX = table.getMargin() + table.getColumns().get(0).getWidth() + table.getColumns().get(1).getWidth()
+				+ table.getColumns().get(2).getWidth();
+		
+		float finalnextX = table.getMargin() + table.getColumns().get(0).getWidth() + table.getColumns().get(1).getWidth()
+				+ table.getColumns().get(2).getWidth() + table.getColumns().get(3).getWidth()
+				+ table.getColumns().get(4).getWidth();
+		
+		for (int i = 0; i <= 1; i++) {
+			contentStream.drawLine(nextX, nextY, finalnextX, nextY);
+			nextY -= table.getRowHeight();
+		}
+		final float tableBottomY = tableTopY - table.getRowHeight();
+		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
+		contentStream.drawLine(finalnextX, tableTopY, finalnextX, tableBottomY);
 	}
 	
 	@SuppressWarnings({ "static-access", "deprecation" })
@@ -135,13 +220,31 @@ public class TomaInvFisGenerator {
 		for (PDPage page : doc.getPages()) {
 			try {
 				PDPageContentStream contentStream = new PDPageContentStream(doc, page, true, true);
-				contentStream.drawLine(table.getMargin(), table.getMargin(), table.getWidth(), table.getMargin());
+				contentStream.drawLine(table.getMargin(), table.getMargin(), table.getWidth() + table.getMargin(),
+						table.getMargin());
 				contentStream.beginText();
 				contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
-				contentStream.moveTextPositionByAmount(table.getMargin(), table.getMargin() - 7);
+				contentStream.moveTextPositionByAmount(table.getMargin(), table.getMargin() - 8);
 				contentStream.showText(new String().format("Página %d de %d", actual_row, numofPages));
 				contentStream.endMarkedContent();
+				contentStream.endText();
+				contentStream.beginText();
+				contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
+				contentStream.moveTextPositionByAmount(table.getWidth() - 3 * table.getMargin(), table.getMargin() - 8);
+				contentStream.showText("S/R: Sin Registro Previo");
+				contentStream.endText();
+				contentStream.beginText();
+				contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
+				contentStream.moveTextPositionByAmount(table.getWidth() - 3 * table.getMargin(), table.getMargin() - 16);
+				contentStream.showText("D/R: Diferencias en el Servidor Responsable");
+				contentStream.endText();
+				contentStream.beginText();
+				contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
+				contentStream.moveTextPositionByAmount(table.getWidth() - 3 * table.getMargin(), table.getMargin() - 24);
+				contentStream.showText("A/D: Activo duplicado en el Inventario");
+				contentStream.endText();
 				contentStream.close();
+				
 			} catch (IOException e) {
 			}
 			actual_row++;
@@ -199,17 +302,6 @@ public class TomaInvFisGenerator {
 			nextX += table.getColumns().get(i).getWidth();
 		}
 		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-		tableTopY = nextY;
-		for (int i = 0; i <= 1; i++) {
-			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
-			nextY -= table.getRowHeight();
-		}
-		for (int i = 0; i < strings.length; i++) {
-			if (i > 2 && i <= 4) {
-				contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-			}
-		}
-		
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -219,13 +311,14 @@ public class TomaInvFisGenerator {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		
 		for (int i = 0; i < lineContent.length; i++) {
+			if (i == 5)
+				continue;
 			String text = lineContent[i];
-			
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
-			nextTextX += table.getColumns().get(i).getWidth();
+			nextTextX += table.getColumns().get(i > 5 ? i - 1 : i).getWidth();
 		}
 	}
 	

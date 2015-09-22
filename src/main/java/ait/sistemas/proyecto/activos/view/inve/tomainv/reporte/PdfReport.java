@@ -64,16 +64,14 @@ public class PdfReport {
 
     private static Table createContent(String[][] data) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("DocumentoREf", 60));
         columns.add(new Column("Codigo", 40));
         columns.add(new Column("Fecha", 60));
-        columns.add(new Column("Codigo Act", 50));
-        columns.add(new Column("Nombre del Activo", 400));
-        columns.add(new Column("Servidor Publico Responsable", 200));	
-        columns.add(new Column("Observaciones", 100));
-        columns.add(new Column("SR", 20));
-        columns.add(new Column("DR", 20));
-        columns.add(new Column("MR", 20));
+        columns.add(new Column("Cod. Activo", 70));
+        columns.add(new Column("Nombre del Activo", 450));
+        columns.add(new Column("Servidor Publico Responsable", 230));	
+        columns.add(new Column("S/R", 25));
+        columns.add(new Column("D/R", 25));
+        columns.add(new Column("A/D", 25));
         
  
         String[][] content = data;
