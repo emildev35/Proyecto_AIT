@@ -112,18 +112,19 @@ public class VTomaInvR extends VerticalLayout implements View, ClickListener {
 		
 	}
 	public String[][] getDatos(List<ActivoInventario> activos){
-		String [][] result =  new String[activos.size()][10];
+		String [][] result =  new String[activos.size()][11];
 		for (int i = 0; i < result.length; i++) {
 			result[i][0] = String.valueOf(activos.get(i).getDependencia());
-			result[i][1] = String.valueOf(activos.get(i).getNumero_documento());
-			result[i][2] = String.valueOf(activos.get(i).getFecha_registro());
-			result[i][3] = String.valueOf(activos.get(i).getCodigo_activo());
-			result[i][4] = String.valueOf(activos.get(i).getNombre_activo());
-			result[i][5] = String.valueOf(activos.get(i).getNombre_funcionario());
-			result[i][6] = String.valueOf(activos.get(i).getObservacion());
-			result[i][7] = String.valueOf(activos.get(i).getSr().equals("-1")?"X":" ");
-			result[i][8] = String.valueOf(activos.get(i).getDr().equals("-1")?"X":" ");
-			result[i][9] = String.valueOf(activos.get(i).getMr().equals("-1")?"X":" ");
+			result[i][1] = String.valueOf(activos.get(i).getDocumento_referencia());
+			result[i][2] = String.valueOf(activos.get(i).getNumero_documento());
+			result[i][3] = String.valueOf(activos.get(i).getFecha_registro());
+			result[i][4] = String.valueOf(activos.get(i).getCodigo_activo());
+			result[i][5] = String.valueOf(activos.get(i).getNombre_activo());
+			result[i][6] = String.valueOf(activos.get(i).getNombre_funcionario());
+			result[i][7] = String.valueOf(activos.get(i).getObservacion());
+			result[i][8] = String.valueOf(activos.get(i).getSr().equals("-1")?"X":" ");
+			result[i][9] = String.valueOf(activos.get(i).getDr().equals("-1")?"X":" ");
+			result[i][10] = String.valueOf(activos.get(i).getMr().equals("-1")?"X":" ");
 		}
 		
 		return result;

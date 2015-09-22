@@ -29,7 +29,21 @@ public class Util {
 			return "0";
 		}
 	}
-
+/**
+ * Retorna un numero con formato ##.###.##
+ * @param string
+ * @return
+ */
+	public static String numberIntFormat(String string) {
+		try {
+			double d_valor = Double.parseDouble(string);
+			DecimalFormat formater = new DecimalFormat("###,###,###,###");
+			String valor_str = formater.format(d_valor);
+			return valor_str;
+		} catch (NumberFormatException ex) {
+			return "0";
+		}
+	}
 	/**
 	 * Retorna la Posicion justificada de un texto
 	 * 

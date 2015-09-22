@@ -57,7 +57,7 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+		msg.add(new BarMessage("Formulario", Messages.SELECT_DEPENDENCIA));
 		buildMessages(msg);
 	}
 	

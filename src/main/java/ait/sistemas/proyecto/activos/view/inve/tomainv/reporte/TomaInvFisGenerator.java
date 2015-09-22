@@ -1,8 +1,7 @@
-package ait.sistemas.proyecto.activos.view.inve.invxgrupo.reporte;
+package ait.sistemas.proyecto.activos.view.inve.tomainv.reporte;
 
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -12,12 +11,11 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
 import ait.sistemas.proyecto.common.report.Table;
-import ait.sistemas.proyecto.common.report.Util;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.ui.UI;
 
-public class InventarioGrupoGenerator {
+public class TomaInvFisGenerator {
 	
 	private PDDocument doc;
 	
@@ -39,35 +37,22 @@ public class InventarioGrupoGenerator {
 	
 	@SuppressWarnings("deprecation")
 	public void drawTable(PDDocument doc, Table table) throws IOException {
-		
+		Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue() - 1;
 		PDPage page;
 		PDPageContentStream contentStream = null;
 		float tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
 				.getHeight() - table.getMargin();
 		
 		String dependencia = "";
+		String nro_resolucion = "";
+		int r = table.getHeaderSize();
 		
-		int can_dependencia = 0;
-		float sum_valorCompra = 0;
-		float sum_valorNeto = 0;
-		int num_dep = 0;
 		for (int i = 0; i < table.getContent().length; i++) {
 			
 			if (!table.getContent()[i][0].equals(dependencia) && contentStream != null) {
-				
 				tableTopY -= table.getRowHeight() * 1.15;
+				r++;
 				contentStream.drawLine(table.getMargin(), tableTopY, table.getWidth() + table.getMargin(), tableTopY);
-				
-				DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
-				DecimalFormat formaterint = new DecimalFormat("##,###,###,###");
-				double s_c = Double.parseDouble(String.valueOf(sum_valorCompra) == null ? "0" : String.valueOf(sum_valorCompra));
-				String str_s_c = formater.format(s_c);
-				double s_n = Double.parseDouble(String.valueOf(sum_valorNeto) == null ? "0" : String.valueOf(sum_valorNeto));
-				String str_s_n = formater.format(s_n);
-				String str_c_d = formaterint.format(can_dependencia);
-				drawCurrentPageCorte(table, new String[] { num_dep > 1 ? "Total General" : "Total Dependencia", str_c_d, str_s_c,
-						str_s_n }, contentStream, tableTopY);
-				num_dep++;
 			}
 			
 			if (!table.getContent()[i][0].equals(dependencia)) {
@@ -77,50 +62,66 @@ public class InventarioGrupoGenerator {
 				}
 				page = generatePage(doc, table);
 				contentStream = generateContentStream(doc, page, table);
-				
-				dependencia = table.getContent()[i][0];
 				tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
 						.getHeight() - table.getMargin();
-				
 				tableTopY -= table.getRowHeight() * table.getHeaderSize();
+				
+				dependencia = table.getContent()[i][0];
+				nro_resolucion = table.getContent()[i][1];
+				r = table.getHeaderSize();
 				writeHeader(contentStream, tableTopY, table);
-				
-				drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia }, contentStream, tableTopY);
+				drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia,
+						"Nro. Resolucion : " + nro_resolucion }, contentStream, tableTopY);
 				tableTopY -= table.getRowHeight();
-				
+				r++;
 				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				
-				can_dependencia = 0;
-				sum_valorCompra = 0;
-				sum_valorNeto = 0;
+			}
+			if (!table.getContent()[i][1].equals(nro_resolucion)) {
+				
+				if (contentStream != null) {
+					contentStream.close();
+				}
+				page = generatePage(doc, table);
+				contentStream = generateContentStream(doc, page, table);
+				tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
+						.getHeight() - table.getMargin();
+				tableTopY -= table.getRowHeight() * table.getHeaderSize();
+				nro_resolucion = table.getContent()[i][1];
+				r = table.getHeaderSize();
+				writeHeader(contentStream, tableTopY, table);
+				drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia,
+						"Nro. Resolucion : " + nro_resolucion }, contentStream, tableTopY);
+				tableTopY -= table.getRowHeight();
+				r++;
+				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				
 			}
-			
+			/**
+			 * Dibujado de los Datos
+			 */
 			String[] current = Arrays.copyOfRange(table.getContent()[i], 1, table.getContent()[i].length);
-			
+			if (!table.getContent()[i][7].equals("Ninguna") && table.getContent()[i][7] != null) {
+				tableTopY -= table.getRowHeight();
+				drawCurrentPage(table, new String[] { table.getContent()[i][7] }, contentStream, tableTopY);
+				r++;
+			}
 			tableTopY -= table.getRowHeight();
+			r++;
 			drawCurrentPage(table, current, contentStream, tableTopY);
 			
-			can_dependencia += Integer.parseInt(table.getContent()[i][2] == "null" ? "0" : table.getContent()[i][2]);
-			sum_valorCompra += Float.parseFloat(table.getContent()[i][3] == "null" ? "0" : table.getContent()[i][3]);
-			sum_valorNeto += Float.parseFloat(table.getContent()[i][4] == "null" ? "0" : table.getContent()[i][4]);
-			
+			if (r >= rowsPerPage) {
+				contentStream.close();
+				r = table.getHeaderSize();
+				page = generatePage(doc, table);
+				contentStream = generateContentStream(doc, page, table);
+				tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
+						.getHeight() - table.getMargin();
+				tableTopY -= table.getRowHeight() * table.getHeaderSize();
+			}
 		}
-		
-		tableTopY -= table.getRowHeight() * 1.15;
-		contentStream.drawLine(table.getMargin(), tableTopY, table.getWidth() + table.getMargin(), tableTopY);
-		
-		DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
-		DecimalFormat formaterint = new DecimalFormat("##,###,###,###");
-		double s_c = Double.parseDouble(String.valueOf(sum_valorCompra) == null ? "0" : String.valueOf(sum_valorCompra));
-		String str_s_c = formater.format(s_c);
-		double s_n = Double.parseDouble(String.valueOf(sum_valorNeto) == null ? "0" : String.valueOf(sum_valorNeto));
-		String str_s_n = formater.format(s_n);
-		String str_c_d = formaterint.format(can_dependencia);
-		drawCurrentPageCorte(table,
-				new String[] { num_dep > 1 ? "Total General" : "Total Dependencia", str_c_d, str_s_c, str_s_n }, contentStream,
-				tableTopY);
 		
 		contentStream.close();
 		drawFooter(doc, table);
@@ -180,46 +181,37 @@ public class InventarioGrupoGenerator {
 		writeContentLineDependencia(strings, contentStream, nextTextX, nextTextY, table);
 	}
 	
-	private void drawCurrentPageCorte(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
-			throws IOException {
-		
-		// Draws grid and borders
-		// drawTableGrid(table, strings, contentStream, tableTopY);
-		float nextTextX = table.getMargin() + table.getCellMargin();
-		float nextTextY = tableTopY - (table.getRowHeight() / 2)
-				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
-		writeContentLineCorte(strings, contentStream, nextTextX, nextTextY, table);
-	}
-	
 	@SuppressWarnings("deprecation")
 	private void drawTableGrid(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
 			throws IOException {
 		float nextY = tableTopY;
 		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		// for (int i = 0; i <= currentPageContent.length + 1; i++) {
 		for (int i = 0; i <= 1; i++) {
 			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
 			nextY -= table.getRowHeight();
 		}
-		// Modificado solo pra el titulo para grilla modificar por
-		// final float tableYLength = table.getRowHeight() +
-		// (table.getRowHeight() * currentPageContent.length);
-		// final float tableBottomY = tableTopY - tableYLength;
 		final float tableBottomY = tableTopY - table.getRowHeight();
 		
 		float nextX = table.getMargin();
 		
-		// Modificado para solo el tititulo para grilla completa modificar por
 		for (int i = 0; i < strings.length; i++) {
 			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
 			nextX += table.getColumns().get(i).getWidth();
 		}
 		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
+		tableTopY = nextY;
+		for (int i = 0; i <= 1; i++) {
+			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
+			nextY -= table.getRowHeight();
+		}
+		for (int i = 0; i < strings.length; i++) {
+			if (i > 2 && i <= 4) {
+				contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
+			}
+		}
 		
 	}
 	
-	// Writes the content for one line
 	@SuppressWarnings("deprecation")
 	private void writeContentLine(String[] lineContent, PDPageContentStream contentStream, float nextTextX, float nextTextY,
 			Table table) throws IOException {
@@ -227,32 +219,11 @@ public class InventarioGrupoGenerator {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		
 		for (int i = 0; i < lineContent.length; i++) {
-			if (i >= 1) {
-				String text = Util.numberFormat(lineContent[i]);
-				if (i == 1) {
-					text = Util.numberIntFormat(lineContent[i]);
-				}
-				contentStream.beginText();
-				contentStream.moveTextPositionByAmount(
-						Util.justificar(text, nextTextX + table.getColumns().get(i).getWidth(), table.getTextFont(),
-								table.getFontSize()), nextTextY);
-				contentStream.showText(text != null ? text : "");
-				contentStream.endText();
-				nextTextX += table.getColumns().get(i).getWidth();
-				continue;
-			}
-			lineContent[i] = lineContent[i] != null ? lineContent[i] : "";
-			String text = lineContent[i].replace("\n", "");
-			if (text.length() > 100) {
-				text = Util.separeString(text, 100)[0];
-			}
+			String text = lineContent[i];
+			
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			try {
-				contentStream.showText(text != null ? text : "");
-			} catch (Exception e) {
-				System.out.print(lineContent[0] + "->" + text);
-			}
+			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
 			nextTextX += table.getColumns().get(i).getWidth();
 		}
@@ -273,28 +244,6 @@ public class InventarioGrupoGenerator {
 					copynextTextY);
 			contentStream.showText(text);
 			contentStream.endText();
-			nextTextX += table.getColumns().get(i).getWidth();
-		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	private void writeContentLineCorte(String[] lineContent, PDPageContentStream contentStream, float nextTextX, float nextTextY,
-			Table table) throws IOException {
-		
-		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		for (int i = 0; i < lineContent.length; i++) {
-			String text = lineContent[i];
-			contentStream.beginText();
-			if (i >= 1) {
-				contentStream.moveTextPositionByAmount(
-						Util.justificar(text, nextTextX + table.getColumns().get(3).getWidth(), table.getTextFont(),
-								table.getFontSize()), nextTextY);
-			} else {
-				contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			}
-			contentStream.showText(text != null ? text : "");
-			contentStream.endText();
-			
 			nextTextX += table.getColumns().get(i).getWidth();
 		}
 	}

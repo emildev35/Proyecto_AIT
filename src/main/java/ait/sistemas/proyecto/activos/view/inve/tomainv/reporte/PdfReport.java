@@ -11,7 +11,6 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
@@ -59,13 +58,13 @@ public class PdfReport {
     
     public boolean getPdf(String[][] data) throws IOException{
     	
-        return new PDFTableGenerator().generatePDF(createContent(data), SAVE_PATH);
+        return new TomaInvFisGenerator().generatePDF(createContent(data), SAVE_PATH);
         
     }
 
     private static Table createContent(String[][] data) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("Dep", 30));	
+        columns.add(new Column("DocumentoREf", 60));
         columns.add(new Column("Codigo", 40));
         columns.add(new Column("Fecha", 60));
         columns.add(new Column("Codigo Act", 50));
@@ -105,7 +104,7 @@ public class PdfReport {
             .setUnidad("XXXXXX")
             .setDependencia("XXXXX")
             .setUsuario("XXXXXX")
-            .setTitle("INMUEBLES")
+            .setTitle("TOMA DE INVENTARIO FISICO")
             .setSubTitle("")
             .build();
         return table;

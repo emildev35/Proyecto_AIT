@@ -95,7 +95,6 @@ public class InventarioImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivoInventario> getReport(short id_dependencia, String doc_referencia, Date fecha_ref) {
 		String str_detalle = "EXEC Inve_ReporteInvFisico_Q " + "@id_dependencia=?1," + "@nro_doc_ref=?2," + "@fecha_doc_ref=?3";
-		
 		Query query_r = this.em.createNativeQuery(str_detalle, "inv-activo");
 		query_r.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query_r.setParameter(1, id_dependencia);

@@ -34,8 +34,8 @@ public class GridInventario extends Grid {
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
 		setWidth("100%");
-		setColumnOrder("id_activo", "nombre_activo", "observaciones");
-		getColumn("id_activo").setHeaderCaption("Codigo Activo").setExpandRatio(1);
+		setColumnOrder("codigo_activo", "nombre_activo", "observaciones");
+		getColumn("codigo_activo").setHeaderCaption("Codigo Activo").setExpandRatio(1);
 		getColumn("nombre_activo").setHeaderCaption("Nombre del Activo").setExpandRatio(7);
 		getColumn("observaciones").setHeaderCaption("Observaciones").setExpandRatio(6);
 		

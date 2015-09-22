@@ -150,8 +150,9 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 				
 				try {
 					binder_tomainv.commit();
-					ActivoInventario activo = new ActivoInventario(Long.parseLong(txt_codigo_activo.getValue().replace(".", "").replace("'", "")),
-							txt_nombre_activo_no.getValue(), tarea_observacion.getValue(), txt_ci_usuario.getValue());
+					ActivoInventario activo = new ActivoInventario(Long.parseLong(txt_codigo_activo.getValue().replace(".", "")
+							.replace("'", "")), txt_nombre_activo_no.getValue(), tarea_observacion.getValue(), txt_ci_usuario
+							.getValue());
 					activos_invetariados.add(activo);
 					grid_inventario.buildGrid(activos_invetariados);
 				} catch (CommitException ex) {
@@ -229,7 +230,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		resul.setId_dependencia(session.getId_dependecia());
 		resul.setId_unidad_organizacional_origen(session.getId_unidad_organizacional());
 		resul.setTipo_movimiento((short) 13);
-		resul.setObservacion("");	
+		resul.setObservacion("");
 		resul.setNro_documento_referencia(txt_nro_documento_ref.getValue());
 		resul.setFecha_nro_referencia(new java.sql.Date(dtf_fecha_ref.getValue().getTime()));
 		resul.setFecha_movimiento(new java.sql.Date(new Date().getTime()));
@@ -273,7 +274,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 			}
 		}
 		if (event.getComponent() == txt_codigo_activo) {
-			if (event.getComponent().toString().length() > 5) {
+			if (event.getComponent().toString().length() >= 5) {
 				try {
 					String codigo = event.getText().substring(event.getText().length() - 4, event.getText().length());
 					ActivoGrid activo = activoimpl.getone(Long.parseLong(codigo), session.getId_dependecia());
@@ -281,6 +282,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 						txt_nombre_activo_no.setValue(activo.getNombre());
 					}
 				} catch (NumberFormatException ex) {
+				} catch (StringIndexOutOfBoundsException e) {
 				}
 			} else {
 				if (event.getComponent().toString().length() > 0) {

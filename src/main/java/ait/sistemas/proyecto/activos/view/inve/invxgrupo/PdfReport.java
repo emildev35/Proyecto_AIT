@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.view.inve.invxgrupo;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.activos.data.service.Impl.FechaDepreciacionImpl;
 import ait.sistemas.proyecto.activos.view.inve.invxgrupo.reporte.InventarioGrupoGenerator;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
@@ -53,10 +55,11 @@ public class PdfReport {
     private static final float ROW_HEIGHT = 14;
     private static final float CELL_MARGIN = 2;
     
-    private static final int HEADER_SIZE = 3;
+    private static final int HEADER_SIZE = 4;
     
     public static final String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new Date().getTime()) + ".pdf";
     
+
     
     public boolean getPdf(String[][] data) throws IOException{
     	
@@ -65,14 +68,15 @@ public class PdfReport {
     }
 
     private static Table createContent(String[][] data) {
+    	
+         FechaDepreciacionImpl fechaimpl = new FechaDepreciacionImpl();
+    	
         List<Column> columns = new ArrayList<Column>();
         columns.add(new Column("Grupo Contalbe", 250));	
         columns.add(new Column("Cantidad", 100));
         columns.add(new Column("Valor de Compra", 100));
         columns.add(new Column("Valor Neto", 100));
 
-
-        
  
         String[][] content = data;
 
@@ -103,7 +107,7 @@ public class PdfReport {
             .setDependencia("XXXXX")
             .setUsuario("XXXXXX")
             .setTitle("INVENTARIO DE ACTIVOS POR GRUPO CONTABLE")
-            .setSubTitle("")
+            .setSubTitle("Elaborado al: "  + new SimpleDateFormat("dd-MM-yyyy").format(fechaimpl.getFechaDep().getFDE_Fecha_Depreciacion()))
             .build();
         return table;
     }   
