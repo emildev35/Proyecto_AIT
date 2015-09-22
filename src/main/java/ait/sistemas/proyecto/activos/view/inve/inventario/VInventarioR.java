@@ -165,7 +165,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
 							new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
 				}
-				File pdfFile = new File(ReportPdf.SAVE_PATH);
+				File pdfFile = new File(reporte.SAVE_PATH);
 
 				VerticalLayout vl_pdf = new VerticalLayout();
 				Embedded pdf = new Embedded("", new FileResource(pdfFile));
