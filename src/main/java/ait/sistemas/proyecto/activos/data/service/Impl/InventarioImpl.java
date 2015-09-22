@@ -15,6 +15,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
+import ait.sistemas.proyecto.activos.component.model.InventarioGrupo;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 
@@ -91,6 +92,7 @@ public class InventarioImpl {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<ActivoInventario> getReport(short id_dependencia, String doc_referencia, Date fecha_ref) {
 		String str_detalle = "EXEC Inve_ReporteInvFisico_Q " + "@id_dependencia=?1," + "@nro_doc_ref=?2," + "@fecha_doc_ref=?3";
 		
@@ -102,4 +104,25 @@ public class InventarioImpl {
 		List<ActivoInventario> result = (List<ActivoInventario>) query_r.getResultList();
 		return result;
 	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<InventarioGrupo> getReport(short id_dependencia) {
+		String str_detalle = "EXEC Inv_InvGrupo_Q " + "@Id_Dependencia=?1";
+		Query query_r = this.em.createNativeQuery(str_detalle, "inventario-grupo");
+		query_r.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query_r.setParameter(1, id_dependencia);
+		List<InventarioGrupo> result = (List<InventarioGrupo>) query_r.getResultList();
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<InventarioGrupo> getReport() {
+		String str_detalle = "EXEC Inv_InvGrupoG_Q ";
+		Query query_r = this.em.createNativeQuery(str_detalle, "inventario-grupo");
+		query_r.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<InventarioGrupo> result = (List<InventarioGrupo>) query_r.getResultList();
+		return result;
+	}
+	
 }

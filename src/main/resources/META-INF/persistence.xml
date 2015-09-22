@@ -37,6 +37,7 @@
 		<class>ait.sistemas.proyecto.activos.component.model.MovimientoReporte</class>
 		<class>ait.sistemas.proyecto.activos.component.model.TipoCambio</class>
 		<class>ait.sistemas.proyecto.activos.component.model.SolicitudSoporte</class>
+		<class>ait.sistemas.proyecto.activos.component.model.InventarioGrupo</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoSoporte</class>
 		<class>ait.sistemas.proyecto.activos.data.model.EstadoSoporte</class>
 		<properties>

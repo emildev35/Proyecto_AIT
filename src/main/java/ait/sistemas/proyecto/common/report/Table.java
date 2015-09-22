@@ -85,7 +85,7 @@ public class Table {
 		return this.getColumns().size();
 	}
 	public Integer getNumberOfColumnsGA() {
-		return this.getColumnsGA().size();
+			return this.getColumnsGA().size();
 	}
 	public float getWidth() {
 		float tableWidth = 0f;

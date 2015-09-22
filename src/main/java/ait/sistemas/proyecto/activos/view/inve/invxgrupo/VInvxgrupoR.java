@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
+import ait.sistemas.proyecto.activos.component.model.InventarioGrupo;
 import ait.sistemas.proyecto.activos.data.service.Impl.InventarioImpl;
-import ait.sistemas.proyecto.activos.view.inve.tomainv.reporte.PdfReport;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
@@ -21,6 +20,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -32,7 +32,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 	
@@ -112,19 +111,26 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 		
 	}
 	
-	public String[][] getDatos(List<ActivoInventario> activos) {
-		String[][] result = new String[activos.size()][10];
-		for (int i = 0; i < result.length; i++) {
+	public String[][] getDatos(List<InventarioGrupo> activos) {
+		
+		List<InventarioGrupo> general = inventarioimpl.getReport();
+		
+		String[][] result = new String[(activos.size() + general.size())][5];
+		
+		for (int i = 0; i < activos.size(); i++) {
 			result[i][0] = String.valueOf(activos.get(i).getDependencia());
-			result[i][1] = String.valueOf(activos.get(i).getNumero_documento());
-			result[i][2] = String.valueOf(activos.get(i).getFecha_registro());
-			result[i][3] = String.valueOf(activos.get(i).getCodigo_activo());
-			result[i][4] = String.valueOf(activos.get(i).getNombre_activo());
-			result[i][5] = String.valueOf(activos.get(i).getNombre_funcionario());
-			result[i][6] = String.valueOf(activos.get(i).getObservacion());
-			result[i][7] = String.valueOf(activos.get(i).getSr().equals("-1") ? "X" : " ");
-			result[i][8] = String.valueOf(activos.get(i).getDr().equals("-1") ? "X" : " ");
-			result[i][9] = String.valueOf(activos.get(i).getMr().equals("-1") ? "X" : " ");
+			result[i][1] = String.valueOf(activos.get(i).getGrupoContable());
+			result[i][2] = String.valueOf(activos.get(i).getCantidad());
+			result[i][3] = String.valueOf(activos.get(i).getValorCompra());
+			result[i][4] = String.valueOf(activos.get(i).getValorNeto());
+		}
+		
+		for (int i = activos.size(); i < result.length; i++) {
+			result[i][0] = String.valueOf(general.get(i - activos.size()).getDependencia());
+			result[i][1] = String.valueOf(general.get(i - activos.size()).getGrupoContable());
+			result[i][2] = String.valueOf(general.get(i - activos.size()).getCantidad());
+			result[i][3] = String.valueOf(general.get(i - activos.size()).getValorCompra());
+			result[i][4] = String.valueOf(general.get(i - activos.size()).getValorNeto());
 		}
 		
 		return result;
@@ -135,34 +141,34 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_reporte.validate()) {
-//				List<ActivoInventario> activos = inventarioimpl.getReport(frm_reporte.getDependencia());
-//				PdfReport reporte = new PdfReport();
-//				try {
-//					reporte.getPdf(getDatos(activos));
-//					File pdfFile = new File(PdfReport.SAVE_PATH);
-//					
-//					VerticalLayout vl_pdf = new VerticalLayout();
-//					Embedded pdf = new Embedded("", new FileResource(pdfFile));
-//					pdf.setMimeType("application/pdf");
-//					pdf.setType(Embedded.TYPE_BROWSER);
-//					pdf.setSizeFull();
-//					vl_pdf.setSizeFull();
-//					vl_pdf.addComponent(pdf);
-//					
-//					Window subWindow = new Window("Reporte Inmuebles");
-//					VerticalLayout subContent = new VerticalLayout();
-//					subContent.setMargin(true);
-//					subWindow.setContent(vl_pdf);
-//					
-//					subWindow.setWidth("90%");
-//					subWindow.setHeight("90%");
-//					subWindow.center();
-//					
-//					// Open it in the UI
-//					getUI().addWindow(subWindow);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+				List<InventarioGrupo> inventario = inventarioimpl.getReport(frm_reporte.getDependencia());
+				PdfReport reporte = new PdfReport();
+				try {
+					reporte.getPdf(getDatos(inventario));
+					File pdfFile = new File(PdfReport.SAVE_PATH);
+					
+					VerticalLayout vl_pdf = new VerticalLayout();
+					Embedded pdf = new Embedded("", new FileResource(pdfFile));
+					pdf.setMimeType("application/pdf");
+					pdf.setType(Embedded.TYPE_BROWSER);
+					pdf.setSizeFull();
+					vl_pdf.setSizeFull();
+					vl_pdf.addComponent(pdf);
+					
+					Window subWindow = new Window("Reporte Inmuebles");
+					VerticalLayout subContent = new VerticalLayout();
+					subContent.setMargin(true);
+					subWindow.setContent(vl_pdf);
+					
+					subWindow.setWidth("90%");
+					subWindow.setHeight("90%");
+					subWindow.center();
+					
+					// Open it in the UI
+					getUI().addWindow(subWindow);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			buildMessages(msg);
 			buildMessages(this.frm_reporte.getMensajes());
