@@ -15,6 +15,12 @@ import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.ui.UI;
 
+/**
+ * Clase encargada de generar el Pdf del Reporte de Toma de Inventario Fisico
+ * 
+ * @author franzemil
+ *
+ */
 public class TomaInvFisGenerator {
 	
 	private PDDocument doc;
