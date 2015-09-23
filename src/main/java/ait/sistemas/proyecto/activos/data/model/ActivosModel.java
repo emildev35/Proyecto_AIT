@@ -36,6 +36,7 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_No_Folio_Real", column = "ACT_No_Folio_Real"),
 		@FieldResult(name = "ACT_No_Garantia", column = "ACT_No_Garantia"),
 		@FieldResult(name = "ACT_No_Informe_Baja", column = "ACT_No_Informe_Baja"),
+		@FieldResult(name = "ACT_No_Resolucion_Baja", column = "ACT_No_Resolucion_Baja"),
 		@FieldResult(name = "ACT_No_Poliza_Seguro", column = "ACT_No_Poliza_Seguro"),
 		@FieldResult(name = "ACT_No_RUAT", column = "ACT_No_RUAT"),
 		@FieldResult(name = "ACT_No_Serie", column = "ACT_No_Serie"),
@@ -60,6 +61,7 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "ACT_Valor_Neto", column = "ACT_Valor_Neto"),
 		@FieldResult(name = "ACT_Vida_Util", column = "ACT_Vida_Util"),
 		@FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
+		@FieldResult(name = "ACT_Motivo_Baja", column = "ACT_Motivo_Baja"),
 		@FieldResult(name = "ACT_Partidas_Presupuestarias", column = "ACT_Partidas_Presupuestarias"),
 		@FieldResult(name = "ACT_Nombre_Empleado", column = "ACT_Nombre_Empleado"),
 		@FieldResult(name = "ACT_APaterno_Empleado", column = "ACT_APaterno_Empleado"),
@@ -98,6 +100,7 @@ public class ActivosModel implements Serializable {
 	private String ACT_No_Folio_Real;
 	private String ACT_No_Garantia;
 	private long ACT_No_Informe_Baja;
+	private String ACT_No_Resolucion_Baja;
 	private String ACT_No_Poliza_Seguro;
 	private String ACT_No_RUAT;
 	private String ACT_No_Serie;
@@ -122,6 +125,7 @@ public class ActivosModel implements Serializable {
 	private BigDecimal ACT_Valor_Neto;
 	private int ACT_Vida_Util;
 	private String ACT_Marca;
+	private String ACT_Motivo_Baja;
 	private String ACT_Partidas_Presupuestarias;
 	private String ACT_Nombre_Empleado;
 	private String ACT_APaterno_Empleado;
@@ -339,6 +343,14 @@ public class ActivosModel implements Serializable {
 		this.ACT_No_Informe_Baja = ACT_No_Informe_Baja;
 	}
 
+	public String getACT_No_Resolucion_Baja() {
+		return ACT_No_Resolucion_Baja;
+	}
+
+	public void setACT_No_Resolucion_Baja(String aCT_No_Resolucion_Baja) {
+		ACT_No_Resolucion_Baja = aCT_No_Resolucion_Baja;
+	}
+
 	public String getACT_No_Poliza_Seguro() {
 		return this.ACT_No_Poliza_Seguro;
 	}
@@ -529,6 +541,14 @@ public class ActivosModel implements Serializable {
 
 	public void setACT_Marca(String aCT_Marca) {
 		ACT_Marca = aCT_Marca;
+	}
+
+	public String getACT_Motivo_Baja() {
+		return ACT_Motivo_Baja;
+	}
+
+	public void setACT_Motivo_Baja(String aCT_Motivo_Baja) {
+		ACT_Motivo_Baja = aCT_Motivo_Baja;
 	}
 
 	public String getACT_Partidas_Presupuestarias() {

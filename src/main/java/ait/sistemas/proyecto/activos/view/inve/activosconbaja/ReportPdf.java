@@ -11,20 +11,21 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.PDFInventarioGenerator;
+import ait.sistemas.proyecto.common.report.PDFActivoBajaGenerator;
+import ait.sistemas.proyecto.common.report.PageSize;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
 
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
-	private static final float MARGIN = 60;
+	private static final PDRectangle PAGE_SIZE = PageSize.OFICIO;
+	private static final float MARGIN = 30;
 	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 10;
+	private static final float FONT_SIZE = 8;
 
 	/**
 	 * Font for footer report
@@ -65,7 +66,7 @@ public class ReportPdf {
 
 	public boolean getPdf(String[][] data, String strDependencia, String fecha) throws IOException {
 
-		return new PDFInventarioGenerator().generatePDF(createContent(data, strDependencia, fecha ), SAVE_PATH);
+		return new PDFActivoBajaGenerator().generatePDF(createContent(data, strDependencia, fecha ), SAVE_PATH);
 
 	}
 
@@ -77,10 +78,12 @@ public class ReportPdf {
 		
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
-		columns.add(new Column("Serie", 100));
-		columns.add(new Column("Nombre del Activo", 600));
+		columns.add(new Column("Nombre del Activo", 380));
+		columns.add(new Column("Motivo Baja", 180));
 		columns.add(new Column("Valor Compra", 75));
 		columns.add(new Column("Valor Neto", 75));
+		columns.add(new Column("Nro Resolucion", 90));
+		columns.add(new Column("Fecha", 50));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 //		Date date = new Date();

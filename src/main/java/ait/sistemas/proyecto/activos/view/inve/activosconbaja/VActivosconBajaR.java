@@ -3,7 +3,6 @@ package ait.sistemas.proyecto.activos.view.inve.activosconbaja;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -12,14 +11,16 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -30,7 +31,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
+public class VActivosconBajaR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +41,7 @@ public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 //	private String[][] data;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
-	private List<BarMessage> msg = new ArrayList<BarMessage>();
+//	private List<BarMessage> msg = new ArrayList<BarMessage>();
 
 	public VActivosconBajaR() {
 
@@ -49,8 +50,8 @@ public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
-		buildMessages(msg);
+//		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+//		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
@@ -113,13 +114,13 @@ public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 	public String[][] getDatos() {
 
 		List<ActivosModel> lista = activo_impl
-				.activos_by_dependencia((Short) this.frmReporte.cb_Dependencia.getValue());
+				.activosbaja_by_dependencia((Short) this.frmReporte.cb_Dependencia.getValue(),new java.sql.Date(this.frmReporte.dt_fecha.getValue().getTime()));
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(), activo.getACT_Nombre_Activo(),
-					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()) };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),activo.getACT_Motivo_Baja(),
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()), String.valueOf(activo.getACT_No_Resolucion_Baja()),String.valueOf(activo.getACT_Fecha_Baja())  };
 			
 			data[r] = row;
 			r++;
@@ -128,13 +129,13 @@ public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 	}
 	public String[][] getDatosALL() {
 		
-		List<ActivosModel> lista = activo_impl.getactivos();
+		List<ActivosModel> lista = activo_impl.getActivosBaja(new java.sql.Date(this.frmReporte.dt_fecha.getValue().getTime()));
 		
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(), activo.getACT_Nombre_Activo(),
-					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()) };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),activo.getACT_Motivo_Baja(),
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()),activo.getACT_No_Resolucion_Baja(),String.valueOf(activo.getACT_Fecha_Baja()) };
 			
 			data[r] = row;
 			r++;
@@ -200,5 +201,9 @@ public class VActivosconBajaR extends VerticalLayout implements  ClickListener {
 			}
 		}
 		buildMessages(this.frmReporte.getMessage());
+	}
+
+	@Override
+	public void enter(ViewChangeEvent event) {
 	}
 }
