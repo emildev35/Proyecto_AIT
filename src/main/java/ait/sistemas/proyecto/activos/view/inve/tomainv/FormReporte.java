@@ -18,6 +18,15 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Formulario del Reporte de Inventario Fisico
+ * esta clase continen:
+ * Dependencia 				: ComboBox
+ * No. Documento Referencia : TextField
+ * Fecha 					: TextField
+ * @author franzemil
+ *
+ */
 public class FormReporte extends GridLayout {
 	
 	private static final long serialVersionUID = 1L;
@@ -97,13 +106,18 @@ public class FormReporte extends GridLayout {
 		mensajes.add(new BarMessage("Form", "Datos Incompletos"));
 		return false;
 	}
-	
+	/**
+	 * Vacio todos los valores de los componentes
+	 */
 	public void clean() {
 		buildcbDependencia();
 		txt_no_resolucion.setValue("");
 		dtf_fecha.setValue(null);
 	}
-	
+	/**
+	 * Retorna la lista de Mensajes del Formulario
+	 * @return
+	 */
 	public List<BarMessage> getMensajes() {
 		return this.mensajes;
 	}

@@ -73,7 +73,7 @@ public class GridActivos extends Grid {
 		removeColumn("ACT_Ubicacion_Fisica_Activo_ID");
 		removeColumn("ACT_Ubicacion_Fisica_Activo");
 		removeColumn("ACT_Ubicacion_Imagen");
-		removeColumn("ACT_Valor");
+		removeColumn("ACT_Valor_Compra");
 		removeColumn("ACT_Valor_Neto");
 		removeColumn("ACT_Vida_Util");
 		removeColumn("ACT_Dependencia_Codigo_Activo");

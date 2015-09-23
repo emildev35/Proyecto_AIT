@@ -33,7 +33,7 @@ import com.vaadin.ui.Window;
  * @author franzemil
  *
  */
-public class VEtiquetaA extends VerticalLayout implements View, ClickListener {
+public class VEtiquetaR extends VerticalLayout implements View, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -44,7 +44,7 @@ public class VEtiquetaA extends VerticalLayout implements View, ClickListener {
 	
 	private CssLayout hl_errores = new CssLayout();
 	
-	public VEtiquetaA() {
+	public VEtiquetaR() {
 		List<BarMessage> msg_inf = new ArrayList<BarMessage>();
 		msg_inf.add(new BarMessage("Fomulario", Messages.CODE_BAR_INFO));
 		addComponent(buildNavBar());

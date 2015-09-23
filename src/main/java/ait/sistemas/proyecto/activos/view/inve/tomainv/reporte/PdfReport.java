@@ -14,6 +14,11 @@ import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
+/***
+ * Clase de Generacion y administracion del Reporte de Inventario Fisico
+ * @author franzemil
+ *
+ */
 public class PdfReport {
 	 // Page configuration
     private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;

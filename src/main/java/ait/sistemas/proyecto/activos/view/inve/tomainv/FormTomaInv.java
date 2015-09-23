@@ -41,6 +41,20 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Formulario para la toma de Inventario Fisico contiene:
+ * No. Documento			: TextField
+ * Fecha Docuemnto 			: DateField
+ * Nombre Funcionario Asig.	: TextField
+ * Nro. Doc. Referencia		: TextField
+ * Fecha Doc. Referencia	: DateField
+ * Codigo Activo			: TextField
+ * CI Usuario				: TextField
+ * Nombre Activo Asignado 	: TextField
+ * Observaciones			: TextArea
+ * @author franzemil
+ *
+ */
 public class FormTomaInv extends GridLayout implements TextChangeListener, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -195,7 +209,9 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		this.dtf_fecha_documento.setValue(new Date());
 		this.txt_nro_documento_ref.focus();
 	}
-	
+	/**
+	 * Establece los controles que seran desabilidados
+	 */
 	public void enabled() {
 		// this.txt_codigo_activo.setEnabled(false);
 		this.dtf_fecha_documento.setEnabled(false);
@@ -214,7 +230,11 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 	public void clearMessages() {
 		this.mensajes = new ArrayList<BarMessage>();
 	}
-	
+	/**
+	 * Retorna true en caso que el Formulario sea valido y false
+	 * en caso contrario
+	 * @return
+	 */
 	public boolean validate() {
 		this.mensajes = new ArrayList<BarMessage>();
 		if (this.activos_invetariados.size() > 0) {
@@ -223,7 +243,9 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		this.mensajes.add(new BarMessage("Grid Inventario", Messages.EMPTY_GRID));
 		return false;
 	}
-	
+	/**
+	 * Retorna los Datos del Formulario para su Registro
+	 */
 	public Movimiento getData() {
 		Movimiento resul = new Movimiento();
 		resul.setNro_documento(Long.parseLong(txt_nro_documento.getValue().replace(".", "")));
@@ -251,14 +273,19 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		}
 		return resul;
 	}
-	
+	/**
+	 * Limpia los Campos del Formulario
+	 */
 	public void clean() {
 		
 		this.binder_tomainv.clear();
 		this.grid_inventario.clean();
 		enabled();
 	}
-	
+	/**
+	 * Retorna el Grid de Activos Inventariados
+	 * @return
+	 */
 	public Grid getGrid() {
 		return this.grid_inventario;
 	}

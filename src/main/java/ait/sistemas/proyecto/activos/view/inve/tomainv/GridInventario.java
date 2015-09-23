@@ -27,7 +27,10 @@ public class GridInventario extends Grid {
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(5);
 	}
-	
+	/**
+	 * LLena del Grid con los datos enviados
+	 * @param activos
+	 */
 	public void buildGrid(List<ActivoInventario> activos) {
 		bean_inventario.addAll(activos);
 		setContainerDataSource(bean_inventario);

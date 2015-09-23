@@ -33,7 +33,6 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	private Button btn_imprimir;
 	private FormInventario frmReporte = new FormInventario();
 	int r = 0;
-//	private String[][] data;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
 

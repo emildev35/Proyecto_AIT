@@ -89,6 +89,7 @@ public class Messages {
 	public static final String REQUIED_FIELDS = "(Los campos con (*) son requeridos)";
 	public static final String SELECT_DEPENDENCIA = "Seleccione una Dependencia";
 	public static final String ALL_DEP = "TODAS LAS DEPENDENCIAS";
+	public static final String TIMEOUT_SESSION = "Session Expirada Presiones F5";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}
