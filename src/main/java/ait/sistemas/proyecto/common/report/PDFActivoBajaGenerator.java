@@ -86,14 +86,14 @@ public class PDFActivoBajaGenerator {
 		String grupo_contable = "";
 		String auxiliar_contable = "";
 
-		float sum_dependencia = 0;
-		float sum_por_dependencia = 0;
-		float sum_grupo_contable = 0;
-		float sum_auxiliares_contables = 0;
-		float sum_neto_dependencia = 0;
-		float sum_neto_por_dependencia = 0;
-		float sum_neto_grupo_contable = 0;
-		float sum_neto_auxiliares_contables = 0;
+		double sum_dependencia = 0;
+		double sum_por_dependencia = 0;
+		double sum_grupo_contable = 0;
+		double sum_auxiliares_contables = 0;
+		double sum_neto_dependencia = 0;
+		double sum_neto_por_dependencia = 0;
+		double sum_neto_grupo_contable = 0;
+		double sum_neto_auxiliares_contables = 0;
 		int can_dependencia = 0;
 		int can_por_dependencia = 0;
 		int can_grupo_contable = 0;
