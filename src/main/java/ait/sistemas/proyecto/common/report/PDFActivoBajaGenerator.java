@@ -16,7 +16,7 @@ import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import com.vaadin.ui.UI;
 
 @SuppressWarnings({ "deprecation", "unused" })
-public class PDFInventarioGenerator {
+public class PDFActivoBajaGenerator {
 
 	private PDDocument doc;
 
@@ -160,7 +160,7 @@ public class PDFInventarioGenerator {
 							.parseDouble(String.valueOf(sum_neto_auxiliares_contables) == null ? "0" : String
 									.valueOf(sum_neto_auxiliares_contables));
 					String str_s_total_neto = formater.format(s_total_neto);
-					contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+					contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 
 					drawCurrentPageCorte(table, new String[] { "Cantidad por Auxiliar Contable", str_aux_cont, "Total",
 							str_s_total, str_s_total_neto }, contentStream, tableTopY);
@@ -211,6 +211,16 @@ public class PDFInventarioGenerator {
 					r++;
 					tableTopY -= table.getRowHeight();
 
+					drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+					drawCurrentPageHeaderGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+					tableTopY -= table.getRowHeight();
+
+					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+					// tableTopY -= table.getRowHeight();
+					r += 2;
+					tableTopY -= table.getRowHeight();
+
 					if (!table.getContent()[i][0].equals(dependencia)) {
 						/**
 						 * Suma de Dependencias
@@ -221,15 +231,6 @@ public class PDFInventarioGenerator {
 						sum_grupo_contable = 0;
 						sum_neto_auxiliares_contables = 0;
 					}
-
-					drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
-					drawCurrentPageHeaderGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
-					tableTopY -= table.getRowHeight();
-
-					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-					// tableTopY -= table.getRowHeight();
-					r += 2;
 
 				}
 				// cambio grupo contable
@@ -253,7 +254,7 @@ public class PDFInventarioGenerator {
 						double s_gruptotal_neto = Double.parseDouble(String.valueOf(sum_neto_grupo_contable));
 						String str_s_grup_total_neto = formater.format(s_gruptotal_neto);
 						tableTopY -= table.getRowHeight();
-						contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+						contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 						drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", str_grup_cont,
 								"Total", str_s_grup_total, str_s_grup_total_neto }, contentStream, tableTopY);
 						// tableTopY -= table.getRowHeight();
@@ -270,9 +271,26 @@ public class PDFInventarioGenerator {
 							tableTopY -= table.getHeaderSize() * table.getRowHeight();
 
 							writeHeader(contentStream, tableTopY, table);
+//							tableTopY -= table.getRowHeight();
+							dependencia = table.getContent()[i][0];
+							// drawTableGridDependencia(table, new String[] {
+							// "Dependencia ", dependencia }, contentStream, tableTopY);
+							writeHeader(contentStream, tableTopY, table);
+							drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream,
+									tableTopY);
+							drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream, tableTopY);
+							
+							r++;
 							tableTopY -= table.getRowHeight();
 
-							r++;
+							drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+							drawCurrentPageHeaderGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+							tableTopY -= table.getRowHeight();
+
+							drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+							drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+							// tableTopY -= table.getRowHeight();
+							r += 2;
 						}
 					}
 					can_dependencia += can_grupo_contable;
@@ -304,11 +322,11 @@ public class PDFInventarioGenerator {
 					double f_deptotal_neto = Double.parseDouble(String.valueOf(sum_neto_por_dependencia));
 					String str_f_dep_total_neto = formater.format(f_deptotal_neto);
 					tableTopY -= table.getRowHeight();
-					contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+					contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 
 					drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", str_f_dep_cont, "Total",
 							str_f_dep_total, str_f_dep_total_neto }, contentStream, tableTopY);
-					tableTopY -= table.getRowHeight();
+//					tableTopY -= table.getRowHeight();
 
 					/**
 					 * Suma de Dependencias
@@ -324,16 +342,22 @@ public class PDFInventarioGenerator {
 							.getPageSize().getHeight() - table.getMargin();
 
 					tableTopY -= table.getHeaderSize() * table.getRowHeight();
+					writeHeader(contentStream, tableTopY, table);
 					drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream,
 							tableTopY);
 					drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream, tableTopY);
 					tableTopY -= table.getRowHeight() * 1.1;
-					writeHeader(contentStream, tableTopY, table);
 					// tableTopY -= table.getRowHeight();
+					
+					drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+					drawCurrentPageHeaderGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+					tableTopY -= table.getRowHeight();
+
 					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+					// tableTopY -= table.getRowHeight();
 
-					r++;
+					r+=3;
 					sum_dependencia += sum_grupo_contable;
 					sum_neto_dependencia += sum_neto_auxiliares_contables;
 					sum_por_dependencia = 0;
@@ -442,7 +466,7 @@ public class PDFInventarioGenerator {
 		sum_neto_por_dependencia += sum_neto_grupo_contable;
 
 		tableTopY -= table.getRowHeight();
-		DecimalFormat formate = new DecimalFormat("##,###,###,###.##");
+		DecimalFormat formate = new DecimalFormat("##,###,###,###");
 
 		double valorf_aux = Double.parseDouble(String.valueOf(can_auxiliares_contables));
 		String str_f_aux = formate.format(valorf_aux);
@@ -453,7 +477,7 @@ public class PDFInventarioGenerator {
 
 		double f_auxtotal_neto = Double.parseDouble(String.valueOf(sum_neto_auxiliares_contables));
 		String str_f_aux_total_neto = formater.format(f_auxtotal_neto);
-		contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+		contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 		drawCurrentPageCorte(table, new String[] { "Cantidad por Auxiliar Contable", str_f_aux, "Total",
 				str_f_aux_total, str_f_aux_total_neto }, contentStream, tableTopY);
 		tableTopY -= table.getRowHeight();
@@ -466,7 +490,7 @@ public class PDFInventarioGenerator {
 
 		double f__gruptotal_neto = Double.parseDouble(String.valueOf(sum_neto_grupo_contable));
 		String str_f_grup_total_neto = formater.format(f__gruptotal_neto);
-		contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+		contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 		drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", str_f_grup_cont, "Total",
 				str_f_grup_total, str_f_grup_total_neto }, contentStream, tableTopY);
 		tableTopY -= table.getRowHeight();
@@ -480,12 +504,11 @@ public class PDFInventarioGenerator {
 
 		double f_deptotal_neto = Double.parseDouble(String.valueOf(sum_neto_por_dependencia));
 		String str_f_dep_total_neto = formater.format(f_deptotal_neto);
-		contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+		contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 		drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", str_f_dep_cont, "Total",
 				str_f_dep_total, str_f_dep_total_neto }, contentStream, tableTopY);
 		tableTopY -= table.getRowHeight();
 
-		
 		if (numero_dependencias > 1) {
 			// calculo suma de TODAS las Dependencias
 			double valorf_sep_contable = Double.parseDouble(String.valueOf(can_dependencia));
@@ -497,7 +520,7 @@ public class PDFInventarioGenerator {
 			double f_septotal_neto = Double.parseDouble(String.valueOf(sum_neto_dependencia));
 			String str_f_sep_total_neto = formater.format(f_septotal_neto);
 
-			contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+			contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 26, tableTopY);
 			drawCurrentPageCorte(table, new String[] { "Cantidad todas las Dependencias", str_f_sep_cont, "Total",
 					str_f_sep_total, str_f_sep_total_neto }, contentStream, tableTopY);
 			tableTopY -= table.getRowHeight();
@@ -535,7 +558,7 @@ public class PDFInventarioGenerator {
 					/ 2, copynextTextY);
 			contentStream.showText(text);
 			contentStream.endText();
-			nextTextX += table.getColumnsGA().get(i).getWidth() * 0.73;
+			nextTextX += table.getColumnsGA().get(i).getWidth() * 0.44;
 		}
 		
 	}
@@ -622,11 +645,11 @@ public class PDFInventarioGenerator {
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table
 						.getFontSize()) / 4);
 		writeContentLineContables(strings, contentStream, nextTextX, nextTextY, table);
-		contentStream.drawLine(table.getMargin()*11/3, tableTopY-15, table.getMargin() * 5 + table.getWidth()
-				/ 6, tableTopY-15);
+		contentStream.drawLine(table.getMargin()*11/3, tableTopY-11, table.getMargin() * 5 + table.getWidth()
+				/ 6, tableTopY-11);
 		writeContentLineContables(strings, contentStream, nextTextX, nextTextY, table);
-		contentStream.drawLine(table.getMargin()*23, tableTopY-15, table.getMargin() * 29/3 + table.getWidth()
-				/ 5, tableTopY-15);
+		contentStream.drawLine(table.getMargin()*23, tableTopY-11, table.getMargin() * 29/3 + table.getWidth()
+				/ 5, tableTopY-11);
 	}
 
 	private void drawCurrentPageCorte(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
@@ -757,7 +780,7 @@ public class PDFInventarioGenerator {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 
 		for (int i = 0; i < lineContent.length; i++) {
-			if (i >= 3) {
+			if (i >= 3 && i<5) {
 				String text = Util.numberFormat(lineContent[i]);
 				contentStream.beginText();
 				contentStream.moveTextPositionByAmount(Util.justificar(text, nextTextX
@@ -808,13 +831,13 @@ public class PDFInventarioGenerator {
 
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		int pos = 2;
-		nextTextX = table.getColumns().get(2).getWidth() - 8 * table.getMargin();
+		nextTextX = table.getColumns().get(2).getWidth() + table.getMargin()*6;
 		for (int i = 0; i < lineContent.length; i++) {
 			String text = lineContent[i];
 			contentStream.beginText();
-			if (i >= 2) {
+			if (i >= 2 ) {
 
-				contentStream.moveTextPositionByAmount(Util.justificar(text, nextTextX
+				contentStream.moveTextPositionByAmount(Util.justificar(text, nextTextX-140
 						+ table.getColumns().get(4).getWidth(), table.getTextFont(), table.getFontSize()), nextTextY);
 			} else {
 				contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
@@ -896,14 +919,14 @@ public class PDFInventarioGenerator {
 
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 
-		nextTextX = (float) (table.getColumns().get(1).getWidth()* 0.9);
+		nextTextX = (float) (table.getColumns().get(1).getWidth()* 0.3);
 		for (int i = 0; i < lineContent.length; i++) {
 			String text = lineContent[i];
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
-			nextTextX += table.getColumns().get(2).getWidth() * 0.63;
+			nextTextX += table.getColumns().get(2).getWidth() * 2;
 			// contentStream.drawLine(nextTextX, nextTextY, nextTextX*5,
 			// nextTextY);
 			// contentStream.drawLine(table.getMargin() * 16, nextTextY,

@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -62,6 +63,16 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> activosbaja_by_dependencia(short id_dependencia, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoBajabyDependencia_Q " 
+				+ "@ACT_Dependencia=?1, "
+				+ "@fecha=?2 ", ActivosModel.class);
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activo_aux_grup(String auxiliar, String grupo, short id_dependencia) {
@@ -77,6 +88,14 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getactivos() {
 		Query query = em.createNativeQuery("Mvac_Activo_Q ", "mapeo-activo");
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getActivosBaja(Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoBaja_Q "
+				+ "@fecha=?1 ", "mapeo-activo");
+		query.setParameter(1, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
