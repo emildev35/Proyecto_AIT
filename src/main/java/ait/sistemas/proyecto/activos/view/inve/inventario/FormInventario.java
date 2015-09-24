@@ -68,9 +68,10 @@ public class FormInventario extends GridLayout {
 		this.binder_Inventario.bind(this.dt_fecha, "fecha");
 		this.binder_Inventario.clear();
 		
+		this.cb_Dependencia.setRequired(true);
 		this.cb_Dependencia.addValidator(new NullValidator("", false));
 		//new NullValidator("", false) por es una clase de vaadin --> no da errores pero tampoco deja registrar
-		this.dt_fecha.setEnabled(false);
+//		this.dt_fecha.setEnabled(false);
 		
 		fillfecha((Fecha_Depreciacion) fecha_depreciacion_impl.getFechaDep());
 		fillcbGrupo();

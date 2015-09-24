@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.inve.inventario;
+package ait.sistemas.proyecto.activos.view.inve.inventarionomi;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,19 +34,19 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VInventarioR extends VerticalLayout implements View, ClickListener {
+public class VInventarioNomiR extends VerticalLayout implements View, ClickListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir = new Button("Imprimir");
 	private Button btn_salir = new Button("SALIR");
-	private FormInventario frmReporte = new FormInventario();
+	private FormInventarioNomi frmReporte = new FormInventarioNomi();
 	int r = 0;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
 	private List<BarMessage> msg = new ArrayList<BarMessage>();
-
-	public VInventarioR() {
+	
+	public VInventarioNomiR() {
 
 		this.btn_imprimir.addClickListener(this);
 		this.btn_salir.addClickListener(this);
@@ -79,7 +79,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	private Component buildFormContent() {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel("Formulario de Impresion " + Messages.REQUIED_FIELDS);
+		Panel frmPanel = new Panel("Formulario de Impresion");
 		// los campos requeridos
 		frmPanel.setIcon(FontAwesome.PRINT);
 		frmPanel.setStyleName(AitTheme.PANEL_FORM);
@@ -96,7 +96,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
 		nav.addComponent(new Label("Inventarios » "));
-		nav.addComponent(new Label("Inventario de Activos » "));
+		nav.addComponent(new Label("Inventario Nominal de Activos » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -126,7 +126,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 
 	public String[][] getDatos() {
 
-		List<ActivosModel> lista = activo_impl.activos_by_dependencia(
+		List<ActivosModel> lista = activo_impl.ActivosNominal_by_dependencia(
 				(Short) this.frmReporte.cb_Dependencia.getValue(), new java.sql.Date(this.frmReporte.dt_fecha
 						.getValue().getTime()));
 
@@ -146,7 +146,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 
 	public String[][] getDatosALL() {
 
-		List<ActivosModel> lista = activo_impl.getActivosbyFechaCompra(new java.sql.Date(this.frmReporte.dt_fecha
+		List<ActivosModel> lista = activo_impl.getActivosNominalbyFechaCompra(new java.sql.Date(this.frmReporte.dt_fecha
 				.getValue().getTime()));
 
 		String[][] data = new String[lista.size()][5];
@@ -206,7 +206,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 				vl_pdf.setSizeFull();
 				vl_pdf.addComponent(pdf);
 
-				Window subWindow = new Window("Reporte Inventario Activos");
+				Window subWindow = new Window("Reporte Inventario Nominal Activos");
 				VerticalLayout subContent = new VerticalLayout();
 				subContent.setMargin(true);
 				subWindow.setContent(vl_pdf);
@@ -223,8 +223,8 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 		}
 		buildMessages(this.frmReporte.getMessage());
 	}
-	if (event.getButton() == this.btn_salir) {
-		UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
-	}
+		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		}
 	}
 }
