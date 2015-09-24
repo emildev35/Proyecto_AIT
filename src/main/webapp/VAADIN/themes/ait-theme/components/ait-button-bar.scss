@@ -35,5 +35,28 @@
 	    border-color: rgb(241, 197, 0);
 	    color: white;
 	}
+	.ait-btn-word {
+		padding: 4px;
+		height: 95%;
+
+		background-color: #5e67ff;
+		border: 2px solid #5e67ff;
+		color: white;
+	}
+	
+	.ait-btn-excel {
+		padding: 4px;
+		height: 95%;
+		background-color: #00c033;
+		border-color: #00c033;
+		color: white;
+	}
+	.ait-btn-pdf{
+		padding: 4px;
+		height: 95%;
+	  	background-color: rgb(255, 108, 96);
+	    border-color: rgb(255, 108, 96);
+	    color: white;
+	}
 	
 }

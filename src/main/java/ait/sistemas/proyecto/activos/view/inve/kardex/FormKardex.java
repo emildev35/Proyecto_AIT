@@ -1,7 +1,7 @@
 package ait.sistemas.proyecto.activos.view.inve.kardex;
 
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -21,13 +21,16 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.TextField;
 
-public class FormKardex extends GridLayout implements ValueChangeListener{
-	
+public class FormKardex extends GridLayout implements ValueChangeListener {
 	
 	private static final long serialVersionUID = 1L;
-
+	
+	public TextField txt_codigoActivo = new TextField("Codigo Activo");
+	public DateField dtf_fechaElaboracion = new DateField("Fecha Elaboracion");
 	
 	public ComboBox cb_Grupo;
 	public ComboBox cb_Auxiliar;
@@ -40,11 +43,9 @@ public class FormKardex extends GridLayout implements ValueChangeListener{
 	final PropertysetItem pitm_Kardex = new PropertysetItem();
 	private FieldGroup binder_Kardex;
 	
-	
 	public FormKardex() {
-		setColumns(1);
-		setRows(3);
-		setWidth("40%");
+		super(3, 4);
+		setWidth("100%");
 		setMargin(true);
 		setSpacing(true);
 		
@@ -69,51 +70,53 @@ public class FormKardex extends GridLayout implements ValueChangeListener{
 		this.cb_Auxiliar.addValidator(new NullValidator("", false));
 		this.cb_Activos.addValidator(new NullValidator("", false));
 		
+		this.dtf_fechaElaboracion.setValue(new Date());
 		fillcbGrupo();
 		buildContent();
 	}
 	
-	public void init(){
+	public void init() {
 		update();
 	}
+	
 	/**
 	 * Actualizacion de los Campos
 	 */
-	public void update(){
+	public void update() {
 		this.binder_Kardex.clear();
-		this.cb_Grupo.setValue((String)(""));
-		this.cb_Auxiliar.setValue((String)(""));
-		this.cb_Activos.setValue((String)(""));
-
+		this.cb_Grupo.setValue((String) (""));
+		this.cb_Auxiliar.setValue((String) (""));
+		this.cb_Activos.setValue((String) (""));
+		this.dtf_fechaElaboracion.setValue(new Date());
 	}
+	
 	/**
-	 * Llenado del Combo Box 
+	 * Llenado del Combo Box
 	 */
-	private void fillcbGrupo(){
+	private void fillcbGrupo() {
 		cb_Grupo.setNullSelectionAllowed(false);
 		cb_Grupo.setInputPrompt("Seleccione un Grupo Contable");
-		for (GruposContablesModel grupo : grupo_impl.getalls())
-		{
+		for (GruposContablesModel grupo : grupo_impl.getalls()) {
 			cb_Grupo.addItem(grupo.getGRC_Grupo_Contable());
 			cb_Grupo.setItemCaption(grupo.getGRC_Grupo_Contable(), grupo.getGRC_Nombre_Grupo_Contable());
 		}
 	}
-	private void fillcbAuxiliar(String id_grupo){
+	
+	private void fillcbAuxiliar(String id_grupo) {
 		cb_Auxiliar.removeAllItems();
 		cb_Auxiliar.setNullSelectionAllowed(false);
 		cb_Auxiliar.setInputPrompt("Seleccione el Auxiliar Contable");
-		for (AuxiliaresContablesModel auxiliar : auxiliar_impl.getreporte(id_grupo))
-		{
+		for (AuxiliaresContablesModel auxiliar : auxiliar_impl.getreporte(id_grupo)) {
 			cb_Auxiliar.addItem(auxiliar.getAUC_Auxiliar_Contable());
 			cb_Auxiliar.setItemCaption(auxiliar.getAUC_Auxiliar_Contable(), auxiliar.getAUC_Nombre_Auxiliar_Contable());
 		}
 	}
-	private void fillcbAcivo(String id_auxiliar){
+	
+	private void fillcbAcivo(String id_auxiliar) {
 		cb_Activos.removeAllItems();
 		cb_Activos.setNullSelectionAllowed(false);
 		cb_Activos.setInputPrompt("Seleccione el Activo");
-		for (ActivosModel activo : activo_impl.activos_by_auxiliar(id_auxiliar))
-		{
+		for (ActivosModel activo : activo_impl.activos_by_auxiliar(id_auxiliar)) {
 			cb_Activos.addItem(activo.getACT_Codigo_Activo());
 			cb_Activos.setItemCaption(activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo());
 		}
@@ -121,56 +124,72 @@ public class FormKardex extends GridLayout implements ValueChangeListener{
 		cb_Activos.addItem(a);
 		cb_Activos.setItemCaption(a, "Todos los Activos");
 	}
+	
 	private void buildContent() {
 		
 		this.cb_Grupo.setWidth("100%");
 		this.cb_Auxiliar.setWidth("100%");
 		this.cb_Activos.setWidth("100%");
 		
-		setColumnExpandRatio(0, 1);
-		setColumnExpandRatio(1, 1);
-		setColumnExpandRatio(2, 2);
+		setColumnExpandRatio(0, 0.3f);
+		setColumnExpandRatio(1, 1f);
+		setColumnExpandRatio(2, 1f);
 		
-		addComponent(this.cb_Grupo, 0,0);
-		addComponent(this.cb_Auxiliar, 0,1);
-		addComponent(this.cb_Activos, 0,2);
-
+		addComponent(dtf_fechaElaboracion, 0, 0);
+		addComponent(txt_codigoActivo, 1, 0);
+		addComponent(this.cb_Grupo, 1, 1);
+		addComponent(this.cb_Auxiliar, 1, 2);
+		addComponent(this.cb_Activos, 1, 3);
+		
 	}
-	public boolean validate(){
-		try{
+	
+	public boolean validate() {
+		if (txt_codigoActivo.getValue() != null) {
+			return true;
+		}
+		try {
 			this.binder_Kardex.commit();
 			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
 			return true;
-		}catch(CommitException e){
-		try{
-			this.cb_Grupo.validate();
-		}catch(Exception ex){
-			this.mensajes.add(new BarMessage(this.cb_Grupo.getCaption(), Messages.EMPTY_MESSAGE));
-		}
-		try{
-			this.cb_Auxiliar.validate();
-		}catch(Exception ex){
-			this.mensajes.add(new BarMessage(this.cb_Auxiliar.getCaption(), Messages.EMPTY_MESSAGE));
-		}
-		try{
-			this.cb_Activos.validate();
-		}catch(Exception ex){
-			this.mensajes.add(new BarMessage(this.cb_Activos.getCaption(), Messages.EMPTY_MESSAGE));
-		}
-		return false;
+		} catch (CommitException e) {
+			try {
+				this.cb_Grupo.validate();
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.cb_Grupo.getCaption(), Messages.EMPTY_MESSAGE));
+			}
+			try {
+				this.cb_Auxiliar.validate();
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.cb_Auxiliar.getCaption(), Messages.EMPTY_MESSAGE));
+			}
+			try {
+				this.cb_Activos.validate();
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.cb_Activos.getCaption(), Messages.EMPTY_MESSAGE));
+			}
+			return false;
 		}
 	}
-	public List<BarMessage> getMessage(){
+	
+	public List<BarMessage> getMessage() {
 		return this.mensajes;
 	}
+	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-		//updateId();
-		if(event.getProperty().getValue() == this.cb_Grupo.getValue() && (String)this.cb_Grupo.getValue() != null){
-			fillcbAuxiliar((String)this.cb_Grupo.getValue());
-		}	
-		if(event.getProperty().getValue() == this.cb_Auxiliar.getValue() && (String)this.cb_Auxiliar.getValue() != null){
-			fillcbAcivo((String)this.cb_Auxiliar.getValue());
-		}	
+		// updateId();
+		if (event.getProperty().getValue() == this.cb_Grupo.getValue() && (String) this.cb_Grupo.getValue() != null) {
+			fillcbAuxiliar((String) this.cb_Grupo.getValue());
+		}
+		if (event.getProperty().getValue() == this.cb_Auxiliar.getValue() && (String) this.cb_Auxiliar.getValue() != null) {
+			fillcbAcivo((String) this.cb_Auxiliar.getValue());
+		}
+	}
+	
+	public String getActivo() {
+		if (txt_codigoActivo.getValue() != null) {
+			return this.txt_codigoActivo.getValue().toString();
+		}
+		return cb_Activos.getValue().toString();
 	}
 }

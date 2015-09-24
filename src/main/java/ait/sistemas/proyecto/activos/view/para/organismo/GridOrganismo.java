@@ -27,7 +27,7 @@ import com.vaadin.ui.Grid;
 			bean_organismo.addAll(organismo_impl.getall());
 			setContainerDataSource(bean_organismo);
 			setHeightMode(HeightMode.ROW);
-			setHeightByRows(5);
+			setHeightByRows(12);
 
 			removeColumn("ORF_Fecha_Registro");
 			

@@ -342,7 +342,7 @@ public class PdfKardexGenerator {
 		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
 		String fecha = fechaHora.format(date);
 		
-		nextTextX += 410;
+		nextTextX = table.getWidth(0) - table.getMargin();
 		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
@@ -359,7 +359,7 @@ public class PdfKardexGenerator {
 		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
 		String strhora = hora.format(date);
 		
-		nextTextX += 410;
+		nextTextX = table.getWidth(0) - table.getMargin();
 		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);

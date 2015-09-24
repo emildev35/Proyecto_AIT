@@ -6,11 +6,13 @@ import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -57,13 +59,18 @@ public class VOrganismoM extends VerticalLayout implements View, ClickListener, 
 
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
+		
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Datos a modificar");
 		frmPanel.setContent(this.frm_organismo);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Organismos Financiadores registrados");
 		gridPanel.setContent(this.grid_organismo);
@@ -89,13 +96,15 @@ public class VOrganismoM extends VerticalLayout implements View, ClickListener, 
 	}
 
 	private Component buildButtonBar() {
+		
 		CssLayout buttonContent = new CssLayout();
-		this.btn_modificar.setStyleName("ait-buttons-btn");
+		btn_modificar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_modificar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_modificar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
-		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
 

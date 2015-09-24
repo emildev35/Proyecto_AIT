@@ -6,11 +6,13 @@ import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
 import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -90,12 +92,13 @@ public class VPartidaM extends VerticalLayout implements View, ClickListener, Se
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_modificar.setStyleName("ait-buttons-btn");
+		btn_modificar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_modificar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_modificar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
-		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
 

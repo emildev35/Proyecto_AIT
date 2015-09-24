@@ -605,29 +605,32 @@ public class ActivosModel implements Serializable {
 	
 	public void Actualizar() {
 		TipoCambioImpl tipocambioimpl = new TipoCambioImpl();
-		 java.util.Date fecha_actual = new java.util.Date();
+		java.util.Date fecha_actual = new java.util.Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
+		
 		double CAI = this.ACT_Valor_Neto == null ? this.ACT_Valor_Compra.doubleValue() : this.ACT_Valor_Neto.doubleValue();
 		double ufvi = tipocambioimpl.getTipoCambioUFV(this.ACT_Fecha_Ultima_Depreciacion).getTipo_cambio().doubleValue();
-		double ufvf = tipocambioimpl.getTipoCambioUFV(new Date(new java.util.Date().getTime())).getTipo_cambio().doubleValue();
-		double AG = CAI * ((ufvi / ufvi) - 1);
+		double ufvf = tipocambioimpl.getTipoCambioUFV(new Date(fecha_actual.getTime())).getTipo_cambio().doubleValue();
+		double AG = CAI * ((ufvf / ufvi) - 1);
 		double CA = AG + CAI;
 		
 		double DAI = 0;
-		double ADA = DAI * ((ufvi / ufvi) - 1);
+		double ADA = DAI * ((ufvf / ufvi) - 1);
 		
 		@SuppressWarnings("deprecation")
-		java.util.Date fecha_total_depresiacion = new java.util.Date(ACT_Fecha_Incorporacion.getDay(),
-				ACT_Fecha_Incorporacion.getMonth(), ACT_Fecha_Incorporacion.getYear() + ACT_Vida_Util);
+		java.util.Date fecha_total_depresiacion = new java.util.Date(ACT_Fecha_Incorporacion.getYear() + ACT_Vida_Util,
+				ACT_Fecha_Incorporacion.getMonth(), ACT_Fecha_Incorporacion.getDay());
 		long diff = 0;
-		if(fecha_total_depresiacion.getTime() < fecha_actual.getTime()){
-			 diff = this.ACT_Fecha_Ultima_Depreciacion.getTime() - fecha_actual.getTime();
-		}else{
-			 diff = fecha_total_depresiacion.getTime() - ACT_Fecha_Incorporacion.getTime()		 ;
+		if (fecha_total_depresiacion.getTime() < fecha_actual.getTime()) {
+			diff = fecha_total_depresiacion.getTime() - ACT_Fecha_Incorporacion.getTime();
+		} else {
+			diff = fecha_actual.getTime() - ACT_Fecha_Incorporacion.getTime();
 		}
-		
-		
-		
 		long dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		double DG = CAI * dias / (ACT_Vida_Util * 365);
 		
+		double DA = 0 + DG;
+		this.ACT_Actualizacion_Acumulada = new BigDecimal(CA);
+		this.ACT_Depresiacion_Acumulada = new BigDecimal(DA);
+		this.ACT_Valor_Neto = new BigDecimal((CA - DA) < 0 ? 1 : (CA - DA	));
 	}
 }

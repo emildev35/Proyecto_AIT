@@ -8,12 +8,14 @@ import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -67,12 +69,16 @@ import com.vaadin.ui.VerticalLayout;
 			formContent.setSpacing(true	);				
 					
 			Panel frmPanel = new Panel();
+			frmPanel.setStyleName(AitTheme.PANEL_FORM);
+			frmPanel.setIcon(FontAwesome.EDIT);
 			frmPanel.setWidth("100%");
 			frmPanel.setCaption("Datos a eliminar");
 			frmPanel.setContent(this.frm_organismo);
 			this.frm_organismo.enabled();
 			formContent.setMargin(true);
 			Panel gridPanel = new Panel();
+			gridPanel.setStyleName(AitTheme.PANEL_GRID);
+			gridPanel.setIcon(FontAwesome.TABLE);
 			gridPanel.setWidth("100%");
 			gridPanel.setCaption("Organismos Financiadores registrados");
 			gridPanel.setContent(this.grid_organismo);
@@ -100,9 +106,12 @@ import com.vaadin.ui.VerticalLayout;
 
 		private Component buildButtonBar() {
 			CssLayout buttonContent = new CssLayout();
-			this.btn_eliminar.setStyleName("ait-buttons-btn");
+			this.btn_eliminar.setStyleName(AitTheme.BTN_SUBMIT);
+			btn_eliminar.setIcon(FontAwesome.TRASH_O);
 			buttonContent.addComponent(this.btn_eliminar);
 			this.btn_limpiar.setStyleName("ait-buttons-btn");
+			this.btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+			btn_limpiar.setIcon(FontAwesome.TRASH_O);
 			buttonContent.addStyleName("ait-buttons");
 			buttonContent.addComponent(this.btn_limpiar);
 			return buttonContent;

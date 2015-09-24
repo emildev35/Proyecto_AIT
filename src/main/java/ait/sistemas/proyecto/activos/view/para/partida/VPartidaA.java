@@ -5,9 +5,11 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -50,9 +52,11 @@ public class VPartidaA extends VerticalLayout implements View, ClickListener {
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
+		btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;

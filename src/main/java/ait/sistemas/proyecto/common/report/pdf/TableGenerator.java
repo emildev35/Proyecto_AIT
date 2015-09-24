@@ -45,7 +45,7 @@ public class TableGenerator {
 	}
 	
 	public void drawTable(PDDocument doc, Table table) throws IOException {
-		Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue() - 1;
+		Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue();
 		Integer numberOfPages = new Double(
 				Math.ceil((table.getNumberOfRows().floatValue() + table.getHeaderSize()) / rowsPerPage)).intValue();
 		this.intNumberPages = numberOfPages;
@@ -91,8 +91,8 @@ public class TableGenerator {
 		// Write content
 		for (int i = 0; i < currentPageContent.length; i++) {
 			writeContentLine(currentPageContent[i], contentStream, nextTextX, nextTextY, table);
-			nextTextY -= table.getRowHeight();
 			nextTextX = table.getMargin() + table.getCellMargin();
+			nextTextY -= table.getRowHeight();
 		}
 		
 		if (pageCount == 0) {

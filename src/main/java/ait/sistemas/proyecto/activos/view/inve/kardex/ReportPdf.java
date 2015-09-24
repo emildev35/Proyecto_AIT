@@ -65,7 +65,7 @@ public class ReportPdf {
 
 	private static final int HEADER_SIZE = 3;
 
-	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public  String SAVE_PATH = PathValues.PATH_REPORTS + "kardex-" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ProveedorImpl provedorimpl = new ProveedorImpl();
 	final ActivoImpl activoimpl = new ActivoImpl();

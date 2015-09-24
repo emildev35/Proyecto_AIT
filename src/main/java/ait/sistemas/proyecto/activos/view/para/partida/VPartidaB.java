@@ -8,12 +8,14 @@ import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
 import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -101,9 +103,12 @@ public class VPartidaB extends VerticalLayout implements View, SelectionListener
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_eliminar.setStyleName("ait-buttons-btn");
+		this.btn_eliminar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
 		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		this.btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;

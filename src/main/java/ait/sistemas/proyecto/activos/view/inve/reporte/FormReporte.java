@@ -35,7 +35,6 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 	final ReporteImpl reporteimpl = new ReporteImpl();
 	final List<String> columns = reporteimpl.getColumnName("Reporte_Activos");
 	final DependenciaImpl dependenciaimpl = new DependenciaImpl();
-	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	public FormReporte() {
@@ -86,8 +85,8 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		setColumnExpandRatio(1, 4.5f);
 		setColumnExpandRatio(2, 1);
 		addComponent(cb_dependencia, 0, 0, 1, 0);
-		addComponent(this.tw_campos, 1, 1);
-		addComponent(txt_nombre_reporte, 0, 2, 1, 2);
+		addComponent(txt_nombre_reporte, 0, 1, 1, 1);
+		addComponent(this.tw_campos, 1, 2);
 		addComponent(tb_vista_previa, 0, 3, 2, 3);
 	}
 	
@@ -166,7 +165,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener, Text
 		}
 		for (String string : data) {
 			if (tb_vista_previa.getColumnWidth(string) < 0) {
-				ints[r] = 500 / data.size();
+				ints[r] = 725 / data.size();
 				System.out.println(ints[r]);
 				r++;
 				continue;

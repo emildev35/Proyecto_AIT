@@ -8,6 +8,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ReporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.report.msexcel.SimpleExcel;
 import ait.sistemas.proyecto.common.report.msword.SimpleWord;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -21,6 +22,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -53,6 +55,8 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel grid_column = new Panel();
+		grid_column.setStyleName(AitTheme.PANEL_PRINT);
+		grid_column.setIcon(FontAwesome.PRINT);
 		grid_column.setWidth("100%");
 		grid_column.setCaption("Inmuebles registrados");
 		formContent.setMargin(true);
@@ -69,20 +73,26 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
+		GridLayout gridButtons = new GridLayout(3, 1);
+		gridButtons.setWidth("100%");
+			
+		Responsive.makeResponsive(gridButtons);
+		Responsive.makeResponsive(buttonContent);
+		
 		buttonContent.addStyleName("ait-buttons");
 		
-		this.btn_imprimir_excel.setStyleName("ait-buttons-btn");
+		this.btn_imprimir_excel.setStyleName(AitTheme.BTN_EXCEL);
 		this.btn_imprimir_excel.setIcon(FontAwesome.FILE_EXCEL_O);
-		buttonContent.addComponent(this.btn_imprimir_excel);
+		gridButtons.addComponent(this.btn_imprimir_excel);
 		
-		this.btn_imprimir_word.setStyleName("ait-buttons-btn");
+		this.btn_imprimir_word.setStyleName(AitTheme.BTN_WORD);
 		this.btn_imprimir_word.setIcon(FontAwesome.FILE_WORD_O);
-		buttonContent.addComponent(this.btn_imprimir_word);
+		gridButtons.addComponent(this.btn_imprimir_word);
 		
-		this.btn_imprimir_pdf.setStyleName("ait-buttons-btn");
+		this.btn_imprimir_pdf.setStyleName(AitTheme.BTN_PDF);
 		this.btn_imprimir_pdf.setIcon(FontAwesome.FILE_PDF_O);
-		buttonContent.addComponent(this.btn_imprimir_pdf);
-		
+		gridButtons.addComponent(this.btn_imprimir_pdf);
+		buttonContent.addComponent(gridButtons);
 		return buttonContent;
 	}
 	
@@ -118,7 +128,8 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 			List<String> columns_header = this.frm_reporte.getColumnsNames();
 			String sql = frm_reporte.getSQL();
 			int[] columns_width = frm_reporte.getColumnssizes();
-			String[][] data = reporteimpl.getData(sql, "Reporte_Activos", frm_reporte.getNumColumns(), frm_reporte.getDependencia());
+			String[][] data = reporteimpl.getData(sql, "Reporte_Activos", frm_reporte.getNumColumns(),
+					frm_reporte.getDependencia());
 			if (event.getButton() == this.btn_imprimir_pdf) {
 				
 				PdfReport pdf_reporte = new PdfReport();
