@@ -52,6 +52,9 @@ public class PdfKardexGeneratorMulti {
 				for (int pageCount = 0; pageCount < numberOfPages; pageCount++) {
 					PDPage page = new PDPage();
 					page.setMediaBox(kardex[i].getPageSize());
+					if(kardex[i].isLandscape()){
+						page.setRotation(90);
+					}
 					this.doc.addPage(page);
 					PDPageContentStream contentStream = generateContentStream(doc, page, kardex[i]);
 					drawCurrentPage(kardex[i], contentStream, pageCount);
@@ -153,7 +156,7 @@ public class PdfKardexGeneratorMulti {
 				if (table.getElemenos()[i][0] == null) {
 					continue;
 				}
-				contentStream.drawLine(table.getMargin(), nextY, (table.getMargin() + table.getWidth()), nextY);
+				contentStream.drawLine(table.getMargin(), nextY, (table.getMargin() + table.getWidth(i)), nextY);
 
 				final float tableYLength = table.getRowHeight() + table.getRowTitleHeight();
 				final float tableBottomY = nextY - tableYLength;
@@ -170,9 +173,9 @@ public class PdfKardexGeneratorMulti {
 				}
 
 				nextY -= table.getRowHeight();
-				contentStream.drawLine(table.getMargin(), nextY, (table.getMargin() + table.getWidth()), nextY);
+				contentStream.drawLine(table.getMargin(), nextY, (table.getMargin() + table.getWidth(i)), nextY);
 				nextY -= table.getRowTitleHeight();
-				contentStream.drawLine(table.getMargin(), nextY, (table.getMargin() + table.getWidth()), nextY);
+				contentStream.drawLine(table.getMargin(), nextY, (table.getMargin() + table.getWidth(i)), nextY);
 			}
 
 		}
@@ -268,7 +271,7 @@ public class PdfKardexGeneratorMulti {
 			// Modificado para solo el tititulo para grilla completa modificar por
 			for (int i = 0; i <= table.getNumberOfRowsComponentes() + 1; i++) {
 
-				contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
+				contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(i), nextY);
 				nextY -= table.getRowHeight();
 			}
 
@@ -293,7 +296,7 @@ public class PdfKardexGeneratorMulti {
 
 			// Modificado para solo el tititulo para grilla completa modificar por
 			for (int i = 0; i <= table.getNumberOfRowsDocumentos() + 1; i++) {
-				contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
+				contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(i), nextY);
 				nextY -= table.getRowHeight();
 			}
 
@@ -367,7 +370,7 @@ public class PdfKardexGeneratorMulti {
 			contentStream.beginText();
 			long text_width = (long) ((table.getTitleFont().getStringWidth(table.getTitle()) / 1000.0f) * table
 					.getFontSizetitle());
-			contentStream.moveTextPositionByAmount((table.getWidth() / 2) - (text_width / 2) + (table.getMargin() / 2),
+			contentStream.moveTextPositionByAmount((table.getWidth(0) / 2) - (text_width / 2) + (table.getMargin() / 2),
 					nextTextY);
 			contentStream.showText(table.getTitle());
 			contentStream.endText();

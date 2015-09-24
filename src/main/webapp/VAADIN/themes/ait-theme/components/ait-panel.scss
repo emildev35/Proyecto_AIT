@@ -10,5 +10,10 @@
 	.v-panel-caption-ait-pn-grid {
 	    @include valo-panel-caption-style($background-color: #3399FF);
 	  }
+	  
+	  
+  	.v-panel-caption-ait-pn-print {
+	    @include valo-panel-caption-style($background-color: #F1C500);
+	  }
 
 }
