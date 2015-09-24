@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.inve.inventario;//la carpeta actual
+package ait.sistemas.proyecto.activos.view.inve.inventarionomi;//la carpeta actual
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +24,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 
-public class FormInventario extends GridLayout {
+public class FormInventarioNomi extends GridLayout {
 	
 	
 	//extends --> herencia 
@@ -49,7 +49,7 @@ public class FormInventario extends GridLayout {
 	//PropertysetItem --> para vincular los datos para que validate todos y no uno por uno. lo lleva todo a un tipo de objeto
 	//FieldGroup --> trabajan juntos lo lleva el tipo de objeto al componente
 	
-	public FormInventario() {
+	public FormInventarioNomi() {
 		setColumns(2); //columnas que aceptara el grid en las posiciones
 		setRows(3); //filas que aceptara el grid
 		setWidth("100%"); //ancho de todo el grid

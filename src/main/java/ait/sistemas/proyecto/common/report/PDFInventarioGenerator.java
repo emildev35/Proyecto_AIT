@@ -269,7 +269,20 @@ public class PDFInventarioGenerator {
 							
 							writeHeader(contentStream, tableTopY, table);
 							tableTopY -= table.getRowHeight();
+							writeHeader(contentStream, tableTopY, table);
+							drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
+							drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
+									tableTopY);
+							tableTopY -= table.getRowHeight() * 1.1;
+							// tableTopY -= table.getRowHeight();
+							drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+							drawCurrentPageHeaderGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+							tableTopY -= table.getRowHeight();
 							
+							drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+							drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+							// tableTopY -= table.getRowHeight();
+							r += 2;
 							r++;
 						}
 					}
@@ -322,14 +335,20 @@ public class PDFInventarioGenerator {
 							.getHeight() - table.getMargin();
 					
 					tableTopY -= table.getHeaderSize() * table.getRowHeight();
+					writeHeader(contentStream, tableTopY, table);
 					drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
 					drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
 							tableTopY);
 					tableTopY -= table.getRowHeight() * 1.1;
-					writeHeader(contentStream, tableTopY, table);
 					// tableTopY -= table.getRowHeight();
+					drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+					drawCurrentPageHeaderGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
+					tableTopY -= table.getRowHeight();
+					
 					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
+					// tableTopY -= table.getRowHeight();
+					r += 2;
 					
 					r++;
 					sum_dependencia += sum_grupo_contable;

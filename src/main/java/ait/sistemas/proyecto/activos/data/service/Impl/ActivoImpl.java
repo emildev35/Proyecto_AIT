@@ -58,19 +58,30 @@ public class ActivoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ActivosModel> activos_by_dependencia(short id_dependencia) {
-		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " 
-	+ "@ACT_Dependencia=?1 ", ActivosModel.class);
+	public List<ActivosModel> activos_by_dependencia(short id_dependencia, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " + "@ACT_Dependencia=?1, " + "@fecha=?2 ",
+				ActivosModel.class);
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_dependencia);
+		query.setParameter(2, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> ActivosNominal_by_dependencia(short id_dependencia, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoNominalbyDependencia " + "@ACT_Dependencia=?1, " + "@fecha=?2 ",
+				ActivosModel.class);
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activosbaja_by_dependencia(short id_dependencia, Date fecha) {
-		Query query = em.createNativeQuery("Mvac_ActivoBajabyDependencia_Q " 
-				+ "@ACT_Dependencia=?1, "
-				+ "@fecha=?2 ", ActivosModel.class);
+		Query query = em.createNativeQuery("Mvac_ActivoBajabyDependencia_Q " + "@ACT_Dependencia=?1, " + "@fecha=?2 ",
+				ActivosModel.class);
 		query.setParameter(1, id_dependencia);
 		query.setParameter(2, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
@@ -89,15 +100,32 @@ public class ActivoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ActivosModel> getactivos() {
-		Query query = em.createNativeQuery("Mvac_Activo_Q ", "mapeo-activo");
+	public List<ActivosModel> getActivosbyFechaCompra(Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivobyFechaCompra_Q " + "@fecha=?1 ", "mapeo-activo");
+		query.setParameter(1, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getActivosNominalbyFechaCompra(Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoNominalbyFechaCompra_Q " + "@fecha=?1 ", "mapeo-activo");
+		query.setParameter(1, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getActivosConsolidado(Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoConsolidado_Q " + "@fecha=?1 ", "mapeo-activo");
+		query.setParameter(1, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getActivosBaja(Date fecha) {
-		Query query = em.createNativeQuery("Mvac_ActivoBaja_Q "
-				+ "@fecha=?1 ", "mapeo-activo");
+		Query query = em.createNativeQuery("Mvac_ActivoBaja_Q " + "@fecha=?1 ", "mapeo-activo");
 		query.setParameter(1, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
