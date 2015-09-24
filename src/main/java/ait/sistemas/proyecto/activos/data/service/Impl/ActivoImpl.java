@@ -96,8 +96,10 @@ public class ActivoImpl {
 		return resultlist;
 	}
 	@SuppressWarnings("unchecked")
-	public List<ActivosModel> getactivos() {
-		Query query = em.createNativeQuery("Mvac_Activo_Q ", "mapeo-activo");
+	public List<ActivosModel> getActivosConsolidado(Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoConsolidado_Q "
+				+ "@fecha=?1 ", "mapeo-activo");
+		query.setParameter(1, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}

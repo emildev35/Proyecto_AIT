@@ -2,23 +2,28 @@ package ait.sistemas.proyecto.activos.view.inve.inventarioconso;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -29,40 +34,47 @@ public class VInventarioConsoR extends VerticalLayout implements View, ClickList
 
 	private static final long serialVersionUID = 1L;
 
-	private Button btn_imprimir;
+	private Button btn_imprimir= new Button("Imprimir");
+	private FormInventarioConso frmReporte = new FormInventarioConso();
 	int r = 0;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
 
 	public VInventarioConsoR() {
 
-		this.btn_imprimir = new Button("Imprimir");
+		this.btn_imprimir.addClickListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
-
+		Responsive.makeResponsive(this);
 	}
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
-		this.btn_imprimir.addClickListener(this);
+		GridLayout btn_grid = new GridLayout(2, 1);
+		btn_grid.setResponsive(true);
+		btn_grid.setSizeFull();
+		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
+		btn_grid.addComponent(this.btn_imprimir);
+		btn_grid.setComponentAlignment(btn_imprimir, Alignment.TOP_CENTER);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
 		buttonContent.addStyleName("ait-buttons");
 
-		Responsive.makeResponsive(buttonContent);
+		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 
 	private Component buildFormContent() {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel();
-		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario de Impresion");
-		formContent.setMargin(true);
+		Panel frmPanel = new Panel("Formulario de Impresion ");
+		// los campos requeridos
+		frmPanel.setIcon(FontAwesome.PRINT);
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		// frmPanel.setWidth("100%");
+		// frmPanel.setCaption("Formulario de Impresion");
+		frmPanel.setContent(this.frmReporte);
 		formContent.addComponent(frmPanel);
-		Responsive.makeResponsive(formContent);
 		return formContent;
 	}
 
@@ -100,7 +112,8 @@ public class VInventarioConsoR extends VerticalLayout implements View, ClickList
 
 	public String[][] getDatosALL() {
 		
-		List<ActivosModel> lista = activo_impl.getactivos();
+		List<ActivosModel> lista = activo_impl.getActivosConsolidado(new java.sql.Date(this.frmReporte.dt_fecha
+				.getValue().getTime()));
 		
 		String[][] data = new String[lista.size()][5];
 		r = 0;
@@ -134,7 +147,7 @@ public class VInventarioConsoR extends VerticalLayout implements View, ClickList
 			ReportPdf reporte = new ReportPdf();
 			try {
 				
-					reporte.getPdf(getDatosALL());
+					reporte.getPdf(getDatosALL(),new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
 				
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
 

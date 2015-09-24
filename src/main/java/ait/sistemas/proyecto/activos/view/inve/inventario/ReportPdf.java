@@ -56,7 +56,7 @@ public class ReportPdf {
 	
 	private static final int HEADER_SIZE = 4;
 	
-	public String SAVE_PATH = PathValues.PATH_REPORTS + "reporteInventario-" + String.valueOf(new java.util.Date().getTime())
+	public String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Inventario-" + String.valueOf(new java.util.Date().getTime())
 			+ ".pdf";
 	
 	final ActivoImpl activoimpl = new ActivoImpl();
