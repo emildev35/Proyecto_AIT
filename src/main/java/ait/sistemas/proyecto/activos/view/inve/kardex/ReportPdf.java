@@ -15,18 +15,24 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 
+/**
+ * Reporte Pdf que contiene el Kardex de Cada Activo
+ * se definio un acho de 725 puntos
+ * @author franzemil
+ *
+ */
 public class ReportPdf {
 	// Page configuration
 	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-	private static final float MARGIN = 60;
-	private static final boolean IS_LANDSCAPE = false;
+	private static final float MARGIN = 30;
+	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
 	private static final float FONT_SIZE = 8;
 
 	private static final PDFont TEXT_FONT_TITLE = PDType1Font.HELVETICA_BOLD;
-	private static final float FONT_TITLE_SIZE = 8;
+	private static final float FONT_TITLE_SIZE = 6.5f;
 
 	/**
 	 * Font for footer report
@@ -54,6 +60,7 @@ public class ReportPdf {
 
 	private static final float ROW_HEIGHT = 15;
 	private static final float ROW_TITLE_HEIGHT = 20;
+	
 	private static final float CELL_MARGIN = 2;
 
 	private static final int HEADER_SIZE = 3;
@@ -95,12 +102,12 @@ public class ReportPdf {
 
 		KardexElement[][] content = data;
 		List<Column> columns_componentes = new ArrayList<Column>();
-		columns_componentes.add(new Column("Nombre del Componente", 250));
-		columns_componentes.add(new Column("Caracteristicas", 250));
+		columns_componentes.add(new Column("Nombre del Componente", 350));
+		columns_componentes.add(new Column("Caracteristicas", 375));
 
 		List<Column> columns_documentos = new ArrayList<Column>();
-		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 250));
-		columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 250));
+		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 350));
+		columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 375));
 
 		String[][] componentes = getComponentes(Long.parseLong(data[0][0].getContenido()), dependencia);
 		String[][] documentos = getDocumentos(Long.parseLong(data[0][0].getContenido()), dependencia);
@@ -131,12 +138,12 @@ public class ReportPdf {
 			KardexElement[][] content = data[i];
 
 			List<Column> columns_componentes = new ArrayList<Column>();
-			columns_componentes.add(new Column("Nombre del Componente", 250));
-			columns_componentes.add(new Column("Caracteristicas", 250));
+			columns_componentes.add(new Column("Nombre del Componente", 350));
+			columns_componentes.add(new Column("Caracteristicas", 375));
 
 			List<Column> columns_documentos = new ArrayList<Column>();
-			columns_documentos.add(new Column("Nombre del Documento de Respaldo", 250));
-			columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 250));
+			columns_documentos.add(new Column("Nombre del Documento de Respaldo", 350));
+			columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 375));
 
 			String[][] componentes = getComponentes(Long.parseLong(data[i][0][0].getContenido()), dependencia);
 			String[][] documentos = getDocumentos(Long.parseLong(data[i][0][0].getContenido()), dependencia);

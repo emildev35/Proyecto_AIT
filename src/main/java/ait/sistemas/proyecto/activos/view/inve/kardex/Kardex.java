@@ -310,14 +310,14 @@ public class Kardex {
 		this.fontSizetexttitle = fontSizetexttitle;
 	}
 
-	public float getWidth() {
+	public float getWidth(int row) {
 		float tableWidth = 0f;
 
-		for (int i = 0; i < elementos.length; i++) {
-			if( this.elementos[0][i] == null){
+		for (int i = 0; i < elementos[row].length; i++) {
+			if( this.elementos[row][i] == null){
 				return tableWidth;
 			}
-			tableWidth += this.elementos[0][i].getAncho();
+			tableWidth += this.elementos[row][i].getAncho();
 		}
 		return tableWidth;
 	}

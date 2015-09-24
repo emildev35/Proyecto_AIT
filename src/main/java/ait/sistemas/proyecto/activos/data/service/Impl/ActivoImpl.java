@@ -42,6 +42,7 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activos_by_auxiliar(String id_auxiliar) {
 		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_auxiliar);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
@@ -50,6 +51,7 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activosgrid_by_auxiliar(String id_auxiliar) {
 		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_auxiliar);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
@@ -59,6 +61,7 @@ public class ActivoImpl {
 	public List<ActivosModel> activos_by_dependencia(short id_dependencia) {
 		Query query = em.createNativeQuery("Mvac_ActivobyDependencia " 
 	+ "@ACT_Dependencia=?1 ", ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_dependencia);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
@@ -127,6 +130,7 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getall(long id_activo) {
 		Query query = em.createNativeQuery("Mvac_Activo_Cod " + "@ACT_Codigo_Activo=?1 ", "mapeo-activo");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_activo);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
