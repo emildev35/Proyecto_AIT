@@ -39,7 +39,7 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir = new Button("Imprimir");
-	private Button btn_salir = new Button("SALIR");
+	private Button btn_salir = new Button("Salir");
 	private FormInventario frmReporte = new FormInventario();
 	int r = 0;
 	private final ActivoImpl activo_impl = new ActivoImpl();

@@ -39,7 +39,7 @@ public class VInventarioNomiR extends VerticalLayout implements View, ClickListe
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir = new Button("Imprimir");
-	private Button btn_salir = new Button("SALIR");
+	private Button btn_salir = new Button("Salir");
 	private FormInventarioNomi frmReporte = new FormInventarioNomi();
 	int r = 0;
 	private final ActivoImpl activo_impl = new ActivoImpl();
