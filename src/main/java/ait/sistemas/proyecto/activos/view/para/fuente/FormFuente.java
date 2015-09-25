@@ -46,7 +46,7 @@ import com.vaadin.ui.TextField;
 			this.txt_nombre_fuente = new TextField("Nombre Fuente de Financiamiento: ");
 			this.mensajes = new ArrayList<BarMessage>();
 			
-			pitm_Fuente.addItemProperty("id_fuente", new ObjectProperty<Integer>((int)1));
+			pitm_Fuente.addItemProperty("id_fuente", new ObjectProperty<String>(""));
 			pitm_Fuente.addItemProperty("nombre_fuente", new ObjectProperty<String>(""));
 			
 
@@ -61,8 +61,8 @@ import com.vaadin.ui.TextField;
 			this.txt_nombre_fuente.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(3, 60), 3,60,false));
 			this.txt_id_fuente.setEnabled(false);	
 			
-			txt_id_fuente.setWidth("90%");
-			txt_nombre_fuente.setWidth("90%");
+			txt_id_fuente.setWidth("40%");
+			txt_nombre_fuente.setWidth("70%");
 
 			updateId();
 			buildContent();
@@ -78,6 +78,7 @@ import com.vaadin.ui.TextField;
 		
 		public void update(){
 			binder_Fuente.clear();
+			this.txt_id_fuente.setValue("");
 		}
 		public void updateId(){
 			this.txt_id_fuente.setValue(fuente_impl.generateId() + "");

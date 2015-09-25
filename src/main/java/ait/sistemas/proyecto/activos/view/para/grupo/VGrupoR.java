@@ -43,7 +43,7 @@ public class VGrupoR extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		List<BarMessage> mensajes = new ArrayList<BarMessage>();
-		mensajes.add(new BarMessage("","Pulsar el Boton Imprimir para generar el reporte", "success"));
+		mensajes.add(new BarMessage("","Pulsar el Boton Imprimir para generar el reporte"));
 		buildMessages(mensajes);
 	}
 
@@ -53,7 +53,6 @@ public class VGrupoR extends VerticalLayout implements View, ClickListener {
 		this.btn_imprimir.addStyleName("ait-buttons-btn");
 		this.btn_imprimir.addClickListener(this);
 		buttonContent.addStyleName("ait-buttons");
-
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}

@@ -29,7 +29,7 @@ public class GridTiposmov extends Grid {
 		bean_tiposmov.addAll(tiposmov_impl.getall());
 		setContainerDataSource(bean_tiposmov);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
+		setHeightByRows(12	);
 		
 		removeColumn("TMV_Fecha_Registro");
 		
@@ -41,9 +41,9 @@ public class GridTiposmov extends Grid {
 		Grid.Column nombre_tiposmovColumn = this.getColumn("TMV_Nombre_Tipo_Movimiento");
 		Grid.Column sigla_tiposmovColumn = this.getColumn("TMV_Sigla_Tipo_Movimiento");
 		
-		id_tiposmovColumn.setHeaderCaption("Codigo");
-		nombre_tiposmovColumn.setHeaderCaption("Nombre del tipo de movimiento");
-		sigla_tiposmovColumn.setHeaderCaption("Sigla");
+		id_tiposmovColumn.setHeaderCaption("Codigo").setExpandRatio(1);
+		nombre_tiposmovColumn.setHeaderCaption("Nombre del tipo de movimiento").setExpandRatio(8);
+		sigla_tiposmovColumn.setHeaderCaption("Sigla").setExpandRatio(2);
 		
 		Responsive.makeResponsive(this);
 	}

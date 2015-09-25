@@ -3,12 +3,11 @@ package ait.sistemas.proyecto.activos.data.service.Impl;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-import ait.sistemas.proyecto.activos.view.inve.reporte.FormReporte;
 import ait.sistemas.proyecto.common.component.Messages;
 
 public class ReporteImpl {

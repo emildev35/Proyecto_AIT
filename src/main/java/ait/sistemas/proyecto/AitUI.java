@@ -10,6 +10,8 @@ import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.MainView;
 import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
+import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -43,22 +45,25 @@ public class AitUI extends UI {
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
 		
-//		 if (((SessionModel) getUI().getSession().getAttribute("user")) ==
-//		 null) {
-//		 SessionModel result;
-//		 try {
-//		 result = Auth.login("KI-VASQ-IM", "3Enero199$");
-//		 getUI().getSession().setAttribute("user", result);
-//		 } catch (SQLException e) {
-//		 e.printStackTrace();
-//		 }
-//		 }
+		// if (((SessionModel) getUI().getSession().getAttribute("user")) ==
+		// null) {
+		// SessionModel result;
+		// try {
+		// result = Auth.login("KI-VASQ-IM", "3Enero199$");
+		// getUI().getSession().setAttribute("user", result);
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
+		// }
 		/**
 		 * Cuenta de Invitado
 		 */
 		if (((SessionModel) getUI().getSession().getAttribute("user")) == null) {
 			SessionModel result = Auth.getDefaultUser();
 			getUI().getSession().setAttribute("user", result);
+		}
+		if (((Arbol_menus) getUI().getSession().getAttribute("nav")) == null) {
+			getUI().getSession().setAttribute("nav", null);
 		}
 		AitViewProvider viewprovider = new AitViewProvider();
 		CssLayout layout = new CssLayout();
@@ -79,6 +84,7 @@ public class AitUI extends UI {
 			super.servletInitialized();
 			getService().setSystemMessagesProvider(new SystemMessagesProvider() {
 				private static final long serialVersionUID = 1L;
+				
 				@Override
 				public SystemMessages getSystemMessages(SystemMessagesInfo systemMessagesInfo) {
 					CustomizedSystemMessages messages = new CustomizedSystemMessages();

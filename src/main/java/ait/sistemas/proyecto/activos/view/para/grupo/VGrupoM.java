@@ -52,6 +52,7 @@ public class VGrupoM extends VerticalLayout implements View, ClickListener,
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+			
 	}
 
 	private Component buildFormContent() {

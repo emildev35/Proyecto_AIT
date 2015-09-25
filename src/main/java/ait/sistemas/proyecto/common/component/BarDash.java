@@ -15,46 +15,34 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
- * Componente que propociona un Barra en la parte superior de la 
- * pantalla en la cual se encuentran componentes como:
- * 	Logo AIT
- * 	Reloj
+ * Componente que propociona un Barra en la parte superior de la pantalla en la
+ * cual se encuentran componentes como: Logo AIT Reloj
+ * 
  * @author franzemil
  *
  */
 public class BarDash extends CustomComponent {
-
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	/*
-	private Label nav_modulo;
-	private Label nav_menu;
-	private Label nav_submenu;
-	private Label nav_opcion;
-	private Label lbDependencia;*/
 	private Image logo_ait;
 	private static final String STYLE_VISIBLE = "valo-menu-visible";
-
+	
 	public BarDash() {
-
+		
 		addStyleName("ait-bar");
-		/*
-		this.nav_modulo = new Label("Modulo");
-		this.nav_menu = new Label("Menu");
-		this.nav_submenu = new Label("Sub-Menu");
-		this.nav_opcion = new Label("Opcion");
-		this.lbDependencia = new Label("Dependencia : General La Paz");*/
 		ThemeResource resource = new ThemeResource("logos/Logo_AIT.png");
 		this.logo_ait = new Image("", resource);
 		Responsive.makeResponsive(this);
 		setCompositionRoot(buildComponents());
 	}
-
+	
 	/**
-	 * Este metodo proporciona el contenedor padre del Componente			
+	 * Este metodo proporciona el contenedor padre del Componente
+	 * 
 	 * @return Component
 	 */
 	private Component buildComponents() {
@@ -65,12 +53,13 @@ public class BarDash extends CustomComponent {
 		mainContent.addComponent(buildLogo());
 		mainContent.addComponent(buildNavigation());
 		mainContent.addComponent(buildClock());
-
+		
 		return mainContent;
 	}
-
+	
 	/**
 	 * Se encarga de generar el Logo de la Institucion
+	 * 
 	 * @return
 	 */
 	private Component buildLogo() {
@@ -80,41 +69,30 @@ public class BarDash extends CustomComponent {
 		/**
 		 * Componente de la Dependencia
 		 */
-		/*
-		 * logoContent.addComponent(this.lbDependencia);
-		 */
-		// Responsive.makeResponsive(this);
+		
+		Responsive.makeResponsive(this);
 		return logoContent;
 	}
-
+	
 	private Component buildNavigation() {
 		CssLayout navigationContent = new CssLayout();
-		/**
-		 * Componentes de Navegacion
-		 */
-		/*
-		 * navigationContent.addStyleName("ait-bar-navitagion");
-		 * navigationContent.addComponent(this.nav_modulo);
-		 * navigationContent.addComponent(this.nav_menu);
-		 * navigationContent.addComponent(this.nav_submenu);
-		 * navigationContent.addComponent(this.nav_opcion);
-		 */
 		Responsive.makeResponsive(navigationContent);
 		return navigationContent;
 	}
-
+	
 	/**
-	 * Se encarga de Generar el Boton Toggle que se muestra en pantallas
-	 * con una baja definicion
+	 * Se encarga de Generar el Boton Toggle que se muestra en pantallas con una
+	 * baja definicion
+	 * 
 	 * @return
 	 */
 	private Component buildToggleButton() {
-
+		
 		@SuppressWarnings("serial")
 		Button valoMenuToggleButton = new Button("Menu", new ClickListener() {
-
+			
 			MenuDash menu = new MenuDash();
-
+			
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				menu.show(STYLE_VISIBLE);
@@ -127,16 +105,18 @@ public class BarDash extends CustomComponent {
 		Responsive.makeResponsive(valoMenuToggleButton);
 		return valoMenuToggleButton;
 	}
+	
 	/**
 	 * Se encarga de generar el componente que contiene la fecha y hora
+	 * 
 	 * @return
 	 */
 	private Component buildClock() {
-
+		
 		CssLayout clockContent = new CssLayout();
 		clockContent.addStyleName("ait-bar-clock");
 		clockContent.addComponent(new AitClock());
 		return clockContent;
 	}
-
+	
 }
