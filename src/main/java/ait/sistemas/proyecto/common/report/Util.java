@@ -2,7 +2,6 @@ package ait.sistemas.proyecto.common.report;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.apache.pdfbox.pdmodel.font.PDFont;

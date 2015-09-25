@@ -10,6 +10,8 @@ import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.activos.view.para.organismo.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -26,6 +28,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -38,7 +41,9 @@ public class VOrganismoR extends VerticalLayout implements View, ClickListener {
 	int r = 0;
 	private final OrganismoImpl organismo_impl = new OrganismoImpl();
 	private CssLayout hl_errores = new CssLayout();
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 
+	
 	public VOrganismoR() {
 
 		this.btn_imprimir = new Button("Imprimir");
@@ -55,8 +60,7 @@ public class VOrganismoR extends VerticalLayout implements View, ClickListener {
 		this.btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
 		btn_imprimir.setIcon(FontAwesome.PRINT);
 		this.btn_imprimir.addClickListener(this);
-		buttonContent.addStyleName("ait-buttons");
-
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
@@ -65,10 +69,7 @@ public class VOrganismoR extends VerticalLayout implements View, ClickListener {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Organismo Financiador » "));
-		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

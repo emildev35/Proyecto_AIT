@@ -28,7 +28,7 @@ public class GridUsuario extends Grid {
 				UsuarioGridModel.class, this.usuarioimpl.getGridData());
 		setContainerDataSource(bean_usuario);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
+		setHeightByRows(10);
 
 		removeColumn("fechaAlta");
 

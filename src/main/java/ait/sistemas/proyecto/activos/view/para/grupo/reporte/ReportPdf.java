@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.view.para.grupo.reporte;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -15,93 +16,73 @@ import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
-	 // Page configuration
-    private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-    private static final float MARGIN = 60;
-    private static final boolean IS_LANDSCAPE = false;
-
-    // Font for textFont
-    private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-    private static final float FONT_SIZE = 12;
-    
-    /**
-     * Font for footer report
-     */
-    private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-    private static final float FOOTER_FONT_SIZE = 10;
-    
-    /**
-     * Font for footer report
-     */
-    private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-    private static final float HEADER_FONT_SIZE = 10;
-    
-    /**
-     * Font for footer report
-     */
-    private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
-    private static final float TITLE_FONT_SIZE = 14;
-    
-    /**
-     * Font for footer report
-     */
-    private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-    private static final float SUBTITLE_FONT_SIZE = 11;
-    
-    private static final float ROW_HEIGHT = 15;
-    private static final float CELL_MARGIN = 2;
-    
-    private static final int HEADER_SIZE = 5;
-    
-    public static final String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Grupos-Contables.pdf";
-    
-    
-    public boolean getPdf(String[][] data) throws IOException{
-    	
-        return new PDFTableGenerator().generatePDF(createContent(data), SAVE_PATH);
-        
-    }
-
-    private static Table createContent(String[][] data) {
-        List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("Codigo", 50));	
-        columns.add(new Column("Nombre Grupo Contable", 140));
-        columns.add(new Column("Partida Presupuestaria", 160));
-        columns.add(new Column("Vida Util", 50));
-        columns.add(new Column("Coeficiente", 80));
-        
- 
-        String[][] content = data;
-
-        float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
-
-        Table table = new TableBuilder()
-            .setCellMargin(CELL_MARGIN)
-            .setColumns(columns)
-            .setContent(content)
-            .setHeight(tableHeight)
-            .setNumberOfRows(content.length)
-            .setRowHeight(ROW_HEIGHT)
-            .setMargin(MARGIN)
-            .setPageSize(PAGE_SIZE)
-            .setLandscape(IS_LANDSCAPE)
-            .setTextFont(TEXT_FONT)
-            .setFontSize(FONT_SIZE)
-            .setHeaderFont(HEADER_FONT)
-            .setFontSizeHeader(HEADER_FONT_SIZE)
-            .setFooterFont(FOOTER_FONT)
-            .setFontSizeFooter(FOOTER_FONT_SIZE)
-            .setTitleFont(TITLE_FONT)
-            .setFontSizeTitle(TITLE_FONT_SIZE)
-            .setSubTitleFont(SUBTITLE_FONT)
-            .setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
-            .setHeaderSize(HEADER_SIZE)
-            .setUnidad("XXXXXX")
-            .setDependencia("XXXXX")
-            .setUsuario("XXXXXX")
-            .setTitle("GRUPOS CONTABLES")
-            .setSubTitle("")
-            .build();
-        return table;
-    }   
+	// Page configuration
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
+	private static final float MARGIN = 40;
+	private static final boolean IS_LANDSCAPE = false;
+	
+	// Font for textFont
+	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
+	private static final float FONT_SIZE = 10;
+	
+	/**
+	 * Font for footer report
+	 */
+	private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
+	private static final float FOOTER_FONT_SIZE = 7;
+	
+	/**
+	 * Font for footer report
+	 */
+	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
+	private static final float HEADER_FONT_SIZE = 8;
+	
+	/**
+	 * Font for footer report
+	 */
+	private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
+	private static final float TITLE_FONT_SIZE = 14;
+	
+	/**
+	 * Font for footer report
+	 */
+	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
+	private static final float SUBTITLE_FONT_SIZE = 12;
+	
+	private static final float ROW_HEIGHT = 14;
+	private static final float CELL_MARGIN = 2;
+	
+	private static final int HEADER_SIZE = 3;
+	
+	public static final String SAVE_PATH = PathValues.PATH_REPORTS + "Informe-Grupos-Contables"
+			+ String.valueOf(new Date().getTime()) + ".pdf";
+	
+	public boolean getPdf(String[][] data) throws IOException {
+		
+		return new PDFTableGenerator().generatePDF(createContent(data), SAVE_PATH);
+		
+	}
+	
+	private static Table createContent(String[][] data) {
+		List<Column> columns = new ArrayList<Column>();
+		columns.add(new Column("Cod.", 30));
+		columns.add(new Column("Nombre Grupo Contable", 220));
+		columns.add(new Column("Partida Presupuestaria", 200));
+		columns.add(new Column("V.Util", 40));
+		columns.add(new Column("Coef.", 40));
+		
+		String[][] content = data;
+		
+		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
+		
+		Table table = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
+				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
+				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
+				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
+				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)
+				.setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE)
+				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("GRUPOS CONTABLES").setSubTitle("")
+				.build();
+		return table;
+	}
 }

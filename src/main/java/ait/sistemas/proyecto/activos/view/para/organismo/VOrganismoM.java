@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.view.para.organismo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
@@ -7,6 +8,8 @@ import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -25,6 +28,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VOrganismoM extends VerticalLayout implements View, ClickListener, SelectionListener {
@@ -37,6 +41,9 @@ public class VOrganismoM extends VerticalLayout implements View, ClickListener, 
 	private Button btn_modificar;
 	private GridOrganismo grid_organismo;
 	private final OrganismoImpl organismo_impl = new OrganismoImpl();
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	private List<BarMessage> msgs = new ArrayList<BarMessage>();
+
 
 	public VOrganismoM() {
 
@@ -87,14 +94,10 @@ public class VOrganismoM extends VerticalLayout implements View, ClickListener, 
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Parametros>>"));
-		nav.addComponent(new Label("Organismo Financiador>>"));
-		nav.addComponent(new Label("<strong>Modificar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-
 	private Component buildButtonBar() {
 		
 		CssLayout buttonContent = new CssLayout();
@@ -103,7 +106,7 @@ public class VOrganismoM extends VerticalLayout implements View, ClickListener, 
 		buttonContent.addComponent(this.btn_modificar);
 		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
 		btn_limpiar.setIcon(FontAwesome.TRASH_O);
-		buttonContent.addStyleName("ait-buttons");
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
 	}
@@ -131,6 +134,10 @@ public class VOrganismoM extends VerticalLayout implements View, ClickListener, 
 
 		if ((Organismo_Financiador) this.grid_organismo.getSelectedRow() != null) {
 			this.frm_organismo.setData((Organismo_Financiador) this.grid_organismo.getSelectedRow());
+			msgs = new ArrayList<BarMessage>();
+			msgs.add(new BarMessage("Formulario", Messages.PRESS_BUTTON_UPDATE));
+			buildMessages(msgs);
+
 		}
 	}
 

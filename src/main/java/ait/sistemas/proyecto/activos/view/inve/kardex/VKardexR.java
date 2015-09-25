@@ -8,7 +8,9 @@ import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -38,6 +40,7 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 	int r = 0;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VKardexR() {
 		
@@ -79,10 +82,7 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Inventarios » "));
-		nav.addComponent(new Label("Kardex » "));
-		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

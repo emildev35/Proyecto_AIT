@@ -8,10 +8,14 @@
 		display: block;
 		bottom: 0px;
 		height: 5%;
+		font-size:1em;
 		width: 100%;
 		z-index: 1 !important;
 	}
-
+	.ait-buttons[width-range~="0-1024px"] {
+		padding: 2px;
+	   	font-size:0.8em;
+	}
 	.ait-btn-submit {
 		padding: 4px;
 		height: 95%;

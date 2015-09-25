@@ -7,6 +7,8 @@ import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -23,6 +25,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VOrganismoA extends VerticalLayout implements View, ClickListener {
@@ -36,6 +39,8 @@ public class VOrganismoA extends VerticalLayout implements View, ClickListener {
 	private GridOrganismo grid_organismo;
 	private final OrganismoImpl organismo_impl = new OrganismoImpl();
 	private List<BarMessage> msg = new ArrayList<BarMessage>();
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+
 
 	public VOrganismoA() {
 		frm_organismo = new FormOrganismo();
@@ -56,15 +61,12 @@ public class VOrganismoA extends VerticalLayout implements View, ClickListener {
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-//		GridLayout btn_grid = new GridLayout(2, 1);
 		btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
 		btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_agregar);
-//		btn_grid.setComponentAlignment(btn_agregar, Alignment.TOP_CENTER);
 		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
 		btn_limpiar.setIcon(FontAwesome.TRASH_O);
-//		btn_grid.setComponentAlignment(btn_limpiar, Alignment.TOP_LEFT);
-		buttonContent.addStyleName("ait-buttons");
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
 	}
@@ -96,12 +98,9 @@ public class VOrganismoA extends VerticalLayout implements View, ClickListener {
 
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
-		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Parametros>>"));
-		nav.addComponent(new Label("Organismo Financiador>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addStyleName("ait-content-nav");
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

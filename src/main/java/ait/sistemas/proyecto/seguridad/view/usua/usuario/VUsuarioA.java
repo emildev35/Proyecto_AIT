@@ -1,13 +1,18 @@
 package ait.sistemas.proyecto.seguridad.view.usua.usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -20,6 +25,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VUsuarioA extends VerticalLayout implements View, ClickListener {
@@ -32,13 +38,17 @@ public class VUsuarioA extends VerticalLayout implements View, ClickListener {
 	private FormUsuario frmUsuario;
 	private UsuarioImpl usuarioimpl = new UsuarioImpl();
 	private GridUsuario grid_usuario = new GridUsuario();
+	private List<BarMessage> msgs = new ArrayList<BarMessage>();
+	
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VUsuarioA() {
 		this.frmUsuario = new FormUsuario();
-		
 		addComponent(buildNavBar());
 		addComponent(builFormContent());
 		addComponent(buildButtonBar());
+		msgs.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		buildMessages(msgs);
 	}
 	
 	private Component builFormContent() {
@@ -46,9 +56,13 @@ public class VUsuarioA extends VerticalLayout implements View, ClickListener {
 		final VerticalLayout vlfrmContent = new VerticalLayout();
 		vlfrmContent.setMargin(true);
 		Panel pnfrmOpcionPerfil = new Panel("Formulario de Registro de Usuarios");
+		pnfrmOpcionPerfil.setStyleName(AitTheme.PANEL_FORM);
+		pnfrmOpcionPerfil.setIcon(FontAwesome.EDIT);
 		pnfrmOpcionPerfil.setContent(this.frmUsuario);
 		
 		Panel pngridOpcionPerfil = new Panel("Grid de Usuarios");
+		pngridOpcionPerfil.setStyleName(AitTheme.PANEL_GRID);
+		pngridOpcionPerfil.setIcon(FontAwesome.TABLE);
 		pngridOpcionPerfil.setContent(this.grid_usuario);
 		
 		vlfrmContent.addComponent(pnfrmOpcionPerfil);
@@ -60,9 +74,7 @@ public class VUsuarioA extends VerticalLayout implements View, ClickListener {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Seguridad » "));
-		nav.addComponent(new Label("Usuarios » "));
-		nav.addComponent(new Label("<strong>Agregar Usuarios</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -70,11 +82,13 @@ public class VUsuarioA extends VerticalLayout implements View, ClickListener {
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_submit);
-		this.btn_submit.addStyleName("ait-buttons-btn");
+		this.btn_submit.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_submit.setIcon(FontAwesome.SAVE);
 		this.btn_submit.addClickListener(this);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
-		this.btn_limpiar.addStyleName("ait-buttons-btn");
+		this.btn_limpiar.addStyleName(AitTheme.BTN_EXIT);
+		this.btn_limpiar.setIcon(FontAwesome.TRASH_O);
 		this.btn_limpiar.addClickListener(this);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;

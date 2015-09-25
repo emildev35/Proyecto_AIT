@@ -9,6 +9,8 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.report.msexcel.SimpleExcel;
 import ait.sistemas.proyecto.common.report.msword.SimpleWord;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -26,6 +28,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -39,6 +42,7 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 	private Button btn_imprimir_word = new Button("Imprimir Word");
 	private Button btn_imprimir_excel = new Button("Imprimir Excel");
 	private Button btn_imprimir_pdf = new Button("Imprimir PDF");
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	private ReporteImpl reporteimpl = new ReporteImpl();
 	
@@ -75,7 +79,7 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 		CssLayout buttonContent = new CssLayout();
 		GridLayout gridButtons = new GridLayout(3, 1);
 		gridButtons.setWidth("100%");
-			
+		
 		Responsive.makeResponsive(gridButtons);
 		Responsive.makeResponsive(buttonContent);
 		
@@ -98,11 +102,9 @@ public class VReporteVariosR extends VerticalLayout implements View, ClickListen
 	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
-		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Inventario>>"));
-		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
+		nav.addStyleName("ait-content-nav");
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

@@ -1,7 +1,5 @@
 package ait.sistemas.proyecto.common.component;
 
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +24,14 @@ import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-
 /**
- * Componente que proporciona una barra horizontal de navegacion
- * en la cual que encuentran componentes como:
- * 	Informacion del Usuario.
- * 	Menu
+ * Componente que proporciona una barra horizontal de navegacion en la cual que
+ * encuentran componentes como: Informacion del Usuario. Menu
+ * 
  * @author franzemil
  *
  */
-public class MenuDash extends CustomComponent implements Serializable, ItemClickListener{
+public class MenuDash extends CustomComponent implements Serializable, ItemClickListener {
 	
 	/**
 	 * 
@@ -44,16 +40,15 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 	/**
 	 * Este MenuItem se utiliza al generar en MenuInfo del Usuario
 	 */
-    private MenuItem settingsItem;
-
-
-    private Tree Treemenu;
-    private List<Arbol_menus> menuelements;
+	private MenuItem settingsItem;
+	
+	private Tree Treemenu;
+	private List<Arbol_menus> menuelements;
 	private UsuarioImpl usuarioimpl;
 	
 	public MenuDash() {
-		this.Treemenu = new Tree();	
-		this.usuarioimpl = new UsuarioImpl(); 
+		this.Treemenu = new Tree();
+		this.usuarioimpl = new UsuarioImpl();
 		this.menuelements = new ArrayList<Arbol_menus>();
 		ObtenerDatos();
 		Treemenu.addItemClickListener(this);
@@ -62,7 +57,7 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 		setCompositionRoot(builComponent());
 		Responsive.makeResponsive(this);
 	}
-
+	
 	private Component builComponent() {
 		CssLayout mainContent = new CssLayout();
 		mainContent.addStyleName("ait-menu");
@@ -70,51 +65,53 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 		mainContent.addComponent(builMenuItems());
 		return mainContent;
 	}
-
-
+	
 	private Component builMenuItems() {
 		VerticalLayout menuContent = new VerticalLayout();
-		//menuContent.setMargin(true);
+		// menuContent.setMargin(true);
 		menuContent.addStyleName("ait-menu-items");
 		for (Arbol_menus menu : this.menuelements) {
 			Treemenu.addItem(menu);
-			if(menu.getAME_Icono()!=null && !menu.getAME_Icono().equals("")){
+			if (menu.getAME_Icono() != null && !menu.getAME_Icono().equals("")) {
 				Treemenu.setItemIcon(menu, FontAwesome.valueOf(menu.getAME_Icono()));
 			}
 		}
 		for (Arbol_menus menu : this.menuelements) {
-			if(menu.getArbolMenus()!=null){
+			if (menu.getArbolMenus() != null) {
 				Treemenu.setParent(menu, menu.getArbolMenus());
 			}
 		}
 		menuContent.addComponent(this.Treemenu);
 		return menuContent;
 	}
-
+	
 	@SuppressWarnings("serial")
 	private Component UserInfo() {
-
+		
 		final MenuBar settings = new MenuBar();
-	    settings.addStyleName("user-menu");
-	    
-	    String usuario = ((SessionModel)UI.getCurrent().getSession().getAttribute("user")).getFull_name();
-		settingsItem = settings.addItem("", new ThemeResource("img/profile-pic-300px.jpg"), null);    
+		settings.addStyleName("user-menu");
+		
+		String usuario = ((SessionModel) UI.getCurrent().getSession().getAttribute("user")).getFull_name();
+		settingsItem = settings.addItem("", new ThemeResource("img/profile-pic-300px.jpg"), null);
 		settingsItem.setText(usuario);
-        settingsItem.addItem("Cerrar Session", new Command() {
-		    @Override
-		    public void menuSelected(final MenuItem selectedItem) {
-		    	UI.getCurrent().getSession().close();
-		    	UI.getCurrent().getPage().reload();
-		    	UI.getCurrent().getNavigator().navigateTo("");
-		    }
+		settingsItem.addItem("Cerrar Session", new Command() {
+			@Override
+			public void menuSelected(final MenuItem selectedItem) {
+				UI.getCurrent().getSession().close();
+				UI.getCurrent().getPage().reload();
+				UI.getCurrent().getNavigator().navigateTo("");
+			}
 		});
 		return settings;
-
+		
 	}
+	
 	/**
-	 * Este evento permite ocultar y hacer visible el menu cuando
-	 * la definicion de pantalla es pequeña	
-	 * @param style ESte recieve in 
+	 * Este evento permite ocultar y hacer visible el menu cuando la definicion
+	 * de pantalla es pequeña
+	 * 
+	 * @param style
+	 *            ESte recieve in
 	 */
 	public void show(String style) {
 		if (getCompositionRoot().getStyleName().contains(style)) {
@@ -124,29 +121,31 @@ public class MenuDash extends CustomComponent implements Serializable, ItemClick
 		}
 		Notification.show(getCompositionRoot().getStyleName());
 	}
-
 	
-	public void ObtenerDatos(){
+	public void ObtenerDatos() {
 		
-		String usuario = ((SessionModel)UI.getCurrent().getSession().getAttribute("user")).getId();
+		String usuario = ((SessionModel) UI.getCurrent().getSession().getAttribute("user")).getId();
 		
-        for (Arbol_menus menu : this.usuarioimpl.getMenus(usuario)){
-        	this.menuelements.add(menu);
-        	ObtenerTodos(menu);
-        }
+		for (Arbol_menus menu : this.usuarioimpl.getMenus(usuario)) {
+			this.menuelements.add(menu);
+			ObtenerTodos(menu);
+		}
 	}
-	public void ObtenerTodos(Arbol_menus menu){    
-    	if (menu.getArbolMenus() != null) {				
-    		this.menuelements.add(menu.getArbolMenus());
-    		ObtenerTodos(menu.getArbolMenus());
-		}       
+	
+	public void ObtenerTodos(Arbol_menus menu) {
+		if (menu.getArbolMenus() != null) {
+			this.menuelements.add(menu.getArbolMenus());
+			ObtenerTodos(menu.getArbolMenus());
+		}
 	}
-
+	
 	@Override
 	public void itemClick(ItemClickEvent event) {
-		if((Arbol_menus)event.getItemId() != null){
-			if(((Arbol_menus)event.getItemId()).getAME_Programa() != null && !((Arbol_menus)event.getItemId()).getAME_Programa().equals("")){
-				UI.getCurrent().getNavigator().navigateTo(((Arbol_menus)event.getItemId()).getAME_Programa());
+		if ((Arbol_menus) event.getItemId() != null) {
+			if (((Arbol_menus) event.getItemId()).getAME_Programa() != null
+					&& !((Arbol_menus) event.getItemId()).getAME_Programa().equals("")) {
+				UI.getCurrent().getSession().setAttribute("nav", (Arbol_menus) event.getItemId());
+				UI.getCurrent().getNavigator().navigateTo(((Arbol_menus) event.getItemId()).getAME_Programa());
 			}
 		}
 	}

@@ -2,12 +2,14 @@ package ait.sistemas.proyecto.activos.view.para.fuente.reporte;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
@@ -16,24 +18,24 @@ import ait.sistemas.proyecto.common.report.TableBuilder;
 public class ReportPdf {
 	 // Page configuration
     private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-    private static final float MARGIN = 60;
+    private static final float MARGIN = 40;
     private static final boolean IS_LANDSCAPE = false;
 
     // Font for textFont
     private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-    private static final float FONT_SIZE = 12;
+    private static final float FONT_SIZE = 10;
     
     /**
      * Font for footer report
      */
     private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-    private static final float FOOTER_FONT_SIZE = 10;
+    private static final float FOOTER_FONT_SIZE = 7;
     
     /**
      * Font for footer report
      */
     private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-    private static final float HEADER_FONT_SIZE = 10;
+    private static final float HEADER_FONT_SIZE = 8;
     
     /**
      * Font for footer report
@@ -45,14 +47,14 @@ public class ReportPdf {
      * Font for footer report
      */
     private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-    private static final float SUBTITLE_FONT_SIZE = 11;
+    private static final float SUBTITLE_FONT_SIZE = 12;
     
-    private static final float ROW_HEIGHT = 15;
+    private static final float ROW_HEIGHT = 14;
     private static final float CELL_MARGIN = 2;
     
-    private static final int HEADER_SIZE = 5;
+    private static final int HEADER_SIZE = 3;
     
-    public static final String SAVE_PATH = "C:\\Editores\\Reportes\\Informe-Fuente-Financiamiento.pdf";
+    public static final String SAVE_PATH = PathValues.PATH_REPORTS +"fuenteFinanciamiento" + String.valueOf(new Date().getTime()) + ".pdf";
     
     
     public boolean getPdf(String[][] data) throws IOException{
@@ -63,8 +65,8 @@ public class ReportPdf {
 
     private static Table createContent(String[][] data) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("Codigo Fuente", 90));	
-        columns.add(new Column("Nombre Fuente de Financiamiento", 390));
+        columns.add(new Column("Cod. Fuente", 60));	
+        columns.add(new Column("Nombre Fuente de Financiamiento", 475));
  
         String[][] content = data;
 

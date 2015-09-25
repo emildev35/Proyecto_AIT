@@ -1,13 +1,18 @@
 package ait.sistemas.proyecto.activos.view.para.fuente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.FuenteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -20,6 +25,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VFuenteA extends VerticalLayout implements View, ClickListener {
@@ -32,6 +38,8 @@ public class VFuenteA extends VerticalLayout implements View, ClickListener {
 	private Button btn_agregar;
 	private GridFuente grid_fuente;
 	private final FuenteImpl fuente_impl = new FuenteImpl();
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
+	private List<BarMessage> msgs = new ArrayList<BarMessage>();
 	
 	public VFuenteA() {
 		frm_fuente = new FormFuente();
@@ -46,15 +54,22 @@ public class VFuenteA extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		
+		msgs = new ArrayList<BarMessage>();
+		msgs.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		buildMessages(msgs);
 	}
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
+		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.UNDO);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_limpiar);
+		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
 	
@@ -63,12 +78,16 @@ public class VFuenteA extends VerticalLayout implements View, ClickListener {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);	
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Datos a registrar");
 		frmPanel.setContent(this.frm_fuente);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);	
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Fuentes de Financiamiento registrados");
 		gridPanel.setContent(this.grid_fuente);
@@ -81,12 +100,9 @@ public class VFuenteA extends VerticalLayout implements View, ClickListener {
 	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
-		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Parametros>>"));
-		nav.addComponent(new Label("Fuentes de Financiamiento>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addStyleName("ait-content-nav");
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

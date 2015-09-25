@@ -14,5 +14,6 @@ public class AitTheme {
 	public static final String BTN_WORD = "ait-btn-word";
 	public static final String BTN_PDF = "ait-btn-pdf";
 	public static final String BTN_EXCEL = "ait-btn-excel";
+	public static final String BUTTONS_BAR = "ait-buttons";
 	
 }
