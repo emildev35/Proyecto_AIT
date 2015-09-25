@@ -82,7 +82,7 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		formContent.setSpacing(true);
 		Panel frmPanel = new Panel("Formulario de Impresion ");
 		frmPanel.setIcon(FontAwesome.PRINT);
-		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setStyleName(AitTheme.PANEL_PRINT);
 		frmPanel.setContent(this.frmReporte);
 		formContent.addComponent(frmPanel);
 		
@@ -124,8 +124,9 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),activo.getACT_Motivo_Baja(),
-					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()), String.valueOf(activo.getACT_No_Resolucion_Baja()),String.valueOf(activo.getACT_Fecha_Baja())  };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()), String.valueOf(activo.getACT_No_Resolucion_Baja()),
+					String.valueOf(activo.getACT_Fecha_Baja()),activo.getACT_Motivo_Baja(),String.valueOf(activo.getACT_Vida_Residual())};
 			
 			data[r] = row;
 			r++;
@@ -139,8 +140,9 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),activo.getACT_Motivo_Baja(),
-					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()),activo.getACT_No_Resolucion_Baja(),String.valueOf(activo.getACT_Fecha_Baja()) };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()),activo.getACT_No_Resolucion_Baja(),
+					String.valueOf(activo.getACT_Fecha_Baja()),activo.getACT_Motivo_Baja(),String.valueOf(activo.getACT_Vida_Residual()) };
 			
 			data[r] = row;
 			r++;

@@ -77,13 +77,14 @@ public class ReportPdf {
 		columnsGA.add(new Column("Auxiliar Contable", 450));
 		
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Codigo", 40));
-		columns.add(new Column("Nombre del Activo", 380));
-		columns.add(new Column("Motivo Baja", 180));
+		columns.add(new Column("Codigo", 32));
+		columns.add(new Column("Nombre del Activo", 328));
 		columns.add(new Column("Valor Compra", 75));
 		columns.add(new Column("Valor Neto", 75));
 		columns.add(new Column("Nro Resolucion", 90));
 		columns.add(new Column("Fecha", 50));
+		columns.add(new Column("Motivo Baja", 180));
+		columns.add(new Column("Vida Residual", 60));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 //		Date date = new Date();

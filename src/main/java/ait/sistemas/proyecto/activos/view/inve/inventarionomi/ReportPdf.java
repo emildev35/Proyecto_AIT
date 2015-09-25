@@ -11,7 +11,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.PDFInventarioGenerator;
+import ait.sistemas.proyecto.common.report.PDFInventarioNominal;
 import ait.sistemas.proyecto.common.report.PageSize;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
@@ -68,7 +68,7 @@ public class ReportPdf {
 		
 		this.SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Inventario-Nominal-" + String.valueOf(new java.util.Date().getTime())
 				+ ".pdf";
-		return new PDFInventarioGenerator().generatePDF(createContent(data, strDependencia, fecha), SAVE_PATH);
+		return new PDFInventarioNominal().generatePDF(createContent(data, strDependencia, fecha), SAVE_PATH);
 		
 	}
 	
@@ -81,9 +81,12 @@ public class ReportPdf {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
 		columns.add(new Column("Serie", 130));
-		columns.add(new Column("Nombre del Activo", 570));
+		columns.add(new Column("Nombre del Activo", 385));
 		columns.add(new Column("Valor Compra", 75));
 		columns.add(new Column("Valor Neto", 75));
+		columns.add(new Column("Nro Res. Baja", 90));
+		columns.add(new Column("Fecha", 50));
+		columns.add(new Column("Vida Util", 45));
 		
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 		// Date date = new Date();

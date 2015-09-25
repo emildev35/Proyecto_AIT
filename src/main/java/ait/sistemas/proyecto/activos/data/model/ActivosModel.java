@@ -64,6 +64,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 		@FieldResult(name = "ACT_Valor_Compra", column = "ACT_Valor_Compra"),
 		@FieldResult(name = "ACT_Valor_Neto", column = "ACT_Valor_Neto"),
 		@FieldResult(name = "ACT_Vida_Util", column = "ACT_Vida_Util"), @FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
+		@FieldResult(name = "ACT_Vida_Residual", column = "ACT_Vida_Residual"), @FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
 		@FieldResult(name = "ACT_Motivo_Baja", column = "ACT_Motivo_Baja"),
 		@FieldResult(name = "ACT_Partidas_Presupuestarias", column = "ACT_Partidas_Presupuestarias"),
 		@FieldResult(name = "ACT_Nombre_Empleado", column = "ACT_Nombre_Empleado"),
@@ -129,6 +130,7 @@ public class ActivosModel implements Serializable {
 	private BigDecimal ACT_Valor_Compra;
 	private BigDecimal ACT_Valor_Neto;
 	private int ACT_Vida_Util;
+	private int ACT_Vida_Residual;
 	private String ACT_Marca;
 	private String ACT_Motivo_Baja;
 	private String ACT_Partidas_Presupuestarias;
@@ -540,6 +542,14 @@ public class ActivosModel implements Serializable {
 		this.ACT_Vida_Util = ACT_Vida_Util;
 	}
 	
+	public int getACT_Vida_Residual() {
+		return ACT_Vida_Residual;
+	}
+
+	public void setACT_Vida_Residual(int aCT_Vida_Residual) {
+		ACT_Vida_Residual = aCT_Vida_Residual;
+	}
+
 	public String getACT_Marca() {
 		return ACT_Marca;
 	}
