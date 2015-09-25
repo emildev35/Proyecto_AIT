@@ -124,7 +124,8 @@ public class Messages {
 	 * Presione el Boton de Imprimir
 	 */
 	public static final String PRESS_PRINT_BTN = "Presione el boton imprimir para Visualizar el Reporte";
-	
+	public static final String PRESS_BUTTON_UPDATE = "Presione e boton de modificar para actualizar el Registro";
+	public static final String PRESS_BUTTON_DELETE = "Presione e boton de Eliminar para actualizar el Registro";
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}

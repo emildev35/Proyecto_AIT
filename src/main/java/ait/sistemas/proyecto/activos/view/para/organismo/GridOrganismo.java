@@ -27,7 +27,7 @@ import com.vaadin.ui.Grid;
 			bean_organismo.addAll(organismo_impl.getall());
 			setContainerDataSource(bean_organismo);
 			setHeightMode(HeightMode.ROW);
-			setHeightByRows(12);
+			setHeightByRows(10);
 
 			removeColumn("ORF_Fecha_Registro");
 			
@@ -38,8 +38,8 @@ import com.vaadin.ui.Grid;
 			Grid.Column id_tiposactColumn = this.getColumn("ORF_Organismo_Financiador");
 			Grid.Column nombre_tiposactColumn = this.getColumn("ORF_Nombre_Organismo_Financiador");
 			
-			id_tiposactColumn.setHeaderCaption("Codigo");
-			nombre_tiposactColumn.setHeaderCaption("Nombre Organismo de Financiamiento");
+			id_tiposactColumn.setHeaderCaption("Codigo").setExpandRatio(1);
+			nombre_tiposactColumn.setHeaderCaption("Nombre Organismo de Financiamiento").setExpandRatio(10);
 			
 			Responsive.makeResponsive(this);
 		}

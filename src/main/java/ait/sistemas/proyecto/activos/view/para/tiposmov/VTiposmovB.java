@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.view.para.tiposmov;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -8,12 +9,16 @@ import ait.sistemas.proyecto.activos.data.model.Tipos_Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.TiposmovImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -26,6 +31,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VTiposmovB extends VerticalLayout implements View, SelectionListener, ClickListener,
@@ -39,8 +45,9 @@ public class VTiposmovB extends VerticalLayout implements View, SelectionListene
 	private Button btn_eliminar;
 	private FormTiposmov frm_tiposmov;
 	private CssLayout hl_errores;
-	
+	private List<BarMessage> msgs = new ArrayList<BarMessage>();
 	final PropertysetItem pitm_Tiposmov = new PropertysetItem();
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VTiposmovB() {
 		
@@ -69,12 +76,16 @@ public class VTiposmovB extends VerticalLayout implements View, SelectionListene
 		formContent.setSpacing(true);
 		
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Datos a eliminar");
 		frmPanel.setContent(this.frm_tiposmov);
 		this.frm_tiposmov.enabled();
 		formContent.setMargin(true);
 		Panel gridPanel = new Panel();
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Tipos de Movimientos registrados");
 		gridPanel.setContent(this.grid_tiposmov);
@@ -91,20 +102,19 @@ public class VTiposmovB extends VerticalLayout implements View, SelectionListene
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Parametros » "));
-		nav.addComponent(new Label("Tipos de Movimientos » "));
-		nav.addComponent(new Label("<strong>Eliminar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_eliminar.setStyleName("ait-buttons-btn");
+		btn_eliminar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.UNDO);
+		buttonContent.setStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
 	}
@@ -119,6 +129,9 @@ public class VTiposmovB extends VerticalLayout implements View, SelectionListene
 		
 		if ((Tipos_Movimiento) this.grid_tiposmov.getSelectedRow() != null) {
 			this.frm_tiposmov.setData((Tipos_Movimiento) this.grid_tiposmov.getSelectedRow());
+			msgs = new ArrayList<BarMessage>();
+			msgs.add(new BarMessage("Formulario", Messages.PRESS_BUTTON_DELETE));
+			buildMessages(msgs);
 		}
 	}
 	

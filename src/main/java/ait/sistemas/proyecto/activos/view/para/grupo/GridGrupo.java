@@ -11,6 +11,7 @@ import com.vaadin.ui.Grid;
 
 /**
  * Grid de Grupos Contables
+ * 
  * @author franzemil
  *
  */
@@ -35,13 +36,13 @@ public class GridGrupo extends Grid {
 		bean_grupo.addAll(grupo_impl.getalls());
 		setContainerDataSource(bean_grupo);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
+		setHeightByRows(10);
 		setWidth("100%");
 		
 		removeColumn("GRC_Fecha_Registro");
 		removeColumn("GRC_Partida_ID");
 		
-		setColumnOrder("GRC_Grupo_Contable", "GRC_Nombre_Grupo_Contable", "GRC_Partida", "GRC_Vida_Util", "GRC_Coeficiente");
+		setColumnOrder("GRC_Grupo_Contable", "GRC_Partida", "GRC_Nombre_Grupo_Contable", "GRC_Vida_Util", "GRC_Coeficiente");
 		
 		Grid.Column id_grupoColumn = this.getColumn("GRC_Grupo_Contable");
 		Grid.Column nombre_grupoColumn = this.getColumn("GRC_Nombre_Grupo_Contable");
