@@ -38,13 +38,13 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
-//	private static final float TITLE_FONT_SIZE = 14;
+	private static final float TITLE_FONT_SIZE = 14;
 
 	/**
 	 * Font for footer report
 //	 */
-//	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-//	private static final float SUBTITLE_FONT_SIZE = 12;
+	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
+	private static final float SUBTITLE_FONT_SIZE = 12;
 //
 //	private static final float ROW_HEIGHT = 15;
 //	private static final float ROW_TITLE_HEIGHT = 20;
@@ -53,13 +53,13 @@ public class ReportPdf {
 //	private static final int HEADER_SIZE = 4;
 	public static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Activos-x-Funcionario" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
-	public boolean getPdf(Acta data) throws IOException {
+	public boolean getPdf(Acta data, String fecha) throws IOException {
 
-		return new PdfActaGenerator().generatePDF(build(data), SAVE_PATH);
+		return new PDFActivosxFunGenerator().generatePDF(build(data, fecha), SAVE_PATH);
 
 	}
 
-	private Acta build(Acta acta){
+	private Acta build(Acta acta, String fecha){
 		
 //		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 		
@@ -72,12 +72,16 @@ public class ReportPdf {
 		acta.setPageSize(PAGE_SIZE);
 		acta.setHeaderFont(HEADER_FONT);
 		acta.setTitleFont(TITLE_FONT);
-		acta.setFontSizetitle(FONT_TITLE_SIZE);
+		acta.setFontSizetitle(TITLE_FONT_SIZE);
 		acta.setFontSizeheader(FONT_TITLE_SIZE);
+		acta.setSubtitleFont(SUBTITLE_FONT);
+		acta.setFontSizesubtitle(SUBTITLE_FONT_SIZE);
 		acta.setFooterFont(FOOTER_FONT);
 		acta.setFontSizefooter(FOOTER_FONT_SIZE);
 		acta.setTexttitleFont(TITLE_FONT);
 		acta.setFontSizetexttitle(FONT_TITLE_SIZE);
+		acta.setTitle("INVENTARIO DE ACTIVOS POR FUNCIONARIO");
+		acta.setSubtitle("Elaborado al : "+ fecha);
 		return acta;
 	}
 

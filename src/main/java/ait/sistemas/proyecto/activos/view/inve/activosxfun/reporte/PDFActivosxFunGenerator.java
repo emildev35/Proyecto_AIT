@@ -11,9 +11,12 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
 import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
+import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
+
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("deprecation")
-public class PdfActaGenerator {
+public class PDFActivosxFunGenerator {
 
 	private PDDocument doc;
 
@@ -64,7 +67,9 @@ public class PdfActaGenerator {
 			tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin()
 					- (table.getRowHeight() * table.getHeaderSize()) : table.getHeight() - table.getMargin()
 					- (table.getRowHeight() * table.getHeaderSize());
-			writeHeader(contentStream, nextTextX, table);
+			//cabecera comun
+			writeHeader(contentStream, tableTopY, table);
+			writeHeader2(contentStream, nextTextX, table);
 		}
 		float nextTextY = tableTopY;
 		drawTableGrid(table, data, contentStream, tableTopY);
@@ -79,83 +84,89 @@ public class PdfActaGenerator {
 			nextTextY -= table.getTb_activos().getRowHeight();
 			nextTextX = table.getMargin() + table.getCellMargin();
 		}
-//		if (pageCount == (intNumberPages - 1)) {
-//			dibujarfirmas(contentStream, nextTextX, nextTextY, table);
-//		}
+		// if (pageCount == (intNumberPages - 1)) {
+		// dibujarfirmas(contentStream, nextTextX, nextTextY, table);
+		// }
 
 		writeFooter(contentStream, nextTextX, 0, table, pageCount);
 		contentStream.close();
 	}
 
-//	private void dibujarfirmas(PDPageContentStream contentStream, float nextTextX, float nextTextY, Acta table)
-//			throws IOException {
-//		String footertitulotext = String.format("Responsabilidad por el manejo de bienes:");
-//		String footertext1 = String
-//				.format("Numero III art. 116 del DS 0181, todos los servidores publicos son responsables por el debido uso, custodia, preservacion y solicitud de servicios de mantenimiento"
-//						+ " de los bienes que les fueron asignados de acuerdo al regimen de Responsabilidad por la funcion");
-//		String footertext2 = String
-//				.format("Publica establecido en la Ley N° 1178 y sus reglamentos.Asimismo el art. 157 numerales I.Los servidores publicos quedan prohibidos de a) Usar los bienes para benficio "
-//						+ "particular o privado. b) Permitir el uso para beneficio particular o privado. c) Prestar o");
-//		String footertext3 = String
-//				.format("transferir el bien a otro empleado publico. d) Enajenar el bien por cuenta propia e) Dañar o alterar sus caracteristicas fisicas o tecnicas f) Poner en riesgo el bien."
-//						+ " g) Ingresar bienes particulares sin autorizacion de la Unidad Responsable de Activos Fijos. h) Sacar");
-//		String footertext4 = String
-//				.format("bienes  de la entidad sin autoizacion de la Unidad o Responsable de Activos Fijos y II.La no observacion a estas prohibiciones generara responsabilidades "
-//						+ "establecidas en la Ley 1178 y sus reglamentos.");
-//
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(footertitulotext);
-//		contentStream.endText();
-//
-//		nextTextY -= table.getRowHeight();
-//
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(footertext1);
-//		contentStream.endText();
-//
-//		nextTextY -= table.getRowHeight() * 0.5;
-//
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(footertext2);
-//		contentStream.endText();
-//
-//		nextTextY -= table.getRowHeight() * 0.5;
-//
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(footertext3);
-//		contentStream.endText();
-//
-//		nextTextY -= table.getRowHeight() * 0.5;
-//
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(footertext4);
-//		contentStream.endText();
-//
-//		nextTextY -= (table.getRowHeight() + table.getMargin());
-//		// nextTextY -= table.getRowHeight();
-//		nextTextX += 20;
-//		for (Firma firma : table.getFirmas()) {
-//			contentStream.setNonStrokingColor(Color.LIGHT_GRAY);
-//			contentStream.fillRect(nextTextX, nextTextY, (table.getWidth() - 2 * table.getMargin()) / 4 - 15,
-//					firma.getAlto() - 15);
-//			contentStream.setNonStrokingColor(Color.BLACK);
-//
-//			contentStream.beginText();
-//			contentStream.moveTextPositionByAmount(nextTextX, nextTextY - 15);
-//			contentStream.showText("Firma");
-//			contentStream.endText();
-//			contentStream.beginText();
-//			contentStream.moveTextPositionByAmount(nextTextX, nextTextY - 25);
-//			nextTextX += (table.getWidth() - 2 * table.getMargin()) / 3;
-//			contentStream.showText(firma.getNombre_usuario());
-//			contentStream.endText();
-//		}
-//	}
+	// private void dibujarfirmas(PDPageContentStream contentStream, float
+	// nextTextX, float nextTextY, Acta table)
+	// throws IOException {
+	// String footertitulotext =
+	// String.format("Responsabilidad por el manejo de bienes:");
+	// String footertext1 = String
+	// .format("Numero III art. 116 del DS 0181, todos los servidores publicos son responsables por el debido uso, custodia, preservacion y solicitud de servicios de mantenimiento"
+	// +
+	// " de los bienes que les fueron asignados de acuerdo al regimen de Responsabilidad por la funcion");
+	// String footertext2 = String
+	// .format("Publica establecido en la Ley N° 1178 y sus reglamentos.Asimismo el art. 157 numerales I.Los servidores publicos quedan prohibidos de a) Usar los bienes para benficio "
+	// +
+	// "particular o privado. b) Permitir el uso para beneficio particular o privado. c) Prestar o");
+	// String footertext3 = String
+	// .format("transferir el bien a otro empleado publico. d) Enajenar el bien por cuenta propia e) Dañar o alterar sus caracteristicas fisicas o tecnicas f) Poner en riesgo el bien."
+	// +
+	// " g) Ingresar bienes particulares sin autorizacion de la Unidad Responsable de Activos Fijos. h) Sacar");
+	// String footertext4 = String
+	// .format("bienes  de la entidad sin autoizacion de la Unidad o Responsable de Activos Fijos y II.La no observacion a estas prohibiciones generara responsabilidades "
+	// + "establecidas en la Ley 1178 y sus reglamentos.");
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+	// contentStream.showText(footertitulotext);
+	// contentStream.endText();
+	//
+	// nextTextY -= table.getRowHeight();
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+	// contentStream.showText(footertext1);
+	// contentStream.endText();
+	//
+	// nextTextY -= table.getRowHeight() * 0.5;
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+	// contentStream.showText(footertext2);
+	// contentStream.endText();
+	//
+	// nextTextY -= table.getRowHeight() * 0.5;
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+	// contentStream.showText(footertext3);
+	// contentStream.endText();
+	//
+	// nextTextY -= table.getRowHeight() * 0.5;
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+	// contentStream.showText(footertext4);
+	// contentStream.endText();
+	//
+	// nextTextY -= (table.getRowHeight() + table.getMargin());
+	// // nextTextY -= table.getRowHeight();
+	// nextTextX += 20;
+	// for (Firma firma : table.getFirmas()) {
+	// contentStream.setNonStrokingColor(Color.LIGHT_GRAY);
+	// contentStream.fillRect(nextTextX, nextTextY, (table.getWidth() - 2 *
+	// table.getMargin()) / 4 - 15,
+	// firma.getAlto() - 15);
+	// contentStream.setNonStrokingColor(Color.BLACK);
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY - 15);
+	// contentStream.showText("Firma");
+	// contentStream.endText();
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY - 25);
+	// nextTextX += (table.getWidth() - 2 * table.getMargin()) / 3;
+	// contentStream.showText(firma.getNombre_usuario());
+	// contentStream.endText();
+	// }
+	// }
 
 	// Writes the content for one line
 	private void writeContentLine(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
@@ -167,7 +178,7 @@ public class PdfActaGenerator {
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
 			contentStream.showText(text != null ? text : "");
-
+//8314037
 			contentStream.endText();
 			nextTextX += table.getColumns().get(i).getWidth();
 		}
@@ -228,48 +239,130 @@ public class PdfActaGenerator {
 		return Arrays.copyOfRange(table.getTb_activos().getData(), startRange, endRange);
 	}
 
-	private void writeHeader(PDPageContentStream contentStream, float nextTextX, Acta table) throws IOException {
+	private void writeHeader(PDPageContentStream contentStream, float nextTextY, Acta table) throws IOException {
+
+		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
+		contentStream.setFont(table.getHeaderFont(), table.getFontSizeheader());
+
+		float nextTextX = table.getMargin();
+		float nextTextXCopy = nextTextX;
+		nextTextY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
+				.getHeight() - table.getMargin();
+
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+
+		contentStream.showText(usuario.getDependecia());
+
+		contentStream.endText();
+
+		long size_header = table.isLandscape() ? 800 : 400;
+		Date date = new Date();
+		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha = fechaHora.format(date);
+
+		nextTextX += size_header;
+
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText("Fecha : " + fecha);
+		contentStream.endText();
+
+		nextTextX = nextTextXCopy;
+		nextTextY -= table.getRowHeight() * 0.5;
+
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText(usuario.getUnidad());
+		contentStream.endText();
+
+		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
+		String strhora = hora.format(date);
+
+		nextTextX += size_header;
+
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText("Hora : " + strhora);
+		contentStream.endText();
+
+		nextTextX = nextTextXCopy;
+		nextTextY -= table.getRowHeight() * 0.5;
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+
+		contentStream.showText(usuario.getFull_name());
+		contentStream.endText();
+
+		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
+
+		nextTextY -= table.getRowHeight() * 0.75;
+
+		contentStream.beginText();
+		long text_width = (long) ((table.getTitleFont().getStringWidth(table.getTitle()) / 1000.0f) * table
+				.getFontSizetitle());
+		contentStream.moveTextPositionByAmount((table.getWidth() / 2) - (text_width / 2) + (table.getMargin() / 2),
+				nextTextY);
+		contentStream.showText(table.getTitle());
+		contentStream.endText();
+
+		nextTextY -= table.getRowHeight();
+		contentStream.setFont(table.getSubtitleFont(), table.getFontSizesubtitle());
+
+		contentStream.beginText();
+		text_width = (long) ((table.getSubtitleFont().getStringWidth(table.getSubtitle()) / 1000.0f) * table
+				.getFontSizesubtitle());
+		contentStream.moveTextPositionByAmount((table.getWidth() / 2) - (text_width / 2) + (table.getMargin() / 2),
+				nextTextY);
+		contentStream.showText(table.getSubtitle());
+		contentStream.endText();
+		
+
+	}
+
+	private void writeHeader2(PDPageContentStream contentStream, float nextTextX, Acta table) throws IOException {
 
 		contentStream.setFont(table.getHeaderFont(), table.getFontSizeheader());
 
 		float nextTextY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table
 				.getPageSize().getHeight() - table.getMargin();
 
-		contentStream.setFont(table.getTextFont(), 16);
-		long text_width = (long) ((table.getTitleFont().getStringWidth(
-				"Activos por Funcionario") / 1000.0f) * 16);
-		nextTextX = table.getWidth() / 2 - text_width / 2;
-		contentStream.beginText();
-		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+//		contentStream.setFont(table.getTextFont(), 16);
+//		long text_width = (long) ((table.getTitleFont().getStringWidth("Activos por Funcionario") / 1000.0f) * 16);
+//		nextTextX = table.getWidth() / 2 - text_width / 2;
+//		contentStream.beginText();
+//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
-		contentStream.showText("Activos por Funcionario" );
-		contentStream.endText();
-
-		nextTextY -= table.getTb_activos().getRowheigth();
-		nextTextX = table.getWidth() - table.getMargin() - 40;
-		
-		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
-		String fecha = fechaHora.format(date);
-
-		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		contentStream.beginText();
-		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText("Fecha: " + fecha);
-		contentStream.endText();
+//		contentStream.showText("Activos por Funcionario");
+//		contentStream.endText();
 //
 //		nextTextY -= table.getTb_activos().getRowheigth();
-//		nextTextX = (table.getWidth() - table.getMargin() * 2) / 3;
+//		nextTextX = table.getWidth() - table.getMargin() - 40;
+//
+//		Date date = new Date();
+//		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+//		String fecha = fechaHora.format(date);
+//
+//		contentStream.setFont(table.getTextFont(), table.getFontSize());
 //		contentStream.beginText();
 //		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText("Entregado por: ");
+//		contentStream.showText("Fecha: " + fecha);
 //		contentStream.endText();
-//		contentStream.beginText();
-//		nextTextX += ((table.getWidth() - table.getMargin() * 2) / 3) + table.getMargin();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText("Recibido por: ");
-//		contentStream.endText();
-
+		//
+		// nextTextY -= table.getTb_activos().getRowheigth();
+		// nextTextX = (table.getWidth() - table.getMargin() * 2) / 3;
+		// contentStream.beginText();
+		// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		// contentStream.showText("Entregado por: ");
+		// contentStream.endText();
+		// contentStream.beginText();
+		// nextTextX += ((table.getWidth() - table.getMargin() * 2) / 3) +
+		// table.getMargin();
+		// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		// contentStream.showText("Recibido por: ");
+		// contentStream.endText();
+		nextTextY -= table.getRowHeight()*3;
+		
 		nextTextY -= table.getTb_activos().getRowHeight();
 		nextTextX = table.getMargin();
 		contentStream.beginText();
@@ -277,18 +370,19 @@ public class PdfActaGenerator {
 		contentStream.showText("Dependencia: ");
 		contentStream.endText();
 
-		nextTextX = (float) 2.6 * table.getMargin();
+		nextTextX = (float) 4.5 * table.getMargin();
 		drawGridCabezera(contentStream, nextTextX, nextTextY, table);
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(table.getDependencia_origen());
 		contentStream.endText();
 
-//		contentStream.beginText();
-//		nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) - (float) 1.8 * table.getMargin();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(table.getDependencia_destino());
-//		contentStream.endText();
+		// contentStream.beginText();
+		// nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) -
+		// (float) 1.8 * table.getMargin();
+		// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		// contentStream.showText(table.getDependencia_destino());
+		// contentStream.endText();
 
 		nextTextY -= table.getTb_activos().getRowHeight();
 		nextTextX = table.getMargin();
@@ -297,17 +391,18 @@ public class PdfActaGenerator {
 		contentStream.showText("Unidad: ");
 		contentStream.endText();
 
-		nextTextX = (float) 2.6 * table.getMargin();
+		nextTextX = (float) 4.5 * table.getMargin();
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(table.getUnidad_origen());
 		contentStream.endText();
 
-//		contentStream.beginText();
-//		nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) - (float) 1.8 * table.getMargin();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(table.getUnidad_destino());
-//		contentStream.endText();
+		// contentStream.beginText();
+		// nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) -
+		// (float) 1.8 * table.getMargin();
+		// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		// contentStream.showText(table.getUnidad_destino());
+		// contentStream.endText();
 
 		nextTextY -= table.getTb_activos().getRowHeight();
 		nextTextX = table.getMargin();
@@ -316,26 +411,27 @@ public class PdfActaGenerator {
 		contentStream.showText("Funcionario Responsable: ");
 		contentStream.endText();
 
-		nextTextX = (float) 2.6 * table.getMargin();
+		nextTextX = (float) 4.5* table.getMargin();
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-		contentStream.showText(table.getUsuario_origen());
+		contentStream.showText(table.getCi() +"  "+table.getUsuario_origen());
 		contentStream.endText();
 
-//		contentStream.beginText();
-//		nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) - (float) 1.8 * table.getMargin();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream.showText(table.getUsuario_destino());
-//		contentStream.endText();
+		// contentStream.beginText();
+		// nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) -
+		// (float) 1.8 * table.getMargin();
+		// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		// contentStream.showText(table.getUsuario_destino());
+		// contentStream.endText();
 
-//		nextTextY -= 2 * table.getTb_activos().getRowHeight();
-//		nextTextX = table.getMargin();
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//		contentStream
-//				.showText("En la Ciudad de La Paz se procedio a la entrega de los bienes de uso verificando el estado de cada uno de los activos que se detallan a continuacion: ");
-//		contentStream.endText();
-//		nextTextY -= 2 * table.getTb_activos().getRowHeight();
+		// nextTextY -= 2 * table.getTb_activos().getRowHeight();
+		// nextTextX = table.getMargin();
+		// contentStream.beginText();
+		// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		// contentStream
+		// .showText("En la Ciudad de La Paz se procedio a la entrega de los bienes de uso verificando el estado de cada uno de los activos que se detallan a continuacion: ");
+		// contentStream.endText();
+		// nextTextY -= 2 * table.getTb_activos().getRowHeight();
 	}
 
 	private void drawGridCabezera(PDPageContentStream contentStream, float nextTextX, float nextTextY, Acta table) {
@@ -351,7 +447,8 @@ public class PdfActaGenerator {
 			nextTextY += 2 * table.getTb_activos().getRowHeight() - 4;
 			contentStream.drawLine(nextTextX, copY + table.getTb_activos().getRowHeight() - 4, nextTextX, nextTextY);
 			nextTextX += 2 * ((table.getWidth() - table.getMargin() * 2) / 3) - (float) 1.8 * table.getMargin();
-//			contentStream.drawLine(nextTextX, copY + table.getTb_activos().getRowHeight() - 4, nextTextX, nextTextY);
+			// contentStream.drawLine(nextTextX, copY +
+			// table.getTb_activos().getRowHeight() - 4, nextTextX, nextTextY);
 			contentStream.drawLine((float) (table.getWidth() - table.getMargin() / 2.5), copY
 					+ table.getTb_activos().getRowHeight() - 4, (float) (table.getWidth() - table.getMargin() / 2.5),
 					nextTextY);
