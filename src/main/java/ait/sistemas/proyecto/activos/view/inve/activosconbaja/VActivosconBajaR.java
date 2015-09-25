@@ -3,6 +3,7 @@ package ait.sistemas.proyecto.activos.view.inve.activosconbaja;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -10,6 +11,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -28,6 +30,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -36,22 +39,24 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 	private static final long serialVersionUID = 1L;
 
 	private Button btn_imprimir=new Button("Imprimir");
+	private Button btn_salir = new Button("Salir");
 	private FormActivosconBaja frmReporte = new FormActivosconBaja();
 	int r = 0;
 //	private String[][] data;
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
-//	private List<BarMessage> msg = new ArrayList<BarMessage>();
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
 
 	public VActivosconBajaR() {
 
 		this.btn_imprimir.addClickListener(this);
+		this.btn_salir.addClickListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-//		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
-//		buildMessages(msg);
+		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
@@ -63,8 +68,11 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		btn_grid.addComponent(this.btn_imprimir);
 		btn_grid.setComponentAlignment(btn_imprimir, Alignment.TOP_CENTER);
 		btn_imprimir.setIcon(FontAwesome.PRINT);
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
-		
+		btn_grid.addComponent(this.btn_salir);
+		btn_salir.setIcon(FontAwesome.UNDO);
+		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
 		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
@@ -72,12 +80,9 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 	private Component buildFormContent() {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel("Formulario de Impresion "+ Messages.REQUIED_FIELDS);
-		//los campos requeridos
+		Panel frmPanel = new Panel("Formulario de Impresion ");
 		frmPanel.setIcon(FontAwesome.PRINT);
-		frmPanel.setStyleName(AitTheme.PANEL_FORM);
-//		frmPanel.setWidth("100%");
-//		frmPanel.setCaption("Formulario de Impresion");
+		frmPanel.setStyleName(AitTheme.PANEL_PRINT);
 		frmPanel.setContent(this.frmReporte);
 		formContent.addComponent(frmPanel);
 		
@@ -89,7 +94,7 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Inventarios » "));
+		nav.addComponent(new Label("Inventario » "));
 		nav.addComponent(new Label("Activos con Baja » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
@@ -119,8 +124,9 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),activo.getACT_Motivo_Baja(),
-					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()), String.valueOf(activo.getACT_No_Resolucion_Baja()),String.valueOf(activo.getACT_Fecha_Baja())  };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()), String.valueOf(activo.getACT_No_Resolucion_Baja()),
+					String.valueOf(activo.getACT_Fecha_Baja()),activo.getACT_Motivo_Baja(),String.valueOf(activo.getACT_Vida_Residual())};
 			
 			data[r] = row;
 			r++;
@@ -134,8 +140,9 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),activo.getACT_Motivo_Baja(),
-					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()),activo.getACT_No_Resolucion_Baja(),String.valueOf(activo.getACT_Fecha_Baja()) };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Valor_Compra()), String.valueOf(activo.getACT_Valor_Neto()),activo.getACT_No_Resolucion_Baja(),
+					String.valueOf(activo.getACT_Fecha_Baja()),activo.getACT_Motivo_Baja(),String.valueOf(activo.getACT_Vida_Residual()) };
 			
 			data[r] = row;
 			r++;
@@ -160,6 +167,7 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 	@Override
 	public void buttonClick(ClickEvent event) {
 		this.frmReporte.clearMessages();
+		if (event.getButton() == this.btn_imprimir) {
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
@@ -201,6 +209,10 @@ public class VActivosconBajaR extends VerticalLayout implements View, ClickListe
 			}
 		}
 		buildMessages(this.frmReporte.getMessage());
+		}
+		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		}
 	}
 
 	@Override
