@@ -143,7 +143,7 @@ public class PdfKardexGeneratorMulti {
 		 * writeContentLine(PDPageContentStream contentStream, float nextTextX,
 		 * float nextTextY, Kardex table) throws IOException {
 		 * contentStream.setFont(table.getTextFont(), table.getFontSize()); for (int
-		 * i = 0; i < 10; i++) { String text = "kim"; contentStream.beginText();
+		 * i = 0; i < 10; i++) { String text = "k410im"; contentStream.beginText();
 		 * contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		 * contentStream.showText(text != null ? text : "");
 		 * contentStream.endText(); nextTextX += 50; } }
@@ -334,7 +334,7 @@ public class PdfKardexGeneratorMulti {
 			DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
 			String fecha = fechaHora.format(date);
 
-			nextTextX += 410;
+			nextTextX += 800;
 
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
@@ -351,7 +351,7 @@ public class PdfKardexGeneratorMulti {
 			DateFormat hora = new SimpleDateFormat("HH:mm:ss");
 			String strhora = hora.format(date);
 
-			nextTextX += 410;
+			nextTextX += 800;
 
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);

@@ -1,13 +1,16 @@
 package ait.sistemas.proyecto.activos.view.para.organismo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -32,6 +35,7 @@ public class VOrganismoA extends VerticalLayout implements View, ClickListener {
 	private Button btn_agregar;
 	private GridOrganismo grid_organismo;
 	private final OrganismoImpl organismo_impl = new OrganismoImpl();
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
 
 	public VOrganismoA() {
 		frm_organismo = new FormOrganismo();
@@ -46,13 +50,20 @@ public class VOrganismoA extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
+//		GridLayout btn_grid = new GridLayout(2, 1);
+		btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
+//		btn_grid.setComponentAlignment(btn_agregar, Alignment.TOP_CENTER);
+		btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		btn_limpiar.setIcon(FontAwesome.TRASH_O);
+//		btn_grid.setComponentAlignment(btn_limpiar, Alignment.TOP_LEFT);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_limpiar);
 		return buttonContent;
@@ -63,12 +74,16 @@ public class VOrganismoA extends VerticalLayout implements View, ClickListener {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Datos a registrar");
 		frmPanel.setContent(this.frm_organismo);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Organismos Financiadores registrados");
 		gridPanel.setContent(this.grid_organismo);

@@ -2,17 +2,18 @@ package ait.sistemas.proyecto.activos.view.inve.kardex;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -50,7 +51,8 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
+		this.btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
 		this.btn_imprimir.addClickListener(this);
 		buttonContent.addStyleName("ait-buttons");
 		
@@ -62,6 +64,8 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_PRINT);
+		frmPanel.setIcon(FontAwesome.PRINT);
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Formulario de Impresion");
 		frmPanel.setContent(this.frmReporte);
@@ -96,8 +100,7 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 		
 		for (ActivosModel activos : lista) {
 			
-			Date fecha_actual = new Date();
-			
+			activos.Actualizar();
 			kardex_elements[r][0][0] = new KardexElement();
 			kardex_elements[r][0][0].setAncho(75);
 			kardex_elements[r][0][0].setTitulo("Codigo");
@@ -237,37 +240,37 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 			kardex_elements[r][6][0] = new KardexElement();
 			kardex_elements[r][6][0].setAncho(150);
 			kardex_elements[r][6][0].setTitulo("Actualizacion Acumulada Getion Anterior");
-			kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada_Gestion_Anterior()));
+			kardex_elements[r][6][0].setContenido("0");
 			
 			kardex_elements[r][6][1] = new KardexElement();
 			kardex_elements[r][6][1].setAncho(130);
 			kardex_elements[r][6][1].setTitulo("Actualizacion Gestion Actual");
-			kardex_elements[r][6][1].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada()));
+			kardex_elements[r][6][1].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada().floatValue()));
 			
 			kardex_elements[r][7][0] = new KardexElement();
 			kardex_elements[r][7][0].setAncho(150);
 			kardex_elements[r][7][0].setTitulo("Depresiacion Acumulada Gestion Anterior");
-			kardex_elements[r][7][0].setContenido(String.valueOf(activos.getACT_Depreciacion_Acumulada_Gestion_Anterior()));
+			kardex_elements[r][7][0].setContenido(String.valueOf(0));
 			
 			kardex_elements[r][7][1] = new KardexElement();
 			kardex_elements[r][7][1].setAncho(130);
 			kardex_elements[r][7][1].setTitulo("Actualizacion Depreciacion Anterior");
-			kardex_elements[r][7][1].setContenido(String.valueOf(activos.getACT_Depresiacion_Acumulada()));
+			kardex_elements[r][7][1].setContenido(String.valueOf(0));
 			
 			kardex_elements[r][7][2] = new KardexElement();
 			kardex_elements[r][7][2].setAncho(100);
 			kardex_elements[r][7][2].setTitulo("Depresiacion Gestion Actual");
-			kardex_elements[r][7][2].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada()));
+			kardex_elements[r][7][2].setContenido(String.valueOf(activos.getACT_Depresiacion_Acumulada().floatValue()));
 			
 			kardex_elements[r][7][3] = new KardexElement();
 			kardex_elements[r][7][3].setAncho(70);
 			kardex_elements[r][7][3].setTitulo("Vida Util Remanente");
-			kardex_elements[r][7][3].setContenido(String.valueOf(activos.getACT_Vida_Util() - fecha_actual.getYear()));
+			kardex_elements[r][7][3].setContenido(String.valueOf(activos.getACT_Vida_Util_Remanente()));
 			
 			kardex_elements[r][7][4] = new KardexElement();
 			kardex_elements[r][7][4].setAncho(100);
 			kardex_elements[r][7][4].setTitulo("Valor del bien a la Fecha");
-			kardex_elements[r][7][4].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada()));
+			kardex_elements[r][7][4].setContenido(String.valueOf(activos.getACT_Valor_Neto().floatValue()));
 			r++;
 			
 		}
@@ -295,15 +298,15 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 			try {
 				SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 				String a = "ALL";
-				if (this.frmReporte.cb_Activos.getValue().toString().equals(a)) {
+				if (frmReporte.getActivo().equals(a)) {
 					List<ActivosModel> data = activo_impl.activos_by_auxiliar(frmReporte.cb_Auxiliar.getValue().toString());
 					reporte.getPdfKardexGeneratorMulti(getData(data), frmReporte.cb_Activos.getValue(),
 							session.getId_dependecia());
 				} else {
-					List<ActivosModel> data = activo_impl.getall(Long.parseLong(frmReporte.cb_Activos.getValue().toString()));
+					List<ActivosModel> data = activo_impl.getall(Long.parseLong(frmReporte.getActivo()));
 					reporte.getPdf(getData(data)[0], frmReporte.cb_Activos.getValue(), session.getId_dependecia());
 				}
-				File pdfFile = new File(ReportPdf.SAVE_PATH);
+				File pdfFile = new File(reporte.SAVE_PATH);
 				
 				VerticalLayout vl_pdf = new VerticalLayout();
 				Embedded pdf = new Embedded("", new FileResource(pdfFile));

@@ -182,14 +182,14 @@ public class PDFTableGenerator {
 		contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
 		
 		nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
-		nextTextY -= (table.getRowHeight() * 2.5);
+		nextTextY -= (table.getRowHeight() * 1.5);
 		contentStream.drawLine(nextTextX, (nextTextY + table.getRowHeight()), table.getWidth() - table.getCellMargin(),
 				(nextTextY + table.getRowHeight()));
 		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		
-		nextTextY += table.getRowHeight() - table.getMargin();
+		nextTextY += table.getRowHeight() - table.getMargin() * 0.75;
 		nextTextX += table.getWidth();
 		String footertext = String.format("Página %d de %d", (pagecount + 1), this.intNumberPages);
 		contentStream.showText(footertext);
@@ -223,7 +223,7 @@ public class PDFTableGenerator {
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(usuario.getUnidad());
@@ -240,14 +240,14 @@ public class PDFTableGenerator {
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(usuario.getFull_name());
 		contentStream.endText();
 		
 		contentStream.setFont(table.getTitleFont(), table.getFontSizetitle());
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		long text_width = (long) ((table.getTitleFont().getStringWidth(table.getTitle()) / 1000.0f) * table.getFontSizetitle());
 		contentStream.moveTextPositionByAmount((table.getWidth() / 2) - (text_width / 2) + (table.getMargin() / 2), nextTextY);
@@ -255,7 +255,7 @@ public class PDFTableGenerator {
 		contentStream.endText();
 		
 		contentStream.setFont(table.getSubtitleFont(), table.getFontSizesubtitle());
-		nextTextY -= table.getRowHeight();
+		nextTextY -= table.getRowHeight() * 0.75;
 		contentStream.beginText();
 		long sub_width = (long) (((table.getSubtitleFont().getStringWidth(table.getSubtitle()) / 1000.0f) * table
 				.getFontSizesubtitle()));

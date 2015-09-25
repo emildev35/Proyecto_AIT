@@ -9,10 +9,12 @@ import ait.sistemas.proyecto.activos.data.model.Partidas_Presupuestaria;
 import ait.sistemas.proyecto.activos.data.service.Impl.PartidaImpl;
 import ait.sistemas.proyecto.activos.view.para.partida.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -50,7 +52,8 @@ public class VPartidaR extends VerticalLayout implements View, ClickListener {
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
+		this.btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
 		this.btn_imprimir.addClickListener(this);
 		buttonContent.addStyleName("ait-buttons");
 

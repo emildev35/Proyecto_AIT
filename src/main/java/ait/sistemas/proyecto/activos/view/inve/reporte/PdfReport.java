@@ -18,8 +18,8 @@ import ait.sistemas.proyecto.common.report.pdf.TableGenerator;
 public class PdfReport {
 	
 	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
-	private static final float MARGIN = 60;
-	private static final boolean IS_LANDSCAPE = false;
+	private static final float MARGIN = 40;
+	private static final boolean IS_LANDSCAPE = true;
 	
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
@@ -29,34 +29,33 @@ public class PdfReport {
 	 * Font for footer report
 	 */
 	private static final PDFont FOOTER_FONT = PDType1Font.HELVETICA;
-	private static final float FOOTER_FONT_SIZE = 8;
+	private static final float FOOTER_FONT_SIZE = 6;
 	
 	/**
 	 * Font for footer report
 	 */
 	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-	private static final float HEADER_FONT_SIZE = 8;
+	private static final float HEADER_FONT_SIZE = 6;
 	
 	/**
 	 * Font for footer report
 	 */
 	private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
-	private static final float TITLE_FONT_SIZE = 13;
+	private static final float TITLE_FONT_SIZE = 14;
 	
 	/**
 	 * Font for footer report
 	 */
 	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-	private static final float SUBTITLE_FONT_SIZE = 11;
+	private static final float SUBTITLE_FONT_SIZE = 12;
 	
-	private static final float ROW_HEIGHT = 15;
+	private static final float ROW_HEIGHT = 13;
 	private static final float CELL_MARGIN = 2;
 	
-	private static final int HEADER_SIZE = 3	;
+	private static final int HEADER_SIZE = 3;
 	
-
-	static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
-
+	static String SAVE_PATH = PathValues.PATH_REPORTS + "reporteVarios" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	
 	final ActivoImpl activoimpl = new ActivoImpl();
 	
 	String[][] data;
@@ -73,7 +72,6 @@ public class PdfReport {
 		for (int i = 0; i < width.length; i++) {
 			columns.add(new Column(title.get(i), width[i]));
 		}
-	
 		
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 		

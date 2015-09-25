@@ -9,10 +9,12 @@ import ait.sistemas.proyecto.activos.data.model.Organismo_Financiador;
 import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.activos.view.para.organismo.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -43,14 +45,15 @@ public class VOrganismoR extends VerticalLayout implements View, ClickListener {
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		List<BarMessage> mensajes = new ArrayList<BarMessage>();
-		mensajes.add(new BarMessage("", "Pulsar el Boton Imprimir para generar el reporte", "success"));
+		mensajes.add(new BarMessage("Reporte", "Pulsar el Boton Imprimir para generar el reporte"));
 		buildMessages(mensajes);
 	}
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
+		this.btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
 		this.btn_imprimir.addClickListener(this);
 		buttonContent.addStyleName("ait-buttons");
 
@@ -108,7 +111,7 @@ public class VOrganismoR extends VerticalLayout implements View, ClickListener {
 		ReportPdf reporte = new ReportPdf();
 		try {
 			reporte.getPdf(getData());
-			File pdfFile = new File(ReportPdf.SAVE_PATH);
+			File pdfFile = new File(reporte.SAVE_PATH);
 
 			VerticalLayout vl_pdf = new VerticalLayout();
 			Embedded pdf = new Embedded("", new FileResource(pdfFile));
