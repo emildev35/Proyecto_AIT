@@ -12,6 +12,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -20,12 +21,16 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.event.MouseEvents.ClickEvent;
+import com.vaadin.event.MouseEvents.ClickListener;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
-public class FormKardex extends GridLayout implements ValueChangeListener {
+public class FormKardex extends GridLayout implements ValueChangeListener, ClickListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +47,9 @@ public class FormKardex extends GridLayout implements ValueChangeListener {
 	final private ActivoImpl activo_impl = new ActivoImpl();
 	final PropertysetItem pitm_Kardex = new PropertysetItem();
 	private FieldGroup binder_Kardex;
+	
+	Panel pnCodigo;
+	Panel pnCombos;
 	
 	public FormKardex() {
 		super(3, 4);
@@ -135,11 +143,42 @@ public class FormKardex extends GridLayout implements ValueChangeListener {
 		setColumnExpandRatio(1, 1f);
 		setColumnExpandRatio(2, 1f);
 		
-		addComponent(dtf_fechaElaboracion, 0, 0);
-		addComponent(txt_codigoActivo, 1, 0);
-		addComponent(this.cb_Grupo, 1, 1);
-		addComponent(this.cb_Auxiliar, 1, 2);
-		addComponent(this.cb_Activos, 1, 3);
+		GridLayout gridlFecha = new GridLayout(1, 1);
+		gridlFecha.setWidth("100%");
+		GridLayout gridlCodigo = new GridLayout(1, 1);
+		gridlCodigo.setWidth("100%");
+		gridlCodigo.setHeight("100%");
+		GridLayout gridlCombos = new GridLayout(1, 3);
+		gridlCombos.setWidth("100%");
+		gridlCodigo.setMargin(true);
+		gridlFecha.setMargin(true);
+		gridlCombos.setMargin(true);
+		
+		Panel pnFecha = new Panel("FECHA ELABORACION");
+		pnFecha.setContent(gridlFecha);
+		pnFecha.setStyleName(AitTheme.PANEL_PRINT);
+		pnFecha.setIcon(FontAwesome.EDIT);
+		pnCodigo = new Panel("SELECCION POR CODIGO");
+		pnCodigo.setContent(gridlCodigo);
+		pnCodigo.setStyleName(AitTheme.PANEL_PRINT);
+		pnCodigo.setIcon(FontAwesome.EDIT);
+		pnCombos = new Panel("SELECCION POR GRUPO Y AUXILIAR CONTABLE");
+		pnCombos.setContent(gridlCombos);
+		pnCombos.setStyleName(AitTheme.PANEL_PRINT);
+		pnCombos.setIcon(FontAwesome.EDIT);
+		
+		pnCodigo.addClickListener(this);
+		pnCombos.addClickListener(this);
+		
+		gridlFecha.addComponent(dtf_fechaElaboracion, 0, 0);
+		gridlCodigo.addComponent(txt_codigoActivo, 0, 0);
+		gridlCombos.addComponent(this.cb_Grupo, 0, 0);
+		gridlCombos.addComponent(this.cb_Auxiliar, 0, 1);
+		gridlCombos.addComponent(this.cb_Activos, 0, 2);
+		
+		addComponent(pnFecha, 0, 0);
+		addComponent(pnCodigo, 1, 0);
+		addComponent(pnCombos, 1, 1, 1, 3);
 		
 	}
 	
@@ -191,5 +230,24 @@ public class FormKardex extends GridLayout implements ValueChangeListener {
 			return this.txt_codigoActivo.getValue().toString();
 		}
 		return cb_Activos.getValue().toString();
+	}
+	
+	@Override
+	public void click(ClickEvent event) {
+		
+		if (event.getSource() == pnCodigo) {
+			this.cb_Activos.setEnabled(false);
+			this.cb_Auxiliar.setEnabled(false);
+			this.cb_Grupo.setEnabled(false);
+			this.txt_codigoActivo.setEnabled(true);
+		}
+		
+		if (event.getSource() == pnCombos) {
+			this.cb_Activos.setEnabled(true);
+			this.cb_Auxiliar.setEnabled(true);
+			this.cb_Grupo.setEnabled(true);
+			this.txt_codigoActivo.setEnabled(false);
+		}
+		
 	}
 }
