@@ -311,10 +311,12 @@ public class ActivoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<MovimientoReporte> ActivosbyUsuario(String ci_usuario) {
-		Query query = em.createNativeQuery("exec Mvac_ActivosbyFuncionario_Q @CI_Usuario=?1 ", "reporte-movimiento").setHint(
+	public List<MovimientoReporte> ActivosbyUsuario(String ci_usuario, Date fecha) {
+		Query query = em.createNativeQuery("exec Mvac_ActivosbyFuncionario_Q @CI_Usuario=?1, "
+				+ "@fecha=?2 ", "reporte-movimiento").setHint(
 				QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, ci_usuario);
+		query.setParameter(2, fecha);
 		List<MovimientoReporte> resultlist = query.getResultList();
 		return resultlist;
 	}

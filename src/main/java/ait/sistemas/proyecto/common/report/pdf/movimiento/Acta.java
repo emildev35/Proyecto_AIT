@@ -33,6 +33,9 @@ public class Acta {
 
 	Integer numberOfRows;
 
+	private String title;
+	private String subtitle;
+	private String ci;
 	private String nro_acta_entrega;
 	private String fecha;
 	private String dependencia_origen;
@@ -50,6 +53,30 @@ public class Acta {
 
 	public Acta() {
 
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getCi() {
+		return ci;
+	}
+
+	public void setCi(String ci) {
+		this.ci = ci;
+	}
+
+	public String getSubtitle() {
+		return subtitle;
+	}
+
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
 	}
 
 	public Integer getNumberOfRows() {

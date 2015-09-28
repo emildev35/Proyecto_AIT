@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.view.inve.activosxfun;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,35 +35,35 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class VActivosxFunR extends VerticalLayout implements View, ClickListener {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	private FormActivosxfun frm_activoxfun;
-	private CssLayout hl_errores;
-	private Button btn_imprimir= new Button("Imprimir");
+
+	private FormActivosxfun frm_activoxfun = new FormActivosxfun();
+	private CssLayout hl_errores = new CssLayout();;
+	private Button btn_imprimir = new Button("Imprimir");
 	private Button btn_salir = new Button("Salir");
-	private FormActivosxfun frmReporte = new FormActivosxfun();
 	private ActivoImpl personal_impl = new ActivoImpl();
 	private List<BarMessage> msg = new ArrayList<BarMessage>();
-	
+
 	public VActivosxFunR() {
-		this.btn_imprimir.addClickListener(this) ;
+		this.btn_imprimir.addClickListener(this);
 		this.btn_salir.addClickListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		msg.add(new BarMessage("Formulario",
+				"Debe llenar los campos con * y campos de seleccion de por C.I. o por Dependencia"));
 		buildMessages(msg);
 	}
-	
+
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		GridLayout btn_grid = new GridLayout(2, 1);
@@ -80,20 +81,16 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
-	
+
 	private Component buildFormContent() {
-		
-		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true);
-		Panel frmPanel = new Panel("Formulario de Impresion ");
-		frmPanel.setIcon(FontAwesome.PRINT);
-		frmPanel.setStyleName(AitTheme.PANEL_FORM);
-		frmPanel.setContent(this.frmReporte);
-		formContent.addComponent(frmPanel);
-		
-		return formContent;
+
+		VerticalLayout vl_form = new VerticalLayout();
+
+		vl_form.addComponent(frm_activoxfun);
+
+		return vl_form;
 	}
-	
+
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
@@ -105,34 +102,47 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-	
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 	}
-	
+
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
-		
+
 		for (BarMessage barMessage : mensages) {
 			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
 
 		if (event.getButton() == this.btn_imprimir) {
-			if(this.frm_activoxfun.validate()){
+			if (this.frm_activoxfun.validate()) {
+
 				ReportPdf reporte = new ReportPdf();
-				List<MovimientoReporte> data_reporte = personal_impl.ActivosbyUsuario(((PersonalModel)frm_activoxfun.cb_funcionario.getValue()).getPER_CI_Empleado());
+				List<MovimientoReporte> data_reporte;
+
+				if (this.frm_activoxfun.txt_ci.getValue() != null
+						&& !this.frm_activoxfun.txt_ci.getValue().toString().equals("")) {
+					data_reporte = personal_impl.ActivosbyUsuario(frm_activoxfun.txt_ci.getValue(), new java.sql.Date(
+							this.frm_activoxfun.dt_fecha.getValue().getTime()));
+				} else {
+					data_reporte = personal_impl.ActivosbyUsuario(
+							((PersonalModel) frm_activoxfun.cb_funcionario.getValue()).getPER_CI_Empleado(),
+							new java.sql.Date(this.frm_activoxfun.dt_fecha.getValue().getTime()));
+				}
+
 				try {
-					reporte.getPdf(getActa(data_reporte));
+					reporte.getPdf(getActa(data_reporte),
+							new SimpleDateFormat("dd-MM-yyyy").format(this.frm_activoxfun.dt_fecha.getValue()));
 				} catch (NumberFormatException | IOException e) {
 					e.printStackTrace();
 				}
@@ -157,9 +167,9 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 
 				// Open it in the UI
 				getUI().addWindow(subWindow);
-			
+
 				Notification.show(Messages.SUCCESS_MESSAGE);
-			}else{
+			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
 			buildMessages(this.frm_activoxfun.getMensajes());
@@ -169,58 +179,84 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 	}
+
 	public Acta getActa(List<MovimientoReporte> data) {
 
 		Acta acta = new Acta();
-		acta.setDependencia_origen(data.get(0).getDependencia_Origen());
-//		acta.setDependencia_destino(data.get(0).getDependencia_Destino());
-		acta.setUnidad_origen(data.get(0).getUnidad_organizacional_Origen());
-//		acta.setUnidad_destino(data.get(0).getUnidad_organizacional_Destino());
-		acta.setUsuario_origen(data.get(0).getUsuario_Origen());
-//		acta.setUsuario_destino(data.get(0).getUsuario_Destino());
-//		acta.setNro_acta_entrega(String.valueOf(data.get(0).getCMV_No_Documento()));
-//		acta.setFecha(data.get(0).getCMV_Fecha_Registro().toString());
+		acta.setDependencia_origen(data.size() > 0 ? data.get(0).getDependencia_Origen() : "");
+		// acta.setDependencia_destino(data.get(0).getDependencia_Destino());
+		acta.setUnidad_origen(data.size() > 0 ?data.get(0).getUnidad_organizacional_Origen(): frm_activoxfun.cb_unidad_organizacional.getCaption());
+		// acta.setUnidad_destino(data.get(0).getUnidad_organizacional_Destino());
+		acta.setCi(data.size() > 0 ?data.get(0).getCi(): "");
+		acta.setUsuario_origen(data.size() > 0 ?data.get(0).getUsuario_Origen(): "");
+		// acta.setUsuario_destino(data.get(0).getUsuario_Destino());
+		// acta.setNro_acta_entrega(String.valueOf(data.get(0).getCMV_No_Documento()));
+		// acta.setFecha(data.get(0).getCMV_Fecha_Registro().toString());
 
 		TablaActivos tabla = new TablaActivos();
 
-		String[][] activos = new String[data.size()*2][3];
+		String[][] activos = new String[data.size() * 2][5];
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Codigo", 30));
+		columns.add(new Column("Codigo", 35));
+		columns.add(new Column("Fecha Asignacion", 75));
+		columns.add(new Column("N° Acta", 35));
 		columns.add(new Column("Nombre del Activo", 345));
-		columns.add(new Column("Caracteriticas y Componentes", 550));
+		columns.add(new Column("Caracteriticas y Componentes", 390));
 
-//		List<Firma> firmas = new ArrayList<Firma>();
-//		firmas.add(new Firma("Funcionario Encargado", 50));
-//		firmas.add(new Firma("", 50));
-//		firmas.add(new Firma("", 50));
-//		acta.setFirmas(firmas);
+		// List<Firma> firmas = new ArrayList<Firma>();
+		// firmas.add(new Firma("Funcionario Encargado", 50));
+		// firmas.add(new Firma("", 50));
+		// firmas.add(new Firma("", 50));
+		// acta.setFirmas(firmas);
 		acta.setColumns(columns);
 		int r = 0;
 		String oldval = "";
 		for (MovimientoReporte movimientoReporte : data) {
+//			if (movimientoReporte.getCodigo_Activo() < 1){
+//				continue;
+//			}
 			activos[r][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
-			activos[r][1] = String.valueOf(movimientoReporte.getNombre_Activo());
-			activos[r][2] = String.valueOf(movimientoReporte.getComponentes());
-			
-			activos[r+1][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
-			activos[r+1][1] = String.valueOf(movimientoReporte.getNombre_Activo());
-			activos[r+1][2] = String.valueOf(movimientoReporte.getCaracteristicas());
+			activos[r][1] = String.valueOf(movimientoReporte.getFecha_Asignacion());
+			activos[r][2] = String.valueOf(movimientoReporte.getNo_Acta());
+			activos[r][3] = String.valueOf(movimientoReporte.getNombre_Activo());
+			activos[r][4] = String.valueOf(movimientoReporte.getComponentes());
+
+			activos[r + 1][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
+			activos[r + 1][1] = String.valueOf(movimientoReporte.getFecha_Asignacion());
+			activos[r + 1][2] = String.valueOf(movimientoReporte.getNo_Acta());
+			activos[r + 1][3] = String.valueOf(movimientoReporte.getNombre_Activo());
+			activos[r + 1][4] = String.valueOf(movimientoReporte.getCaracteristicas());
+
+			if (activos[r][2] == null || activos[r][2].equals("null")) {
+				activos[r][2] = "";
+			}
+			if (activos[r][0] == null || activos[r][0].equals("0") ) {
+				activos[r][0] = "";
+//				activos[r][1] = "Activos";
+			}
+			if (activos[r][1] == null || activos[r][1].equals("null") || activos[r][1].equals("") ) {
+				activos[r][1] = "";
+			}
 
 			if (oldval.equals(activos[r][0])) {
 				activos[r][0] = "";
 				activos[r][1] = "";
-			}else{
+				activos[r][2] = "";
+				activos[r][3] = "";
+			} else {
 				oldval = activos[r][0];
 			}
-			
-			if (oldval.equals(activos[r+1][0])) {
-				activos[r+1][0] = "";
-				activos[r+1][1] = "";
-			}else{
-				oldval = activos[r+1][0];
+
+			if (oldval.equals(activos[r + 1][0])) {
+				activos[r + 1][0] = "";
+				activos[r + 1][1] = "";
+				activos[r + 1][2] = "";
+				activos[r + 1][3] = "";
+			} else {
+				oldval = activos[r + 1][0];
 			}
 
-			r+=2;
+			r += 2;
 		}
 		tabla.setData(activos);
 		tabla.setRowheigth(15);
