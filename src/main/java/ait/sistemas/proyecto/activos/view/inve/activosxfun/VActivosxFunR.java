@@ -45,8 +45,8 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 
 	private static final long serialVersionUID = 1L;
 
-	private FormActivosxfun frm_activoxfun= new FormActivosxfun();
-	private CssLayout hl_errores= new CssLayout();;
+	private FormActivosxfun frm_activoxfun = new FormActivosxfun();
+	private CssLayout hl_errores = new CssLayout();;
 	private Button btn_imprimir = new Button("Imprimir");
 	private Button btn_salir = new Button("Salir");
 	private ActivoImpl personal_impl = new ActivoImpl();
@@ -59,7 +59,8 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", "Debe llenar los campos con * y campos de seleccion de por C.I. o por Dependencia"));
+		msg.add(new BarMessage("Formulario",
+				"Debe llenar los campos con * y campos de seleccion de por C.I. o por Dependencia"));
 		buildMessages(msg);
 	}
 
@@ -125,20 +126,23 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 
 		if (event.getButton() == this.btn_imprimir) {
 			if (this.frm_activoxfun.validate()) {
+
 				ReportPdf reporte = new ReportPdf();
 				List<MovimientoReporte> data_reporte;
-				if (this.frm_activoxfun.txt_ci.getValue() != null && !this.frm_activoxfun.txt_ci.getValue().toString().equals("")){
-					 data_reporte = personal_impl
-								.ActivosbyUsuario(frm_activoxfun.txt_ci.getValue(),new java.sql.Date(this.frm_activoxfun.dt_fecha.getValue().getTime()));
+
+				if (this.frm_activoxfun.txt_ci.getValue() != null
+						&& !this.frm_activoxfun.txt_ci.getValue().toString().equals("")) {
+					data_reporte = personal_impl.ActivosbyUsuario(frm_activoxfun.txt_ci.getValue(), new java.sql.Date(
+							this.frm_activoxfun.dt_fecha.getValue().getTime()));
+				} else {
+					data_reporte = personal_impl.ActivosbyUsuario(
+							((PersonalModel) frm_activoxfun.cb_funcionario.getValue()).getPER_CI_Empleado(),
+							new java.sql.Date(this.frm_activoxfun.dt_fecha.getValue().getTime()));
 				}
-				else{
-					data_reporte = personal_impl
-							.ActivosbyUsuario(((PersonalModel) frm_activoxfun.cb_funcionario.getValue())
-									.getPER_CI_Empleado(),new java.sql.Date(this.frm_activoxfun.dt_fecha.getValue().getTime()));
-				}
-				
+
 				try {
-					reporte.getPdf(getActa(data_reporte), new SimpleDateFormat("dd-MM-yyyy").format(this.frm_activoxfun.dt_fecha.getValue()));
+					reporte.getPdf(getActa(data_reporte),
+							new SimpleDateFormat("dd-MM-yyyy").format(this.frm_activoxfun.dt_fecha.getValue()));
 				} catch (NumberFormatException | IOException e) {
 					e.printStackTrace();
 				}
@@ -179,12 +183,12 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 	public Acta getActa(List<MovimientoReporte> data) {
 
 		Acta acta = new Acta();
-		acta.setDependencia_origen(data.get(0).getDependencia_Origen());
+		acta.setDependencia_origen(data.size() > 0 ? data.get(0).getDependencia_Origen() : "");
 		// acta.setDependencia_destino(data.get(0).getDependencia_Destino());
-		acta.setUnidad_origen(data.get(0).getUnidad_organizacional_Origen());
+		acta.setUnidad_origen(data.size() > 0 ?data.get(0).getUnidad_organizacional_Origen(): frm_activoxfun.cb_unidad_organizacional.getCaption());
 		// acta.setUnidad_destino(data.get(0).getUnidad_organizacional_Destino());
-		acta.setCi(data.get(0).getCi());
-		acta.setUsuario_origen(data.get(0).getUsuario_Origen());
+		acta.setCi(data.size() > 0 ?data.get(0).getCi(): "");
+		acta.setUsuario_origen(data.size() > 0 ?data.get(0).getUsuario_Origen(): "");
 		// acta.setUsuario_destino(data.get(0).getUsuario_Destino());
 		// acta.setNro_acta_entrega(String.valueOf(data.get(0).getCMV_No_Documento()));
 		// acta.setFecha(data.get(0).getCMV_Fecha_Registro().toString());
@@ -208,6 +212,9 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 		int r = 0;
 		String oldval = "";
 		for (MovimientoReporte movimientoReporte : data) {
+//			if (movimientoReporte.getCodigo_Activo() < 1){
+//				continue;
+//			}
 			activos[r][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
 			activos[r][1] = String.valueOf(movimientoReporte.getFecha_Asignacion());
 			activos[r][2] = String.valueOf(movimientoReporte.getNo_Acta());
@@ -220,10 +227,17 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 			activos[r + 1][3] = String.valueOf(movimientoReporte.getNombre_Activo());
 			activos[r + 1][4] = String.valueOf(movimientoReporte.getCaracteristicas());
 
-			if (activos[r][2]==null || activos[r][2].equals("null")){
+			if (activos[r][2] == null || activos[r][2].equals("null")) {
 				activos[r][2] = "";
 			}
-			
+			if (activos[r][0] == null || activos[r][0].equals("0") ) {
+				activos[r][0] = "";
+//				activos[r][1] = "Activos";
+			}
+			if (activos[r][1] == null || activos[r][1].equals("null") || activos[r][1].equals("") ) {
+				activos[r][1] = "";
+			}
+
 			if (oldval.equals(activos[r][0])) {
 				activos[r][0] = "";
 				activos[r][1] = "";

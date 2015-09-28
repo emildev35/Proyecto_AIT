@@ -41,12 +41,12 @@ public class MovimientoReporte {
 	private String Usuario_Destino;
 	private long CMV_No_Documento;
 	private Date CMV_Fecha_Registro;
-	private long Codigo_Activo;
+	private String Codigo_Activo;
 	private String Nombre_Activo;
 	private String Componentes;
 	private String Caracteristicas;
 	private String ci;
-	private Date Fecha_Asignacion;
+	private String Fecha_Asignacion;
 	private String No_Acta;
 	public String getId_cmovimiento() {
 		return id_cmovimiento;
@@ -102,10 +102,10 @@ public class MovimientoReporte {
 	public void setCMV_Fecha_Registro(Date cMV_Fecha_Registro) {
 		CMV_Fecha_Registro = cMV_Fecha_Registro;
 	}
-	public long getCodigo_Activo() {
+	public String getCodigo_Activo() {
 		return Codigo_Activo;
 	}
-	public void setCodigo_Activo(long codigo_Activo) {
+	public void setCodigo_Activo(String codigo_Activo) {
 		Codigo_Activo = codigo_Activo;
 	}
 	public String getNombre_Activo() {
@@ -132,10 +132,10 @@ public class MovimientoReporte {
 	public void setCi(String ci) {
 		this.ci = ci;
 	}
-	public Date getFecha_Asignacion() {
+	public String getFecha_Asignacion() {
 		return Fecha_Asignacion;
 	}
-	public void setFecha_Asignacion(Date fecha_Asignacion) {
+	public void setFecha_Asignacion(String fecha_Asignacion) {
 		Fecha_Asignacion = fecha_Asignacion;
 	}
 	public String getNo_Acta() {

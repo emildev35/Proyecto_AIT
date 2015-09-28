@@ -74,6 +74,7 @@ public class FormActivosxfun extends GridLayout implements ValueChangeListener {
 		binder_activosxfun.clear();
 
 		this.dt_fecha.setRequired(true);
+		this.cb_funcionario.setRequired(true);
 		// this.cb_unidad_organizacional.addValidator(new
 		// NullValidator("No Nulo", false));
 		cb_dependencia.setInputPrompt("Dependencia");
@@ -103,7 +104,7 @@ public class FormActivosxfun extends GridLayout implements ValueChangeListener {
 	}
 
 	private void fillcbDependencia() {
-		cb_unidad_organizacional.removeAllItems();
+		cb_dependencia.removeAllItems();
 		cb_funcionario.removeAllItems();
 		for (Dependencia dependencia : dependencia_impl.getall()) {
 			cb_dependencia.addItem(dependencia);
@@ -113,8 +114,8 @@ public class FormActivosxfun extends GridLayout implements ValueChangeListener {
 	}
 
 	private void fillcbUnidadOrganizacional(short id_depepndencia) {
-		cb_funcionario.removeAllItems();
-		cb_funcionario.setNullSelectionAllowed(false);
+		cb_unidad_organizacional.removeAllItems();
+		cb_unidad_organizacional.setNullSelectionAllowed(false);
 		for (Unidades_Organizacionale unidad_organizacional : unidad_impl.getunidad(id_depepndencia)) {
 			cb_unidad_organizacional.addItem(unidad_organizacional);
 			cb_unidad_organizacional.setItemCaption(unidad_organizacional,
@@ -193,7 +194,7 @@ public class FormActivosxfun extends GridLayout implements ValueChangeListener {
 	}
 
 	public boolean validate() {
-		if (txt_ci.getValue() != null) {
+		if (txt_ci.getValue() != null && !txt_ci.getValue().equals("")) {
 			return true;
 		}
 		try {
