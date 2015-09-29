@@ -68,6 +68,8 @@ public class PDFActivosxFunGenerator {
 			// cabecera comun
 			writeHeader(contentStream, tableTopY, table);
 			writeHeader2(contentStream, nextTextX, table);
+			drawCurrentPageOrden(table, new String[] { "(Orden:/Grupo/Auxiliar/Codigo Activo)" }, contentStream,
+					tableTopY + 15);
 		}
 
 		float nextTextY = tableTopY;
@@ -92,9 +94,11 @@ public class PDFActivosxFunGenerator {
 			} else {
 				r--;
 			}
-//		if(table.getTb_activos().getData()[i][1].equals("null") || table.getTb_activos().getData()[i][1].equals("") || table.getTb_activos().getData()[i][1] == null){
-//			table.getTb_activos().getData()[i][1]="entr";
-//			}
+			// if(table.getTb_activos().getData()[i][1].equals("null") ||
+			// table.getTb_activos().getData()[i][1].equals("") ||
+			// table.getTb_activos().getData()[i][1] == null){
+			// table.getTb_activos().getData()[i][1]="entr";
+			// }
 			if (r >= rowsPerPage) {
 				if (contentStream != null) {
 					contentStream.close();
@@ -108,6 +112,8 @@ public class PDFActivosxFunGenerator {
 				r = table.getHeaderSize();
 				writeHeader(contentStream, nextTextY, table);
 				writeHeader2(contentStream, nextTextX, table);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Grupo/Auxiliar/Codigo Activo)" }, contentStream,
+						tableTopY + 15);
 				drawTableGrid(table, data, contentStream, tableTopY);
 
 				// Calculate center alignment for text in cell considering font
@@ -125,6 +131,29 @@ public class PDFActivosxFunGenerator {
 
 		contentStream.close();
 		drawFooter(doc, table);
+	}
+
+	private void drawCurrentPageOrden(Acta table, String[] strings, PDPageContentStream contentStream, float tableTopY) throws IOException {
+		float nextTextX = table.getMargin() * 25 + table.getCellMargin();
+		float nextTextY = tableTopY
+				- (table.getRowHeight() / 2)
+				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table
+						.getFontSize()) / 4);
+		writeContentLineOrden(strings, contentStream, nextTextX, nextTextY, table);
+	}
+
+	private void writeContentLineOrden(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
+			float nextTextY, Acta table) throws IOException {
+		contentStream.setFont(table.getTextFont(), table.getFontSize());
+
+		for (int i = 0; i < lineContent.length; i++) {
+			String text = lineContent[i];
+			contentStream.beginText();
+			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+			contentStream.showText(text != null ? text : "");
+			contentStream.endText();
+			nextTextX += table.getWidth();
+		}
 	}
 
 	private PDPage generatePage(PDDocument doc2, Acta table) {
@@ -240,7 +269,7 @@ public class PDFActivosxFunGenerator {
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 
 			contentStream.showText(text != null ? text : "");
-		
+
 			contentStream.endText();
 			// if (text == null || text.toString().equals("") && i>0){
 			// nextTextY += table.getRowHeight();
@@ -271,39 +300,44 @@ public class PDFActivosxFunGenerator {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		return contentStream;
 	}
-//
-//	private void writeFooter(PDPageContentStream contentStream, float nextTextX, float nextTextY, Acta table,
-//			int pagecount) throws IOException {
-//
-//		contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
-//
-//		nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
-//		nextTextY -= (table.getRowHeight() * 2.5);
-//
-//		contentStream.beginText();
-//		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-//
-//		nextTextY += table.getRowHeight() - table.getMargin();
-//
-//		String footertext = String.format("Página %d de %d", (pagecount + 1), intNumberPages);
-//		contentStream.showText(footertext);
-//		contentStream.endText();
-//
-//	}
 
-//	private String[][] getContentForCurrentPage(Acta table, Integer rowsPerPage, int pageCount) {
-//		int startRange = pageCount * rowsPerPage;
-//
-//		int endRange = (pageCount * rowsPerPage) + rowsPerPage;
-//
-//		if (pageCount == 0) {
-//			endRange = (pageCount * rowsPerPage) - 8 + rowsPerPage;
-//		}
-//		if (endRange > table.getNumberOfRowsTable()) {
-//			endRange = table.getNumberOfRowsTable();
-//		}
-//		return Arrays.copyOfRange(table.getTb_activos().getData(), startRange, endRange);
-//	}
+	//
+	// private void writeFooter(PDPageContentStream contentStream, float
+	// nextTextX, float nextTextY, Acta table,
+	// int pagecount) throws IOException {
+	//
+	// contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
+	//
+	// nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
+	// nextTextY -= (table.getRowHeight() * 2.5);
+	//
+	// contentStream.beginText();
+	// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+	//
+	// nextTextY += table.getRowHeight() - table.getMargin();
+	//
+	// String footertext = String.format("Página %d de %d", (pagecount + 1),
+	// intNumberPages);
+	// contentStream.showText(footertext);
+	// contentStream.endText();
+	//
+	// }
+
+	// private String[][] getContentForCurrentPage(Acta table, Integer
+	// rowsPerPage, int pageCount) {
+	// int startRange = pageCount * rowsPerPage;
+	//
+	// int endRange = (pageCount * rowsPerPage) + rowsPerPage;
+	//
+	// if (pageCount == 0) {
+	// endRange = (pageCount * rowsPerPage) - 8 + rowsPerPage;
+	// }
+	// if (endRange > table.getNumberOfRowsTable()) {
+	// endRange = table.getNumberOfRowsTable();
+	// }
+	// return Arrays.copyOfRange(table.getTb_activos().getData(), startRange,
+	// endRange);
+	// }
 
 	private void writeHeader(PDPageContentStream contentStream, float nextTextY, Acta table) throws IOException {
 
@@ -324,7 +358,7 @@ public class PDFActivosxFunGenerator {
 
 		long size_header = table.isLandscape() ? 800 : 400;
 		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");
 		String fecha = fechaHora.format(date);
 
 		nextTextX += size_header;
@@ -533,10 +567,10 @@ public class PDFActivosxFunGenerator {
 		// Modificado para solo el tititulo para grilla completa modificar por
 		for (int i = 0; i < currentPageContent.length + 1; i++) {
 			if (i <= currentPageContent.length && i > 0) {
-//				if (!currentPageContent[i - 1][0].equals("")) {
-					// contentStream.drawLine(table.getMargin(), nextY,
-					// table.getColumnWidth() + table.getMargin(), nextY);
-//				}
+				// if (!currentPageContent[i - 1][0].equals("")) {
+				// contentStream.drawLine(table.getMargin(), nextY,
+				// table.getColumnWidth() + table.getMargin(), nextY);
+				// }
 			} else {
 				contentStream.drawLine(table.getMargin(), nextY, table.getColumnWidth() + table.getMargin(), nextY);
 				contentStream.drawLine(table.getMargin(), nextY - table.getRowHeight(),

@@ -18,7 +18,7 @@ public class ReportPdf {
 
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 9;
+	private static final float FONT_SIZE = 8;
 
 //	private static final PDFont TEXT_FONT_TITLE = PDType1Font.HELVETICA;
 	private static final float FONT_TITLE_SIZE = 8;

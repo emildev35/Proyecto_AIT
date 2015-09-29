@@ -24,7 +24,8 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "Codigo_Activo", column = "Codigo_Activo"),
 	@FieldResult(name = "Nombre_Activo", column = "Nombre_Activo"),
 	@FieldResult(name = "Componentes", column = "Componentes"),
-	@FieldResult(name = "Caracteristicas", column = "Caracteristicas")
+	@FieldResult(name = "Caracteristicas", column = "Caracteristicas"),
+	@FieldResult(name = "ACT_No_Serie", column = "ACT_No_Serie")
 	})})
 @Entity
 public class MovimientoReporte {
@@ -48,6 +49,7 @@ public class MovimientoReporte {
 	private String ci;
 	private String Fecha_Asignacion;
 	private String No_Acta;
+	private String ACT_No_Serie;
 	public String getId_cmovimiento() {
 		return id_cmovimiento;
 	}
@@ -143,6 +145,12 @@ public class MovimientoReporte {
 	}
 	public void setNo_Acta(String no_Acta) {
 		No_Acta = no_Acta;
+	}
+	public String getACT_No_Serie() {
+		return ACT_No_Serie;
+	}
+	public void setACT_No_Serie(String aCT_No_Serie) {
+		ACT_No_Serie = aCT_No_Serie;
 	}
 	
 }
