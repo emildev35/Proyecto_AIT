@@ -24,7 +24,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TiposactImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
-import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
@@ -96,9 +96,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	VActualizaM father;
+	private ActivoSession sessionactivo;
+	VActualizaTabM father;
 	
-	public FormDatosGenerales(VActualizaM father) {
+	public FormDatosGenerales(VActualizaTabM father) {
 		super(5, 6);
 		setWidth("100%");
 		setMargin(true);
@@ -200,7 +201,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_tipo_cambio_dolar.setEnabled(false);
 		this.txt_tipo_cambio_ufv.setEnabled(false);
 		
+		this.txt_codigo_activo.setEnabled(false);
+		this.txt_nombre_activo.setEnabled(false);
+		
 		buildForm();
+		fillActivo();
 		Responsive.makeResponsive(this);
 	}
 	
@@ -238,9 +243,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		
 	}
 	
-	private void buildtxtIdActivo() {
-		this.txt_codigo_activo.setValue(String.valueOf(activoimpl.getIdAcivo(session.getId_dependecia())));
-	}
 	
 	private void clean() {
 		this.binderDatosGeneraler.clear();
@@ -248,7 +250,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_tipo_cambio_dolar.setValue("0,0");
 		this.txt_valor_compra.setValue("0,0");
 		this.txt_vida_util.setValue("0");
-		buildtxtIdActivo();
 	}
 	
 	private void buildcbTipoActivo() {
@@ -564,5 +565,15 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				}
 			}
 		}
+	}
+	
+	
+	private void fillActivo() {
+		if (UI.getCurrent().getSession().getAttribute("activo") != null) {
+			this.sessionactivo = (ActivoSession) UI.getCurrent().getSession().getAttribute("activo");
+			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
+			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
+		}
+		
 	}
 }
