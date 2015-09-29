@@ -71,7 +71,7 @@ public class Messages {
 	public static final String PIN_MESSAGES = "* El PIN Generado es de uso exclusivo para Autorizar Documentos de Movimientos de Activos Fijos";
 	public static final String PIN_MESSAGES_2 = "* El PIN Generado esta bajo su responsabilidad y no debe ser divulgado a terceros";
 	/**
-	 * Seleccione  Tipo Movimiento
+	 * Seleccione Tipo Movimiento
 	 */
 	public static final String SELECT_MOVIMIENTO = "Seleccione un Movimiento";
 	/**
@@ -126,6 +126,8 @@ public class Messages {
 	public static final String PRESS_PRINT_BTN = "Presione el boton imprimir para Visualizar el Reporte";
 	public static final String PRESS_BUTTON_UPDATE = "Presione e boton de modificar para actualizar el Registro";
 	public static final String PRESS_BUTTON_DELETE = "Presione e boton de Eliminar para actualizar el Registro";
+	public static final String TIPO_CAMBIO = "Tipo de Cambio no Existente Añada de Manera Manual";
+	
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
 	}

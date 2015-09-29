@@ -63,16 +63,16 @@ public class ReportPdf {
 	
 	private static final float CELL_MARGIN = 2;
 
-	private static final int HEADER_SIZE = 3;
+	private static final int HEADER_SIZE = 4;
 
 	public  String SAVE_PATH = PathValues.PATH_REPORTS + "kardex-" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ProveedorImpl provedorimpl = new ProveedorImpl();
 	final ActivoImpl activoimpl = new ActivoImpl();
 
-	public boolean getPdf(KardexElement[][] data, Object id_activo, short id_dependencia) throws IOException {
+	public boolean getPdf(KardexElement[][] data, Object id_activo, short id_dependencia, String fecha) throws IOException {
 
-		return new PdfKardexGenerator().generatePDF(createContent(data, id_dependencia), SAVE_PATH);
+		return new PdfKardexGenerator().generatePDF(createContent(data, id_dependencia, fecha), SAVE_PATH);
 
 	}
 
@@ -98,7 +98,7 @@ public class ReportPdf {
 		return result;
 	}
 
-	private Kardex createContent(KardexElement[][] data, short dependencia) {
+	private Kardex createContent(KardexElement[][] data, short dependencia,  String fecha) {
 
 		KardexElement[][] content = data;
 		List<Column> columns_componentes = new ArrayList<Column>();
@@ -124,12 +124,12 @@ public class ReportPdf {
 				.setFooterFont(FOOTER_FONT).setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT)
 				.setFontSizeTitle(TITLE_FONT_SIZE).setSubTitleFont(SUBTITLE_FONT)
 				.setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE).setUnidad("XXXXXX")
-				.setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("KARDEX").build();
+				.setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("KARDEX").setSubTitle("Elaborado al : " +  fecha).build();
 		return table;
 
 	}
 
-	private Kardex[] createContent(KardexElement[][][] data, short dependencia) {
+	private Kardex[] createContent(KardexElement[][][] data, short dependencia, String fecha) {
 
 		Kardex[] result = new Kardex[data.length];
 
@@ -161,16 +161,16 @@ public class ReportPdf {
 					.setFooterFont(FOOTER_FONT).setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT)
 					.setFontSizeTitle(TITLE_FONT_SIZE).setSubTitleFont(SUBTITLE_FONT)
 					.setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE).setUnidad("XXXXXX")
-					.setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("KARDEX").build();
+					.setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("KARDEX").setSubTitle("Elaborado al : " +  fecha).build();
 			result[i] = kardex;
 
 		}
 		return result;
 	}
 
-	public boolean getPdfKardexGeneratorMulti(KardexElement[][][] data, Object value, short id_dependecia)
+	public boolean getPdfKardexGeneratorMulti(KardexElement[][][] data, Object value, short id_dependecia , String fecha)
 			throws IOException {
-		return new PdfKardexGeneratorMulti().generatePDF(createContent(data, id_dependecia), SAVE_PATH);
+		return new PdfKardexGeneratorMulti().generatePDF(createContent(data, id_dependecia, fecha), SAVE_PATH);
 
 	}
 }

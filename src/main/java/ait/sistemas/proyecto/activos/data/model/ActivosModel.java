@@ -3,6 +3,7 @@ package ait.sistemas.proyecto.activos.data.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Entity;
@@ -64,7 +65,8 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 		@FieldResult(name = "ACT_Valor_Compra", column = "ACT_Valor_Compra"),
 		@FieldResult(name = "ACT_Valor_Neto", column = "ACT_Valor_Neto"),
 		@FieldResult(name = "ACT_Vida_Util", column = "ACT_Vida_Util"), @FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
-		@FieldResult(name = "ACT_Vida_Residual", column = "ACT_Vida_Residual"), @FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
+		@FieldResult(name = "ACT_Vida_Residual", column = "ACT_Vida_Residual"),
+		@FieldResult(name = "ACT_Marca", column = "ACT_Marca"),
 		@FieldResult(name = "ACT_Motivo_Baja", column = "ACT_Motivo_Baja"),
 		@FieldResult(name = "ACT_Partidas_Presupuestarias", column = "ACT_Partidas_Presupuestarias"),
 		@FieldResult(name = "ACT_Nombre_Empleado", column = "ACT_Nombre_Empleado"),
@@ -545,11 +547,11 @@ public class ActivosModel implements Serializable {
 	public int getACT_Vida_Residual() {
 		return ACT_Vida_Residual;
 	}
-
+	
 	public void setACT_Vida_Residual(int aCT_Vida_Residual) {
 		ACT_Vida_Residual = aCT_Vida_Residual;
 	}
-
+	
 	public String getACT_Marca() {
 		return ACT_Marca;
 	}
@@ -613,11 +615,25 @@ public class ActivosModel implements Serializable {
 		return vida_util_remanente < 0 ? 0 : vida_util_remanente;
 	}
 	
-	public void Actualizar() {
+	public void Actualizar(java.util.Date fecha_actual) {
 		TipoCambioImpl tipocambioimpl = new TipoCambioImpl();
-		java.util.Date fecha_actual = new java.util.Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
 		
-		double CAI = this.ACT_Valor_Neto == null ? this.ACT_Valor_Compra.doubleValue() : this.ACT_Valor_Neto.doubleValue();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(this.ACT_Fecha_Incorporacion);
+		calendar.add(Calendar.YEAR, this.ACT_Vida_Util);
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+		java.util.Date fecha_total_depresiacion = calendar.getTime();
+		
+		if (fecha_total_depresiacion.getTime() < fecha_actual.getTime()) {
+			fecha_actual = fecha_total_depresiacion;
+		}
+		// java.util.Date fecha_actual = new
+		// java.util.Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
+		// java.util.Date fecha_actual = new java.util.Date();
+		// double CAI = this.ACT_Valor_Neto == null ?
+		// this.ACT_Valor_Compra.doubleValue() :
+		// this.ACT_Valor_Neto.doubleValue();
+		double CAI = this.ACT_Valor_Compra.doubleValue();
 		double ufvi = tipocambioimpl.getTipoCambioUFV(this.ACT_Fecha_Ultima_Depreciacion).getTipo_cambio().doubleValue();
 		double ufvf = tipocambioimpl.getTipoCambioUFV(new Date(fecha_actual.getTime())).getTipo_cambio().doubleValue();
 		double AG = CAI * ((ufvf / ufvi) - 1);
@@ -626,9 +642,10 @@ public class ActivosModel implements Serializable {
 		double DAI = 0;
 		double ADA = DAI * ((ufvf / ufvi) - 1);
 		
-		@SuppressWarnings("deprecation")
-		java.util.Date fecha_total_depresiacion = new java.util.Date(ACT_Fecha_Incorporacion.getYear() + ACT_Vida_Util,
-				ACT_Fecha_Incorporacion.getMonth(), ACT_Fecha_Incorporacion.getDay());
+		
+		/**
+		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de Actual o Fecha de Depresiacion Total
+		 */
 		long diff = 0;
 		if (fecha_total_depresiacion.getTime() < fecha_actual.getTime()) {
 			diff = fecha_total_depresiacion.getTime() - ACT_Fecha_Incorporacion.getTime();
@@ -636,11 +653,27 @@ public class ActivosModel implements Serializable {
 			diff = fecha_actual.getTime() - ACT_Fecha_Incorporacion.getTime();
 		}
 		long dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-		double DG = CAI * dias / (ACT_Vida_Util * 365);
+		
+		/**
+		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de Depresiacion Total
+		 */
+		long diff_totales = 0;
+		diff_totales = fecha_total_depresiacion.getTime() - ACT_Fecha_Incorporacion.getTime();
+		long dias_totales = TimeUnit.DAYS.convert(diff_totales, TimeUnit.MILLISECONDS);
+		
+		
+		CAI = CA;
+		double DG = CAI * dias / dias_totales;
 		
 		double DA = 0 + DG;
+		
+		double NETO = CA - DA;
+		CA = Math.round(CA * 100.0) / 100.0;
+		DA = Math.round(DA * 100.0) / 100.0;
+		NETO = Math.round(NETO * 100.0) / 100.0;
+		
 		this.ACT_Actualizacion_Acumulada = new BigDecimal(CA);
 		this.ACT_Depresiacion_Acumulada = new BigDecimal(DA);
-		this.ACT_Valor_Neto = new BigDecimal((CA - DA) < 0 ? 1 : (CA - DA	));
+		this.ACT_Valor_Neto = new BigDecimal(NETO < 1 ? 1 : NETO);
 	}
 }

@@ -211,7 +211,9 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener, Sele
 					
 				}
 				if (event.getProperty().getValue() == this.cb_usuario.getValue() && this.cb_usuario.getValue() != null) {
-					buildGrid(usuario.getId(), 0);
+					fillcbSubSistema();
+						buildGrid(usuario.getId(), 0);
+					this.id_padre = 0;
 				}
 				if (this.cbSubSistema.getValue() == null) {
 					buildGrid(usuario.getId(), 0);

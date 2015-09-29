@@ -186,7 +186,7 @@ public class PdfKardexGenerator {
 			String titulo = lineContent[i].getTitulo();
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.showText(titulo != null ? titulo : "");
+			contentStream.showText(titulo != null && !titulo.equals("null") ? titulo : "");
 			contentStream.endText();
 			
 			contentStream.setFont(table.getTextFont(), table.getFontSize());
@@ -209,7 +209,7 @@ public class PdfKardexGenerator {
 					}
 				}
 			}
-			contentStream.showText(contenido != null ? contenido : "");
+			contentStream.showText(contenido != null && !titulo.equals("null") ? contenido : "");
 			contentStream.endText();
 			
 			nextTextX += lineContent[i].getAncho();
@@ -252,7 +252,7 @@ public class PdfKardexGenerator {
 			String text = lineContent[i];
 			contentStream.beginText();
 			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.showText(text != null ? text : "");
+			contentStream.showText(text != null && !text.equals("null") ? text : "");
 			contentStream.endText();
 			nextTextX += table.getColumns_documentos().get(i).getWidth();
 		}
@@ -339,7 +339,7 @@ public class PdfKardexGenerator {
 		contentStream.endText();
 		
 		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");
 		String fecha = fechaHora.format(date);
 		
 		nextTextX = table.getWidth(0) - table.getMargin();
@@ -350,7 +350,7 @@ public class PdfKardexGenerator {
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight() * 0.75;
+		nextTextY -= table.getRowHeight() * 0.70;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(usuario.getUnidad());
@@ -367,7 +367,7 @@ public class PdfKardexGenerator {
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight() * 0.75;
+		nextTextY -= table.getRowHeight() * 0.70;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(usuario.getFull_name());
@@ -384,14 +384,13 @@ public class PdfKardexGenerator {
 		contentStream.setFont(table.getSubtitleFont(), table.getFontSizesubtitle());
 		nextTextY -= table.getRowHeight();
 		// Descomentar para habilidar subtitulos
-		/*
-		 * contentStream.beginText(); long sub_width = (long)
-		 * ((table.getSubtitleFont().getStringWidth( table.getSubtitle()) /
-		 * 1000.0f) * table.getFontSizesubtitle());
-		 * contentStream.moveTextPositionByAmount((table.getWidth() / 2) -
-		 * (sub_width / 2) + (table.getMargin() / 2), nextTextY);
-		 * contentStream.showText(table.getSubtitle()); contentStream.endText();
-		 */
+		
+		contentStream.beginText();
+		long sub_width = (long) ((table.getSubtitleFont().getStringWidth(table.getSubtitle()) / 1000.0f) * table
+				.getFontSizesubtitle());
+		contentStream.moveTextPositionByAmount((table.getWidth(0) / 2) - (sub_width / 2) + (table.getMargin() / 2), nextTextY);
+		contentStream.showText(table.getSubtitle());
+		contentStream.endText();
 		
 	}
 }

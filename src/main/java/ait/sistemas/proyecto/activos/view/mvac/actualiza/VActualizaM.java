@@ -1,9 +1,10 @@
-package ait.sistemas.proyecto.activos.view.mvac.ingreso;
+package ait.sistemas.proyecto.activos.view.mvac.actualiza;
 
-import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormCaracteriticas;
-import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormComponentes;
-import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormDatosGenerales;
-import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormDocumentos;
+
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.form.FormCaracteriticas;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.form.FormComponentes;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.form.FormDatosGenerales;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.form.FormDocumentos;
 import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
@@ -18,7 +19,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VActivoA extends VerticalLayout implements View{
+public class VActualizaM extends VerticalLayout implements View{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,7 +30,7 @@ public class VActivoA extends VerticalLayout implements View{
 	public TabSheet tbs_form;
 	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 
-	public VActivoA() {
+	public VActualizaM() {
 		setWidth("100%");	
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
