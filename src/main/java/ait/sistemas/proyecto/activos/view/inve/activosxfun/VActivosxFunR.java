@@ -2,8 +2,11 @@ package ait.sistemas.proyecto.activos.view.inve.activosxfun;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
@@ -143,7 +146,7 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 				try {
 					reporte.getPdf(getActa(data_reporte),
 							new SimpleDateFormat("dd-MM-yyyy").format(this.frm_activoxfun.dt_fecha.getValue()));
-				} catch (NumberFormatException | IOException e) {
+				} catch (NumberFormatException | IOException | ParseException e) {
 					e.printStackTrace();
 				}
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
@@ -180,7 +183,7 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 		}
 	}
 
-	public Acta getActa(List<MovimientoReporte> data) {
+	public Acta getActa(List<MovimientoReporte> data) throws ParseException {
 
 		Acta acta = new Acta();
 		acta.setDependencia_origen(data.size() > 0 ? data.get(0).getDependencia_Origen() : "");
@@ -195,13 +198,14 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 
 		TablaActivos tabla = new TablaActivos();
 
-		String[][] activos = new String[data.size() * 2][5];
+		String[][] activos = new String[data.size() * 2][6];
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Codigo", 35));
-		columns.add(new Column("Fecha Asignacion", 75));
-		columns.add(new Column("N° Acta", 35));
-		columns.add(new Column("Nombre del Activo", 345));
-		columns.add(new Column("Caracteriticas y Componentes", 390));
+		columns.add(new Column("Codigo", 30));
+		columns.add(new Column("Fecha", 45));
+		columns.add(new Column("N° Acta", 30));
+		columns.add(new Column("Serie", 115));
+		columns.add(new Column("Nombre del Activo", 350));
+		columns.add(new Column("Caracteriticas y Componentes", 325));
 
 		// List<Firma> firmas = new ArrayList<Firma>();
 		// firmas.add(new Firma("Funcionario Encargado", 50));
@@ -211,38 +215,51 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 		acta.setColumns(columns);
 		int r = 0;
 		String oldval = "";
+		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (MovimientoReporte movimientoReporte : data) {
 //			if (movimientoReporte.getCodigo_Activo() < 1){
 //				continue;
 //			}
 			activos[r][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
-			activos[r][1] = String.valueOf(movimientoReporte.getFecha_Asignacion());
+			if (!movimientoReporte.getFecha_Asignacion().equals("")){
+			Date fecha = fechaHora.parse(movimientoReporte.getFecha_Asignacion());
+			activos[r][1] = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(fecha));
+			}
+			else{
+			activos[r][1] = String.valueOf(String.valueOf(movimientoReporte.getCodigo_Activo()));
+			}
 			activos[r][2] = String.valueOf(movimientoReporte.getNo_Acta());
-			activos[r][3] = String.valueOf(movimientoReporte.getNombre_Activo());
-			activos[r][4] = String.valueOf(movimientoReporte.getComponentes());
+			activos[r][3] = String.valueOf(movimientoReporte.getACT_No_Serie());
+			activos[r][4] = String.valueOf(movimientoReporte.getNombre_Activo());
+			activos[r][5] = String.valueOf(movimientoReporte.getComponentes());
 
 			activos[r + 1][0] = String.valueOf(movimientoReporte.getCodigo_Activo());
 			activos[r + 1][1] = String.valueOf(movimientoReporte.getFecha_Asignacion());
 			activos[r + 1][2] = String.valueOf(movimientoReporte.getNo_Acta());
-			activos[r + 1][3] = String.valueOf(movimientoReporte.getNombre_Activo());
-			activos[r + 1][4] = String.valueOf(movimientoReporte.getCaracteristicas());
+			activos[r + 1][3] = String.valueOf(movimientoReporte.getACT_No_Serie());
+			activos[r + 1][4] = String.valueOf(movimientoReporte.getNombre_Activo());
+			activos[r + 1][5] = String.valueOf(movimientoReporte.getCaracteristicas());
 
 			if (activos[r][2] == null || activos[r][2].equals("null")) {
 				activos[r][2] = "";
 			}
-			if (activos[r][0] == null || activos[r][0].equals("0") ) {
-				activos[r][0] = "";
-//				activos[r][1] = "Activos";
+			if (activos[r][3] == null || activos[r][3].equals("null")) {
+				activos[r][3] = "";
 			}
-			if (activos[r][1] == null || activos[r][1].equals("null") || activos[r][1].equals("") ) {
-				activos[r][1] = "";
-			}
+//			if (activos[r][0] == null || activos[r][0].equals("0") ) {
+//				activos[r][0] = "";
+////				activos[r][1] = "Activos";
+//			}
+//			if (activos[r][1] == null || activos[r][1].equals("null") || activos[r][1].equals("") ) {
+//				activos[r][1] = "";
+//			}
 
 			if (oldval.equals(activos[r][0])) {
 				activos[r][0] = "";
 				activos[r][1] = "";
 				activos[r][2] = "";
 				activos[r][3] = "";
+				activos[r][4] = "";
 			} else {
 				oldval = activos[r][0];
 			}
@@ -252,6 +269,7 @@ public class VActivosxFunR extends VerticalLayout implements View, ClickListener
 				activos[r + 1][1] = "";
 				activos[r + 1][2] = "";
 				activos[r + 1][3] = "";
+				activos[r + 1][4] = "";
 			} else {
 				oldval = activos[r + 1][0];
 			}
