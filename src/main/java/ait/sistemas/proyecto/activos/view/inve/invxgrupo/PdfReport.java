@@ -10,7 +10,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.FechaDepreciacionImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.CierreGestionImpl;
 import ait.sistemas.proyecto.activos.view.inve.invxgrupo.reporte.InventarioGrupoGenerator;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
@@ -67,7 +67,7 @@ public class PdfReport {
 	
 	private static Table createContent(String[][] data) {
 		
-		FechaDepreciacionImpl fechaimpl = new FechaDepreciacionImpl();
+		CierreGestionImpl fechaimpl = new CierreGestionImpl();
 		
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Grupo Contalbe", 250));
@@ -106,7 +106,7 @@ public class PdfReport {
 				.setTitle("INVENTARIO DE ACTIVOS POR GRUPO CONTABLE")
 				.setSubTitle(
 						"Elaborado al: "
-								+ new SimpleDateFormat("dd-MM-yyyy").format(fechaimpl.getFechaDep().getFDE_Fecha_Depreciacion()))
+								+ new SimpleDateFormat("dd-MM-yyyy").format(fechaimpl.getFechaDep().getCGE_Fecha_Cierre_Gestion()))
 				.build();
 		return table;
 	}

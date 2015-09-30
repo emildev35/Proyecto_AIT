@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion;
-import ait.sistemas.proyecto.activos.data.service.Impl.FechaDepreciacionImpl;
+import ait.sistemas.proyecto.activos.data.model.Cierre_Gestion;
+import ait.sistemas.proyecto.activos.data.service.Impl.CierreGestionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -35,7 +35,7 @@ public class FormInventarioConso extends GridLayout {
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	//los List siempre se declaran asi 
 	//BarMessage --> clase para mandar:			 componente  mensaje   tipo
-	final private FechaDepreciacionImpl fecha_depreciacion_impl = new FechaDepreciacionImpl();
+	final private CierreGestionImpl fecha_depreciacion_impl = new CierreGestionImpl();
 	final PropertysetItem pitm_Inventario = new PropertysetItem();
 	private FieldGroup binder_Inventario;
 	
@@ -63,13 +63,13 @@ public class FormInventarioConso extends GridLayout {
 		//new NullValidator("", false) por es una clase de vaadin --> no da errores pero tampoco deja registrar
 //		this.dt_fecha.setEnabled(false);
 		
-		fillfecha((Fecha_Depreciacion) fecha_depreciacion_impl.getFechaDep());
+		fillfecha((Cierre_Gestion) fecha_depreciacion_impl.getFechaDep());
 		buildContent();
 	}
 	
-	private void fillfecha(Fecha_Depreciacion data) {
+	private void fillfecha(Cierre_Gestion data) {
 		
-		this.dt_fecha.setValue(data.getFDE_Fecha_Depreciacion());
+		this.dt_fecha.setValue(data.getCGE_Fecha_Cierre_Gestion());
 	}
 
 	/**

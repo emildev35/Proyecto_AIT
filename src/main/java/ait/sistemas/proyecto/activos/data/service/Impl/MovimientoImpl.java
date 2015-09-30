@@ -93,6 +93,53 @@ public class MovimientoImpl {
 			return 0;
 		}
 	}
+	public int addMovimientoReva(Movimiento data) throws SQLException {
+ConnecctionActivos conn = new ConnecctionActivos();
+		
+		String Sql = String.format("exec [dbo].[Mvac_CMovimientoBaja_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
+				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s'," + "@No_Documento_referencia='%s'," + "@Fecha_Documento_Referencia='%s',"+ "@Tipo_Movimiento=%d,"
+				+ "@Observaciones='%s'",
+				data.getId_dependencia(), 
+				data.getId_unidad_organizacional_origen(),
+				data.getNro_documento(), 
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_movimiento()), 
+				data.getUsuario(), 
+				data.getNro_documento_referencia(),
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_nro_referencia()),
+				data.getTipo_movimiento(),
+				data.getObservacion());
+		int resultado_cabecera = conn.callproc(Sql);
+	
+		int result_detalle = 0;
+		if (resultado_cabecera > 0) {
+			for (Detalle detalle : data.getDetalles()) {
+				String str_detalle = String.format("EXEC Mvac_DMovimientoReva_I " + "@Dependencia_Id=%d,"
+						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
+						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," +"@Nuevo_valor='%s',"+"@Nueva_vida_util=%d,"+ "@Observaciones='%s'", 
+						detalle.getId_dependencia(), 
+						detalle.getId_unidad_organizacional_origen(), 
+						detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(detalle.getFecha_registro()), 
+						detalle.getTipo_movimiento(), detalle.getId_activo(), 
+						detalle.getNuevo_valor().toString(),
+						detalle.getNueva_vida_util(),
+						detalle.getObservacion());
+				System.out.print(str_detalle);
+				result_detalle += conn.callproc(str_detalle);
+				
+			}
+			
+			if (result_detalle == data.getDetalles().size()) {
+				return 1;
+			} else {
+				dropmovimiento(data);
+				return 0;
+			}
+			
+		} else {
+			return 0;
+		}
+	}
 	public int addMovimientoTransferencia(Movimiento data) {
 		this.emf = null;
 		this.em = null;
