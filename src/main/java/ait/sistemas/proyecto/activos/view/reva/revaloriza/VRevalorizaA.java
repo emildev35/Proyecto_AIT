@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.view.reva.revaloriza;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,12 +120,16 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_solicitud.validate()) {
-				if (movimientoimpl.addMovimientoReva(this.frm_solicitud.getData())>0) {
-					this.frm_solicitud.clear();
-					Notification.show(Messages.SUCCESS_MESSAGE);
-				}
-				else{
-					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+				try {
+					if (movimientoimpl.addMovimientoReva(this.frm_solicitud.getData())>0) {
+						this.frm_solicitud.clear();
+						Notification.show(Messages.SUCCESS_MESSAGE);
+					}
+					else{
+						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);

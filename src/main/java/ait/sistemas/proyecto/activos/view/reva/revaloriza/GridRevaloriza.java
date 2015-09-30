@@ -59,5 +59,19 @@ public class GridRevaloriza extends Grid{
 	}
 	public void clean(){
 		removeAllColumns();
+		
+		bean_inventario = new BeanItemContainer<ActivoInventario>(ActivoInventario.class);
+		setContainerDataSource(bean_inventario);
+		removeColumn("ci_funcionario");
+		removeColumn("dependencia");
+		removeColumn("documento_referencia");
+		removeColumn("dr");
+		removeColumn("sr");
+		removeColumn("mr");
+		removeColumn("fecha_referencia");
+		removeColumn("fecha_registro");
+		removeColumn("nombre_funcionario");
+		removeColumn("numero_documento");
+		removeColumn("observacion");
 	}
 }

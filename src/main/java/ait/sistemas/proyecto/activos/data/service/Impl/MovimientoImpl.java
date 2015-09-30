@@ -93,40 +93,40 @@ public class MovimientoImpl {
 			return 0;
 		}
 	}
-	public int addMovimientoReva(Movimiento data) {
-		this.emf = null;
-		this.em = null;
-		EntityManagerFactory emfdos = Persistence.createEntityManagerFactory("AIT-Activos");
-		EntityManager emdos = emfdos.createEntityManager();
-		String str_cabezera = "EXEC Mvac_CMovimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
-				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6,"
-				+ "@Tipo_Movimiento=?7," + "@Observaciones=?8";
-		Query query_cabezera = emdos.createNativeQuery(str_cabezera);
-		query_cabezera.setParameter(1, data.getId_dependencia());
-		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
-		query_cabezera.setParameter(3, data.getNro_documento());
-		query_cabezera.setParameter(4, data.getFecha_registro());
-		query_cabezera.setParameter(5, data.getFecha_movimiento());
-		query_cabezera.setParameter(6, data.getUsuario());
-		query_cabezera.setParameter(7, data.getTipo_movimiento());
-		query_cabezera.setParameter(8, data.getObservacion());
-		int result_cabezera = (Integer) query_cabezera.getSingleResult();
+	public int addMovimientoReva(Movimiento data) throws SQLException {
+ConnecctionActivos conn = new ConnecctionActivos();
+		
+		String Sql = String.format("exec [dbo].[Mvac_CMovimientoBaja_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
+				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s'," + "@No_Documento_referencia='%s'," + "@Fecha_Documento_Referencia='%s',"+ "@Tipo_Movimiento=%d,"
+				+ "@Observaciones='%s'",
+				data.getId_dependencia(), 
+				data.getId_unidad_organizacional_origen(),
+				data.getNro_documento(), 
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_movimiento()), 
+				data.getUsuario(), 
+				data.getNro_documento_referencia(),
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_nro_referencia()),
+				data.getTipo_movimiento(),
+				data.getObservacion());
+		int resultado_cabecera = conn.callproc(Sql);
+	
 		int result_detalle = 0;
-		if (result_cabezera > 0) {
+		if (resultado_cabecera > 0) {
 			for (Detalle detalle : data.getDetalles()) {
+				String str_detalle = String.format("EXEC Mvac_DMovimientoReva_I " + "@Dependencia_Id=%d,"
+						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
+						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," +"@Nuevo_valor='%s',"+"@Nueva_vida_util=%d,"+ "@Observaciones='%s'", 
+						detalle.getId_dependencia(), 
+						detalle.getId_unidad_organizacional_origen(), 
+						detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(detalle.getFecha_registro()), 
+						detalle.getTipo_movimiento(), detalle.getId_activo(), 
+						detalle.getNuevo_valor().toString(),
+						detalle.getNueva_vida_util(),
+						detalle.getObservacion());
+				System.out.print(str_detalle);
+				result_detalle += conn.callproc(str_detalle);
 				
-				String str_detalle = "EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
-						+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Tipo_Movimiento=?5," + "@Activo_Id=?6,"
-						+ "@Observaciones=?7";
-				Query query_detalle = emdos.createNativeQuery(str_detalle);
-				query_detalle.setParameter(1, detalle.getId_dependencia());
-				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
-				query_detalle.setParameter(3, detalle.getNro_documento());
-				query_detalle.setParameter(4, detalle.getFecha_registro());
-				query_detalle.setParameter(5, detalle.getTipo_movimiento());
-				query_detalle.setParameter(6, detalle.getId_activo());
-				query_detalle.setParameter(7, detalle.getObservacion());
-				result_detalle += (Integer) query_detalle.getSingleResult();
 			}
 			
 			if (result_detalle == data.getDetalles().size()) {
