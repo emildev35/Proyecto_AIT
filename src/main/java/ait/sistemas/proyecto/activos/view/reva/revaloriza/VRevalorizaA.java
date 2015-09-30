@@ -119,7 +119,7 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_solicitud.validate()) {
-				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
+				if (movimientoimpl.addMovimientoReva(this.frm_solicitud.getData())>0) {
 					this.frm_solicitud.clear();
 					Notification.show(Messages.SUCCESS_MESSAGE);
 				}
