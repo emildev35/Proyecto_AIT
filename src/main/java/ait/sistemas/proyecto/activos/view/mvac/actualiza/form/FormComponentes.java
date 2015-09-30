@@ -6,7 +6,7 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
-import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -56,11 +56,12 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private final ActivoImpl activoimpl = new ActivoImpl();
 	
 	List<Componente> componentes = new ArrayList<Componente>();
+	
 	ActivoSession sessionactivo;
 	
-	VActualizaM father;
+	VActualizaTabM father;
 	
-	public FormComponentes(VActualizaM father) {
+	public FormComponentes(VActualizaTabM father) {
 		super(3, 3);
 		setWidth("100%");
 		setSpacing(true);

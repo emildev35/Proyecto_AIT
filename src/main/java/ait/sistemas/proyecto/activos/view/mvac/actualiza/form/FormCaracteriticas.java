@@ -9,7 +9,7 @@ import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
-import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormImageUpload;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
@@ -78,9 +78,9 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	ActivoSession sessionactivo;
 	
-	VActualizaM father;
+	VActualizaTabM father;
 	
-	public FormCaracteriticas(VActualizaM father) {
+	public FormCaracteriticas(VActualizaTabM father) {
 		
 		super(7, 7);
 		setWidth("100%");

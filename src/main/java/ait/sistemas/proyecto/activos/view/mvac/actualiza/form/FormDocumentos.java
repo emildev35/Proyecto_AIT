@@ -7,7 +7,7 @@ import ait.sistemas.proyecto.activos.component.DocumentUploader;
 import ait.sistemas.proyecto.activos.component.model.Documento;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
-import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 
@@ -62,9 +62,9 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	List<Documento> documentos = new ArrayList<Documento>();
 	ActivoSession sessionactivo;
 	
-	VActualizaM father;
+	VActualizaTabM father;
 	
-	public FormDocumentos(VActualizaM father) {
+	public FormDocumentos(VActualizaTabM father) {
 		super(3, 3);
 		setWidth("100%");
 		setSpacing(true);

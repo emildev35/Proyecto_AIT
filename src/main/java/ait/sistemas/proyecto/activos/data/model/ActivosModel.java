@@ -642,9 +642,9 @@ public class ActivosModel implements Serializable {
 		double DAI = 0;
 		double ADA = DAI * ((ufvf / ufvi) - 1);
 		
-		
 		/**
-		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de Actual o Fecha de Depresiacion Total
+		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de
+		 * Actual o Fecha de Depresiacion Total
 		 */
 		long diff = 0;
 		if (fecha_total_depresiacion.getTime() < fecha_actual.getTime()) {
@@ -655,25 +655,25 @@ public class ActivosModel implements Serializable {
 		long dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 		
 		/**
-		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de Depresiacion Total
+		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de
+		 * Depresiacion Total
 		 */
 		long diff_totales = 0;
 		diff_totales = fecha_total_depresiacion.getTime() - ACT_Fecha_Incorporacion.getTime();
 		long dias_totales = TimeUnit.DAYS.convert(diff_totales, TimeUnit.MILLISECONDS);
-		
 		
 		CAI = CA;
 		double DG = CAI * dias / dias_totales;
 		
 		double DA = 0 + DG;
 		
-		double NETO = CA - DA;
+		double NETO = CA - (DA == CA ? CA - 1 : CA);
 		CA = Math.round(CA * 100.0) / 100.0;
 		DA = Math.round(DA * 100.0) / 100.0;
 		NETO = Math.round(NETO * 100.0) / 100.0;
 		
 		this.ACT_Actualizacion_Acumulada = new BigDecimal(CA);
 		this.ACT_Depresiacion_Acumulada = new BigDecimal(DA);
-		this.ACT_Valor_Neto = new BigDecimal(NETO < 1 ? 1 : NETO);
+		this.ACT_Valor_Neto = new BigDecimal(NETO);
 	}
 }

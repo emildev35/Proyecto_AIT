@@ -106,14 +106,14 @@ public class FormEtiqueta extends GridLayout implements ValueChangeListener {
 		if (this.grid_activos.getSelectedRows().size() > 0) {
 			return true;
 		} else {
-			
 			this.mensajes.add(new BarMessage("Formulario", Messages.EMPTY_GRID));
-			
 			return false;
 		}
 	}
+	
 	/**
 	 * Retorna los mensajes que se generaron dentro de Formulario
+	 * 
 	 * @return
 	 */
 	public List<BarMessage> getMessage() {
@@ -172,16 +172,20 @@ public class FormEtiqueta extends GridLayout implements ValueChangeListener {
 			cb_unidad_organizacional.setItemCaption(unidad, unidad.getUNO_Nombre_Unidad_Organizacional());
 		}
 	}
+	
 	/**
 	 * Retorna el Grid de los Activos
+	 * 
 	 * @return
 	 */
 	public GridActivos getGrid() {
 		return this.grid_activos;
 	}
+	
 	/**
 	 * Retorna los codigos generados en base a los Activos que se seleccionaron
 	 * en el Grid de Activos
+	 * 
 	 * @return
 	 */
 	public List<CodeBar> getActivos() {

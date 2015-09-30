@@ -258,39 +258,24 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 					+ " " + activos.getACT_AMaterno_Empleado());
 			
 			kardex_elements[r][6][0] = new KardexElement();
-			kardex_elements[r][6][0].setAncho(150);
-			kardex_elements[r][6][0].setTitulo("Actualizacion Acumulada Getion Anterior");
-			kardex_elements[r][6][0].setContenido("0");
+			kardex_elements[r][6][0].setAncho(130);
+			kardex_elements[r][6][0].setTitulo("Actualización");
+			kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada().floatValue()));
 			
 			kardex_elements[r][6][1] = new KardexElement();
-			kardex_elements[r][6][1].setAncho(130);
-			kardex_elements[r][6][1].setTitulo("Actualizacion Gestion Actual");
-			kardex_elements[r][6][1].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada().floatValue()));
+			kardex_elements[r][6][1].setAncho(100);
+			kardex_elements[r][6][1].setTitulo("Depreciación");
+			kardex_elements[r][6][1].setContenido(String.valueOf(activos.getACT_Depresiacion_Acumulada().floatValue()));
 			
-			kardex_elements[r][7][0] = new KardexElement();
-			kardex_elements[r][7][0].setAncho(150);
-			kardex_elements[r][7][0].setTitulo("Depreciacion Acumulada Gestion Anterior");
-			kardex_elements[r][7][0].setContenido(String.valueOf(0));
+			kardex_elements[r][6][2] = new KardexElement();
+			kardex_elements[r][6][2].setAncho(70);
+			kardex_elements[r][6][2].setTitulo("Vida Util Remanente");
+			kardex_elements[r][6][2].setContenido(String.valueOf(activos.getACT_Vida_Util_Remanente()));
 			
-			kardex_elements[r][7][1] = new KardexElement();
-			kardex_elements[r][7][1].setAncho(130);
-			kardex_elements[r][7][1].setTitulo("Actualizacion Depreciacion Anterior");
-			kardex_elements[r][7][1].setContenido(String.valueOf(0));
-			
-			kardex_elements[r][7][2] = new KardexElement();
-			kardex_elements[r][7][2].setAncho(100);
-			kardex_elements[r][7][2].setTitulo("Depreciacion Gestion Actual");
-			kardex_elements[r][7][2].setContenido(String.valueOf(activos.getACT_Depresiacion_Acumulada().floatValue()));
-			
-			kardex_elements[r][7][3] = new KardexElement();
-			kardex_elements[r][7][3].setAncho(70);
-			kardex_elements[r][7][3].setTitulo("Vida Util Remanente");
-			kardex_elements[r][7][3].setContenido(String.valueOf(activos.getACT_Vida_Util_Remanente()));
-			
-			kardex_elements[r][7][4] = new KardexElement();
-			kardex_elements[r][7][4].setAncho(100);
-			kardex_elements[r][7][4].setTitulo("Valor del bien a la Fecha");
-			kardex_elements[r][7][4].setContenido(String.valueOf(activos.getACT_Valor_Neto().floatValue()));
+			kardex_elements[r][6][3] = new KardexElement();
+			kardex_elements[r][6][3].setAncho(100);
+			kardex_elements[r][6][3].setTitulo("Valor del bien a la Fecha");
+			kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Valor_Neto().floatValue()));
 			r++;
 			
 		}

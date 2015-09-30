@@ -19,7 +19,6 @@ public class PDFActivosxFunGenerator {
 
 	private PDDocument doc;
 
-	private int intNumberPages = 5;
 
 	public boolean generatePDF(Acta acta, String savePath) throws IOException {
 		boolean result = false;
@@ -39,10 +38,6 @@ public class PDFActivosxFunGenerator {
 
 	public void drawacta(PDDocument doc, Acta acta) throws IOException {
 
-		Integer rowsPerPage = new Double(Math.floor(acta.getHeight() / acta.getTb_activos().getRowheigth())).intValue() - 1;
-		Integer numberOfPages = new Double(Math.ceil((acta.getNumberOfRows().floatValue()) / rowsPerPage)).intValue();
-		// numberOfPages = numberOfPages < 1 ? 0 : numberOfPages;
-		this.intNumberPages = numberOfPages;
 		PDPage page = new PDPage();
 		page.setMediaBox(acta.getPageSize());
 		this.doc.addPage(page);
