@@ -9,7 +9,6 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Autorizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Auxiliares_Contable</class>
-		<class>ait.sistemas.proyecto.activos.data.model.Fecha_Depreciacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Cierre_Gestion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.Componente</class>
 		<class>ait.sistemas.proyecto.activos.data.model.ComponentesModel</class>

@@ -10,16 +10,23 @@ import ait.sistemas.proyecto.activos.data.model.Cierre_Gestion;
 public class CierreGestionImpl {
 	private EntityManagerFactory emf;
 	private EntityManager em;
-	
+
 	public CierreGestionImpl() {
 		this.emf = Persistence.createEntityManagerFactory("AIT-Activos");
 		this.em = emf.createEntityManager();
 	}
-	
+
 	public Cierre_Gestion getall() {
-		
+
 		Query query = em.createNativeQuery("EXEC Reva_CierreGestion_Q", "cierre-gestion");
-		Cierre_Gestion resultlist = (Cierre_Gestion)query.getSingleResult();
+		Cierre_Gestion resultlist = (Cierre_Gestion) query.getSingleResult();
+		return resultlist;
+	}
+
+	public Cierre_Gestion getFechaDep() {
+
+		Query query = em.createNativeQuery("EXEC Reva_FechaDepre_Q", "cierre-gestion");
+		Cierre_Gestion resultlist = (Cierre_Gestion) query.getSingleResult();
 		return resultlist;
 	}
 }
