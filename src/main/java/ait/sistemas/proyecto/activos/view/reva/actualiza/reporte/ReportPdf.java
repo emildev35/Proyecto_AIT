@@ -12,13 +12,14 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.PDFRevalorizacionGenerador;
+import ait.sistemas.proyecto.common.report.PageSize;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
 
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
-	private static final float MARGIN = 60;
+	private static final PDRectangle PAGE_SIZE = PageSize.OFICIO;
+	private static final float MARGIN = 30;
 	private static final boolean IS_LANDSCAPE = true;
 
 	// Font for textFont
@@ -46,15 +47,16 @@ public class ReportPdf {
 	/**
 	 * Font for footer report
 	 */
+	
 	private static final PDFont SUBTITLE_FONT = PDType1Font.HELVETICA;
-	private static final float SUBTITLE_FONT_SIZE = 11;
-
+	private static final float SUBTITLE_FONT_SIZE = 12;
+	
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
+	
+	private static final int HEADER_SIZE = 4;
 
-	private static final int HEADER_SIZE = 5;
-
-	public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public static String SAVE_PATH = PathValues.PATH_REPORTS + "actualizacion" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ActivoImpl activoimpl = new ActivoImpl();
 
@@ -69,31 +71,38 @@ public class ReportPdf {
 
 	private Table createContent(String[][] content, String strDependencia) {
 
+		List<Column> columnsGA = new ArrayList<Column>();
+		columnsGA.add(new Column("Grupo Contable", 440));
+		columnsGA.add(new Column("Auxiliar Contable", 450));
+		
 
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
-		columns.add(new Column("Nombre del Activo", 345));
-		columns.add(new Column("Fecha Compra", 45));
-		columns.add(new Column("Valor Compra", 50));
-		columns.add(new Column("Vida Util", 22));
-		columns.add(new Column("Valor Actualizado Gestion Anterior", 60));
-		columns.add(new Column("Depreciacion Actualizada Gestion Anterior", 60));
-		columns.add(new Column("Actualizacion Gestion Actual", 60));
-		columns.add(new Column("Depreciacion Gestion Actual", 60));
-		columns.add(new Column("Actualizacion Acumulada", 60));
-		columns.add(new Column("Depreciacion Acumulada", 60));
-		columns.add(new Column("Valor Neto", 35));
+		columns.add(new Column("Nombre del Activo", 315));
+		columns.add(new Column("Fecha Compra", 50));
+		columns.add(new Column("Valor Compra", 55));
+		columns.add(new Column("Vida Util", 55));
+		columns.add(new Column("Valor Actualizado Gestion Anterior", 55));
+		columns.add(new Column("Depreciacion Actualizada Gestion Anterior", 55));
+		columns.add(new Column("Actualizacion Gestion Actual", 55));
+		columns.add(new Column("Depreciacion Gestion Actual", 55));
+		columns.add(new Column("Actualizacion Acumulada", 55));
+		columns.add(new Column("Depreciacion Acumulada", 55));
+		columns.add(new Column("Valor Neto", 55));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 
-		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumns(columns).setContent(content)
-				.setHeight(tableHeight).setNumberOfRows(content.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
-				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
-				.setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE).setFooterFont(FOOTER_FONT)
-				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)
-				.setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE)
-				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX").setTitle("        ACTUALIZACION DE ACTIVOS FIJOS")
-				.build();
+		// Date date = new Date();
+		// DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		// String fecha = fechaHora.format(date);
+		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumnsGA(columnsGA).setContent(content)
+				.setColumns(columns).setContent(content).setHeight(tableHeight).setNumberOfRows(content.length)
+				.setRowHeight(ROW_HEIGHT).setMargin(MARGIN).setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE)
+				.setTextFont(TEXT_FONT).setFontSize(FONT_SIZE).setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE)
+				.setFooterFont(FOOTER_FONT).setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT)
+				.setFontSizeTitle(TITLE_FONT_SIZE).setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
+				.setHeaderSize(HEADER_SIZE).setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
+				.setTitle("INVENTARIO DE ACTIVOS").setSubTitle("Realizado al : " ).build();
 		return Inventario;
 
 	}

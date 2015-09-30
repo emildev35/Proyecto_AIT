@@ -168,11 +168,7 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener{
 		});
 
 		Panel pn_doc = new Panel("Documento de Revalorizaion");
-		pn_doc.setIcon(FontAwesome.EDIT);
-		pn_doc.setStyleName(AitTheme.PANEL_FORM);
 		Panel pn_resol = new Panel("Resolucion de Revalorizacion");
-		pn_resol.setIcon(FontAwesome.EDIT);
-		pn_resol.setStyleName(AitTheme.PANEL_FORM);
 		Panel pn_registro = new Panel("Registre los datos del Activo Fijo Revalorizado");
 		pn_registro.setIcon(FontAwesome.EDIT);
 		pn_registro.setStyleName(AitTheme.PANEL_FORM);

@@ -269,8 +269,8 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 			
 			kardex_elements[r][6][2] = new KardexElement();
 			kardex_elements[r][6][2].setAncho(70);
-			kardex_elements[r][6][2].setTitulo("Vida Util Remanente");
-			kardex_elements[r][6][2].setContenido(String.valueOf(activos.getACT_Vida_Util_Remanente()));
+			kardex_elements[r][6][2].setTitulo("Vida Util Residual");
+			kardex_elements[r][6][2].setContenido(String.valueOf(activos.getACT_Vida_Residual()));
 			
 			kardex_elements[r][6][3] = new KardexElement();
 			kardex_elements[r][6][3].setAncho(100);
