@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.component.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -31,7 +32,9 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "nro_seguro", column = "nro_seguro"),
 	@FieldResult(name = "vto_seguro", column = "vto_seguro"),
 	@FieldResult(name = "nro_garantia", column = "nro_garantia"),
-	@FieldResult(name = "vto_garantia", column = "vto_garantia")
+	@FieldResult(name = "vto_garantia", column = "vto_garantia"),
+	@FieldResult(name = "nuevo_valor", column = "nuevo_valor"),
+	@FieldResult(name = "nueva_vida_util", column = "nueva_vida_util")
 	})})
 @Entity
 public class Detalle implements Serializable{
@@ -53,6 +56,8 @@ public class Detalle implements Serializable{
 	private Date vto_seguro;
 	private int nro_garantia;
 	private Date vto_garantia;
+	private BigDecimal nuevo_valor;
+	private int nueva_vida_util;
 	public Detalle() {
 	}
 	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
@@ -150,6 +155,18 @@ public class Detalle implements Serializable{
 	}
 	public void setVto_garantia(Date vto_garantia) {
 		this.vto_garantia = vto_garantia;
+	}
+	public BigDecimal getNuevo_valor() {
+		return nuevo_valor;
+	}
+	public void setNuevo_valor(BigDecimal nuevo_valor) {
+		this.nuevo_valor = nuevo_valor;
+	}
+	public int getNueva_vida_util() {
+		return nueva_vida_util;
+	}
+	public void setNueva_vida_util(int nueva_vida_util) {
+		this.nueva_vida_util = nueva_vida_util;
 	}
 
 	

@@ -1,23 +1,30 @@
 package ait.sistemas.proyecto.activos.view.reva.revaloriza;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -26,35 +33,41 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormRevaloriza frm_solicitud;
-	private CssLayout hl_errores;
-	private Button btn_limpiar;
-	private Button btn_agregar;
+	private FormRevaloriza frm_solicitud= new FormRevaloriza(this);
+	private CssLayout hl_errores= new CssLayout();
+	private Button btn_salir= new Button("Salir");
+	private Button btn_guardar= new Button("Agregar");
 	
 	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
 	
 	public VRevalorizaA() {
-		frm_solicitud = new FormRevaloriza();
-		this.btn_limpiar = new Button("Limpiar");
-		this.btn_agregar = new Button("Agregar");
-		this.btn_agregar.addClickListener(this);
-		this.btn_limpiar.addClickListener(this);
-		
-		this.hl_errores = new CssLayout();
+		this.btn_guardar.addClickListener(this);
+		this.btn_salir.addClickListener(this);
 		
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
+		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+		buildMessages(msg);
 	}
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
-		buttonContent.addComponent(this.btn_agregar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
+		GridLayout btn_grid = new GridLayout(2, 1);
+		btn_grid.setResponsive(true);
+		btn_grid.setSizeFull();
+		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_grid.addComponent(this.btn_guardar);
+		btn_grid.setComponentAlignment(btn_guardar, Alignment.TOP_CENTER);
+		btn_guardar.setIcon(FontAwesome.SAVE);
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
-		buttonContent.addComponent(this.btn_limpiar);
+		btn_grid.addComponent(this.btn_salir);
+		btn_salir.setIcon(FontAwesome.UNDO);
+		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
+		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 	
@@ -62,14 +75,14 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 		
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
-		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Activos Disponibles");
-		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 		formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
-		formContent.addComponent(gridPanel);
-		Responsive.makeResponsive(formContent);
+		
+		Panel pn_grid = new Panel("Activos Fijos Revalorizados");
+		pn_grid.setIcon(FontAwesome.TABLE);
+		pn_grid.setStyleName(AitTheme.PANEL_GRID);
+		pn_grid.setContent(this.frm_solicitud.getGrid());
+		formContent.addComponent(pn_grid);
 		return formContent;
 	}
 	
@@ -89,7 +102,7 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	public void enter(ViewChangeEvent event) {
 	}
 	
-	private void buildMessages(List<BarMessage> mensages) {
+	void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
@@ -104,7 +117,7 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_agregar) {
+		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_solicitud.validate()) {
 				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
 					this.frm_solicitud.clear();
@@ -116,12 +129,12 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
+			buildMessages(msg);
 			buildMessages(this.frm_solicitud.getMensajes());
 			this.frm_solicitud.clearMessages();
 		}
-		if (event.getButton() == this.btn_limpiar) {
-			frm_solicitud.update();
-			// this.frm_solicitud.updateId();
+		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 			
 		}
 	}

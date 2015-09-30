@@ -1,46 +1,63 @@
 package ait.sistemas.proyecto.activos.view.reva.revaloriza;
 
-import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
-import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import java.util.List;
+
+import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
-
+/**
+ * Grid asociado a la Clase ActivoInventario
+ * @author Kim
+ *
+ */
 public class GridRevaloriza extends Grid{
 
 	private static final long serialVersionUID = 1L;
-	private BeanItemContainer<ActivoGrid> bean_activos;
-
-	final ActivoImpl activoimpl = new ActivoImpl();
+	private BeanItemContainer<ActivoInventario> bean_inventario;
 	
 	public GridRevaloriza() {
-		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
-		setContainerDataSource(bean_activos);
-		setSizeFull();
-		Column id_activo = getColumn("id_activo").setExpandRatio(1);
-		id_activo.setHeaderCaption("Codigo");
-		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
-		nombre_activo.setHeaderCaption("Nombre Activo");
+		bean_inventario = new BeanItemContainer<ActivoInventario>(ActivoInventario.class);
+		setContainerDataSource(bean_inventario);
+		setWidth("100%");
+		setHeightMode(HeightMode.ROW);
+		setHeightByRows(5);
+		removeColumn("ci_funcionario");
+		removeColumn("dependencia");
+		removeColumn("documento_referencia");
+		removeColumn("dr");
+		removeColumn("sr");
+		removeColumn("mr");
+		removeColumn("fecha_referencia");
+		removeColumn("fecha_registro");
+		removeColumn("nombre_funcionario");
+		removeColumn("numero_documento");
+		removeColumn("observacion");
 	}
-	public void update(String grupo_contable, String auxiliar_contable){
-		removeAllColumns();
-		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getDisponibles(grupo_contable, auxiliar_contable));
-		setContainerDataSource(bean_activos);
-		setSelectionMode(SelectionMode.MULTI);
-		Column id_activo = getColumn("id_activo").setExpandRatio(1);
-		id_activo.setHeaderCaption("Codigo");
-		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
-		nombre_activo.setHeaderCaption("Nombre Activo");
+	/**
+	 * LLena del Grid con los datos enviados
+	 * @param activos
+	 */
+	public void buildGrid(List<ActivoInventario> activos) {
+		bean_inventario.addAll(activos);
+		setContainerDataSource(bean_inventario);
+		setHeightMode(HeightMode.ROW);
+		setHeightByRows(5);
+		setWidth("100%");
+		
+
+		setColumnOrder("codigo_activo", "nombre_activo", "nuevo_valor","nueva_vida_util");
+		getColumn("codigo_activo").setHeaderCaption("Codigo").setExpandRatio(0);
+		getColumn("nombre_activo").setHeaderCaption("Nombre del Activo").setExpandRatio(7);
+		getColumn("nuevo_valor").setHeaderCaption("Nuevo Valor").setExpandRatio(1);
+		getColumn("nueva_vida_util").setHeaderCaption("Nueva Vida Util").setExpandRatio(1);
+		
+		// sort("AUC_Auxiliar_Contable", SortDirection.ASCENDING);
+		Responsive.makeResponsive(this);
 	}
-	
-	public void updateasignados(String ci_usuario){
+	public void clean(){
 		removeAllColumns();
-		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getAsignados(ci_usuario));
-		setContainerDataSource(bean_activos);
-		setSelectionMode(SelectionMode.MULTI);
-		Column id_activo = getColumn("id_activo").setExpandRatio(1);
-		id_activo.setHeaderCaption("Codigo");
-		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
-		nombre_activo.setHeaderCaption("Nombre Activo");
 	}
 }
