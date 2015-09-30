@@ -608,14 +608,17 @@ public class ActivosModel implements Serializable {
 		ACT_Inmueble = aCT_Inmueble;
 	}
 	
-	@SuppressWarnings("deprecation")
-	public int getACT_Vida_Util_Remanente() {
-		int vida_util_remanente = (this.ACT_Fecha_Incorporacion.getYear() + this.ACT_Vida_Util)
-				- (new java.util.Date().getYear());
-		return vida_util_remanente < 0 ? 0 : vida_util_remanente;
-	}
 	
-	public void Actualizar(java.util.Date fecha_actual) {
+	public boolean Actualizar(java.util.Date fecha_actual) {
+		
+		if (fecha_actual.getTime() < this.ACT_Fecha_Incorporacion.getTime()) {
+			
+			this.ACT_Actualizacion_Acumulada = new BigDecimal(0);
+			this.ACT_Depresiacion_Acumulada = new BigDecimal(0);
+			this.ACT_Valor_Neto = new BigDecimal(0);
+			return false;
+		}
+		
 		TipoCambioImpl tipocambioimpl = new TipoCambioImpl();
 		
 		Calendar calendar = Calendar.getInstance();
@@ -627,19 +630,21 @@ public class ActivosModel implements Serializable {
 		if (fecha_total_depresiacion.getTime() < fecha_actual.getTime()) {
 			fecha_actual = fecha_total_depresiacion;
 		}
-		// java.util.Date fecha_actual = new
-		// java.util.Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
-		// java.util.Date fecha_actual = new java.util.Date();
-		// double CAI = this.ACT_Valor_Neto == null ?
-		// this.ACT_Valor_Compra.doubleValue() :
-		// this.ACT_Valor_Neto.doubleValue();
-		double CAI = this.ACT_Valor_Compra.doubleValue();
-		double ufvi = tipocambioimpl.getTipoCambioUFV(this.ACT_Fecha_Ultima_Depreciacion).getTipo_cambio().doubleValue();
-		double ufvf = tipocambioimpl.getTipoCambioUFV(new Date(fecha_actual.getTime())).getTipo_cambio().doubleValue();
+		double CAI = Double.parseDouble(this.ACT_Valor_Compra.toString());
+		double ufvi = Double.parseDouble(tipocambioimpl.getTipoCambioUFV(this.ACT_Fecha_Incorporacion).getTipo_cambio()
+				.toString());
+		double ufvf = Double.parseDouble(tipocambioimpl.getTipoCambioUFV(new Date(fecha_actual.getTime())).getTipo_cambio()
+				.toString());
 		double AG = CAI * ((ufvf / ufvi) - 1);
 		double CA = AG + CAI;
 		
 		double DAI = 0;
+		double division = ufvf / ufvi;
+		
+		BigDecimal bd = new BigDecimal(division);
+		
+		division = bd.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		
 		double ADA = DAI * ((ufvf / ufvi) - 1);
 		
 		/**
@@ -666,14 +671,18 @@ public class ActivosModel implements Serializable {
 		double DG = CAI * dias / dias_totales;
 		
 		double DA = 0 + DG;
+		if (CA == DA) {
+			DA--;
+		}
 		
-		double NETO = CA - (DA == CA ? CA - 1 : CA);
-		CA = Math.round(CA * 100.0) / 100.0;
-		DA = Math.round(DA * 100.0) / 100.0;
-		NETO = Math.round(NETO * 100.0) / 100.0;
+		double NETO = CA - DA;
 		
-		this.ACT_Actualizacion_Acumulada = new BigDecimal(CA);
-		this.ACT_Depresiacion_Acumulada = new BigDecimal(DA);
-		this.ACT_Valor_Neto = new BigDecimal(NETO);
+		@SuppressWarnings("deprecation")
+		int vida_util_remanente = (this.ACT_Fecha_Incorporacion.getYear() + this.ACT_Vida_Util) - fecha_actual.getYear();
+		this.ACT_Vida_Residual = vida_util_remanente < 0 ? 0 : vida_util_remanente;
+		this.ACT_Actualizacion_Acumulada = new BigDecimal(CA).setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.ACT_Depresiacion_Acumulada = new BigDecimal(DA).setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.ACT_Valor_Neto = new BigDecimal(NETO).setScale(2, BigDecimal.ROUND_HALF_UP);
+		return true;
 	}
 }

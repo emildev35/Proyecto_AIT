@@ -114,7 +114,7 @@ public class FormRevaloriza extends GridLayout  {
 	private void buildContent() {
 		
 		Panel pn_doc = new Panel("Documento de Revalorizaion");
-		Panel pn_resol = new Panel("Resolucion de Revalorizacion");
+//		Panel pn_resol = new Panel("Resolucion de Revalorizacion");
 		Panel pn_registro = new Panel("Registre los datos del Activo Fijo Revalorizado");
 		
 		GridLayout gridl_doc = new GridLayout(2, 1);

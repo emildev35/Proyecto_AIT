@@ -24,10 +24,8 @@ public class ActualizacionImpl {
 
 public int add_Actualizacion (Actualizacion table) {
 	String strQuery = String.format("EXEC Reva_Actualiza_I "
-			+ "@UFVI=?1, "
-			+ "@Fecha=?2 ");
+			+ "@Fecha_Depreciacion=?1 ");
 	Query query = this.em.createNativeQuery(strQuery);
-	query.setParameter(1, table.getUfvf());
 	query.setParameter(2, table.getFecha());
 	try{
 		int result = (Integer) query.getSingleResult();
