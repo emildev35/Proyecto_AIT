@@ -103,7 +103,7 @@ public class Messages {
 	/**
 	 * Mensaje presionar tecla ENTER
 	 */
-	public static final String KEY_ENTER = "Para el registro del Activo debe presionar la tecla ENTER o INTRO";
+	public static final String KEY_ENTER = "Para el registro debe presionar la tecla ENTER o INTRO";
 	/***
 	 * Mensaje de Campos requeridos
 	 */

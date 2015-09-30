@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.component.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -30,7 +31,10 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "fecha_registro", column = "fecha_registro"),
 		@FieldResult(name = "documento_referencia", column = "documento_referencia"),
 		@FieldResult(name = "nombre_funcionario", column = "nombre_funcionario"),
-		@FieldResult(name = "fecha_referencia", column = "fecha_referencia") }) })
+		@FieldResult(name = "fecha_referencia", column = "fecha_referencia"),
+		@FieldResult(name = "nuevo_valor", column = "nuevo_valor"),
+		@FieldResult(name = "nueva_vida_util", column = "nueva_vida_util")
+		}) })
 @Entity
 public class ActivoInventario implements Serializable {	
 	private static final long serialVersionUID = 1L;
@@ -49,6 +53,8 @@ public class ActivoInventario implements Serializable {
 	private String documento_referencia;
 	private String fecha_referencia;
 	private String nombre_funcionario;
+	private BigDecimal nuevo_valor;
+	private int nueva_vida_util;
 	
 	public ActivoInventario() {
 	}
@@ -60,6 +66,13 @@ public class ActivoInventario implements Serializable {
 		this.ci_funcionario = ci_funcionario;
 	}
 
+	public ActivoInventario(long codigo_activo, String nombre_activo, BigDecimal nuevo_valor, int nueva_vida_util) {
+		this.codigo_activo = codigo_activo;
+		this.nombre_activo = nombre_activo;
+		this.nueva_vida_util=nueva_vida_util;
+		this.nuevo_valor = nuevo_valor;
+	}
+	
 	public long getCodigo_activo() {
 		return codigo_activo;
 	}
@@ -162,6 +175,22 @@ public class ActivoInventario implements Serializable {
 	
 	public void setNombre_funcionario(String nombre_funcionario) {
 		this.nombre_funcionario = nombre_funcionario;
+	}
+
+	public BigDecimal getNuevo_valor() {
+		return nuevo_valor;
+	}
+
+	public void setNuevo_valor(BigDecimal nuevo_valor) {
+		this.nuevo_valor = nuevo_valor;
+	}
+
+	public int getNueva_vida_util() {
+		return nueva_vida_util;
+	}
+
+	public void setNueva_vida_util(int nueva_vida_util) {
+		this.nueva_vida_util = nueva_vida_util;
 	}
 	
 }
