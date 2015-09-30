@@ -7,7 +7,9 @@ import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.common.view.HomeView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -33,13 +35,15 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	
 	private static final long serialVersionUID = 1L;
 	
-	private FormRevaloriza frm_solicitud= new FormRevaloriza(this);
-	private CssLayout hl_errores= new CssLayout();
-	private Button btn_salir= new Button("Salir");
-	private Button btn_guardar= new Button("Agregar");
+	private FormRevaloriza frm_solicitud = new FormRevaloriza(this);
+	private CssLayout hl_errores = new CssLayout();
+	private Button btn_salir = new Button("Salir");
+	private Button btn_guardar = new Button("Agregar");
 	
-	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private MovimientoImpl movimientoimpl = new MovimientoImpl();
 	private List<BarMessage> msg = new ArrayList<BarMessage>();
+	
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VRevalorizaA() {
 		this.btn_guardar.addClickListener(this);
@@ -77,7 +81,6 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 		formContent.setSpacing(true);
 		formContent.setMargin(true);
 		formContent.addComponent(frm_solicitud);
-		
 		Panel pn_grid = new Panel("Activos Fijos Revalorizados");
 		pn_grid.setIcon(FontAwesome.TABLE);
 		pn_grid.setStyleName(AitTheme.PANEL_GRID);
@@ -90,10 +93,7 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Movimiento de Activos >>"));
-		nav.addComponent(new Label("Solicitud de Asignacion>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -119,11 +119,10 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_solicitud.validate()) {
-				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData())>0) {
+				if (movimientoimpl.addMovimiento(this.frm_solicitud.getData()) > 0) {
 					this.frm_solicitud.clear();
 					Notification.show(Messages.SUCCESS_MESSAGE);
-				}
-				else{
+				} else {
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 				}
 			} else {

@@ -34,8 +34,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 	private Button btn_imprimir;
 	private FormReporte frmReporte = new FormReporte();
 	int r = 0;
-	// private String[][] data;
-	// private final ActivoImpl activo_impl = new ActivoImpl();
+	
 	private final ActualizacionImpl actualizacion_impl = new ActualizacionImpl();
 	private CssLayout hl_errores = new CssLayout();
 	
@@ -85,22 +84,6 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		
 	}
 	
-	// public String[][] getData() {
-	//
-	// List<ActivosModel> lista = activo_impl
-	// .activos_by_dependencia((Short)
-	// this.frmReporte.cb_Dependencia.getValue());
-	//
-	// this.data = new String[lista.size()][2];
-	// this.r = 0;
-	// for (ActivosModel activo : lista) {
-	// String[] row = { activo.getACT_Grupo_Contable(),
-	// activo.getACT_Auxiliar_Contable() };
-	// this.data[r] = row;
-	// this.r++;
-	// }
-	// return data;
-	// }
 	
 	public String[][] getDatos() {
 		
@@ -156,25 +139,6 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		return data;
 	}
 	
-	// public String[][] getDatosALL() {
-	//
-	// List<ActivosModel> lista = activo_impl.getactivos();
-	//
-	// String[][] data = new String[lista.size()][5];
-	// r = 0;
-	// for (ActivosModel activo : lista) {
-	// String[] row = { activo.getACT_Dependencia(),
-	// activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(),
-	// activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(),
-	// activo.getACT_Nombre_Activo(),
-	// String.valueOf(activo.getACT_Valor()),
-	// String.valueOf(activo.getACT_Valor_Neto()) };
-	//
-	// data[r] = row;
-	// r++;
-	// }
-	// return data;
-	// }
 	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
