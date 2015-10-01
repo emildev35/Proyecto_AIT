@@ -21,7 +21,6 @@ public class CierreGestionImpl {
 	}
 
 	public Cierre_Gestion getall() {
-
 		Query query = em.createNativeQuery("EXEC Reva_CierreGestion_Q", "cierre-gestion");
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		Cierre_Gestion resultlist = (Cierre_Gestion)query.getSingleResult();

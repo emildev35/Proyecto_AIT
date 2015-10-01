@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,10 +24,10 @@ public class ActualizacionImpl {
 	}
 
 public int add_Actualizacion (Actualizacion table) {
-	String strQuery = String.format("EXEC Reva_Actualiza_I "
-			+ "@Fecha_Depreciacion=?1 ");
+	String strQuery = String.format("EXEC Reva_Actualizacion_I "
+			+ "@Fecha_Actual=?1 ");
 	Query query = this.em.createNativeQuery(strQuery);
-	query.setParameter(2, table.getFecha());
+	query.setParameter(2, new SimpleDateFormat("yyyy-MM-ddT00:00:00").format(table.getFecha()));
 	try{
 		int result = (Integer) query.getSingleResult();
 		return result;
@@ -36,10 +37,11 @@ public int add_Actualizacion (Actualizacion table) {
 	
 }
 @SuppressWarnings("unchecked")
-public List<ActivosModel> getActualizacion(short id_dependencia) {
-	Query query = em.createNativeQuery("Reva_Actualizacion_Q " + "@ACT_Dependencia=?1 ", ActivosModel.class);
+public List<ActivosModel> getActualizacion(short id_dependencia, String fecha) {
+	Query query = em.createNativeQuery("Reva_Actualizacion_Q " + "@ACT_Dependencia=?1 , @Fecha_Reporte=?2", ActivosModel.class);
 	query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	query.setParameter(1, id_dependencia);
+	query.setParameter(2, fecha);
 	List<ActivosModel> resultlist = query.getResultList();
 	return resultlist;
 }

@@ -2,6 +2,8 @@ package ait.sistemas.proyecto.activos.view.reva.actualiza;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -84,11 +86,13 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		
 	}
 	
-	
 	public String[][] getDatos() {
-		
-		List<ActivosModel> lista = actualizacion_impl.getActualizacion((Short) this.frmReporte.cb_Dependencia.getValue());
-		
+		List<ActivosModel> lista = new ArrayList<ActivosModel>();
+		if ((Short) this.frmReporte.cb_Dependencia.getValue() == 0) {
+			lista = actualizacion_impl.getActualizacion((short) 0, new SimpleDateFormat("yyyy-dd-MM").format(frmReporte.dtf_fecha_ultima_depre.getValue()));
+		} else {
+			lista = actualizacion_impl.getActualizacion((short)this.frmReporte.cb_Dependencia.getValue(), new SimpleDateFormat("yyyy-MM-ddT00:00:00").format(frmReporte.dtf_fecha_ultima_depre.getValue()));
+		}
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
@@ -119,26 +123,16 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 			
 			double valor_DAA = activo.getACT_DAA() == null ? 0 : activo.getACT_DAA().doubleValue();
 			String str_DAA = String.valueOf(valor_DAA);
-			String[] row = { 
-					activo.getACT_Dependencia(), 
-					activo.getACT_Grupo_Contable(),
-					activo.getACT_Auxiliar_Contable(),
-					activo.getACT_Codigo_Activo(), 
-					activo.getACT_Nombre_Activo(), 
-					String.valueOf(activo.getACT_Fecha_Compra()),
-					valor_str_compra, 
-					String.valueOf(activo.getACT_Vida_Util()), 
-					str_acrualizacion_GAn, 
-					str_depreciacion_GAn,
-					str_acrualizacion_GA, 
-					str_depreciacion_GA, str_CA, str_DAA, valor_str };
+			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(),
+					activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(), String.valueOf(activo.getACT_Fecha_Compra()),
+					valor_str_compra, String.valueOf(activo.getACT_Vida_Util()), str_acrualizacion_GAn, str_depreciacion_GAn,
+					str_acrualizacion_GA, str_depreciacion_GA, str_CA, str_DAA, valor_str };
 			
 			data[r] = row;
 			r++;
 		}
 		return data;
 	}
-	
 	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
