@@ -106,7 +106,7 @@ public class PdfReport {
 				.setTitle("INVENTARIO DE ACTIVOS POR GRUPO CONTABLE")
 				.setSubTitle(
 						"Elaborado al: "
-								+ new SimpleDateFormat("dd-MM-yyyy").format(fechaimpl.getFechaDep().getCGE_Fecha_Cierre_Gestion()))
+								+ new SimpleDateFormat("dd-MM-yyyy").format(fechaimpl.getall().getCGE_Fecha_Cierre_Gestion()))
 				.build();
 		return table;
 	}

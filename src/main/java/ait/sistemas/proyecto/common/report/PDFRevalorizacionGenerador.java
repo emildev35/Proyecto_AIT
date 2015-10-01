@@ -419,9 +419,9 @@ public class PDFRevalorizacionGenerador {
 			 * Suma de los Auxiliares Contables
 			 */
 			
-			sum_auxiliares_contables += Double.parseDouble(table.getContent()[i][6] == "null" ? "0" : table.getContent()[i][6]);
-			sum_neto_auxiliares_contables += Double.parseDouble(table.getContent()[i][7] == "null" ? "0"
-					: table.getContent()[i][7]);
+			sum_auxiliares_contables += Double.parseDouble(table.getContent()[i][13] == "null" ? "0" : table.getContent()[i][13]);
+			sum_neto_auxiliares_contables += Double.parseDouble(table.getContent()[i][14] == "null" ? "0"
+					: table.getContent()[i][14]);
 			can_auxiliares_contables++;
 			tableTopY -= table.getRowHeight();
 			drawCurrentPage(table, current, contentStream, tableTopY);
@@ -772,7 +772,7 @@ public class PDFRevalorizacionGenerador {
 			Table table) throws IOException {
 		
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		nextTextX = table.getColumns().get(2).getWidth() - 8 * table.getMargin();
+		nextTextX = table.getColumns().get(2).getWidth() * 6 - table.getMargin();
 		for (int i = 0; i < lineContent.length; i++) {
 			String text = lineContent[i];
 			contentStream.beginText();
@@ -788,7 +788,7 @@ public class PDFRevalorizacionGenerador {
 			
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
-			nextTextX += 2 * table.getColumns().get(4).getWidth();
+			nextTextX += 4 * table.getColumns().get(4).getWidth();
 			if (i == 3) {
 				nextTextX = table.getMargin() + table.getWidth() - table.getColumns().get(4).getWidth();
 			}
