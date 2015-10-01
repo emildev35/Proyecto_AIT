@@ -14,7 +14,10 @@ public class CmovimientoDocumento {
 	
 	public CmovimientoDocumento() {
 	}
-
+	public CmovimientoDocumento(String no_referencia, Date fecha_no_referencia) {
+		this.nro_documento_referencia=no_referencia;
+		this.fecha_nro_referencia = fecha_no_referencia;
+	}
 	public short getId_dependencia() {
 		return id_dependencia;
 	}
@@ -71,4 +74,12 @@ public class CmovimientoDocumento {
 		this.no_documento = no_documento;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		CmovimientoDocumento nmov = (CmovimientoDocumento)obj;
+		if(this.nro_documento_referencia.equals(nmov.getNro_documento_referencia()) && this.fecha_nro_referencia.equals(nmov.getFecha_nro_referencia())){
+			return true;
+		}
+		return false;
+	}
 }

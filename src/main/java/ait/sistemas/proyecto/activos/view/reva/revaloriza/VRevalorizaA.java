@@ -55,6 +55,7 @@ public class VRevalorizaA extends VerticalLayout implements View, ClickListener 
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
 		msg.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+		msg.add(new BarMessage("Formulario", Messages.LLENAR_CAMPOS_RES));
 		buildMessages(msg);
 	}
 	

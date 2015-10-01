@@ -9,6 +9,7 @@ import java.util.Map;
 
 import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.ActivoInventario;
+import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
@@ -64,6 +65,7 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 	private List<ActivoInventario> activos_invetariados = new ArrayList<ActivoInventario>();
 	private VerticalLayout layout_errores;
 	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
+	public CmovimientoDocumento resol;
 
 	public FormRevaloriza(VerticalLayout layout) {
 
@@ -100,14 +102,17 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 
 		this.dtf_fecha_resol.setRequired(true);
 		// this.dtf_fecha_doc.addValidator(new NullValidator("No Nulo", false));
+		this.txtcodigo.setEnabled(false);
 		this.txtcodigo.addTextChangeListener(this);
 		this.txtcodigo.setRequired(true);
 		this.txtcodigo.addValidator(new NullValidator("No Nulo", false));
 		this.txtnombre_activo.setEnabled(false);
 		this.txtnombre_activo.setRequired(true);
 		this.txtnombre_activo.addValidator(new NullValidator("No Nulo", false));
+		this.txtnuevo_valor.setEnabled(false);
 		this.txtnuevo_valor.setRequired(true);
 		this.txtnuevo_valor.addValidator(new NullValidator("No Nulo", false));
+		this.txtnueva_vida_util.setEnabled(false);
 		this.txtnueva_vida_util.setRequired(true);
 		this.txtnueva_vida_util.addValidator(new NullValidator("No Nulo", false));
 
@@ -133,40 +138,6 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 	}
 
 	private void buildContent() {
-
-		this.addShortcutListener(new ShortcutListener("Key Enter", KeyCode.ENTER, new int[] {}) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void handleAction(Object sender, Object target) {
-
-				try {
-					binder_revaloriza.commit();
-					ActivoInventario activo = new ActivoInventario(
-							Long.parseLong(txtcodigo.getValue().replace(".", "")
-							.replace("'", "")), txtnombre_activo.getValue(), 
-							new BigDecimal(txtnuevo_valor.getValue()),
-							Integer.parseInt(txtnueva_vida_util.getValue()));
-					activos_invetariados.add(activo);
-					grid_revaloriza.buildGrid(activos_invetariados);
-				} catch (CommitException ex) {
-					Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
-					Iterator<Field<?>> it = invalid_fields.keySet().iterator();
-					while (it.hasNext()) {
-						Field<?> key = (Field<?>) it.next();
-						mensajes.add(new BarMessage(key.getCaption(),
-								invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields
-										.get(key).getMessage()));
-					}
-				}
-				((VRevalorizaA) layout_errores).buildMessages(mensajes);
-				mensajes = new ArrayList<BarMessage>();
-				txtcodigo.setValue("");
-				txtnombre_activo.setValue("");
-				txtnuevo_valor.setValue("");
-				txtnueva_vida_util.setValue("");
-			}
-		});
 
 		Panel pn_doc = new Panel("Documento de Revalorizaion");
 		Panel pn_resol = new Panel("Resolucion de Revalorizacion");
@@ -210,6 +181,79 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 		pn_registro.setContent(gridl_activos);
 
 		this.addComponent(pn_registro, 0, 1, 5, 1);
+
+		gridl_res.addShortcutListener(new ShortcutListener("Key Enter", KeyCode.ENTER, new int[] {}) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void handleAction(Object sender, Object target) {
+
+				if (!txt_resolucion.getValue().equals(null) && !dtf_fecha_resol.getValue().equals(null)) {
+					if (resol == null) {
+						resol = new CmovimientoDocumento(txt_resolucion.getValue(), new java.sql.Date(dtf_fecha_resol
+								.getValue().getTime()));
+						txt_resolucion.setValue("");
+						dtf_fecha_resol.setValue(null);
+						clearMessages();
+						mensajes.add(new BarMessage("Formulario", Messages.LLENAR_NUEVAMENTE));
+
+					} else {
+						if (resol.equals(new CmovimientoDocumento(txt_resolucion.getValue(), new java.sql.Date(
+								dtf_fecha_resol.getValue().getTime())))) {
+							txtcodigo.setEnabled(true);
+							txtnuevo_valor.setEnabled(true);
+							txtnueva_vida_util.setEnabled(true);
+							clearMessages();
+							mensajes.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+						} else {
+							resol = null;
+							txt_resolucion.setValue("");
+							dtf_fecha_resol.setValue(null);
+							clearMessages();
+							mensajes.add(new BarMessage("Formulario", Messages.CAMPOS_DSITINTOS));
+							// TODO vaciar y mostrar mensaje
+						}
+					}
+
+				} 
+				else{
+					mensajes.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+					mensajes.add(new BarMessage("Formulario", Messages.LLENAR_CAMPOS_RES));
+				}
+			}
+		});
+
+		gridl_activos.addShortcutListener(new ShortcutListener("Key Enter", KeyCode.ENTER, new int[] {}) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void handleAction(Object sender, Object target) {
+
+				try {
+
+					binder_revaloriza.commit();
+					ActivoInventario activo = new ActivoInventario(Long.parseLong(txtcodigo.getValue().replace(".", "")
+							.replace("'", "")), txtnombre_activo.getValue(), new BigDecimal(txtnuevo_valor.getValue()),
+							Integer.parseInt(txtnueva_vida_util.getValue()));
+					activos_invetariados.add(activo);
+					grid_revaloriza.buildGrid(activos_invetariados);
+				} catch (CommitException ex) {
+					Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
+					Iterator<Field<?>> it = invalid_fields.keySet().iterator();
+					while (it.hasNext()) {
+						Field<?> key = (Field<?>) it.next();
+						mensajes.add(new BarMessage(key.getCaption(),
+								invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields
+										.get(key).getMessage()));
+					}
+				}
+				((VRevalorizaA) layout_errores).buildMessages(mensajes);
+				mensajes = new ArrayList<BarMessage>();
+				txtcodigo.setValue("");
+				txtnombre_activo.setValue("");
+				txtnuevo_valor.setValue("");
+				txtnueva_vida_util.setValue("");
+			}
+		});
 
 	}
 

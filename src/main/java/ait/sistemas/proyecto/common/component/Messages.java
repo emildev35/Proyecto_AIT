@@ -135,4 +135,16 @@ public class Messages {
 	public static String MANY_CONFIRM_DELETE_MESSAGE(int element, String caption) {
 		return String.format("Esta Uds. seguro de eliminar los %d %s", element, caption);
 	}
+	/**
+	 * llenar el campo nuevamente
+	 */
+	public static final String LLENAR_NUEVAMENTE = "Porfavor llene el campo nuevamente";
+	/**
+	 * los campos son distintos
+	 */
+	public static final String CAMPOS_DSITINTOS = "Los campos son disitntos";
+	/**
+	 * llenar la resolucion y la fecha
+	 */
+	public static final String LLENAR_CAMPOS_RES = "Debe llenar los campos No. Resolucion y Fecha";
 }
