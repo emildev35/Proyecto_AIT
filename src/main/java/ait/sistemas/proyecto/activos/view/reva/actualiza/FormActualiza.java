@@ -122,7 +122,6 @@ public class FormActualiza extends GridLayout implements ValueChangeListener {
 
 	public boolean validate() {
 		if (dtf_fecha_ultima_depre.getValue().getTime() < dtf_fecha.getValue().getTime()) {
-
 			try {
 				this.binder_Actualizacion.commit();
 				this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));

@@ -284,7 +284,6 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
-
 		result.setId_dependencia(usuario.getId_dependecia());
 		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_no_doc.getValue()));
