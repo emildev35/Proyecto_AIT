@@ -1,7 +1,5 @@
 package ait.sistemas.proyecto;
 
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
@@ -11,7 +9,6 @@ import ait.sistemas.proyecto.common.view.MainView;
 import ait.sistemas.proyecto.seguridad.component.Auth;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
-import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -25,7 +22,6 @@ import com.vaadin.server.SystemMessagesInfo;
 import com.vaadin.server.SystemMessagesProvider;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 

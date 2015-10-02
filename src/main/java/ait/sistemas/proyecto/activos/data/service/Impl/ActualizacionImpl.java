@@ -25,9 +25,10 @@ public class ActualizacionImpl {
 
 public int add_Actualizacion (Actualizacion table) {
 	String strQuery = String.format("EXEC Reva_Actualizacion_I "
-			+ "@Fecha_Actual=?1 ");
+			+ "@Fecha_Actual=?1");
 	Query query = this.em.createNativeQuery(strQuery);
-	query.setParameter(2, new SimpleDateFormat("yyyy-MM-ddT00:00:00").format(table.getFecha()));
+	query.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").format(table.getFecha())+"T00:00:00");
+	
 	try{
 		int result = (Integer) query.getSingleResult();
 		return result;

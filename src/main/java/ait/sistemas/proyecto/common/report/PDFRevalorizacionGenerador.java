@@ -21,7 +21,6 @@ public class PDFRevalorizacionGenerador {
 	
 	private PDDocument doc;
 	
-	
 	public boolean generatePDF(Table table, String savePath) throws IOException {
 		boolean result = false;
 		doc = null;
@@ -52,8 +51,6 @@ public class PDFRevalorizacionGenerador {
 		tableTopY -= table.getRowHeight() * table.getHeaderSize();
 		
 		dependencia = table.getContent()[i][0];
-		// drawTableGridDependencia(table, new String[] {
-		// "Dependencia ", dependencia }, contentStream, tableTopY);
 		writeHeader(contentStream, tableTopY, table);
 		drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
 		drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream, tableTopY);
@@ -85,14 +82,69 @@ public class PDFRevalorizacionGenerador {
 		String grupo_contable = "";
 		String auxiliar_contable = "";
 		
+		/**
+		 * Depreciacion Acumulada
+		 */
 		double sum_dependencia = 0;
 		double sum_por_dependencia = 0;
 		double sum_grupo_contable = 0;
 		double sum_auxiliares_contables = 0;
+		/**
+		 * Valor Neto
+		 */
 		double sum_neto_dependencia = 0;
 		double sum_neto_por_dependencia = 0;
 		double sum_neto_grupo_contable = 0;
 		double sum_neto_auxiliares_contables = 0;
+		
+		/**
+		 * Actualizacion Acumulada
+		 */
+		double sum_actacu_dependencia = 0;
+		double sum_actacu_por_dependencia = 0;
+		double sum_actacu_grupo_contable = 0;
+		double sum_actacu_auxiliares_contables = 0;
+		
+		/**
+		 * Depreciacion Gestion Actual
+		 */
+		double sum_depgestact_dependencia = 0;
+		double sum_depgestact_por_dependencia = 0;
+		double sum_depgestact_grupo_contable = 0;
+		double sum_depgestact_auxiliares_contables = 0;
+		
+		/**
+		 * Actualizacion Gestion Actual
+		 */
+		double sum_actgesact_dependencia = 0;
+		double sum_actgesact_por_dependencia = 0;
+		double sum_actgesact_grupo_contable = 0;
+		double sum_actgesact_auxiliares_contables = 0;
+		
+		/**
+		 * Depreciacion Actualizada Gestion Anterior
+		 */
+		double sum_depacugestant_dependencia = 0;
+		double sum_depacugestant_por_dependencia = 0;
+		double sum_depacugestant_grupo_contable = 0;
+		double sum_depacugestant_auxiliares_contables = 0;
+		
+		/**
+		 * Valor Actualizada Gestion Anterior
+		 */
+		double sum_valactgesant_dependencia = 0;
+		double sum_valactgesant_por_dependencia = 0;
+		double sum_valactgesant_grupo_contable = 0;
+		double sum_valactgesant_auxiliares_contables = 0;
+		
+		/**
+		 * Valor de Compra
+		 */
+		double sum_valcompra_dependencia = 0;
+		double sum_valcompra_por_dependencia = 0;
+		double sum_valcompra_grupo_contable = 0;
+		double sum_valcompra_auxiliares_contables = 0;
+		
 		int can_dependencia = 0;
 		int can_por_dependencia = 0;
 		int can_grupo_contable = 0;
@@ -131,20 +183,27 @@ public class PDFRevalorizacionGenerador {
 				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				
-				tableTopY -= 3*table.getRowHeight();
+				tableTopY -= 3 * table.getRowHeight();
 				r += 5;
 			}
 			
-			// Cambio de Auxliar
+			/**
+			 * Cambio de Auxliar Contable
+			 */
 			if (!table.getContent()[i][2].equals(auxiliar_contable)) {
+				can_grupo_contable += can_auxiliares_contables;
+				
 				sum_grupo_contable += sum_auxiliares_contables;
 				sum_neto_grupo_contable += sum_neto_auxiliares_contables;
+				sum_valcompra_grupo_contable += sum_valcompra_auxiliares_contables;
+				sum_valactgesant_grupo_contable += sum_valactgesant_auxiliares_contables;
+				sum_actgesact_grupo_contable += sum_actgesact_auxiliares_contables;
+				sum_depacugestant_grupo_contable += sum_depacugestant_auxiliares_contables;
+				sum_depgestact_grupo_contable += sum_depgestact_auxiliares_contables;
+				sum_actacu_grupo_contable += sum_actacu_auxiliares_contables;
 				
-				can_grupo_contable += can_auxiliares_contables;
 				if (!auxiliar_contable.equals("")) {
 					tableTopY -= table.getRowHeight();
-					// drawTableGridContables(table, new String[] { "", "" },
-					// contentStream, tableTopY);
 					
 					double valors_auxiliar_contable = Double.parseDouble(String.valueOf(can_auxiliares_contables) == null ? "0"
 							: String.valueOf(can_auxiliares_contables));
@@ -158,10 +217,29 @@ public class PDFRevalorizacionGenerador {
 					
 					double s_total_neto = sum_neto_auxiliares_contables;
 					String str_s_total_neto = formater.format(s_total_neto);
-					contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+					contentStream.drawLine(table.getMargin() * 16, tableTopY, (float) (table.getMargin() * 30.5), tableTopY);
 					
-					drawCurrentPageCorte(table, new String[] { "Cantidad por Auxiliar Contable", str_aux_cont, "Total",
-							str_s_total, str_s_total_neto }, contentStream, tableTopY);
+					drawCurrentPageCorte(
+							table,
+							new String[] { "Cantidad por Auxiliar Contable", str_aux_cont, "Total",
+									formater.format(sum_valcompra_auxiliares_contables),
+									formater.format(sum_valactgesant_auxiliares_contables),
+									formater.format(sum_actgesact_auxiliares_contables),
+									formater.format(sum_depacugestant_auxiliares_contables),
+									formater.format(sum_depgestact_auxiliares_contables),
+									formater.format(sum_actacu_auxiliares_contables), str_s_total, str_s_total_neto },
+							contentStream, tableTopY);
+					
+					can_auxiliares_contables = 0;
+					
+					sum_auxiliares_contables = 0;
+					sum_neto_auxiliares_contables = 0;
+					sum_valcompra_auxiliares_contables = 0;
+					sum_valactgesant_auxiliares_contables = 0;
+					sum_actgesact_auxiliares_contables = 0;
+					sum_depacugestant_auxiliares_contables = 0;
+					sum_depgestact_auxiliares_contables = 0;
+					sum_actacu_auxiliares_contables = 0;
 					if (r >= rowsPerPage || r == table.getHeaderSize()) {
 						if (contentStream != null) {
 							contentStream.close();
@@ -178,13 +256,7 @@ public class PDFRevalorizacionGenerador {
 						
 						r++;
 					}
-					// tableTopY -= table.getRowHeight();
-					// r++;
 				}
-				can_auxiliares_contables = 0;
-				sum_auxiliares_contables = 0;
-				sum_neto_auxiliares_contables = 0;
-				
 				
 				r++;
 				if (r >= rowsPerPage || r == table.getHeaderSize()) {
@@ -199,8 +271,6 @@ public class PDFRevalorizacionGenerador {
 					tableTopY -= table.getRowHeight() * table.getHeaderSize();
 					
 					dependencia = table.getContent()[i][0];
-					// drawTableGridDependencia(table, new String[] {
-					// "Dependencia ", dependencia }, contentStream, tableTopY);
 					writeHeader(contentStream, tableTopY, table);
 					drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
 					drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
@@ -208,6 +278,9 @@ public class PDFRevalorizacionGenerador {
 					r++;
 					tableTopY -= table.getRowHeight();
 					
+					/**
+					 * Cambio de Dependencia
+					 */
 					if (!table.getContent()[i][0].equals(dependencia)) {
 						/**
 						 * Suma de Dependencias
@@ -215,8 +288,24 @@ public class PDFRevalorizacionGenerador {
 						sum_dependencia += sum_grupo_contable;
 						sum_neto_dependencia += sum_neto_auxiliares_contables;
 						sum_por_dependencia += sum_grupo_contable;
+						sum_valcompra_por_dependencia += sum_valcompra_grupo_contable;
+						sum_valactgesant_por_dependencia += sum_valactgesant_grupo_contable;
+						sum_actgesact_por_dependencia += sum_actgesact_grupo_contable;
+						sum_depacugestant_por_dependencia += sum_depacugestant_grupo_contable;
+						sum_depgestact_por_dependencia += sum_depgestact_grupo_contable;
+						sum_actacu_por_dependencia += sum_actacu_grupo_contable;
+						
+						
 						sum_grupo_contable = 0;
+						
 						sum_neto_auxiliares_contables = 0;
+						sum_valcompra_auxiliares_contables = 0;
+						sum_valactgesant_auxiliares_contables = 0;
+						sum_actgesact_auxiliares_contables = 0;
+						sum_depacugestant_auxiliares_contables = 0;
+						sum_depgestact_auxiliares_contables = 0;
+						sum_actacu_auxiliares_contables = 0;
+						
 					}
 					
 					drawTableGridGA(table, table.getColumnsNamesAsArrayGA(), contentStream, tableTopY);
@@ -225,11 +314,13 @@ public class PDFRevalorizacionGenerador {
 					
 					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-					tableTopY -= 3*table.getRowHeight();
+					tableTopY -= 3 * table.getRowHeight();
 					r += 5;
 					
 				}
-				// cambio grupo contable
+				/**
+				 * Cambio de Grupo contable
+				 */
 				if (!table.getContent()[i][1].equals(grupo_contable)) {
 					/**
 					 * Suma de los Grupo Contable
@@ -250,9 +341,17 @@ public class PDFRevalorizacionGenerador {
 						double s_gruptotal_neto = Double.parseDouble(String.valueOf(sum_neto_grupo_contable));
 						String str_s_grup_total_neto = formater.format(s_gruptotal_neto);
 						tableTopY -= table.getRowHeight();
-						contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
-						drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", str_grup_cont, "Total",
-								str_s_grup_total, str_s_grup_total_neto }, contentStream, tableTopY);
+						contentStream.drawLine(table.getMargin() * 16, tableTopY, (float) (table.getMargin() * 30.5), tableTopY);
+						drawCurrentPageCorte(
+								table,
+								new String[] { "Cantidad por Grupo Contable", str_grup_cont, "Total",
+								
+								formater.format(sum_valcompra_grupo_contable), formater.format(sum_valactgesant_grupo_contable),
+										formater.format(sum_actgesact_grupo_contable),
+										formater.format(sum_depacugestant_grupo_contable),
+										formater.format(sum_depgestact_grupo_contable),
+										formater.format(sum_actacu_grupo_contable), str_s_grup_total, str_s_grup_total_neto },
+								contentStream, tableTopY);
 						// tableTopY -= table.getRowHeight();
 						r++;
 						if (r >= rowsPerPage || r == table.getHeaderSize()) {
@@ -281,28 +380,47 @@ public class PDFRevalorizacionGenerador {
 							
 							drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 							drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-							tableTopY -= 3*table.getRowHeight();
+							tableTopY -= 3 * table.getRowHeight();
 							r += 5;
 							r += 2;
 						}
 					}
-					can_dependencia += can_grupo_contable;
-					sum_dependencia += sum_grupo_contable;
-					sum_neto_dependencia += sum_neto_grupo_contable;
 					can_por_dependencia += can_grupo_contable;
 					sum_por_dependencia += sum_grupo_contable;
 					sum_neto_por_dependencia += sum_neto_grupo_contable;
+					sum_valcompra_por_dependencia += sum_valcompra_grupo_contable;
+					sum_valactgesant_por_dependencia += sum_valactgesant_grupo_contable;
+					sum_actgesact_por_dependencia += sum_actgesact_grupo_contable;
+					sum_depacugestant_por_dependencia += sum_depacugestant_grupo_contable;
+					sum_depgestact_por_dependencia += sum_depgestact_grupo_contable;
+					sum_actacu_por_dependencia += sum_actacu_grupo_contable;
+					
+					
+					can_dependencia += can_grupo_contable;
+					sum_dependencia += sum_grupo_contable;
+					sum_neto_dependencia += sum_neto_grupo_contable;
+					sum_valcompra_dependencia += sum_valcompra_grupo_contable;
+					sum_valactgesant_dependencia += sum_valactgesant_grupo_contable;
+					sum_actgesact_dependencia += sum_actgesact_grupo_contable;
+					sum_depacugestant_dependencia += sum_depacugestant_grupo_contable;
+					sum_depgestact_dependencia += sum_depgestact_grupo_contable;
+					sum_actacu_dependencia += sum_actacu_grupo_contable;
+					
 					can_grupo_contable = 0;
 					sum_grupo_contable = 0;
+					sum_valcompra_grupo_contable = 0;
+					sum_valactgesant_grupo_contable = 0;
+					sum_actgesact_grupo_contable = 0;
+					sum_depacugestant_grupo_contable = 0;
+					sum_depgestact_grupo_contable = 0;
+					sum_actacu_grupo_contable = 0;
 					sum_neto_grupo_contable = 0;
 				}
-				// Cambio de Dependencia
+				/**
+				 * Cambio de Dependencia
+				 */
 				if (!table.getContent()[i][0].equals(dependencia)) {
 					dependencia = table.getContent()[i][0];
-					// drawTableGridDependencia(table, new String[] {
-					// "Dependencia ", dependencia }, contentStream, tableTopY);
-					
-					// calculo suma por Dependencia
 					
 					DecimalFormat formate = new DecimalFormat("##,###,###,###");
 					double valorf_dep_contable = Double.parseDouble(String.valueOf(can_por_dependencia));
@@ -315,10 +433,17 @@ public class PDFRevalorizacionGenerador {
 					double f_deptotal_neto = Double.parseDouble(String.valueOf(sum_neto_por_dependencia));
 					String str_f_dep_total_neto = formater.format(f_deptotal_neto);
 					tableTopY -= table.getRowHeight();
-					contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
+					contentStream.drawLine(table.getMargin() * 16, tableTopY, (float) (table.getMargin() * 30.5), tableTopY);
 					
-					drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", str_f_dep_cont, "Total",
-							str_f_dep_total, str_f_dep_total_neto }, contentStream, tableTopY);
+					drawCurrentPageCorte(
+							table,
+							new String[] { "Cantidad por Dependencia", str_f_dep_cont, "Total",
+							
+							formater.format(sum_valcompra_por_dependencia), formater.format(sum_valactgesant_por_dependencia),
+									formater.format(sum_actgesact_por_dependencia),
+									formater.format(sum_depacugestant_por_dependencia),
+									formater.format(sum_depgestact_por_dependencia), formater.format(sum_actacu_por_dependencia),
+									str_f_dep_total, str_f_dep_total_neto }, contentStream, tableTopY);
 					tableTopY -= table.getRowHeight();
 					
 					/**
@@ -353,11 +478,26 @@ public class PDFRevalorizacionGenerador {
 					r++;
 					sum_dependencia += sum_grupo_contable;
 					sum_neto_dependencia += sum_neto_auxiliares_contables;
-					sum_por_dependencia = 0;
-					sum_neto_por_dependencia = 0;
+					
+					sum_valcompra_dependencia += sum_valcompra_grupo_contable;
+					sum_valactgesant_dependencia += sum_valactgesant_grupo_contable;
+					sum_actgesact_dependencia += sum_actgesact_grupo_contable;
+					sum_depacugestant_dependencia += sum_depacugestant_grupo_contable;
+					sum_depgestact_dependencia += sum_depgestact_grupo_contable;
+					sum_actacu_dependencia += sum_actacu_grupo_contable;
+					
+					
 					sum_grupo_contable += sum_grupo_contable;
 					sum_neto_auxiliares_contables = 0;
 					can_por_dependencia = 0;
+					
+					sum_valcompra_grupo_contable = 0;
+					sum_valactgesant_grupo_contable = 0;
+					sum_actgesact_grupo_contable = 0;
+					sum_depacugestant_grupo_contable = 0;
+					sum_depgestact_grupo_contable = 0;
+					sum_actacu_grupo_contable = 0;
+					sum_neto_grupo_contable = 0;
 					
 					numero_dependencias += 1;
 				}
@@ -377,6 +517,10 @@ public class PDFRevalorizacionGenerador {
 					page = generatePage(doc, table);
 					contentStream = generateContentStream(doc, page, table);
 					r = table.getHeaderSize();
+					sum_actacu_auxiliares_contables = 0;
+					sum_actgesact_auxiliares_contables = 0;
+					sum_depacugestant_auxiliares_contables = 0;
+					sum_valcompra_auxiliares_contables = 0;
 					tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
 							.getHeight() - table.getMargin();
 					tableTopY -= table.getRowHeight() * table.getHeaderSize();
@@ -391,14 +535,19 @@ public class PDFRevalorizacionGenerador {
 					r++;
 					tableTopY -= table.getRowHeight();
 					
+					/**
+					 * Cambio de Dependencia
+					 */
 					if (!table.getContent()[i][0].equals(dependencia)) {
 						/**
 						 * Suma de Dependencias
 						 */
 						sum_dependencia += sum_grupo_contable;
+						sum_valcompra_dependencia += sum_valcompra_grupo_contable;
 						sum_neto_dependencia += sum_neto_auxiliares_contables;
 						sum_por_dependencia += sum_grupo_contable;
 						sum_grupo_contable = 0;
+						sum_valcompra_grupo_contable = 0;
 						sum_neto_auxiliares_contables = 0;
 					}
 					
@@ -408,7 +557,7 @@ public class PDFRevalorizacionGenerador {
 					
 					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-					tableTopY -= 3*table.getRowHeight();
+					tableTopY -= 3 * table.getRowHeight();
 					r += 5;
 					
 				}
@@ -416,12 +565,33 @@ public class PDFRevalorizacionGenerador {
 			
 			String[] current = Arrays.copyOfRange(table.getContent()[i], 3, table.getContent()[i].length);
 			/**
-			 * Suma de los Auxiliares Contables
+			 * Suma de los Auxliares Contables
 			 */
-			
 			sum_auxiliares_contables += Double.parseDouble(table.getContent()[i][13] == "null" ? "0" : table.getContent()[i][13]);
 			sum_neto_auxiliares_contables += Double.parseDouble(table.getContent()[i][14] == "null" ? "0"
 					: table.getContent()[i][14]);
+			sum_valcompra_auxiliares_contables += Double.parseDouble(table.getContent()[i][7] == "null" ? "0" : table
+					.getContent()[i][7]);
+			sum_valactgesant_auxiliares_contables += Double.parseDouble(table.getContent()[i][8] == "null" ? "0" : table
+					.getContent()[i][8]);
+			sum_actgesact_auxiliares_contables += Double.parseDouble(table.getContent()[i][9] == "null" ? "0" : table
+					.getContent()[i][9]);
+			
+			sum_depacugestant_auxiliares_contables += Double.parseDouble(table.getContent()[i][10] == "null" ? "0" : table
+					.getContent()[i][10]);
+			sum_depgestact_auxiliares_contables += Double.parseDouble(table.getContent()[i][11] == "null" ? "0" : table
+					.getContent()[i][11]);
+			sum_actacu_auxiliares_contables += Double.parseDouble(table.getContent()[i][12] == "null" ? "0"
+					: table.getContent()[i][12]);
+			
+			
+//			sum_valcompra_dependencia += sum_valcompra_auxiliares_contables;
+//			sum_valactgesant_dependencia += sum_valactgesant_auxiliares_contables;
+//			sum_actgesact_dependencia += sum_actgesact_auxiliares_contables;
+//			sum_depacugestant_dependencia += sum_depacugestant_auxiliares_contables;
+//			sum_depgestact_dependencia += sum_depgestact_auxiliares_contables;
+//			sum_actacu_dependencia += sum_actacu_auxiliares_contables;
+			
 			can_auxiliares_contables++;
 			tableTopY -= table.getRowHeight();
 			drawCurrentPage(table, current, contentStream, tableTopY);
@@ -444,8 +614,14 @@ public class PDFRevalorizacionGenerador {
 			r++;
 		}
 		can_grupo_contable += can_auxiliares_contables;
-		sum_grupo_contable += sum_auxiliares_contables;
 		sum_neto_grupo_contable += sum_neto_auxiliares_contables;
+		sum_grupo_contable += sum_auxiliares_contables;
+		sum_valcompra_grupo_contable += sum_valcompra_auxiliares_contables;
+		sum_valactgesant_grupo_contable += sum_valactgesant_auxiliares_contables;
+		sum_actgesact_grupo_contable += sum_actgesact_auxiliares_contables;
+		sum_depacugestant_grupo_contable += sum_depacugestant_auxiliares_contables;
+		sum_depgestact_grupo_contable += sum_depgestact_auxiliares_contables;
+		sum_actacu_grupo_contable += sum_actacu_auxiliares_contables;
 		
 		can_dependencia += can_grupo_contable;
 		sum_dependencia += sum_grupo_contable;
@@ -454,6 +630,12 @@ public class PDFRevalorizacionGenerador {
 		can_por_dependencia += can_grupo_contable;
 		sum_por_dependencia += sum_grupo_contable;
 		sum_neto_por_dependencia += sum_neto_grupo_contable;
+		sum_valcompra_por_dependencia += sum_valcompra_grupo_contable;
+		sum_valactgesant_por_dependencia += sum_valactgesant_grupo_contable;
+		sum_actgesact_por_dependencia += sum_actgesact_grupo_contable;
+		sum_depacugestant_por_dependencia += sum_depacugestant_grupo_contable;
+		sum_depgestact_por_dependencia += sum_depgestact_grupo_contable;
+		sum_actacu_por_dependencia += sum_actacu_grupo_contable;
 		
 		tableTopY -= table.getRowHeight();
 		DecimalFormat formate = new DecimalFormat("##,###,###,###");
@@ -467,9 +649,18 @@ public class PDFRevalorizacionGenerador {
 		
 		double f_auxtotal_neto = Double.parseDouble(String.valueOf(sum_neto_auxiliares_contables));
 		String str_f_aux_total_neto = formater.format(f_auxtotal_neto);
-		contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
-		drawCurrentPageCorte(table, new String[] { "Cantidad por Auxiliar Contable", str_f_aux, "Total", str_f_aux_total,
-				str_f_aux_total_neto }, contentStream, tableTopY);
+		contentStream.drawLine(table.getMargin() * 15, tableTopY, table.getMargin() * 31, tableTopY);
+		
+		drawCurrentPageCorte(
+				table,
+				new String[] { "Cantidad por Auxiliar Contable", str_f_aux, "Total",
+						formater.format(sum_valcompra_auxiliares_contables),
+						formater.format(sum_valactgesant_auxiliares_contables),
+						formater.format(sum_actgesact_auxiliares_contables),
+						formater.format(sum_depacugestant_auxiliares_contables),
+						formater.format(sum_depgestact_auxiliares_contables), formater.format(sum_actacu_auxiliares_contables),
+						str_f_aux_total, str_f_aux_total_neto }, contentStream, tableTopY);
+		
 		tableTopY -= table.getRowHeight();
 		
 		double valorf_grupo_contable = Double.parseDouble(String.valueOf(can_grupo_contable));
@@ -480,9 +671,14 @@ public class PDFRevalorizacionGenerador {
 		
 		double f__gruptotal_neto = Double.parseDouble(String.valueOf(sum_neto_grupo_contable));
 		String str_f_grup_total_neto = formater.format(f__gruptotal_neto);
-		contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
-		drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", str_f_grup_cont, "Total", str_f_grup_total,
-				str_f_grup_total_neto }, contentStream, tableTopY);
+		contentStream.drawLine(table.getMargin() * 15, tableTopY, table.getMargin() * 31, tableTopY);
+		drawCurrentPageCorte(
+				table,
+				new String[] { "Cantidad por Grupo Contable", str_f_grup_cont, "Total",
+						formater.format(sum_valcompra_grupo_contable), formater.format(sum_valactgesant_grupo_contable),
+						formater.format(sum_actgesact_grupo_contable), formater.format(sum_depacugestant_grupo_contable),
+						formater.format(sum_depgestact_grupo_contable), formater.format(sum_actacu_grupo_contable),
+						str_f_grup_total, str_f_grup_total_neto }, contentStream, tableTopY);
 		tableTopY -= table.getRowHeight();
 		
 		// calculo suma por Dependencia
@@ -494,9 +690,14 @@ public class PDFRevalorizacionGenerador {
 		
 		double f_deptotal_neto = Double.parseDouble(String.valueOf(sum_neto_por_dependencia));
 		String str_f_dep_total_neto = formater.format(f_deptotal_neto);
-		contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
-		drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", str_f_dep_cont, "Total", str_f_dep_total,
-				str_f_dep_total_neto }, contentStream, tableTopY);
+		contentStream.drawLine(table.getMargin() * 15, tableTopY, table.getMargin() * 31, tableTopY);
+		drawCurrentPageCorte(
+				table,
+				new String[] { "Cantidad por Dependencia", str_f_dep_cont, "Total",
+						formater.format(sum_valcompra_por_dependencia), formater.format(sum_valactgesant_por_dependencia),
+						formater.format(sum_actgesact_por_dependencia), formater.format(sum_depacugestant_por_dependencia),
+						formater.format(sum_depgestact_por_dependencia), formater.format(sum_actacu_por_dependencia),
+						str_f_dep_total, str_f_dep_total_neto }, contentStream, tableTopY);
 		tableTopY -= table.getRowHeight();
 		
 		if (numero_dependencias > 1) {
@@ -508,9 +709,17 @@ public class PDFRevalorizacionGenerador {
 			
 			String str_f_sep_total_neto = formater.format(sum_neto_dependencia);
 			
-			contentStream.drawLine(table.getMargin() * 26, tableTopY, table.getMargin() * 31, tableTopY);
-			drawCurrentPageCorte(table, new String[] { "Cantidad todas las Dependencias", str_f_sep_cont, "Total",
-					str_f_sep_total, str_f_sep_total_neto }, contentStream, tableTopY);
+			contentStream.drawLine(table.getMargin() * 16, tableTopY, (float) (table.getMargin() * 30.5), tableTopY);
+			drawCurrentPageCorte(
+					table,
+					new String[] { "Cantidad todas las Dependencias", str_f_sep_cont, "Total",
+							formater.format(sum_valcompra_dependencia), 
+							formater.format(sum_valactgesant_dependencia),
+							formater.format(sum_actgesact_dependencia), 
+							formater.format(sum_depacugestant_dependencia),
+							formater.format(sum_depgestact_dependencia),
+							formater.format(sum_actacu_dependencia),
+							str_f_sep_total, str_f_sep_total_neto }, contentStream, tableTopY);
 			tableTopY -= table.getRowHeight();
 		}
 		contentStream.close();
@@ -700,7 +909,7 @@ public class PDFRevalorizacionGenerador {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		
 		for (int i = 0; i < lineContent.length; i++) {
-			if (i >= 3) {
+			if (i >= 4) {
 				String text = Util.numberFormat(lineContent[i]);
 				contentStream.beginText();
 				contentStream.moveTextPositionByAmount(
@@ -772,7 +981,7 @@ public class PDFRevalorizacionGenerador {
 			Table table) throws IOException {
 		
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		nextTextX = table.getColumns().get(2).getWidth() * 6 - table.getMargin();
+		nextTextX = table.getColumns().get(2).getWidth() * 3 - table.getMargin();
 		for (int i = 0; i < lineContent.length; i++) {
 			String text = lineContent[i];
 			contentStream.beginText();
@@ -788,13 +997,30 @@ public class PDFRevalorizacionGenerador {
 			
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
-			nextTextX += 4 * table.getColumns().get(4).getWidth();
-			if (i == 3) {
-				nextTextX = table.getMargin() + table.getWidth() - table.getColumns().get(4).getWidth();
-			}
+			nextTextX += 2.5 * table.getColumns().get(4).getWidth();
 			if (i == 2) {
+				nextTextX = table.getMargin() + table.getWidth() - 8 * table.getColumns().get(4).getWidth();
+			}
+			if (i == 3) {
+				nextTextX = table.getMargin() + table.getWidth() - 7 * table.getColumns().get(4).getWidth();
+			}
+			if (i == 4) {
+				nextTextX = table.getMargin() + table.getWidth() - 6 * table.getColumns().get(4).getWidth();
+			}
+			if (i == 5) {
+				nextTextX = table.getMargin() + table.getWidth() - 5 * table.getColumns().get(4).getWidth();
+			}
+			if (i == 6) {
+				nextTextX = table.getMargin() + table.getWidth() - 4 * table.getColumns().get(4).getWidth();
+			}
+			if (i == 7) {
+				nextTextX = table.getMargin() + table.getWidth() - 3 * table.getColumns().get(4).getWidth();
+			}
+			if (i == 8) {
 				nextTextX = table.getMargin() + table.getWidth() - 2 * table.getColumns().get(4).getWidth();
-				
+			}
+			if (i == 9) {
+				nextTextX = table.getMargin() + table.getWidth() - table.getColumns().get(4).getWidth();
 			}
 		}
 	}

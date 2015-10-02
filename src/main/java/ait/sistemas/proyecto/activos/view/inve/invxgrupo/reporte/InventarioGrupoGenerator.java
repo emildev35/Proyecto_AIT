@@ -228,9 +228,9 @@ public class InventarioGrupoGenerator {
 		
 		for (int i = 0; i < lineContent.length; i++) {
 			if (i >= 1) {
-				String text = Util.numberFormat(lineContent[i]);
-				if (i == 1) {
-					text = Util.numberIntFormat(lineContent[i]);
+				String text = lineContent[i];
+				if (i != 1) {
+					text = Util.numberFormat(lineContent[i]);
 				}
 				contentStream.beginText();
 				contentStream.moveTextPositionByAmount(

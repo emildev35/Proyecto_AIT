@@ -47,7 +47,7 @@
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
-
+			<property name="javax.persistence.lock.timeout" value="100"/>
 		</properties>
 	</persistence-unit>
 

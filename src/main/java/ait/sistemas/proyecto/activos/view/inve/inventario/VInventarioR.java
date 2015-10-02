@@ -133,10 +133,12 @@ public class VInventarioR extends VerticalLayout implements View, ClickListener 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(),
+			String[] row = { 
+					activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(),
 					activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(),
 					activo.getACT_Nombre_Activo(), String.valueOf(activo.getACT_Valor_Compra()),
-					String.valueOf(activo.getACT_Valor_Neto()) };
+					String.valueOf(activo.getACT_Valor_Neto()) 
+			};
 
 			data[r] = row;
 			r++;

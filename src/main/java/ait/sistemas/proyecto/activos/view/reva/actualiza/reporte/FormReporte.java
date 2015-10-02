@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.CierreGestionImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -18,6 +19,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
@@ -104,8 +106,13 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 		
 		Panel pn_valor_actual = new Panel(
 				"Seleccione la Dependencia");
+		pn_valor_actual.setStyleName(AitTheme.PANEL_PRINT);
+		pn_valor_actual.setIcon(FontAwesome.PRINT);
 		Panel pn_ultimo_valor = new Panel("Datos de la ultima Actualizacion y Depreciacion");
 
+		pn_ultimo_valor.setStyleName(AitTheme.PANEL_PRINT);
+		pn_ultimo_valor.setIcon(FontAwesome.PRINT);
+		
 		GridLayout grid_valor = new GridLayout(1, 1);
 		grid_valor.setSizeFull();
 		grid_valor.setMargin(true);
