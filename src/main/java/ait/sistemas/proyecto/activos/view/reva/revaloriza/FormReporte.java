@@ -19,6 +19,7 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
@@ -52,7 +53,7 @@ public class FormReporte extends GridLayout {
 	//FieldGroup --> trabajan juntos lo lleva el tipo de objeto al componente
 	
 	public FormReporte() {
-		setColumns(2); //columnas que aceptara el grid en las posiciones
+		setColumns(5); //columnas que aceptara el grid en las posiciones
 		setRows(3); //filas que aceptara el grid
 		setWidth("100%"); //ancho de todo el grid
 		setMargin(true); //espacio de los cuatro costados
@@ -80,9 +81,14 @@ public class FormReporte extends GridLayout {
 		//new NullValidator("", false) por es una clase de vaadin --> no da errores pero tampoco deja registrar
 //		this.dt_fecha.setEnabled(false);
 		
+		this.dt_fecha.setWidth("40%");
+		this.txt_no_resolucion.setWidth("90%");
+		this.cb_Dependencia.setWidth("90%");
+		
 		fillfecha();
 		fillcbDependencia();
 		buildContent();
+		Responsive.makeResponsive(this);
 	}
 	
 	private void fillfecha() {
@@ -114,10 +120,6 @@ public class FormReporte extends GridLayout {
 	}
 	private void buildContent() {
 		
-		this.dt_fecha.setWidth("100%");
-		this.txt_no_resolucion.setWidth("100%");
-		this.cb_Dependencia.setWidth("100%");
-		
 		Panel pn_res = new Panel("Registre el Número de Resolución Revalorización");
 		Panel pn_dep = new Panel("Seleccione una Dependencia");
 		Panel pn_fecha = new Panel("Registre Fecha Elaboracion Reporte");
@@ -130,21 +132,27 @@ public class FormReporte extends GridLayout {
 		
 		GridLayout gridl_res = new GridLayout(2, 1);
 		gridl_res.setSizeFull();
-		gridl_res.setColumnExpandRatio(0, 0.2f);
+		gridl_res.setColumnExpandRatio(0, 0);
 		gridl_res.addComponent(this.txt_no_resolucion, 0,0);
 		pn_res.setContent(gridl_res);
+		
+		this.addComponent(pn_res, 0, 0, 1, 0);
 	
 		GridLayout gridl_dep = new GridLayout(2, 1);
 		gridl_dep.setSizeFull();
 		gridl_dep.setColumnExpandRatio(0, 1);
 		gridl_dep.addComponent(this.cb_Dependencia, 0,0);
 		pn_dep.setContent(gridl_dep);
+		
+		this.addComponent(pn_dep, 0, 1, 1, 1);
 
 		GridLayout gridl_fecha = new GridLayout(2, 1);
 		gridl_fecha.setSizeFull();
-		gridl_fecha.setColumnExpandRatio(0, 0.2f);
+		gridl_fecha.setColumnExpandRatio(0, 0);
 		gridl_fecha.addComponent(this.dt_fecha, 0,0);
 		pn_fecha.setContent(gridl_fecha);
+		
+		this.addComponent(pn_fecha, 0, 2, 1, 2);
 		
 	}
 	public boolean validate(){

@@ -117,6 +117,7 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getActivosbyFechaCompra(Date fecha) {
 		Query query = em.createNativeQuery("Mvac_ActivobyFechaCompra_Q " + "@fecha=?1 ", "mapeo-activo");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
@@ -145,6 +146,7 @@ public class ActivoImpl {
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getActivosConsolidado(Date fecha) {
 		Query query = em.createNativeQuery("Mvac_ActivoConsolidado_Q " + "@fecha=?1 ", "mapeo-activo");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;

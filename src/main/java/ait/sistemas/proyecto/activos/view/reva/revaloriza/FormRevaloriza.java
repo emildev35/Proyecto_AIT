@@ -66,8 +66,12 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 	private VerticalLayout layout_errores;
 	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	public CmovimientoDocumento resol;
+	public VRevalorizaA padre;
+	GridLayout gridl_activos;
 
-	public FormRevaloriza(VerticalLayout layout) {
+	public int r = 0;
+
+	public FormRevaloriza(VRevalorizaA layout) {
 
 		super(6, 3);
 		setSpacing(true);
@@ -129,15 +133,18 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 		buildId();
 		buildContent();
 		Responsive.makeResponsive(this);
+		this.padre = layout;
 	}
 
 	private void buildId() {
 		this.txt_no_doc.setValue(String.valueOf(movimientoimpl.getId((short) 15)));
 		this.dtf_fecha_doc.setValue(new Date());
-		this.dtf_fecha_resol.setValue(new Date());
+		// this.dtf_fecha_resol.setValue(new Date());
 	}
 
 	private void buildContent() {
+		
+		
 
 		Panel pn_doc = new Panel("Documento de Revalorizaion");
 		Panel pn_resol = new Panel("Resolucion de Revalorizacion");
@@ -156,7 +163,7 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 
 		this.addComponent(pn_doc, 0, 0, 1, 0);
 
-		GridLayout gridl_res = new GridLayout(2, 1);
+		final GridLayout gridl_res = new GridLayout(2, 1);
 		gridl_res.setSizeFull();
 		// gridl_solicitud.setMargin(true);
 		gridl_res.setColumnExpandRatio(0, 1);
@@ -167,7 +174,7 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 
 		this.addComponent(pn_resol, 4, 0, 5, 0);
 
-		GridLayout gridl_activos = new GridLayout(4, 1);
+		final GridLayout gridl_activos = new GridLayout(4, 1);
 		gridl_activos.setSizeFull();
 		gridl_activos.setMargin(true);
 		gridl_activos.setColumnExpandRatio(0, 0.1f);
@@ -181,13 +188,47 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 		pn_registro.setContent(gridl_activos);
 
 		this.addComponent(pn_registro, 0, 1, 5, 1);
-
-		gridl_res.addShortcutListener(new ShortcutListener("Key Enter", KeyCode.ENTER, new int[] {}) {
+//
+//		gridl_activos.addShortcutListener(new ShortcutListener("Key Activos", KeyCode.ENTER, new int[] {}) {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public void handleAction(Object sender, Object target) {
+//				
+//				try {
+//					binder_revaloriza.commit();
+//					ActivoInventario activo = new ActivoInventario(Long.parseLong(txtcodigo.getValue().replace(".", "")
+//							.replace("'", "")), txtnombre_activo.getValue(), new BigDecimal(txtnuevo_valor.getValue()),
+//							Integer.parseInt(txtnueva_vida_util.getValue()));
+//					activos_invetariados.add(activo);
+//					grid_revaloriza.buildGrid(activos_invetariados);
+//				} catch (CommitException ex) {
+//					Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
+//					Iterator<Field<?>> it = invalid_fields.keySet().iterator();
+//					while (it.hasNext()) {
+//						Field<?> key = (Field<?>) it.next();
+//						mensajes.add(new BarMessage(key.getCaption(),
+//								invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields
+//										.get(key).getMessage()));
+//					}
+//				}
+//				((VRevalorizaA) layout_errores).buildMessages(mensajes);
+//				mensajes = new ArrayList<BarMessage>();
+//				txtcodigo.setValue("");
+//				txtnombre_activo.setValue("");
+//				txtnuevo_valor.setValue("");
+//				txtnueva_vida_util.setValue("");
+//			
+//			}
+//		});
+		
+		gridl_res.addShortcutListener(new ShortcutListener("Key Enter", KeyCode.ENTER, null) {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void handleAction(Object sender, Object target) {
-
-				if (!txt_resolucion.getValue().equals(null) && !dtf_fecha_resol.getValue().equals(null)) {
+				r++;
+				if (r<3) {
+				if (!txt_resolucion.getValue().equals(null) && !dtf_fecha_resol.getValue().equals(null) && !txt_resolucion.getValue().equals("") && !dtf_fecha_resol.getValue().equals("")) {
 					if (resol == null) {
 						resol = new CmovimientoDocumento(txt_resolucion.getValue(), new java.sql.Date(dtf_fecha_resol
 								.getValue().getTime()));
@@ -202,7 +243,13 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 							txtcodigo.setEnabled(true);
 							txtnuevo_valor.setEnabled(true);
 							txtnueva_vida_util.setEnabled(true);
+							txt_resolucion.setEnabled(false);
+							dtf_fecha_resol.setEnabled(false);
+//							gridl_res.setEnabled(false);
+//							gridl_activos.setEnabled(true);
 							clearMessages();
+							resol = null;
+							mensajes.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
 							mensajes.add(new BarMessage("Formulario", Messages.KEY_ENTER));
 						} else {
 							resol = null;
@@ -210,50 +257,48 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 							dtf_fecha_resol.setValue(null);
 							clearMessages();
 							mensajes.add(new BarMessage("Formulario", Messages.CAMPOS_DSITINTOS));
-							// TODO vaciar y mostrar mensaje
+							r=0;
 						}
 					}
 
 				} 
 				else{
-					mensajes.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+//					mensajes.add(new BarMessage("Formulario", Messages.KEY_ENTER));
+					clearMessages();
 					mensajes.add(new BarMessage("Formulario", Messages.LLENAR_CAMPOS_RES));
 				}
+				padre.buildMessages(mensajes);
 			}
-		});
-
-		gridl_activos.addShortcutListener(new ShortcutListener("Key Enter", KeyCode.ENTER, new int[] {}) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void handleAction(Object sender, Object target) {
-
-				try {
-
-					binder_revaloriza.commit();
-					ActivoInventario activo = new ActivoInventario(Long.parseLong(txtcodigo.getValue().replace(".", "")
-							.replace("'", "")), txtnombre_activo.getValue(), new BigDecimal(txtnuevo_valor.getValue()),
-							Integer.parseInt(txtnueva_vida_util.getValue()));
-					activos_invetariados.add(activo);
-					grid_revaloriza.buildGrid(activos_invetariados);
-				} catch (CommitException ex) {
-					Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
-					Iterator<Field<?>> it = invalid_fields.keySet().iterator();
-					while (it.hasNext()) {
-						Field<?> key = (Field<?>) it.next();
-						mensajes.add(new BarMessage(key.getCaption(),
-								invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields
-										.get(key).getMessage()));
+				System.out.print(r);
+				if (r>=3){
+					try {
+						binder_revaloriza.commit();
+						ActivoInventario activo = new ActivoInventario(Long.parseLong(txtcodigo.getValue().replace(".", "")
+								.replace("'", "")), txtnombre_activo.getValue(), new BigDecimal(txtnuevo_valor.getValue()),
+								Integer.parseInt(txtnueva_vida_util.getValue()));
+						activos_invetariados.add(activo);
+						grid_revaloriza.buildGrid(activos_invetariados);
+					} catch (CommitException ex) {
+						Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
+						Iterator<Field<?>> it = invalid_fields.keySet().iterator();
+						while (it.hasNext()) {
+							Field<?> key = (Field<?>) it.next();
+							mensajes.add(new BarMessage(key.getCaption(),
+									invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields
+											.get(key).getMessage()));
+						}
 					}
+					((VRevalorizaA) layout_errores).buildMessages(mensajes);
+					mensajes = new ArrayList<BarMessage>();
+					txtcodigo.setValue("");
+					txtnombre_activo.setValue("");
+					txtnuevo_valor.setValue("");
+					txtnueva_vida_util.setValue("");
 				}
-				((VRevalorizaA) layout_errores).buildMessages(mensajes);
-				mensajes = new ArrayList<BarMessage>();
-				txtcodigo.setValue("");
-				txtnombre_activo.setValue("");
-				txtnuevo_valor.setValue("");
-				txtnueva_vida_util.setValue("");
 			}
 		});
+
+		
 
 	}
 
@@ -281,6 +326,7 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 	}
 
 	public Movimiento getData() {
+		r=0;
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
@@ -310,6 +356,16 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 		}
 
 		return result;
+	}
+	/**
+	 * bloquear al principio el cuerpo y dejar la cabecera
+	 */
+	public void enable_cuerpo(){
+		txt_resolucion.setEnabled(true);
+		dtf_fecha_resol.setEnabled(true);
+		txtcodigo.setEnabled(false);
+		txtnueva_vida_util.setEnabled(false);
+		txtnuevo_valor.setEnabled(false);
 	}
 
 	/**

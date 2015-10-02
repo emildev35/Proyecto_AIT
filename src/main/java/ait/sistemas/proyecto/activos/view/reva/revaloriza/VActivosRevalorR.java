@@ -80,14 +80,14 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 	private Component buildFormContent() {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel("Formulario de Impresion " + Messages.REQUIED_FIELDS);
+		// Panel frmPanel = new Panel("Formulario de Impresion ");
 		// los campos requeridos
-		frmPanel.setIcon(FontAwesome.PRINT);
-		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		// frmPanel.setIcon(FontAwesome.PRINT);
+		// frmPanel.setStyleName(AitTheme.PANEL_FORM);
 		// frmPanel.setWidth("100%");
 		// frmPanel.setCaption("Formulario de Impresion");
-		frmPanel.setContent(this.frmReporte);
-		formContent.addComponent(frmPanel);
+		// frmPanel.setContent(this.frmReporte);
+		formContent.addComponent(frmReporte);
 		return formContent;
 	}
 
@@ -96,8 +96,8 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
 		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Inventarios » "));
-		nav.addComponent(new Label("Inventario de Activos » "));
+		nav.addComponent(new Label("Revalorizacion de Activos » "));
+		nav.addComponent(new Label("Activos Fijos Revalorizados » "));
 		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
@@ -127,17 +127,21 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 
 	public String[][] getDatos() {
 
-		List<ActivosModel> lista = activo_impl.activos_by_dependencia(
-				(Short) this.frmReporte.cb_Dependencia.getValue(), new java.sql.Date(this.frmReporte.dt_fecha
-						.getValue().getTime()));
+		List<ActivosModel> lista = activo_impl.activosbaja_by_dependencia((Short) this.frmReporte.cb_Dependencia
+				.getValue(), new java.sql.Date(this.frmReporte.dt_fecha.getValue().getTime()));
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
 			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(),
-					activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(),
-					activo.getACT_Nombre_Activo(), String.valueOf(activo.getACT_Valor_Compra()),
-					String.valueOf(activo.getACT_Valor_Neto()) };
+					activo.getACT_Auxiliar_Contable(),
+					activo.getACT_Codigo_Activo(),
+					activo.getACT_No_Serie(),
+					activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_No_Resolucion_Baja()), 
+					String.valueOf(activo.getACT_Fecha_Baja()),
+					String.valueOf(activo.getACT_Valor_Compra()), 
+					String.valueOf(activo.getACT_Vida_Util()) };
 
 			data[r] = row;
 			r++;
@@ -147,16 +151,21 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 
 	public String[][] getDatosALL() {
 
-		List<ActivosModel> lista = activo_impl.getActivosbyFechaCompra(new java.sql.Date(this.frmReporte.dt_fecha
-				.getValue().getTime()));
+		List<ActivosModel> lista = activo_impl.getActivosBaja(new java.sql.Date(this.frmReporte.dt_fecha.getValue()
+				.getTime()));
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
 			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(),
-					activo.getACT_Auxiliar_Contable(), activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(),
-					activo.getACT_Nombre_Activo(), String.valueOf(activo.getACT_Valor_Compra()),
-					String.valueOf(activo.getACT_Valor_Neto()) };
+					activo.getACT_Auxiliar_Contable(),
+					activo.getACT_Codigo_Activo(),
+					activo.getACT_No_Serie(),
+					activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_No_Resolucion_Baja()), 
+					String.valueOf(activo.getACT_Fecha_Baja()),
+					String.valueOf(activo.getACT_Valor_Compra()), 
+					String.valueOf(activo.getACT_Vida_Util()) };
 
 			data[r] = row;
 			r++;
@@ -182,50 +191,50 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 	public void buttonClick(ClickEvent event) {
 		this.frmReporte.clearMessages();
 		if (event.getButton() == this.btn_imprimir) {
-		if (this.frmReporte.validate()) {
-			ReportPdf reporte = new ReportPdf();
-			try {
-				short a = 0;
-				if ((Short) this.frmReporte.cb_Dependencia.getValue() == a) {
-					// int [][] datas = activo_impl.getProvedoreCuidad();
-					reporte.getPdf(getDatosALL(),
-							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
-							new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
-				} else {
-					reporte.getPdf(getDatos(),
-							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()),
-							new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
+			if (this.frmReporte.validate()) {
+				ReportPdf reporte = new ReportPdf();
+				try {
+					short a = 0;
+					if ((Short) this.frmReporte.cb_Dependencia.getValue() == a) {
+						// int [][] datas = activo_impl.getProvedoreCuidad();
+						reporte.getPdf(getDatosALL(), this.frmReporte.cb_Dependencia
+								.getItemCaption(this.frmReporte.cb_Dependencia.getValue()), new SimpleDateFormat(
+								"dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
+					} else {
+						reporte.getPdf(getDatos(), this.frmReporte.cb_Dependencia
+								.getItemCaption(this.frmReporte.cb_Dependencia.getValue()), new SimpleDateFormat(
+								"dd-MM-yyyy").format(this.frmReporte.dt_fecha.getValue()));
+					}
+					File pdfFile = new File(ReportPdf.SAVE_PATH);
+
+					VerticalLayout vl_pdf = new VerticalLayout();
+					Embedded pdf = new Embedded("", new FileResource(pdfFile));
+
+					pdf.setMimeType("application/pdf");
+					pdf.setType(Embedded.TYPE_BROWSER);
+					pdf.setSizeFull();
+					vl_pdf.setSizeFull();
+					vl_pdf.addComponent(pdf);
+
+					Window subWindow = new Window("Reporte Inventario Activos");
+					VerticalLayout subContent = new VerticalLayout();
+					subContent.setMargin(true);
+					subWindow.setContent(vl_pdf);
+
+					subWindow.setWidth("90%");
+					subWindow.setHeight("90%");
+					subWindow.center();
+
+					// Open it in the UI
+					getUI().addWindow(subWindow);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				File pdfFile = new File(ReportPdf.SAVE_PATH);
-
-				VerticalLayout vl_pdf = new VerticalLayout();
-				Embedded pdf = new Embedded("", new FileResource(pdfFile));
-
-				pdf.setMimeType("application/pdf");
-				pdf.setType(Embedded.TYPE_BROWSER);
-				pdf.setSizeFull();
-				vl_pdf.setSizeFull();
-				vl_pdf.addComponent(pdf);
-
-				Window subWindow = new Window("Reporte Inventario Activos");
-				VerticalLayout subContent = new VerticalLayout();
-				subContent.setMargin(true);
-				subWindow.setContent(vl_pdf);
-
-				subWindow.setWidth("90%");
-				subWindow.setHeight("90%");
-				subWindow.center();
-
-				// Open it in the UI
-				getUI().addWindow(subWindow);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+			buildMessages(this.frmReporte.getMessage());
 		}
-		buildMessages(this.frmReporte.getMessage());
-	}
-	if (event.getButton() == this.btn_salir) {
-		UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
-	}
+		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		}
 	}
 }
