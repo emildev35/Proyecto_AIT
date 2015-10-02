@@ -20,10 +20,10 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -151,8 +151,8 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 
 	public String[][] getDatosALL() {
 
-		List<ActivosModel> lista = activo_impl.getActivosBaja(new java.sql.Date(this.frmReporte.dt_fecha.getValue()
-				.getTime()));
+		List<ActivosModel> lista = activo_impl.getActivosbyResol(new java.sql.Date(this.frmReporte.dt_fecha.getValue()
+				.getTime()), frmReporte.txt_no_resolucion.getValue());
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
@@ -191,6 +191,7 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 	public void buttonClick(ClickEvent event) {
 		this.frmReporte.clearMessages();
 		if (event.getButton() == this.btn_imprimir) {
+			if (activo_impl.getResol(frmReporte.txt_no_resolucion.getValue()) == 1){
 			if (this.frmReporte.validate()) {
 				ReportPdf reporte = new ReportPdf();
 				try {
@@ -232,6 +233,12 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 				}
 			}
 			buildMessages(this.frmReporte.getMessage());
+		}
+			else{
+				frmReporte.clearMessages();
+				msg.add(new BarMessage("Formulario", Messages.NO_EXISTE_RESOL));
+				buildMessages(msg);
+			}
 		}
 		if (event.getButton() == this.btn_salir) {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);

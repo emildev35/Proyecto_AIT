@@ -147,4 +147,8 @@ public class Messages {
 	 * llenar la resolucion y la fecha
 	 */
 	public static final String LLENAR_CAMPOS_RES = "Debe llenar los campos No. Resolucion y Fecha";
+	/**
+	 * La resolucion no existe
+	 */
+	public static final String NO_EXISTE_RESOL = "La Resolucion no existe";
 }

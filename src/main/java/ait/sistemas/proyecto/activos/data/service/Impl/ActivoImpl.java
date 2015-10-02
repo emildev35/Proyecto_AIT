@@ -159,6 +159,23 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	public int getResol(String resolucion) {
+		Query query = em.createNativeQuery("Mvac_Resolucion_Q " + "@no_resolucion=?1 ");
+		query.setParameter(1, resolucion);
+		
+		int resultlist = (int) query.getSingleResult();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getActivosbyResol(Date fecha, String resolucion) {
+		Query query = em.createNativeQuery("Mvac_ActivobyResolucion_Q " + "@fecha=?1, "
+				+ "@resolucion=?2 ", "mapeo-activo");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, fecha);
+		query.setParameter(2, resolucion);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getactivosbydependencia(short id_dependencia) {
