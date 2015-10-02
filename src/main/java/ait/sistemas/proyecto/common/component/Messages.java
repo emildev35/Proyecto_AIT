@@ -138,7 +138,7 @@ public class Messages {
 	/**
 	 * llenar el campo nuevamente
 	 */
-	public static final String LLENAR_NUEVAMENTE = "Porfavor llene el campo nuevamente";
+	public static final String LLENAR_NUEVAMENTE = "Porfavor llene los campos nuevamente";
 	/**
 	 * los campos son distintos
 	 */
