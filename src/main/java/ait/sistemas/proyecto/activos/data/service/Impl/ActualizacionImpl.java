@@ -56,14 +56,32 @@ public class ActualizacionImpl {
 	
 	/**
 	 * Retorna la Lista de Resumen de Activos Actualizados
+	 * organizados y ordenados por la Dependencia
 	 * @param id_dependencia
+	 * @param fechaElaboracion
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ActivosModel> getResumenActualizacion(short id_dependencia) {
-		Query query = em.createNativeQuery("Reva_ResumenAct_Q " + "@ACT_Dependencia=?1 ", ActivosModel.class);
+	public List<ActivosModel> getResumenActualizacion(short id_dependencia, String fechaElaboracion) {
+		Query query = em.createNativeQuery("Reva_ResumenAct_Q " + "@ACT_Dependencia=?1 , @Fecha_Reporte=?2", ActivosModel.class);
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_dependencia);
+		query.setParameter(2, fechaElaboracion);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+	
+	/**
+	 * Retorna la Lista General de Resumen de Activos Actualizados
+	 * 
+	 * @param fechaElaboracion
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getResumenGeneralActualizacion(String fechaElaboracion) {
+		Query query = em.createNativeQuery("Reva_ResumenActG_Q " + "@Fecha_Reporte=?1", ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, fechaElaboracion);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}

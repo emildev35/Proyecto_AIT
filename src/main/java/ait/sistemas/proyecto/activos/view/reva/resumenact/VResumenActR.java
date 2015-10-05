@@ -2,16 +2,21 @@ package ait.sistemas.proyecto.activos.view.reva.resumenact;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.common.view.HomeView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -23,6 +28,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -31,12 +37,13 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_imprimir;
+	private Button btnSalir = new Button("Salir");
 	private FormResumenact frmReporte = new FormResumenact();
 	int r = 0;
-	// private String[][] data;
-	// private final ActivoImpl activo_impl = new ActivoImpl();
 	private final ActualizacionImpl actualizacion_impl = new ActualizacionImpl();
 	private CssLayout hl_errores = new CssLayout();
+	
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VResumenActR() {
 		
@@ -49,11 +56,17 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
-		this.btn_imprimir.addClickListener(this);
-		buttonContent.addStyleName("ait-buttons");
+		buttonContent.addComponent(btn_imprimir);
+		buttonContent.addComponent(btnSalir);
 		
+		btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
+		btnSalir.addStyleName(AitTheme.BTN_EXIT);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
+		btnSalir.setIcon(FontAwesome.UNDO);
+		
+		btn_imprimir.addClickListener(this);
+		btnSalir.addClickListener(this);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
@@ -71,10 +84,7 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Revalorizacion Depreciacion » "));
-		nav.addComponent(new Label("Resumen Actualizacion y Depreciacion de Activos » "));
-		nav.addComponent(new Label("<strong>Reporte</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -84,78 +94,63 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 		
 	}
 	
-	// public String[][] getData() {
-	//
-	// List<ActivosModel> lista = activo_impl
-	// .activos_by_dependencia((Short)
-	// this.frmReporte.cb_Dependencia.getValue());
-	//
-	// this.data = new String[lista.size()][2];
-	// this.r = 0;
-	// for (ActivosModel activo : lista) {
-	// String[] row = { activo.getACT_Grupo_Contable(),
-	// activo.getACT_Auxiliar_Contable() };
-	// this.data[r] = row;
-	// this.r++;
-	// }
-	// return data;
-	// }
-	
-	public String[][] getDatos() {
+	public String[][] getDatos(short idDependencia, String fechaElaboracion) {
+		List<ActivosModel> activos = actualizacion_impl.getResumenActualizacion(idDependencia, fechaElaboracion);
 		
-		List<ActivosModel> lista = actualizacion_impl.getResumenActualizacion((Short) this.frmReporte.cb_Dependencia.getValue());
-		
-		String[][] data = new String[lista.size()][5];
-		r = 0;
-		for (ActivosModel activo : lista) {
+		if (idDependencia == FormResumenact.ALL) {
+			List<ActivosModel> general = actualizacion_impl.getResumenGeneralActualizacion(fechaElaboracion);
 			
-			DecimalFormat formater = new DecimalFormat("##,###,###,##0.00");
-			double valor_CA = Double.parseDouble(String.valueOf(activo.getACT_CA() == null ? "0" : activo.getACT_CA()));
-			String str_CA = formater.format(valor_CA);
+			String[][] result = new String[(activos.size() + general.size())][11];
+			for (int i = 0; i < activos.size(); i++) {
+				result[i][0] = String.valueOf(activos.get(i).getACT_Dependencia());
+				result[i][1] = String.valueOf(activos.get(i).getACT_Grupo_Contable());
+				result[i][2] = String.valueOf(activos.get(i).getACT_Codigo_Activo());
+				result[i][3] = String.valueOf(activos.get(i).getACT_Valor_Compra());
+				result[i][4] = String.valueOf(activos.get(i).getACT_Actualizacion_Acumulada_Gestion_Anterior());
+				result[i][5] = String.valueOf(activos.get(i).getACT_Depreciacion_Acumulada_Gestion_Anterior());
+				result[i][6] = String.valueOf(activos.get(i).getACT_Actualizacion_Gestion_Actual());
+				result[i][7] = String.valueOf(activos.get(i).getACT_Depreciacion_Gestion_Actual());
+				result[i][8] = String.valueOf(activos.get(i).getACT_CA());
+				result[i][9] = String.valueOf(activos.get(i).getACT_DAA());
+				result[i][10] = String.valueOf(activos.get(i).getACT_Valor_Neto());
+			}
 			
-			String[] row = {
-					activo.getACT_Dependencia(),
-					" ",
-					" ",
-					activo.getACT_Dependencia_Codigo_Activo(),
-					activo.getACT_Grupo_Contable(),
-					String.valueOf(activo.getACT_Codigo_Activo()),
-					activo.getACT_Valor_Compra().toString(),
-					String.valueOf(activo.getACT_Vida_Util()),
-					formater.format(activo.getACT_Actualizacion_Acumulada_Gestion_Anterior().doubleValue()),
-					formater.format(activo.getACT_Depreciacion_Acumulada_Gestion_Anterior().doubleValue()),
-					formater.format(activo.getACT_Actualizacion_Gestion_Actual().doubleValue()),
-					formater.format(activo.getACT_Depreciacion_Gestion_Actual().doubleValue()),
-					str_CA,
-					formater.format(activo.getACT_Depreciacion_Gestion_Actual().doubleValue()
-							- activo.getACT_Depreciacion_Acumulada_Gestion_Anterior().doubleValue()),
-					formater.format(activo.getACT_Valor_Neto()) };
+			for (int i = activos.size(); i < result.length; i++) {
+				result[i][0] = String.valueOf(general.get(i - activos.size()).getACT_Dependencia());
+				result[i][1] = String.valueOf(general.get(i - activos.size()).getACT_Grupo_Contable());
+				result[i][2] = String.valueOf(general.get(i - activos.size()).getACT_Codigo_Activo());
+				result[i][3] = String.valueOf(general.get(i - activos.size()).getACT_Valor_Compra());
+				result[i][4] = String.valueOf(general.get(i - activos.size()).getACT_Actualizacion_Acumulada_Gestion_Anterior());
+				result[i][5] = String.valueOf(general.get(i - activos.size()).getACT_Depreciacion_Acumulada_Gestion_Anterior());
+				result[i][6] = String.valueOf(general.get(i - activos.size()).getACT_Actualizacion_Gestion_Actual());
+				result[i][7] = String.valueOf(general.get(i - activos.size()).getACT_Depreciacion_Gestion_Actual());
+				result[i][8] = String.valueOf(general.get(i - activos.size()).getACT_CA());
+				result[i][9] = String.valueOf(general.get(i - activos.size()).getACT_DAA());
+				result[i][10] = String.valueOf(general.get(i - activos.size()).getACT_Valor_Neto());
+			}
+			return result;
 			
-			data[r] = row;
-			r++;
+		} else {
+			
+			String[][] result = new String[activos.size()][11];
+			
+			for (int i = 0; i < activos.size(); i++) {
+				result[i][0] = String.valueOf(activos.get(i).getACT_Dependencia());
+				result[i][1] = String.valueOf(activos.get(i).getACT_Grupo_Contable());
+				result[i][2] = String.valueOf(activos.get(i).getACT_Codigo_Activo());
+				result[i][3] = String.valueOf(activos.get(i).getACT_Valor_Compra());
+				result[i][4] = String.valueOf(activos.get(i).getACT_Actualizacion_Acumulada_Gestion_Anterior());
+				result[i][5] = String.valueOf(activos.get(i).getACT_Depreciacion_Acumulada_Gestion_Anterior());
+				result[i][6] = String.valueOf(activos.get(i).getACT_Actualizacion_Gestion_Actual());
+				result[i][7] = String.valueOf(activos.get(i).getACT_Depreciacion_Gestion_Actual());
+				result[i][8] = String.valueOf(activos.get(i).getACT_CA());
+				result[i][9] = String.valueOf(activos.get(i).getACT_DAA());
+				result[i][10] = String.valueOf(activos.get(i).getACT_Valor_Neto());
+			}
+			return result;
 		}
-		return data;
+		
 	}
-	
-	// public String[][] getDatosALL() {
-	//
-	// List<ActivosModel> lista = activo_impl.getactivos();
-	//
-	// String[][] data = new String[lista.size()][5];
-	// r = 0;
-	// for (ActivosModel activo : lista) {
-	// String[] row = { activo.getACT_Dependencia(),
-	// activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(),
-	// activo.getACT_Codigo_Activo(), activo.getACT_No_Serie(),
-	// activo.getACT_Nombre_Activo(),
-	// String.valueOf(activo.getACT_Valor()),
-	// String.valueOf(activo.getACT_Valor_Neto()) };
-	//
-	// data[r] = row;
-	// r++;
-	// }
-	// return data;
-	// }
 	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
@@ -173,46 +168,45 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (this.frmReporte.validate()) {
-			ReportPdf reporte = new ReportPdf();
-			try {
-				if ((Short) this.frmReporte.cb_Dependencia.getValue() == FormResumenact.ALL) {
-					reporte.getPdf(getDatosALL(),
-							this.frmReporte.cb_Dependencia.getItemCaption(this.frmReporte.cb_Dependencia.getValue()));
-				} else {
-					reporte.getPdf(getDatos(), frmReporte.dtf_fecha_ultima_depre.getValidators().toString() + "T00:00:00");
+		
+		if (event.getButton() == btnSalir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		} else {
+			if (this.frmReporte.validate()) {
+				ReportPdf reporte = new ReportPdf();
+				try {
+					reporte.getPdf(
+							getDatos((short) frmReporte.cb_Dependencia.getValue(), frmReporte.dtf_fecha_ultima_depre.getValue()
+									.toString() + "T00:00:00"),
+							new SimpleDateFormat("dd-MM-yyyy").format(frmReporte.dtf_fecha_ultima_depre.getValue()));
+					File pdfFile = new File(ReportPdf.SAVE_PATH);
+					
+					VerticalLayout vl_pdf = new VerticalLayout();
+					Embedded pdf = new Embedded("", new FileResource(pdfFile));
+					
+					pdf.setMimeType("application/pdf");
+					pdf.setType(Embedded.TYPE_BROWSER);
+					pdf.setSizeFull();
+					vl_pdf.setSizeFull();
+					vl_pdf.addComponent(pdf);
+					
+					Window subWindow = new Window("Reporte Resumen Actualizacion");
+					VerticalLayout subContent = new VerticalLayout();
+					subContent.setMargin(true);
+					subWindow.setContent(vl_pdf);
+					
+					subWindow.setWidth("90%");
+					subWindow.setHeight("90%");
+					subWindow.center();
+					
+					getUI().addWindow(subWindow);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				File pdfFile = new File(ReportPdf.SAVE_PATH);
-				
-				VerticalLayout vl_pdf = new VerticalLayout();
-				Embedded pdf = new Embedded("", new FileResource(pdfFile));
-				
-				pdf.setMimeType("application/pdf");
-				pdf.setType(Embedded.TYPE_BROWSER);
-				pdf.setSizeFull();
-				vl_pdf.setSizeFull();
-				vl_pdf.addComponent(pdf);
-				
-				Window subWindow = new Window("Reporte Resumen Actualizacion");
-				VerticalLayout subContent = new VerticalLayout();
-				subContent.setMargin(true);
-				subWindow.setContent(vl_pdf);
-				
-				subWindow.setWidth("90%");
-				subWindow.setHeight("90%");
-				subWindow.center();
-				
-				// Open it in the UI
-				getUI().addWindow(subWindow);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+			buildMessages(this.frmReporte.getMessage());
+			
 		}
-		buildMessages(this.frmReporte.getMessage());
 	}
 	
-	private String[][] getDatosALL() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
