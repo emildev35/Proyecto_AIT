@@ -176,6 +176,18 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getActivosbyResolDependnecia(Date fecha, String resolucion, short id_dependencia) {
+		Query query = em.createNativeQuery("Mvac_ActivobyResolucionDependencia_Q " + "@fecha=?1, "
+				+ "@resolucion=?2,"
+				+ "@id_dependencia=?3 ", "mapeo-activo");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, fecha);
+		query.setParameter(2, resolucion);
+		query.setParameter(3, id_dependencia);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> getactivosbydependencia(short id_dependencia) {

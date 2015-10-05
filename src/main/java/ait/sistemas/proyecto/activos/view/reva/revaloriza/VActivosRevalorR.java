@@ -55,8 +55,8 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
-		buildMessages(msg);
+//		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+//		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
@@ -127,8 +127,8 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 
 	public String[][] getDatos() {
 
-		List<ActivosModel> lista = activo_impl.activosbaja_by_dependencia((Short) this.frmReporte.cb_Dependencia
-				.getValue(), new java.sql.Date(this.frmReporte.dt_fecha.getValue().getTime()));
+		List<ActivosModel> lista = activo_impl.getActivosbyResolDependnecia(new java.sql.Date(this.frmReporte.dt_fecha.getValue()
+				.getTime()), frmReporte.txt_no_resolucion.getValue(),(short)frmReporte.cb_Dependencia.getValue());
 
 		String[][] data = new String[lista.size()][5];
 		r = 0;
@@ -139,7 +139,7 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 					activo.getACT_No_Serie(),
 					activo.getACT_Nombre_Activo(),
 					String.valueOf(activo.getACT_No_Resolucion_Baja()), 
-					String.valueOf(activo.getACT_Fecha_Baja()),
+					String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(activo.getACT_Fecha_Baja())),
 					String.valueOf(activo.getACT_Valor_Compra()), 
 					String.valueOf(activo.getACT_Vida_Util()) };
 
@@ -163,7 +163,7 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 					activo.getACT_No_Serie(),
 					activo.getACT_Nombre_Activo(),
 					String.valueOf(activo.getACT_No_Resolucion_Baja()), 
-					String.valueOf(activo.getACT_Fecha_Baja()),
+					String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(activo.getACT_Fecha_Baja())),
 					String.valueOf(activo.getACT_Valor_Compra()), 
 					String.valueOf(activo.getACT_Vida_Util()) };
 
@@ -217,7 +217,7 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 					vl_pdf.setSizeFull();
 					vl_pdf.addComponent(pdf);
 
-					Window subWindow = new Window("Reporte Inventario Activos");
+					Window subWindow = new Window("Reporte Activos Fijos Revalorizados");
 					VerticalLayout subContent = new VerticalLayout();
 					subContent.setMargin(true);
 					subWindow.setContent(vl_pdf);
@@ -235,7 +235,7 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 			buildMessages(this.frmReporte.getMessage());
 		}
 			else{
-				frmReporte.clearMessages();
+				this.frmReporte.clearMessages();
 				msg.add(new BarMessage("Formulario", Messages.NO_EXISTE_RESOL));
 				buildMessages(msg);
 			}
