@@ -472,8 +472,8 @@ public class PDFRevalorizacionGenerador {
 					
 					drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 					drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-					// tableTopY -= table.getRowHeight();
-					r += 2;
+					tableTopY -= 3*table.getRowHeight();
+					r += 5;
 					
 					r++;
 					sum_dependencia += sum_grupo_contable;
@@ -490,22 +490,19 @@ public class PDFRevalorizacionGenerador {
 					sum_grupo_contable += sum_grupo_contable;
 					sum_neto_auxiliares_contables = 0;
 					can_por_dependencia = 0;
-//					sum_valcompra_grupo_contable = 0;
-//					sum_valactgesant_grupo_contable = 0;
-//					sum_actgesact_grupo_contable = 0;
-//					sum_depacugestant_grupo_contable = 0;
-//					sum_depgestact_grupo_contable = 0;
-//					sum_actacu_grupo_contable = 0;
-//					sum_neto_grupo_contable = 0;
+					sum_valcompra_por_dependencia = 0;
+					sum_valactgesant_por_dependencia = 0;
+					sum_actgesact_por_dependencia = 0;
+					sum_depacugestant_por_dependencia = 0;
+					sum_depgestact_por_dependencia = 0;
+					sum_actacu_por_dependencia = 0;
+					sum_neto_por_dependencia = 0;
 					
 					numero_dependencias += 1;
 				}
 				grupo_contable = table.getContent()[i][1];
 				auxiliar_contable = table.getContent()[i][2];
 				
-				// drawTableGridContables(table, new String[] {
-				// "Grupo Contable", grupo_contable, "Auxiliar Contable",
-				// auxiliar_contable }, contentStream, tableTopY);
 				tableTopY -= table.getRowHeight();
 				drawCurrentPageContable(table, new String[] { grupo_contable, auxiliar_contable }, contentStream, tableTopY);
 				r++;
@@ -525,8 +522,6 @@ public class PDFRevalorizacionGenerador {
 					tableTopY -= table.getRowHeight() * table.getHeaderSize();
 					
 					dependencia = table.getContent()[i][0];
-					// drawTableGridDependencia(table, new String[] {
-					// "Dependencia ", dependencia }, contentStream, tableTopY);
 					writeHeader(contentStream, tableTopY, table);
 					drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
 					drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
@@ -622,19 +617,19 @@ public class PDFRevalorizacionGenerador {
 		sum_depgestact_grupo_contable += sum_depgestact_auxiliares_contables;
 		sum_actacu_grupo_contable += sum_actacu_auxiliares_contables;
 		
+
 		can_dependencia += can_grupo_contable;
+		can_por_dependencia += can_grupo_contable;
+
 		sum_dependencia += sum_grupo_contable;
 		sum_neto_dependencia += sum_neto_grupo_contable;
 		
-		can_por_dependencia += can_grupo_contable;
-		sum_por_dependencia += sum_grupo_contable;
-		sum_neto_por_dependencia += sum_neto_grupo_contable;
-		sum_valcompra_por_dependencia += sum_valcompra_grupo_contable;
-		sum_valactgesant_por_dependencia += sum_valactgesant_grupo_contable;
-		sum_actgesact_por_dependencia += sum_actgesact_grupo_contable;
-		sum_depacugestant_por_dependencia += sum_depacugestant_grupo_contable;
-		sum_depgestact_por_dependencia += sum_depgestact_grupo_contable;
-		sum_actacu_por_dependencia += sum_actacu_grupo_contable;
+		sum_valcompra_dependencia += sum_valcompra_grupo_contable;
+		sum_valactgesant_dependencia += sum_valactgesant_grupo_contable;
+		sum_actgesact_dependencia += sum_actgesact_grupo_contable;
+		sum_depacugestant_dependencia += sum_depacugestant_grupo_contable;
+		sum_depgestact_dependencia += sum_depgestact_grupo_contable;
+		sum_actacu_dependencia += sum_actacu_grupo_contable;
 		
 		tableTopY -= table.getRowHeight();
 		DecimalFormat formate = new DecimalFormat("##,###,###,###");
@@ -662,8 +657,6 @@ public class PDFRevalorizacionGenerador {
 		
 		tableTopY -= table.getRowHeight();
 		
-		double valorf_grupo_contable = Double.parseDouble(String.valueOf(can_grupo_contable));
-		String str_f_grup_cont = formate.format(valorf_grupo_contable);
 		
 		double f_grp_total = Double.parseDouble(String.valueOf(sum_grupo_contable));
 		String str_f_grup_total = formater.format(f_grp_total);
@@ -673,7 +666,7 @@ public class PDFRevalorizacionGenerador {
 		contentStream.drawLine(table.getMargin() * 15, tableTopY, table.getMargin() * 31, tableTopY);
 		drawCurrentPageCorte(
 				table,
-				new String[] { "Cantidad por Grupo Contable", str_f_grup_cont, "Total",
+				new String[] { "Cantidad por Grupo Contable", formate.format(can_grupo_contable), "Total",
 						formater.format(sum_valcompra_grupo_contable), formater.format(sum_valactgesant_grupo_contable),
 						formater.format(sum_actgesact_grupo_contable), formater.format(sum_depacugestant_grupo_contable),
 						formater.format(sum_depgestact_grupo_contable), formater.format(sum_actacu_grupo_contable),
@@ -823,8 +816,6 @@ public class PDFRevalorizacionGenerador {
 	private void drawCurrentPageContable(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
 			throws IOException {
 		
-		// Draws grid and borders
-		// drawTableGrid(table, strings, contentStream, tableTopY);
 		float nextTextX = table.getMargin() + table.getCellMargin();
 		float nextTextY = tableTopY - (table.getRowHeight() / 2)
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
@@ -839,8 +830,6 @@ public class PDFRevalorizacionGenerador {
 	private void drawCurrentPageCorte(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
 			throws IOException {
 		
-		// Draws grid and borders
-		// drawTableGrid(table, strings, contentStream, tableTopY);
 		float nextTextX = table.getMargin() + table.getCellMargin();
 		float nextTextY = tableTopY - (table.getRowHeight() / 2)
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
@@ -851,21 +840,14 @@ public class PDFRevalorizacionGenerador {
 			throws IOException {
 		float nextY = tableTopY;
 		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		// for (int i = 0; i <= currentPageContent.length + 1; i++) {
 		for (int i = 0; i <= 1; i++) {
 			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
 			nextY -= 4 * table.getRowHeight();
 		}
-		// Modificado solo pra el titulo para grilla modificar por
-		// final float tableYLength = table.getRowHeight() +
-		// (table.getRowHeight() * currentPageContent.length);
-		// final float tableBottomY = tableTopY - tableYLength;
 		final float tableBottomY = tableTopY - 4 * table.getRowHeight();
 		
 		float nextX = table.getMargin();
 		
-		// Modificado para solo el tititulo para grilla completa modificar por
 		for (int i = 0; i < strings.length; i++) {
 			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
 			nextX += table.getColumns().get(i).getWidth();
@@ -878,16 +860,11 @@ public class PDFRevalorizacionGenerador {
 			throws IOException {
 		float nextY = tableTopY;
 		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		// for (int i = 0; i <= currentPageContent.length + 1; i++) {
 		for (int i = 0; i <= 1; i++) {
 			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
 			nextY -= table.getRowHeight();
 		}
-		// Modificado solo pra el titulo para grilla modificar por
-		// final float tableYLength = table.getRowHeight() +
-		// (table.getRowHeight() * currentPageContent.length);
-		// final float tableBottomY = tableTopY - tableYLength;
+
 		final float tableBottomY = tableTopY - table.getRowHeight();
 		
 		float nextX = table.getMargin();
@@ -953,8 +930,6 @@ public class PDFRevalorizacionGenerador {
 				long text_width = (long) ((long) ((table.getTextFont().getStringWidth(part_text) / 1000.0f) * table.getFontSize()) * 1.20);
 				contentStream.moveTextPositionByAmount(nextTextX + table.getColumns().get(i).getWidth() / 2 - text_width / 2,
 						copynextTextY);
-				// contentStream.moveTextPositionByAmount(nextTextX,
-				// copynextTextY);
 				try {
 					contentStream.showText(part_text);
 				} catch (Exception e) {
@@ -963,15 +938,6 @@ public class PDFRevalorizacionGenerador {
 				contentStream.endText();
 				copynextTextY -= table.getRowHeight();
 			}
-			// }
-			// contentStream.beginText();
-			// contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			// try {
-			// contentStream.showText(text != null ? text : "");
-			// } catch (Exception e) {
-			// System.out.print(lineContent[0] + "->" + text);
-			// }
-			// contentStream.endText();
 			nextTextX += table.getColumns().get(i).getWidth();
 		}
 	}
@@ -1067,11 +1033,6 @@ public class PDFRevalorizacionGenerador {
 			contentStream.showText(text != null ? text : "");
 			contentStream.endText();
 			nextTextX += table.getColumns().get(2).getWidth() * 8;
-			// contentStream.drawLine(nextTextX, nextTextY, nextTextX*5,
-			// nextTextY);
-			// contentStream.drawLine(table.getMargin() * 16, nextTextY,
-			// table.getMargin() * 11 + table.getWidth()
-			// / 6, nextTextY);
 		}
 		
 	}
