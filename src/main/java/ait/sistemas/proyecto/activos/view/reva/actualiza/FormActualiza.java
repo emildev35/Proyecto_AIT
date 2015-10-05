@@ -11,6 +11,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.CierreGestionImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -20,6 +21,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
@@ -89,6 +91,12 @@ public class FormActualiza extends GridLayout implements ValueChangeListener {
 				"Registre la Fecha a la cual desea Actualizar y Depreciar el Valor de los Activos Fijos");
 		Panel pn_ultimo_valor = new Panel("Datos de la ultima Actualizacion y Depreciacion");
 
+		pn_valor_actual.setStyleName(AitTheme.PANEL_PRINT);
+		pn_valor_actual.setIcon(FontAwesome.PRINT);
+		
+		pn_ultimo_valor.setStyleName(AitTheme.PANEL_PRINT);
+		pn_ultimo_valor.setIcon(FontAwesome.PRINT);
+		
 		GridLayout grid_valor = new GridLayout(2, 1);
 		grid_valor.setSizeFull();
 		grid_valor.setMargin(true);
@@ -162,11 +170,5 @@ public class FormActualiza extends GridLayout implements ValueChangeListener {
 
 	@Override
 	public void valueChange(ValueChangeEvent event) {
-//		if (this.dtf_fecha.getValue() != null && event.getProperty().getValue() == this.dtf_fecha.getValue()) {
-//			List<TipoCambio> tipo_cambio = this.tipocambio_impl.getTipoCambioUFV(new java.sql.Date(this.dtf_fecha
-//					.getValue().getTime()));
-//
-//			this.txt_ufvf.setValue(tipo_cambio.get(0).getTipo_cambio().toString().replace(".", ","));
-//		}
 	}
 }

@@ -5,9 +5,14 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.common.view.HomeView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -20,6 +25,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VActualizaP extends VerticalLayout implements View, ClickListener {
@@ -29,12 +35,17 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 	private FormActualiza frm_Actualiza;
 	private CssLayout hl_errores;
 	private Button btn_agregar;
+	private Button btn_salir = new Button("Salir");
 	private final ActualizacionImpl actualiza_impl = new ActualizacionImpl();
+	
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VActualizaP() {
 		frm_Actualiza = new FormActualiza();
 		this.btn_agregar = new Button("Actualiza Activos");
 		this.btn_agregar.addClickListener(this);
+		
+		this.btn_salir.addClickListener(this);
 		
 		this.hl_errores = new CssLayout();
 		
@@ -45,9 +56,13 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
-		buttonContent.addComponent(this.btn_agregar);
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_agregar.setIcon(FontAwesome.TRUCK);
+		btn_salir.setStyleName(AitTheme.BTN_EXIT);
+		btn_salir.setIcon(FontAwesome.UNDO);
+		buttonContent.addComponent(btn_agregar);
+		buttonContent.addComponent(btn_salir);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		return buttonContent;
 	}
 	
@@ -65,10 +80,7 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos >>"));
-		nav.addComponent(new Label("Revalorizacion Depreciacion >>"));
-		nav.addComponent(new Label("Actualizacion >>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -102,6 +114,8 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 			}
 			buildMessages(this.frm_Actualiza.getMensajes());
 			this.frm_Actualiza.clearMessages();
+		}else{
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 	}
 	

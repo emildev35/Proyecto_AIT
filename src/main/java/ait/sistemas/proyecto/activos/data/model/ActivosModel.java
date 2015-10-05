@@ -55,7 +55,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 		@FieldResult(name = "ACT_Tipo_Cambio_Dolar", column = "ACT_Tipo_Cambio_Dolar"),
 		@FieldResult(name = "ACT_Tipo_Cambio_UFV", column = "ACT_Tipo_Cambio_UFV"),
 		@FieldResult(name = "ACT_Actualizacion_Acumulada_Gestion_Anterior", column = "ACT_Actualizacion_Acumulada_Gestion_Anterior"),
-		@FieldResult(name = "ACT_Actualizacion_Acumulada", column = "ACT_Actualizacion_Acumulada"),
+		@FieldResult(name = "	", column = "ACT_Actualizacion_Acumulada"),
 		@FieldResult(name = "ACT_Depreciacion_Acumulada_Gestion_Anterior", column = "ACT_Depreciacion_Acumulada_Gestion_Anterior"),
 		@FieldResult(name = "ACT_Depresiacion_Acumulada", column = "ACT_Depresiacion_Acumulada"),
 		@FieldResult(name = "ACT_CA", column = "ACT_CA"), @FieldResult(name = "ACT_DAA", column = "ACT_DAA"),
@@ -124,6 +124,8 @@ public class ActivosModel implements Serializable {
 	private BigDecimal ACT_Actualizacion_Acumulada;
 	private BigDecimal ACT_Depresiacion_Acumulada;
 	private BigDecimal ACT_Depreciacion_Acumulada_Gestion_Anterior;
+	private BigDecimal ACT_Actualizacion_Gestion_Actual;
+	private BigDecimal ACT_Depreciacion_Gestion_Actual;
 	private BigDecimal ACT_DAA;
 	private BigDecimal ACT_CA;
 	private int ACT_Ubicacion_Fisica_Activo_ID;
@@ -320,6 +322,39 @@ public class ActivosModel implements Serializable {
 		this.ACT_No_Comprobante_Gasto = ACT_No_Comprobante_Gasto;
 	}
 	
+	
+	public Date getACT_Fecha_Ultima_Revalorizacion() {
+		return ACT_Fecha_Ultima_Revalorizacion;
+	}
+
+	public void setACT_Fecha_Ultima_Revalorizacion(Date aCT_Fecha_Ultima_Revalorizacion) {
+		ACT_Fecha_Ultima_Revalorizacion = aCT_Fecha_Ultima_Revalorizacion;
+	}
+
+	public Date getACT_Fecha_Ultima_Depreciacion() {
+		return ACT_Fecha_Ultima_Depreciacion;
+	}
+
+	public void setACT_Fecha_Ultima_Depreciacion(Date aCT_Fecha_Ultima_Depreciacion) {
+		ACT_Fecha_Ultima_Depreciacion = aCT_Fecha_Ultima_Depreciacion;
+	}
+
+	public BigDecimal getACT_Actualizacion_Gestion_Actual() {
+		return ACT_Actualizacion_Gestion_Actual;
+	}
+
+	public void setACT_Actualizacion_Gestion_Actual(BigDecimal aCT_Actualizacion_Gestion_Actual) {
+		ACT_Actualizacion_Gestion_Actual = aCT_Actualizacion_Gestion_Actual;
+	}
+
+	public BigDecimal getACT_Depreciacion_Gestion_Actual() {
+		return ACT_Depreciacion_Gestion_Actual;
+	}
+
+	public void setACT_Depreciacion_Gestion_Actual(BigDecimal aCT_Depreciacion_Gestion_Actual) {
+		ACT_Depreciacion_Gestion_Actual = aCT_Depreciacion_Gestion_Actual;
+	}
+
 	public String getACT_No_Contrato_Mantenimiento() {
 		return this.ACT_No_Contrato_Mantenimiento;
 	}

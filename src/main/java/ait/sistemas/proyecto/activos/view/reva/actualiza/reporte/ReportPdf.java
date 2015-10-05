@@ -36,7 +36,7 @@ public class ReportPdf {
 	 * Font for footer report
 	 */
 	private static final PDFont HEADER_FONT = PDType1Font.HELVETICA;
-	private static final float HEADER_FONT_SIZE = 10;
+	private static final float HEADER_FONT_SIZE = 8;
 
 	/**
 	 * Font for footer report
@@ -63,25 +63,25 @@ public class ReportPdf {
 	String[][] contables;
 	String[][] activos;
 
-	public boolean getPdf(String[][] data, String strDependencia) throws IOException {
+	public boolean getPdf(String[][] data, String fecha) throws IOException {
 
-		return new PDFRevalorizacionGenerador().generatePDF(createContent(data, strDependencia), SAVE_PATH);
+		return new PDFRevalorizacionGenerador().generatePDF(createContent(data, fecha), SAVE_PATH);
 
 	}
 
-	private Table createContent(String[][] content, String strDependencia) {
+	private Table createContent(String[][] content, String fecha) {
 
 		List<Column> columnsGA = new ArrayList<Column>();
 		columnsGA.add(new Column("Grupo Contable", 440));
-		columnsGA.add(new Column("Auxiliar Contable", 450));
+		columnsGA.add(new Column("Auxiliar Contable", 445));
 		
 
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
 		columns.add(new Column("Nombre del Activo", 315));
+		columns.add(new Column("Vida Util", 50));
 		columns.add(new Column("Fecha Compra", 50));
 		columns.add(new Column("Valor Compra", 55));
-		columns.add(new Column("Vida Util", 55));
 		columns.add(new Column("Valor Actualizado Gestion Anterior", 55));
 		columns.add(new Column("Depreciacion Actualizada Gestion Anterior", 55));
 		columns.add(new Column("Actualizacion Gestion Actual", 55));
@@ -92,9 +92,6 @@ public class ReportPdf {
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 
-		// Date date = new Date();
-		// DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
-		// String fecha = fechaHora.format(date);
 		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setColumnsGA(columnsGA).setContent(content)
 				.setColumns(columns).setContent(content).setHeight(tableHeight).setNumberOfRows(content.length)
 				.setRowHeight(ROW_HEIGHT).setMargin(MARGIN).setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE)
@@ -102,7 +99,7 @@ public class ReportPdf {
 				.setFooterFont(FOOTER_FONT).setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT)
 				.setFontSizeTitle(TITLE_FONT_SIZE).setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
 				.setHeaderSize(HEADER_SIZE).setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
-				.setTitle("INVENTARIO DE ACTIVOS").setSubTitle("Realizado al : " ).build();
+				.setTitle("ACTUALIZACION Y DEPRECIACION DE ACTIVOS").setSubTitle("Realizado al : " + fecha).build();
 		return Inventario;
 
 	}

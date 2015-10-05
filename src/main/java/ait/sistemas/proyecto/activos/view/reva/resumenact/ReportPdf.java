@@ -61,9 +61,9 @@ public class ReportPdf {
 	String[][] contables;
 	String[][] activos;
 
-	public boolean getPdf(String[][] data, String strDependencia) throws IOException {
+	public boolean getPdf(String[][] data, String fecha) throws IOException {
 
-		return new PdfResumenActGenerator().generatePDF(createContent(data, strDependencia), SAVE_PATH);
+		return new PdfResumenActGenerator().generatePDF(createContent(data, fecha), SAVE_PATH);
 
 	}
 

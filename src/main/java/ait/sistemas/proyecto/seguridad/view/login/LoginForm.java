@@ -148,7 +148,7 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 	}
 	
 	public boolean isNew() {
-		if (getComponent(0, 2) != null) {
+		if (getComponent(1, 2) != null) {
 			return true;
 		}
 		return false;
