@@ -25,7 +25,7 @@ public class ReportPdf {
 	
 	// Font for textFont
 	private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-	private static final float FONT_SIZE = 9;
+	private static final float FONT_SIZE = 8;
 	
 	/**
 	 * Font for footer report
@@ -81,8 +81,10 @@ public class ReportPdf {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 40));
 		columns.add(new Column("Serie", 130));
-		columns.add(new Column("Nombre del Activo", 570));
+		columns.add(new Column("Nombre del Activo", 415));
 		columns.add(new Column("Valor Compra", 75));
+		columns.add(new Column("Actualizacion Acumulada", 80));
+		columns.add(new Column("Depreciacion Acumulada", 75));
 		columns.add(new Column("Valor Neto", 75));
 		
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
