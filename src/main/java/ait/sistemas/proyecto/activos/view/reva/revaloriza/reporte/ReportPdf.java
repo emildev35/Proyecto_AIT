@@ -11,7 +11,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.PDFActivoBajaGenerator;
+import ait.sistemas.proyecto.common.report.PDFRevalorizaGenerator;
 import ait.sistemas.proyecto.common.report.PageSize;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
@@ -57,7 +57,7 @@ public class ReportPdf {
 	private static final int HEADER_SIZE = 4;
 
 
-	public static String SAVE_PATH = PathValues.PATH_REPORTS+ "Reporte-Activos-Baja-" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public static String SAVE_PATH = PathValues.PATH_REPORTS+ "Reporte-Activos-Revalorizados-" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 	
 	final ActivoImpl activoimpl = new ActivoImpl();
 
@@ -66,7 +66,7 @@ public class ReportPdf {
 
 	public boolean getPdf(String[][] data, String strDependencia, String fecha) throws IOException {
 
-		return new PDFActivoBajaGenerator().generatePDF(createContent(data, strDependencia, fecha ), SAVE_PATH);
+		return new PDFRevalorizaGenerator().generatePDF(createContent(data, strDependencia, fecha ), SAVE_PATH);
 
 	}
 
@@ -77,14 +77,13 @@ public class ReportPdf {
 		columnsGA.add(new Column("Auxiliar Contable", 450));
 		
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column("Codigo", 32));
-		columns.add(new Column("Nombre del Activo", 328));
-		columns.add(new Column("Valor Compra", 75));
-		columns.add(new Column("Valor Neto", 75));
+		columns.add(new Column("Codigo", 37));
+		columns.add(new Column("Serie", 130));
+		columns.add(new Column("Nombre del Activo", 448));
 		columns.add(new Column("Nro Resolucion", 90));
 		columns.add(new Column("Fecha", 50));
-		columns.add(new Column("Motivo Baja", 180));
-		columns.add(new Column("Vida Residual", 60));
+		columns.add(new Column("Valor Compra", 75));
+		columns.add(new Column("Vida Util", 60));
 
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 //		Date date = new Date();
@@ -100,7 +99,7 @@ public class ReportPdf {
 				.setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT).setFontSizeTitle(TITLE_FONT_SIZE)
 				.setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE).setHeaderSize(HEADER_SIZE)
 				.setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
-				.setTitle("INVENTARIO DE ACTIVOS CON BAJA")
+				.setTitle("ACTIVOS FIJOS REVALORIZADOS")
 				.setSubTitle("Realizado al : " + fecha)
 				.build();
 		return Inventario;

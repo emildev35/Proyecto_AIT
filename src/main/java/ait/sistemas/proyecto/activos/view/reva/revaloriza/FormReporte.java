@@ -177,7 +177,7 @@ public class FormReporte extends GridLayout {
 	}
 
 	public void clearMessages() {
-		this.mensajes.clear();
+		this.mensajes = new ArrayList<BarMessage>();
 	}
 }
 
