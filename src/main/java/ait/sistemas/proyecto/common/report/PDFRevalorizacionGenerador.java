@@ -210,7 +210,7 @@ public class PDFRevalorizacionGenerador {
 					DecimalFormat formate = new DecimalFormat("##,###,###,###");
 					String str_aux_cont = formate.format(valors_auxiliar_contable);
 					
-					DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
+					DecimalFormat formater = new DecimalFormat("##,###,###,##0.00");
 					
 					double s_total = sum_auxiliares_contables;
 					String str_s_total = formater.format(s_total);
@@ -333,7 +333,7 @@ public class PDFRevalorizacionGenerador {
 						
 						DecimalFormat formate = new DecimalFormat("##,###,###,###");
 						String str_grup_cont = formate.format(valors_grupo_contable);
-						DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
+						DecimalFormat formater = new DecimalFormat("##,###,###,##0.00");
 						
 						double s_grp_total = Double.parseDouble(String.valueOf(sum_grupo_contable));
 						String str_s_grup_total = formater.format(s_grp_total);
@@ -425,7 +425,7 @@ public class PDFRevalorizacionGenerador {
 					DecimalFormat formate = new DecimalFormat("##,###,###,###");
 					double valorf_dep_contable = Double.parseDouble(String.valueOf(can_por_dependencia));
 					String str_f_dep_cont = formate.format(valorf_dep_contable);
-					DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
+					DecimalFormat formater = new DecimalFormat("##,###,###,##0.00");
 					
 					double f_dep_total = Double.parseDouble(String.valueOf(sum_por_dependencia));
 					String str_f_dep_total = formater.format(f_dep_total);
@@ -490,14 +490,13 @@ public class PDFRevalorizacionGenerador {
 					sum_grupo_contable += sum_grupo_contable;
 					sum_neto_auxiliares_contables = 0;
 					can_por_dependencia = 0;
-					
-					sum_valcompra_grupo_contable = 0;
-					sum_valactgesant_grupo_contable = 0;
-					sum_actgesact_grupo_contable = 0;
-					sum_depacugestant_grupo_contable = 0;
-					sum_depgestact_grupo_contable = 0;
-					sum_actacu_grupo_contable = 0;
-					sum_neto_grupo_contable = 0;
+//					sum_valcompra_grupo_contable = 0;
+//					sum_valactgesant_grupo_contable = 0;
+//					sum_actgesact_grupo_contable = 0;
+//					sum_depacugestant_grupo_contable = 0;
+//					sum_depgestact_grupo_contable = 0;
+//					sum_actacu_grupo_contable = 0;
+//					sum_neto_grupo_contable = 0;
 					
 					numero_dependencias += 1;
 				}
@@ -642,7 +641,7 @@ public class PDFRevalorizacionGenerador {
 		
 		double valorf_aux = Double.parseDouble(String.valueOf(can_auxiliares_contables));
 		String str_f_aux = formate.format(valorf_aux);
-		DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
+		DecimalFormat formater = new DecimalFormat("##,###,###,##0.00");
 		
 		double f_aux_total = Double.parseDouble(String.valueOf(sum_auxiliares_contables));
 		String str_f_aux_total = formater.format(f_aux_total);
@@ -1113,7 +1112,7 @@ public class PDFRevalorizacionGenerador {
 		
 		long size_header = table.isLandscape() ? 800 : 400;
 		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");
 		String fecha = fechaHora.format(date);
 		
 		nextTextX += size_header;

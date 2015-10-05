@@ -28,7 +28,7 @@ public class FormResumenact extends GridLayout implements ValueChangeListener{
 	
 	
 	private static final long serialVersionUID = 1L;
-
+	public static final short ALL = 0;
 	
 	public ComboBox cb_Dependencia;
 	public TextField txt_ufvi;
@@ -94,9 +94,9 @@ public class FormResumenact extends GridLayout implements ValueChangeListener{
 			cb_Dependencia.addItem(dependencia.getDEP_Dependencia());
 			cb_Dependencia.setItemCaption(dependencia.getDEP_Dependencia(), dependencia.getDEP_Nombre_Dependencia());
 		}
-//		short a = 0;
-//		cb_Dependencia.addItem(a);
-//		cb_Dependencia.setItemCaption(a, "Todas las Dependencias");
+	
+		cb_Dependencia.addItem(ALL);
+		cb_Dependencia.setItemCaption(ALL, Messages.ALL_DEP);
 	}
 	private void buildContent() {
 		

@@ -16,7 +16,7 @@ import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import com.vaadin.ui.UI;
 
 
-@SuppressWarnings({ "deprecation", "unused" })
+@SuppressWarnings("deprecation")
 public class PdfResumenActGenerator {
 
 	private PDDocument doc;
@@ -199,22 +199,9 @@ public class PdfResumenActGenerator {
 		sum_dependencia += sum_grupo_contable;
 		sum_neto_dependencia += sum_neto_dependencia;
 
-//		drawCurrentPageCorte(table,
-//				new String[] { "Cantidad por Auxiliar Contable", String.valueOf(can_auxiliares_contables), "Total",
-//						String.valueOf(sum_auxiliares_contables), "Total Neto",
-//						String.valueOf(sum_neto_auxiliares_contables) }, contentStream, tableTopY);
 		
 		tableTopY -= table.getRowHeight();
 
-//		drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", String.valueOf(can_grupo_contable),
-//				"Total", String.valueOf(sum_grupo_contable), "Total Neto", String.valueOf(sum_neto_grupo_contable) },
-//				contentStream, tableTopY);
-//		tableTopY -= table.getRowHeight();
-
-//		drawCurrentPageCorte(table, new String[] { "Cantidad por Dependencia", String.valueOf(can_dependencia),
-//				"Total", String.valueOf(sum_dependencia), "Total Neto", String.valueOf(sum_neto_dependencia) },
-//				contentStream, tableTopY);
-//		tableTopY -= table.getRowHeight();
 
 		contentStream.close();
 
@@ -259,18 +246,6 @@ public class PdfResumenActGenerator {
 		writeContentLineDependencia(strings, contentStream, nextTextX, nextTextY, table);
 	}
 
-	private void drawCurrentPageContable(Table table, String[] strings, PDPageContentStream contentStream,
-			float tableTopY) throws IOException {
-
-		// Draws grid and borders
-		// drawTableGrid(table, strings, contentStream, tableTopY);
-		float nextTextX = table.getMargin() + table.getCellMargin();
-		float nextTextY = tableTopY
-				- (table.getRowHeight() / 2)
-				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table
-						.getFontSize()) / 4);
-		writeContentLineContables(strings, contentStream, nextTextX, nextTextY, table);
-	}
 
 	private void drawCurrentPageCorte(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
 			throws IOException {
@@ -312,59 +287,7 @@ public class PdfResumenActGenerator {
 
 	}
 
-	private void drawTableGridDependencia(Table table, String[] strings, PDPageContentStream contentStream,
-			float tableTopY) throws IOException {
-		float nextY = tableTopY;
 
-		// Modificado para solo el tititulo para grilla completa modificar por
-		// for (int i = 0; i <= currentPageContent.length + 1; i++) {
-		for (int i = 0; i <= 1; i++) {
-			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth() / 3, nextY);
-			nextY -= table.getRowHeight();
-		}
-		// Modificado solo pra el titulo para grilla modificar por
-		// final float tableYLength = table.getRowHeight() +
-		// (table.getRowHeight() * currentPageContent.length);
-		// final float tableBottomY = tableTopY - tableYLength;
-		final float tableBottomY = tableTopY - table.getRowHeight();
-
-		float nextX = table.getMargin();
-
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i < strings.length; i++) {
-			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-			nextX += table.getWidth() / 6;
-		}
-		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-
-	}
-
-	private void drawTableGridContables(Table table, String[] strings, PDPageContentStream contentStream,
-			float tableTopY) throws IOException {
-		float nextY = tableTopY;
-
-		// Modificado para solo el tititulo para grilla completa modificar por
-		// for (int i = 0; i <= currentPageContent.length + 1; i++) {
-		for (int i = 0; i <= 1; i++) {
-			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
-			nextY -= table.getRowHeight();
-		}
-		// Modificado solo pra el titulo para grilla modificar por
-		// final float tableYLength = table.getRowHeight() +
-		// (table.getRowHeight() * currentPageContent.length);
-		// final float tableBottomY = tableTopY - tableYLength;
-		final float tableBottomY = tableTopY - table.getRowHeight();
-
-		float nextX = table.getMargin();
-
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i < strings.length; i++) {
-			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-			nextX += table.getWidth() / 4;
-		}
-		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-
-	}
 
 	// Writes the content for one line
 	private void writeContentLine(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
@@ -446,33 +369,6 @@ public class PdfResumenActGenerator {
 		}
 	}
 
-	private void drawTableGridCorte(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
-			throws IOException {
-		float nextY = tableTopY;
-
-		// Modificado para solo el tititulo para grilla completa modificar por
-		// for (int i = 0; i <= currentPageContent.length + 1; i++) {
-
-		for (int i = 0; i <= 2; i++) {
-			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(), nextY);
-			nextY -= table.getRowHeight();
-		}
-		// Modificado solo pra el titulo para grilla modificar por
-		// final float tableYLength = table.getRowHeight() +
-		// (table.getRowHeight() * currentPageContent.length);
-		// final float tableBottomY = tableTopY - tableYLength;
-		final float tableBottomY = tableTopY - 2 * table.getRowHeight();
-
-		float nextX = table.getMargin();
-
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i < strings.length; i++) {
-			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-			nextX += table.getWidth() / 4;
-		}
-		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-
-	}
 
 	private void writeContentLineDependencia(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
 			float nextTextY, Table table) throws IOException {
@@ -521,26 +417,6 @@ public class PdfResumenActGenerator {
 		return contentStream;
 	}
 
-	private void writeFooter(PDPageContentStream contentStream, float nextTextX, float nextTextY, Table table,
-			int pagecount) throws IOException {
-
-		contentStream.setFont(table.getFooterFont(), table.getFontSizefooter());
-
-		nextTextY = table.isLandscape() ? table.getMargin() : table.getMargin();
-		nextTextY -= (table.getRowHeight() * 2.5);
-		contentStream.drawLine(nextTextX, (nextTextY + table.getRowHeight()), nextTextX * table.getNumberOfColumns(),
-				(nextTextY + table.getRowHeight()));
-
-		contentStream.beginText();
-		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-
-		nextTextY += table.getRowHeight() - table.getMargin();
-		nextTextX += table.getWidth();
-		String footertext = String.format("Página %d de %d", this.intactualpage, this.intNumberoftotalPages);
-		contentStream.showText(footertext);
-		contentStream.endText();
-
-	}
 
 	private void writeHeader(PDPageContentStream contentStream, float nextTextY, Table table) throws IOException {
 

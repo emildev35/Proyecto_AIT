@@ -99,7 +99,7 @@ public class ReportPdf {
 				.setFooterFont(FOOTER_FONT).setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT)
 				.setFontSizeTitle(TITLE_FONT_SIZE).setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
 				.setHeaderSize(HEADER_SIZE).setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
-				.setTitle("INVENTARIO DE ACTIVOS").setSubTitle("Realizado al : " + fecha).build();
+				.setTitle("ACTUALIZACION Y DEPRECIACION DE ACTIVOS").setSubTitle("Realizado al : " + fecha).build();
 		return Inventario;
 
 	}
