@@ -154,7 +154,7 @@ public class PDFInventarioGenerator {
 				sum_neto_grupo_contable += sum_neto_auxiliares_contables;
 				
 				sum_CA_grupo +=sum_CA_auxiliar;
-				sum_DA_grupo +=sum_DA_grupo;
+				sum_DA_grupo +=sum_DA_auxiliar;
 				
 				can_grupo_contable += can_auxiliares_contables;
 				if (!auxiliar_contable.equals("")) {
@@ -286,13 +286,13 @@ public class PDFInventarioGenerator {
 						double s_ca_grup_total = Double.parseDouble(String.valueOf(sum_CA_grupo));
 						String str_ca_grup_total = formater.format(s_ca_grup_total);
 						
-						double s_da_g_total = Double.parseDouble(String.valueOf(sum_DA_grupo));
-						String str_da_g_total = formater.format(s_da_g_total);
+						double da_g_total = Double.parseDouble(String.valueOf(sum_DA_grupo));
+						String str_da_grup_total = formater.format(da_g_total);
 						
 						tableTopY -= table.getRowHeight();
 						contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 31, tableTopY);
 						drawCurrentPageCorte(table, new String[] { "Cantidad por Grupo Contable", str_grup_cont, "Total",
-								str_s_grup_total,str_ca_grup_total,str_da_g_total, str_s_grup_total_neto }, contentStream, tableTopY);
+								str_s_grup_total,str_ca_grup_total,str_da_grup_total, str_s_grup_total_neto }, contentStream, tableTopY);
 						// tableTopY -= table.getRowHeight();
 						r++;
 						if (r >= rowsPerPage || r == table.getHeaderSize()) {
@@ -914,7 +914,7 @@ public class PDFInventarioGenerator {
 			
 //			contentStream.showText(text);
 			contentStream.endText();
-			copynextTextY -= table.getRowHeight();
+			copynextTextY -= table.getRowHeight()/2;
 		}
 		}
 			else{
@@ -1108,7 +1108,7 @@ public class PDFInventarioGenerator {
 		
 		long size_header = table.isLandscape() ? 800 : 400;
 		Date date = new Date();
-		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");
 		String fecha = fechaHora.format(date);
 		
 		nextTextX += size_header;
