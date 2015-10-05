@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.CierreGestionImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -18,6 +19,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
@@ -111,6 +113,8 @@ public class FormResumenact extends GridLayout implements ValueChangeListener{
 		grid_valor.setMargin(true);
 		grid_valor.addComponent(this.cb_Dependencia, 0, 0);
 		pn_valor_actual.setContent(grid_valor);
+		pn_valor_actual.setStyleName(AitTheme.PANEL_PRINT);
+		pn_valor_actual.setIcon(FontAwesome.PRINT);
 		this.addComponent(pn_valor_actual, 0, 0);
 
 		GridLayout grid_ultimo = new GridLayout(2, 1);
@@ -119,6 +123,8 @@ public class FormResumenact extends GridLayout implements ValueChangeListener{
 		grid_ultimo.addComponent(this.dtf_fecha_ultima_depre, 0, 0);
 		grid_ultimo.addComponent(this.txt_ufvi, 1, 0);
 		pn_ultimo_valor.setContent(grid_ultimo);
+		pn_ultimo_valor.setStyleName(AitTheme.PANEL_PRINT);
+		pn_ultimo_valor.setIcon(FontAwesome.PRINT);
 		this.addComponent(pn_ultimo_valor, 0, 1);
 
 	}
