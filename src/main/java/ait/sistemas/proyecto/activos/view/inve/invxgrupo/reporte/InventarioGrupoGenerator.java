@@ -48,8 +48,8 @@ public class InventarioGrupoGenerator {
 		String dependencia = "";
 		
 		int can_dependencia = 0;
-		float sum_valorCompra = 0;
-		float sum_valorNeto = 0;
+		double sum_valorCompra = 0;
+		double sum_valorNeto = 0;
 		int num_dep = 0;
 		for (int i = 0; i < table.getContent().length; i++) {
 			
@@ -60,13 +60,9 @@ public class InventarioGrupoGenerator {
 				
 				DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
 				DecimalFormat formaterint = new DecimalFormat("##,###,###,###");
-				double s_c = Double.parseDouble(String.valueOf(sum_valorCompra) == null ? "0" : String.valueOf(sum_valorCompra));
-				String str_s_c = formater.format(s_c);
-				double s_n = Double.parseDouble(String.valueOf(sum_valorNeto) == null ? "0" : String.valueOf(sum_valorNeto));
-				String str_s_n = formater.format(s_n);
-				String str_c_d = formaterint.format(can_dependencia);
-				drawCurrentPageCorte(table, new String[] { num_dep > 1 ? "Total General" : "Total Dependencia", str_c_d, str_s_c,
-						str_s_n }, contentStream, tableTopY);
+				drawCurrentPageCorte(table,
+						new String[] { num_dep > 1 ? "Total General" : "Total Dependencia", formaterint.format(can_dependencia),
+								formater.format(sum_valorCompra), formater.format(sum_valorNeto) }, contentStream, tableTopY);
 				num_dep++;
 			}
 			
@@ -86,6 +82,7 @@ public class InventarioGrupoGenerator {
 				writeHeader(contentStream, tableTopY, table);
 				
 				drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia }, contentStream, tableTopY);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo)" }, contentStream, tableTopY);
 				tableTopY -= table.getRowHeight();
 				
 				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
@@ -103,8 +100,8 @@ public class InventarioGrupoGenerator {
 			drawCurrentPage(table, current, contentStream, tableTopY);
 			
 			can_dependencia += Integer.parseInt(table.getContent()[i][2] == "null" ? "0" : table.getContent()[i][2]);
-			sum_valorCompra += Float.parseFloat(table.getContent()[i][3] == "null" ? "0" : table.getContent()[i][3]);
-			sum_valorNeto += Float.parseFloat(table.getContent()[i][4] == "null" ? "0" : table.getContent()[i][4]);
+			sum_valorCompra += Double.parseDouble(table.getContent()[i][3] == "null" ? "0" : table.getContent()[i][3]);
+			sum_valorNeto += Double.parseDouble(table.getContent()[i][4] == "null" ? "0" : table.getContent()[i][4]);
 			
 		}
 		
@@ -113,14 +110,10 @@ public class InventarioGrupoGenerator {
 		
 		DecimalFormat formater = new DecimalFormat("##,###,###,###.00");
 		DecimalFormat formaterint = new DecimalFormat("##,###,###,###");
-		double s_c = Double.parseDouble(String.valueOf(sum_valorCompra) == null ? "0" : String.valueOf(sum_valorCompra));
-		String str_s_c = formater.format(s_c);
-		double s_n = Double.parseDouble(String.valueOf(sum_valorNeto) == null ? "0" : String.valueOf(sum_valorNeto));
-		String str_s_n = formater.format(s_n);
-		String str_c_d = formaterint.format(can_dependencia);
-		drawCurrentPageCorte(table,
-				new String[] { num_dep > 1 ? "Total General" : "Total Dependencia", str_c_d, str_s_c, str_s_n }, contentStream,
-				tableTopY);
+		drawCurrentPageCorte(
+				table,
+				new String[] { num_dep > 1 ? "Total General" : "Total Dependencia", formaterint.format(can_dependencia),
+						formater.format(sum_valorCompra), formater.format(sum_valorNeto) }, contentStream, tableTopY);
 		
 		contentStream.close();
 		drawFooter(doc, table);
@@ -274,6 +267,32 @@ public class InventarioGrupoGenerator {
 			contentStream.showText(text);
 			contentStream.endText();
 			nextTextX += table.getColumns().get(i).getWidth();
+		}
+	}
+	
+	private void drawCurrentPageOrden(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
+			throws IOException {
+		// Draws grid and borders
+		// drawTableGrid(table, strings, contentStream, tableTopY);
+		float nextTextX = (float) (table.getWidth() - 2.5 * table.getMargin());
+		float nextTextY = tableTopY - (table.getRowHeight() / 2)
+				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
+		writeContentLineOrden(strings, contentStream, nextTextX, nextTextY, table);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void writeContentLineOrden(String[] lineContent, PDPageContentStream contentStream, float nextTextX, float nextTextY,
+			Table table) throws IOException {
+		
+		contentStream.setFont(table.getTextFont(), table.getFontSize());
+		
+		for (int i = 0; i < lineContent.length; i++) {
+			String text = lineContent[i];
+			contentStream.beginText();
+			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+			contentStream.showText(text != null ? text : "");
+			contentStream.endText();
+			nextTextX += table.getWidth();
 		}
 	}
 	

@@ -95,6 +95,7 @@ public class ResumenActuGenerator {
 				writeHeader(contentStream, tableTopY, table);
 				
 				drawCurrentPageDependencia(table, new String[] { "Dependencia : " + dependencia }, contentStream, tableTopY);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo)" }, contentStream, tableTopY);
 				tableTopY -= table.getRowHeight();
 				
 				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
@@ -343,6 +344,33 @@ public class ResumenActuGenerator {
 		}
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		return contentStream;
+	}
+	
+	private void drawCurrentPageOrden(Table table, String[] strings, PDPageContentStream contentStream, float tableTopY)
+			throws IOException {
+		
+		// Draws grid and borders
+		// drawTableGrid(table, strings, contentStream, tableTopY);
+		float nextTextX = (float) (table.getWidth() - 2.5 * table.getMargin());
+		float nextTextY = tableTopY - (table.getRowHeight() / 2)
+				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
+		writeContentLineOrden(strings, contentStream, nextTextX, nextTextY, table);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void writeContentLineOrden(String[] lineContent, PDPageContentStream contentStream, float nextTextX, float nextTextY,
+			Table table) throws IOException {
+		
+		contentStream.setFont(table.getTextFont(), table.getFontSize());
+		
+		for (int i = 0; i < lineContent.length; i++) {
+			String text = lineContent[i];
+			contentStream.beginText();
+			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+			contentStream.showText(text != null ? text : "");
+			contentStream.endText();
+			nextTextX += table.getWidth();
+		}
 	}
 	
 	@SuppressWarnings("deprecation")

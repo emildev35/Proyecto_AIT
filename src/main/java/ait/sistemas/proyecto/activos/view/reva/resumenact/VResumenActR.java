@@ -3,11 +3,13 @@ package ait.sistemas.proyecto.activos.view.reva.resumenact;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.report.msexcel.SimpleExcel;
 import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.common.view.HomeView;
@@ -37,6 +39,7 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_imprimir;
+	private Button btn_excel = new Button("Exportar Excel");
 	private Button btnSalir = new Button("Salir");
 	private FormResumenact frmReporte = new FormResumenact();
 	int r = 0;
@@ -57,15 +60,20 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(btn_imprimir);
+		buttonContent.addComponent(btn_excel);
 		buttonContent.addComponent(btnSalir);
 		
 		btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
 		btnSalir.addStyleName(AitTheme.BTN_EXIT);
 		btn_imprimir.setIcon(FontAwesome.PRINT);
 		btnSalir.setIcon(FontAwesome.UNDO);
+		btn_excel.setIcon(FontAwesome.FILE_EXCEL_O);
+		btn_excel.setStyleName(AitTheme.BTN_EXCEL);
 		
 		btn_imprimir.addClickListener(this);
 		btnSalir.addClickListener(this);
+		btn_excel.addClickListener(this);
+		
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
@@ -171,6 +179,46 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 		
 		if (event.getButton() == btnSalir) {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		} else if (event.getButton() == btn_excel) {
+			List<String> columnsHeaders = new ArrayList<String>();
+			columnsHeaders.add("Dependencia");
+			columnsHeaders.add("Grupo Contable");
+			columnsHeaders.add("Cantidad");
+			columnsHeaders.add("Valor de Compra");
+			columnsHeaders.add("Valor Actualizado Gestion Anterior");
+			columnsHeaders.add("Depreciacion Actualizada Gestion Anterior");
+			columnsHeaders.add("Actualizacion Gestion Actual");
+			columnsHeaders.add("Depreciacion Gestion Actual");
+			columnsHeaders.add("Actualizacion Acumulada");
+			columnsHeaders.add("Depreciacion Acumulada");
+			columnsHeaders.add("Valor Neto");
+			SimpleExcel simpleExcel = new SimpleExcel();
+			simpleExcel.save(
+					getDatos((short) frmReporte.cb_Dependencia.getValue(), frmReporte.dtf_fecha_ultima_depre.getValue()
+							.toString() + "T00:00:00"), columnsHeaders, "Resumen Actualizacion de Activos");
+			
+			File pdfFile = new File(simpleExcel.SAVE_PATH);
+			
+			VerticalLayout vl_pdf = new VerticalLayout();
+			Embedded pdf = new Embedded("", new FileResource(pdfFile));
+			
+			pdf.setMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			pdf.setType(Embedded.TYPE_BROWSER);
+			pdf.setSizeFull();
+			vl_pdf.setSizeFull();
+			vl_pdf.addComponent(pdf);
+			
+			Window subWindow = new Window("Reporte Inventario Activos");
+			VerticalLayout subContent = new VerticalLayout();
+			subContent.setMargin(true);
+			subWindow.setContent(vl_pdf);
+			
+			subWindow.setWidth("90%");
+			subWindow.setHeight("90%");
+			subWindow.center();
+			
+			// Open it in the UI
+			getUI().addWindow(subWindow);
 		} else {
 			if (this.frmReporte.validate()) {
 				ReportPdf reporte = new ReportPdf();
