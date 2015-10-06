@@ -6,8 +6,6 @@ import java.io.OutputStream;
 
 import ait.sistemas.proyecto.common.component.PathValues;
 
-import com.vaadin.server.Page;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload.Receiver;
 
 public class DocumentUploader implements Receiver {

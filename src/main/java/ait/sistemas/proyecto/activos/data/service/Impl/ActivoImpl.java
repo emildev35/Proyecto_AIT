@@ -298,7 +298,9 @@ public class ActivoImpl {
 				+ "@Nit_Proveedor=?3, " + "@Marca=?4, " + "@Numero_Serie=?5, " + "@Numero_Garantia=?6, " + "@Numero_Ruat=?7, "
 				+ "@Numero_Folio_Real=?8, " + "@Numero_Poliza_Seguro=?9, " + "@Numero_Contrato_Mantenimiento=?10, "
 				+ "@Vencimiento_Garantia=?11, " + "@Vencimiento_Seguro=?12, " + "@Vencimiento_Contrato_Mantenumiento=?13, "
-				+ "@Ubicacion_Imagen=?14";
+				+ "@Ubicacion_Imagen=?14,"
+				+ "@Numero_Licencia=?15,"
+				+ "@Vencimiento_Licencia=?16";
 		
 		Query query = this.em.createNativeQuery(str_add_caracteristicas).setParameter(1, caracteristicas.getCodigo())
 				.setParameter(2, caracteristicas.getDependencia()).setParameter(3, caracteristicas.getNit_proveedor())
@@ -310,7 +312,9 @@ public class ActivoImpl {
 				.setParameter(11, caracteristicas.getVencimiento_garantia())
 				.setParameter(12, caracteristicas.getVencimiento_seguro())
 				.setParameter(13, caracteristicas.getVencimiento_contrato_mantenumiento())
-				.setParameter(14, caracteristicas.getUbicacion_imagen());
+				.setParameter(14, caracteristicas.getUbicacion_imagen())
+				.setParameter(15, caracteristicas.getNumeroLicencia())
+				.setParameter(16, caracteristicas.getVencimientoLicencia());
 		
 		int result = (Integer) query.getSingleResult();
 		
@@ -318,6 +322,11 @@ public class ActivoImpl {
 	}
 	
 	public boolean addComponentes(List<Componente> componentes, ActivoSession sessionactivo) {
+
+	Query query = this.em.createNativeQuery("Mvac_QuitarComponentes_Q @Id_Activo=?1")
+				.setParameter(1, sessionactivo.getCodigo());
+		query.getSingleResult();
+		
 		final ComponenteImpl componenteimpl = new ComponenteImpl();
 		for (Componente componente : componentes) {
 			if (!componenteimpl.add(sessionactivo.getCodigo(), sessionactivo.getDependencia(), componente.getNombre(),
@@ -328,9 +337,12 @@ public class ActivoImpl {
 		return true;
 	}
 	
-	public boolean addDocumentos(List<Documento> documetnos, ActivoSession sessionactivo) {
+	public boolean addDocumentos(List<Documento> documentos, ActivoSession sessionactivo) {
+		Query query = this.em.createNativeQuery("Mvac_QuitarDocumentos_Q @Id_Activo=?1")
+				.setParameter(1, sessionactivo.getCodigo());
+		query.getSingleResult();
 		final DocumentoRespaldoImpl documentoimpl = new DocumentoRespaldoImpl();
-		for (Documento componente : documetnos) {
+		for (Documento componente : documentos) {
 			if (!documentoimpl.add(sessionactivo.getCodigo(), sessionactivo.getDependencia(), componente.getNombre(),
 					componente.getDireccion())) {
 				return false;

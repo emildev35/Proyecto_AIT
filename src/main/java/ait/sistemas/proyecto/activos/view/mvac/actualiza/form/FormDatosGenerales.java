@@ -81,6 +81,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public ComboBox cb_ubicacion_fisica = new ComboBox("Ubicacion Fisica");
 	public ComboBox cb_inmueble = new ComboBox("Inmueble");
 	public DateField dtf_fecha_comodato = new DateField("Fecha ComoDato");
+
 	
 	final PropertysetItem pitmDatosGenerales = new PropertysetItem();
 	private FieldGroup binderDatosGeneraler;
@@ -369,8 +370,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public boolean validate() {
 		try {
 			this.binderDatosGeneraler.commit();
-			if(dtf_fecha_incorporacion.getValue().getTime() > dtf_fecha_compra.getValue().getTime()){
-					this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
+			if (dtf_fecha_incorporacion.getValue().getTime() > dtf_fecha_compra.getValue().getTime()) {
+				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
 				return false;
 			}
 			return true;
@@ -533,7 +534,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				.getORF_Organismo_Financiador());
 		datos_generales.setId_ubicacion_fisica(((UbicacionesFisicasModel) cb_ubicacion_fisica.getValue())
 				.getUBF_Ubicacion_Fisica());
-
+		
 		if (dtf_fecha_comodato.getValue() != null) {
 			datos_generales.setFecha_como_dato(new java.sql.Date(this.dtf_fecha_comodato.getValue().getTime()));
 		}
@@ -609,13 +610,22 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				cb_ubicacion_fisica.setValue(ubicacion);
 			} catch (Exception ex) {
 			}
-			if(!activoimpl.esModificable(sessionactivo.getCodigo())){
+			if (!activoimpl.esModificable(sessionactivo.getCodigo())) {
 				dtf_fecha_compra.setEnabled(false);
 				dtf_fecha_incorporacion.setEnabled(false);
 				cb_grupo_contable.setEnabled(false);
 				txt_vida_util.setEnabled(false);
 				txt_valor_compra.setEnabled(false);
 			}
+			this.btn_guardar.setEnabled(true);
+			this.btn_guardar_datos_generales.setEnabled(true);
+			this.btn_guardar.setEnabled(true);
+			} else {	
+			Notification.show(Messages.ACTIVO_NO_ENCONTRADO, Type.ERROR_MESSAGE);
+
+			this.btn_guardar.setEnabled(false);
+			this.btn_guardar_datos_generales.setEnabled(false);
+			this.btn_guardar.setEnabled(false);
 		}
 	}
 }
