@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ait.sistemas.proyecto.activos.data.model_rrhh.Dependencia;
-import ait.sistemas.proyecto.activos.data.service.Impl.DependenciaImpl;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
@@ -20,14 +19,13 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
-public class FormReporte extends GridLayout {
+public class FormRevalorizaP extends GridLayout {
 	
 	
 	//extends --> herencia 
@@ -39,12 +37,10 @@ public class FormReporte extends GridLayout {
 	
 	public DateField dt_fecha;
 	public TextField txt_no_resolucion;
-	public ComboBox cb_Dependencia;
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	//los List siempre se declaran asi 
 	//BarMessage --> clase para mandar:			 componente  mensaje   tipo
-	final private DependenciaImpl dependencia_impl = new DependenciaImpl();
 	final PropertysetItem pitm_Revaloriza = new PropertysetItem();
 	private FieldGroup binder_Revaloriza;
 	
@@ -52,7 +48,7 @@ public class FormReporte extends GridLayout {
 	//PropertysetItem --> para vincular los datos para que validate todos y no uno por uno. lo lleva todo a un tipo de objeto
 	//FieldGroup --> trabajan juntos lo lleva el tipo de objeto al componente
 	
-	public FormReporte() {
+	public FormRevalorizaP() {
 		setColumns(5); //columnas que aceptara el grid en las posiciones
 		setRows(3); //filas que aceptara el grid
 		setWidth("100%"); //ancho de todo el grid
@@ -61,39 +57,27 @@ public class FormReporte extends GridLayout {
 		
 		this.dt_fecha = new DateField("Fecha:");
 		this.txt_no_resolucion= new TextField("No. Resolucion");
-		this.cb_Dependencia = new ComboBox("Elija una Dependencia");//intanciandolo
 		
 		pitm_Revaloriza.addItemProperty("fecha", new ObjectProperty<Date>(new Date()));
 		pitm_Revaloriza.addItemProperty("resolucion", new ObjectProperty<String>(""));
-		pitm_Revaloriza.addItemProperty("dependencia", new ObjectProperty<Short>((short)1));//el combo va tener un objeto de tipo short 
 
 		this.binder_Revaloriza = new FieldGroup(pitm_Revaloriza);
 		//instanciando FieldGroup mandandole PropertysetItem
 		this.binder_Revaloriza.bind(this.dt_fecha, "fecha");
 		this.binder_Revaloriza.bind(this.txt_no_resolucion,"resolucion");
-		this.binder_Revaloriza.bind(this.cb_Dependencia, "dependencia");
 		this.binder_Revaloriza.clear();
 		
 		this.txt_no_resolucion.setRequired(true);
+		this.dt_fecha.setRequired(true);
 		this.txt_no_resolucion.addValidator(new NullValidator("", false));
-		this.cb_Dependencia.setRequired(true);
-		this.cb_Dependencia.addValidator(new NullValidator("", false));
 		//new NullValidator("", false) por es una clase de vaadin --> no da errores pero tampoco deja registrar
 //		this.dt_fecha.setEnabled(false);
 		
 		this.dt_fecha.setWidth("40%");
 		this.txt_no_resolucion.setWidth("90%");
-		this.cb_Dependencia.setWidth("90%");
 		
-		fillfecha();
-		fillcbDependencia();
 		buildContent();
 		Responsive.makeResponsive(this);
-	}
-	
-	private void fillfecha() {
-		
-		this.dt_fecha.setValue(new Date());
 	}
 
 	/**
@@ -106,18 +90,6 @@ public class FormReporte extends GridLayout {
 	/**
 	 * Llenado del Combo Box 
 	 */
-	private void fillcbDependencia(){
-		cb_Dependencia.setNullSelectionAllowed(false);
-		cb_Dependencia.setInputPrompt("Seleccione una Dependencia");
-		for (Dependencia dependencia : dependencia_impl.getall())
-		{
-			cb_Dependencia.addItem(dependencia.getDEP_Dependencia());
-			cb_Dependencia.setItemCaption(dependencia.getDEP_Dependencia(), dependencia.getDEP_Nombre_Dependencia());
-		}
-		short a = 0;
-		cb_Dependencia.addItem(a);
-		cb_Dependencia.setItemCaption(a, "Todas las Dependencias");
-	}
 	private void buildContent() {
 		
 		Panel pn_res = new Panel("Registre el Número de Resolución Revalorización");
@@ -138,14 +110,6 @@ public class FormReporte extends GridLayout {
 		
 		this.addComponent(pn_res, 0, 0, 1, 0);
 	
-		GridLayout gridl_dep = new GridLayout(2, 1);
-		gridl_dep.setSizeFull();
-		gridl_dep.setColumnExpandRatio(0, 1);
-		gridl_dep.addComponent(this.cb_Dependencia, 0,0);
-		pn_dep.setContent(gridl_dep);
-		
-		this.addComponent(pn_dep, 0, 1, 1, 1);
-
 		GridLayout gridl_fecha = new GridLayout(2, 1);
 		gridl_fecha.setSizeFull();
 		gridl_fecha.setColumnExpandRatio(0, 0);
@@ -180,5 +144,11 @@ public class FormReporte extends GridLayout {
 	public void clearMessages() {
 		this.mensajes = new ArrayList<BarMessage>();
 	}
+	
+	public Movimiento getData() {
+		Movimiento resul = new Movimiento();
+		resul.setNro_documento_referencia(this.txt_no_resolucion.getValue().replace(",", "."));
+		resul.setFecha_nro_referencia(new java.sql.Date(this.dt_fecha.getValue().getTime()));
+		return resul;
+	}
 }
-

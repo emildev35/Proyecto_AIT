@@ -85,5 +85,4 @@ public class ActualizacionImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
-	
 }

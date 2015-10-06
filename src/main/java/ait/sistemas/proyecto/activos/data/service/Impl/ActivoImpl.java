@@ -16,6 +16,7 @@ import ait.sistemas.proyecto.activos.component.model.CaracteristicasActivo;
 import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.model.DatosGeneralesActivos;
 import ait.sistemas.proyecto.activos.component.model.Documento;
+import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -362,6 +363,22 @@ public class ActivoImpl {
 			return null;
 		}
 		return resultlist;
+	}
+	/**
+	 * actualiza los campos revalorizados en la tabla Activos
+	 */
+	public int RevalorizaActivos(Movimiento data) {
+		Query query = em.createNativeQuery("EXEC Reva_RevalorizacionActivos_I "
+				+ "@No_resolucion=?1, "
+				+ "@Fecha=?2 ");
+		query.setParameter(1,data.getNro_documento_referencia());
+		query.setParameter(2,data.getFecha_nro_referencia());
+		try {
+			int result = (Integer) query.getSingleResult();
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 	
 }

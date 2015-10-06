@@ -30,6 +30,8 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -55,8 +57,8 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		Responsive.makeResponsive(this);
-//		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
-//		buildMessages(msg);
+		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
@@ -235,9 +237,7 @@ public class VActivosRevalorR extends VerticalLayout implements View, ClickListe
 			buildMessages(this.frmReporte.getMessage());
 		}
 			else{
-				this.frmReporte.clearMessages();
-				msg.add(new BarMessage("Formulario", Messages.NO_EXISTE_RESOL));
-				buildMessages(msg);
+				Notification.show(Messages.NO_EXISTE_RESOL, Type.ERROR_MESSAGE);
 			}
 		}
 		if (event.getButton() == this.btn_salir) {
