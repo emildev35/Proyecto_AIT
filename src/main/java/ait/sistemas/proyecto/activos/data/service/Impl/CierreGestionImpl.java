@@ -25,5 +25,18 @@ public class CierreGestionImpl {
 		Cierre_Gestion resultlist = (Cierre_Gestion)query.getSingleResult();
 		return resultlist;
 	}
+	public int Cierre(Cierre_Gestion cierre_Gestion) {
+		Query query = em.createNativeQuery("EXEC Reva_CierreGestion_I "
+				+ "@Fecha=?1, "
+				+ "@Tipo_Cambio=?2 ");
+		query.setParameter(1,cierre_Gestion.getCGE_Fecha_Cierre_Gestion());
+		query.setParameter(2,cierre_Gestion.getCGE_Tipo_Cambio_UFV());
+		try {
+			int result = (Integer) query.getSingleResult();
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 
 }
