@@ -43,6 +43,15 @@ public class InmuebleImpl implements Dao<Inmueble> {
 		List<InmuebleModel> resultlist = query.getResultList();		
 		return resultlist;
 	}
+	
+	public InmuebleModel get(short id_dependencia, short id_inmueble) {
+		Query query = em.createNativeQuery("exec Rrhh_Inmueble_UQ @INM_Dependencia=?1, @Id_Inmueble=?2 ", "archive-map-inmueble").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, id_inmueble);
+		InmuebleModel resultlist = (InmuebleModel)query.getSingleResult();
+		return resultlist;
+	}
+	
 	@Override
 	public Inmueble getone(long id) {
 		return null;

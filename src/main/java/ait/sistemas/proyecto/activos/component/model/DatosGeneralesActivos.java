@@ -3,7 +3,36 @@ package ait.sistemas.proyecto.activos.component.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
+import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
+
+
+
+
+@SqlResultSetMapping(name = "datos-generales", entities = { @EntityResult(entityClass = DatosGeneralesActivos.class, fields = {
+	@FieldResult(name = "id_activo", column = "ACT_Codigo_Activo"),
+	@FieldResult(name = "id_dependencia", column = "ACT_Dependencia"),
+	@FieldResult(name = "nombre_activo", column = "ACT_Nombre_Activo"),
+	@FieldResult(name = "tipo_activo", column = "ACT_Tipo_Activo"),
+	@FieldResult(name = "fecha_compra", column = "ACT_Fecha_Compra"),
+	@FieldResult(name = "fecha_incorporacion", column = "ACT_Fecha_Incorporacion"),
+	@FieldResult(name = "valor", column = "ACT_Valor_Compra"),
+	@FieldResult(name = "tipo_cambio_ufv", column = "ACT_Tipo_Cambio_UFV"),
+	@FieldResult(name = "tipo_cambio_dolar", column = "ACT_Tipo_Cambio_Dolar"),
+	@FieldResult(name = "id_grupo_contable", column = "ACT_Grupo_Contable"),
+	@FieldResult(name = "id_auxiliar_contalbe", column = "ACT_Auxiliar_Contable"),
+	@FieldResult(name = "vida_util", column = "ACT_Vida_Util"),
+	@FieldResult(name = "id_fuente_financiamiento", column = "ACT_Fuente_Financiamiento"),
+	@FieldResult(name = "id_organimismo_financiador", column = "ACT_Organismo_Financiador"),
+	@FieldResult(name = "id_ubicacion_fisica", column = "ACT_Ubicacion_Fisica_Activo"),
+	@FieldResult(name = "fecha_como_dato", column = "ACT_Fecha_Comodato")
+	})})
+@Entity
 public class DatosGeneralesActivos {
+	@Id
 	private long id_activo;
 	private short id_dependencia;
 	private String nombre_activo;
@@ -182,7 +211,5 @@ public class DatosGeneralesActivos {
 	public void setFecha_como_dato(Date fecha_como_dato) {
 		this.fecha_como_dato = fecha_como_dato;
 	}
-	
-	
 	
 }

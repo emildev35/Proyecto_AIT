@@ -81,7 +81,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	VActualizaTabM father;
 	
 	public FormCaracteriticas(VActualizaTabM father) {
-		
 		super(7, 7);
 		setWidth("100%");
 		setSpacing(true);
@@ -139,6 +138,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.father = father;
 		
 		fuildForm();
+		buildcbProveedor();
+		fillActivo();
 	}
 	
 	private void fuildForm() {
@@ -194,8 +195,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		pn_imagen.setSizeFull();
 		addComponent(pn_imagen, 6, 0, 6, 6);
 		
-		buildcbProveedor();
-		
 	}
 	
 	private void clean() {
@@ -206,7 +205,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.txt_numero_folio_real.setValue("0");
 		this.txt_numero_garantia.setValue("0");
 		this.txt_numero_poliza_seguro.setValue("0");
-		this.txt_tiempo_garantia.setValue("0");
 		this.txt_nombre_activo.setValue("");
 		this.txt_numero_serie.setInputPrompt("Ingrese un Numero de Serie");
 		this.txt_numero_ruat.setInputPrompt("Ingrese un Numero de Ruat");
@@ -223,6 +221,19 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			Notification.show(sessionactivo.getNombre_activo());
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
+
+			CaracteristicasActivo caracteristicaActivo = activoimpl.getCaracteristicas(sessionactivo.getCodigo());
+			this.txt_numero_serie.setValue(caracteristicaActivo.getNumero_serie());
+			this.txt_numero_ruat.setValue(caracteristicaActivo.getNumero_ruat());
+			this.txt_numero_contrato_mantenimiento.setValue(caracteristicaActivo.getNumero_contrato_mantenimiento());
+			this.txt_numero_folio_real.setValue(caracteristicaActivo.getNumero_folio_real());
+			this.txt_numero_garantia.setValue(caracteristicaActivo.getNumero_garantia());
+			this.txt_numero_poliza_seguro.setValue(caracteristicaActivo.getNumero_poliza_seguro());
+			this.txt_marca.setValue(caracteristicaActivo.getMarca());
+			this.dtf_vcto_contrato_mantenimientno.setValue(caracteristicaActivo.getVencimiento_contrato_mantenumiento());
+			this.dtf_vencimiento_garantia.setValue(caracteristicaActivo.getVencimiento_garantia());
+			this.dtf_vencimiento_seguro.setValue(caracteristicaActivo.getVencimiento_seguro());
+			this.cb_proveedor.setValue(proveedorimpl.get(caracteristicaActivo.getNit_proveedor()));
 		}
 	}
 	
@@ -334,6 +345,5 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
-		fillActivo();
 	}
 }

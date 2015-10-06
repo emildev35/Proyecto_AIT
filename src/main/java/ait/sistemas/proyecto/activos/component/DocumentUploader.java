@@ -21,7 +21,7 @@ public class DocumentUploader implements Receiver {
 			file = new File(PathValues.DOCUMENT_PATH + filename);
 			fos = new FileOutputStream(file);
 		} catch (final java.io.FileNotFoundException e) {
-			new Notification("Extension de Documento no Valido<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
+
 			return null;
 		}
 		return fos;
@@ -29,7 +29,7 @@ public class DocumentUploader implements Receiver {
 	public String getFile() {
 		if(file==null){
 			return "";
-		}
+		}	
 		return file.getAbsolutePath().equals(null)?"":file.getAbsolutePath();
 	}
 	

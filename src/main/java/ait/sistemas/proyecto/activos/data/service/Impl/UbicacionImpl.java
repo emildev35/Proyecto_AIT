@@ -54,6 +54,17 @@ public class UbicacionImpl implements Dao<Ubicaciones_Fisica> {
 		List<UbicacionesFisicasModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
+	public UbicacionesFisicasModel get(short dependencia, int i) {
+		this.em.getEntityManagerFactory().getCache().evict(UbicacionesFisicasModel.class);
+		Query query = em.createNativeQuery("exec Rrhh_Ubicacion_UQ @Id_Dependencia=?1, @Id_Ubicacion=?2", "archive-map-UF")
+				.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, dependencia);
+		query.setParameter(2, i);
+		UbicacionesFisicasModel resultlist = (UbicacionesFisicasModel)query.getSingleResult();
+		return resultlist;
+	}
+	
 	// public List<Ubicaciones_Fisica> getallreporte(Short id_dependencia) {
 	// this.em.getEntityManagerFactory().getCache().evict(PersonalModel.class);
 	// Query query =

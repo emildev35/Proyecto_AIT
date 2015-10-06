@@ -2,8 +2,32 @@ package ait.sistemas.proyecto.activos.component.model;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
+import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
+
+@SqlResultSetMapping(name = "caracteristicas", entities = { @EntityResult(entityClass = CaracteristicasActivo.class, fields = {
+	@FieldResult(name = "codigo", column = "ACT_Codigo_Activo"),
+	@FieldResult(name = "depedencia", column = "ACT_Dependencia"),
+	@FieldResult(name = "nit_proveedor", column = "ACT_NIT_Proveedor"),
+	@FieldResult(name = "marca", column = "ACT_Marca"),
+	@FieldResult(name = "numero_serie", column = "ACT_No_Serie"),
+	@FieldResult(name = "numero_garantia", column = "ACT_No_Garantia"),
+	@FieldResult(name = "numero_ruat", column = "ACT_No_RUAT"),
+	@FieldResult(name = "numero_folio_real", column = "ACT_No_Folio_Real"),
+	@FieldResult(name = "numero_poliza_seguro", column = "ACT_No_Poliza_Seguro"),
+	@FieldResult(name = "numero_contrado_mantenimiento", column = "ACT_No_Contrato_Mantenimiento"),
+	@FieldResult(name = "vencimiento_garantia", column = "ACT_Fecha_Vencimiento_Garantia"),
+	@FieldResult(name = "vencimiento_seguro", column = "ACT_Fecha_Vencimiento_Seguro"),
+	@FieldResult(name = "vencimiento_contrato_mantenumiento", column = "ACT_Fecha_Vencimiento_Mantenimiento"),
+	@FieldResult(name = "ubicacion_imagen", column = "ACT_Ubicacion_Imagen")
+	})})
+@Entity
 public class CaracteristicasActivo {
 	
+	@Id
 	private String codigo;
 	private short dependencia;
 	private String nit_proveedor;

@@ -87,6 +87,7 @@ public class Messages {
 	 * Mensaje para verificar que una fecha sea mayor a la ultima depreciacion
 	 */
 	public static final String INVALIT_DATE = "La fecha debe ser Mayor a la fecha de la ultima depreciacion";
+	public static final String BAD_DATE= "Este Activo viene del Futuro?";
 	/**
 	 * Utilizado en casos donde el String que se desee utilizar tenga el valor
 	 * de null
@@ -151,4 +152,5 @@ public class Messages {
 	 * La resolucion no existe
 	 */
 	public static final String NO_EXISTE_RESOL = "La Resolucion no existe";
+	public static final String BAD_FECHA_INCORPORACION = "La Fecha de Incorporacion no Puede ser Menos a de la Fecha de Compra";
 }
