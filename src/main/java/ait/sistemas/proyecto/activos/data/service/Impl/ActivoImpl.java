@@ -31,10 +31,9 @@ public class ActivoImpl {
 		this.em = emf.createEntityManager();
 	}
 	
-	public int getIdAcivo(short id_dependencia) {
+	public int getIdAcivo() {
 		int result = 0;
-		Query query = this.em.createNativeQuery("EXEC MVAC_INGRESO_GET_ID @Id_Dependencia=?1");
-		query.setParameter(1, id_dependencia);
+		Query query = this.em.createNativeQuery("EXEC MVAC_INGRESO_GET_ID");
 		result = (Integer) query.getSingleResult();
 		return (result + 1);
 	}

@@ -114,6 +114,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
+			
 			double d_valor = activo.getACT_Valor_Neto() == null ? 0 : activo.getACT_Valor_Neto().doubleValue();
 			String valor_str = String.valueOf(d_valor);
 			
@@ -141,10 +142,21 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 			
 			double valor_DAA = activo.getACT_DAA() == null ? 0 : activo.getACT_DAA().doubleValue();
 			String str_DAA = String.valueOf(valor_DAA);
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(),
-					activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(), String.valueOf(activo.getACT_Vida_Util()),
-					activo.getACT_Fecha_Compra().toString(), valor_str_compra, str_acrualizacion_GAn, str_depreciacion_GAn,
-					str_acrualizacion_GA, str_depreciacion_GA, str_CA, str_DAA, valor_str };
+			String[] row = { activo.getACT_Dependencia(), 
+					activo.getACT_Grupo_Contable(),
+					activo.getACT_Auxiliar_Contable(),
+					activo.getACT_Codigo_Activo(),
+					activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Vida_Util()),
+					activo.getACT_Fecha_Compra().toString(), 
+					valor_str_compra,
+					str_acrualizacion_GAn,
+					str_depreciacion_GAn,
+					str_acrualizacion_GA, 
+					str_depreciacion_GA, 
+					str_CA,
+					str_DAA,
+					valor_str };
 			
 			data[r] = row;
 			r++;

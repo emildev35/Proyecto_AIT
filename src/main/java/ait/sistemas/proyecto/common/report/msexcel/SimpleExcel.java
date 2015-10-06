@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.TreeMap;
 import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -25,6 +27,7 @@ public class SimpleExcel {
 	
 	public final String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".xlsx";
 	XSSFWorkbook workbook = new XSSFWorkbook();
+	
 	public void save(String[][] data, List<String> columns, String titulo) {
 		
 		try {
@@ -59,6 +62,22 @@ public class SimpleExcel {
 				int cellid = 0;
 				for (Object obj : objectArr) {
 					Cell cell = row.createCell(cellid++);
+					try {
+						cell.setCellValue(Double.parseDouble(obj.toString()));
+						cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+						continue;
+					} catch (Exception ex) {
+					}
+					try {
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+						cell.setCellValue(formatter.parse(obj.toString()));
+						CellStyle cellStyle = workbook.createCellStyle();
+						CreationHelper createHelper = workbook.getCreationHelper();
+						cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("m/d/yy"));
+						cell.setCellStyle(cellStyle);
+						continue;
+					} catch (Exception ex) {
+					}
 					cell.setCellValue((String) obj);
 				}
 			}
@@ -74,10 +93,10 @@ public class SimpleExcel {
 		}
 	}
 	
-	private void writeTitle(XSSFSheet spreadsheet, String titulo, List<String> columns){
+	private void writeTitle(XSSFSheet spreadsheet, String titulo, List<String> columns) {
 		XSSFRow row_title = spreadsheet.createRow((short) 0);
 		Font font = workbook.createFont();
-		font.setFontHeightInPoints((short)18);
+		font.setFontHeightInPoints((short) 18);
 		CellStyle title_style = workbook.createCellStyle();
 		title_style.setFont(font);
 		row_title.setHeight((short) 400);

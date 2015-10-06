@@ -336,7 +336,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		if (event.getButton() == btn_act_previo) {
 			this.txt_codigo_activo.setEnabled(false);
 			this.txt_nombre_activo_no.setEnabled(true);
-			this.txt_codigo_activo.setValue(String.valueOf(activoimpl.getIdAcivo(session.getId_dependecia())));
+			this.txt_codigo_activo.setValue(String.valueOf(activoimpl.getIdAcivo()));
 			this.txt_nombre_activo_no.setValue("");
 			txt_nombre_activo_no.focus();
 		}

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import ait.sistemas.proyecto.common.component.PathValues;
+
 import com.vaadin.server.Page;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload.Receiver;
@@ -16,10 +18,10 @@ public class DocumentUploader implements Receiver {
 	public OutputStream receiveUpload(String filename, String mimeType) {
 		FileOutputStream fos = null; // Stream to write to
 		try {
-			file = new File("C:\\Editores\\Desarrollo\\ProyectoGit\\Upload\\" + filename);
+			file = new File(PathValues.DOCUMENT_PATH + filename);
 			fos = new FileOutputStream(file);
 		} catch (final java.io.FileNotFoundException e) {
-			new Notification("Could not open file<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
+			new Notification("Extension de Documento no Valido<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
 			return null;
 		}
 		return fos;

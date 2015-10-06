@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import ait.sistemas.proyecto.common.component.PathValues;
+
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Embedded;
@@ -21,10 +23,10 @@ public class ImageUploader implements Receiver, SucceededListener {
     public OutputStream receiveUpload(String filename, String mimeType) {
         FileOutputStream fos = null; // Stream to write to
         try {
-            file = new File("/tmp/uploads/" + filename);
+            file = new File(PathValues.IMAGE_UPLOAD + filename);
             fos = new FileOutputStream(file);
         } catch (final java.io.FileNotFoundException e) {
-            new Notification("Could not open file<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
+            new Notification("No pudo leer la imagen<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
             return null;
         }
         return fos;

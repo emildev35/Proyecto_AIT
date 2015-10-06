@@ -12,4 +12,8 @@ public class PathValues {
 	
 //	public static final String CODE_PATH = "C:\\Reportes\\Codigos\\";
 	public static final String CODE_PATH = System.getProperty("os.name").startsWith("Windows")?"C:\\Reportes\\Codigos\\":"/tmp/";
+
+	public static final String IMAGE_UPLOAD =  System.getProperty("os.name").startsWith("Windows")?"C:\\Reportes\\imgActivos\\":"/tmp/";
+
+	public static final String DOCUMENT_PATH = System.getProperty("os.name").startsWith("Windows")?"C:\\Reportes\\docActivos\\":"/tmp/";
 }
