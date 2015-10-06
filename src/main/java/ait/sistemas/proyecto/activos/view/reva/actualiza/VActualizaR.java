@@ -11,6 +11,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
 import ait.sistemas.proyecto.activos.view.reva.actualiza.reporte.FormReporte;
 import ait.sistemas.proyecto.activos.view.reva.actualiza.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.report.msexcel.SimpleExcel;
 import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.common.view.HomeView;
@@ -40,6 +41,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_imprimir;
+	private Button btn_excel = new Button("Exportar Excel");
 	private Button btn_salir = new Button("Salir");
 	private FormReporte frmReporte = new FormReporte();
 	int r = 0;
@@ -58,6 +60,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		
 		btn_imprimir.addClickListener(this);
 		btn_salir.addClickListener(this);
+		btn_excel.addClickListener(this);
 		
 	}
 	
@@ -67,7 +70,10 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		btn_imprimir.setIcon(FontAwesome.PRINT);
 		btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		btn_salir.setIcon(FontAwesome.UNDO);
+		btn_excel.setIcon(FontAwesome.FILE_EXCEL_O);
+		btn_excel.setStyleName(AitTheme.BTN_EXCEL);
 		buttonContent.addComponent(btn_imprimir);
+		buttonContent.addComponent(btn_excel);
 		buttonContent.addComponent(btn_salir);
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		return buttonContent;
@@ -108,6 +114,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 		String[][] data = new String[lista.size()][5];
 		r = 0;
 		for (ActivosModel activo : lista) {
+			
 			double d_valor = activo.getACT_Valor_Neto() == null ? 0 : activo.getACT_Valor_Neto().doubleValue();
 			String valor_str = String.valueOf(d_valor);
 			
@@ -135,10 +142,21 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 			
 			double valor_DAA = activo.getACT_DAA() == null ? 0 : activo.getACT_DAA().doubleValue();
 			String str_DAA = String.valueOf(valor_DAA);
-			String[] row = { activo.getACT_Dependencia(), activo.getACT_Grupo_Contable(), activo.getACT_Auxiliar_Contable(),
-					activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo(), String.valueOf(activo.getACT_Vida_Util()),
-					activo.getACT_Fecha_Compra().toString(), valor_str_compra, str_acrualizacion_GAn, str_depreciacion_GAn,
-					str_acrualizacion_GA, str_depreciacion_GA, str_CA, str_DAA, valor_str };
+			String[] row = { activo.getACT_Dependencia(), 
+					activo.getACT_Grupo_Contable(),
+					activo.getACT_Auxiliar_Contable(),
+					activo.getACT_Codigo_Activo(),
+					activo.getACT_Nombre_Activo(),
+					String.valueOf(activo.getACT_Vida_Util()),
+					activo.getACT_Fecha_Compra().toString(), 
+					valor_str_compra,
+					str_acrualizacion_GAn,
+					str_depreciacion_GAn,
+					str_acrualizacion_GA, 
+					str_depreciacion_GA, 
+					str_CA,
+					str_DAA,
+					valor_str };
 			
 			data[r] = row;
 			r++;
@@ -162,42 +180,89 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
-		
-		if (event.getButton() == btn_salir) {
-			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
-		} else {
-			if (this.frmReporte.validate()) {
-				ReportPdf reporte = new ReportPdf();
-				try {
-					reporte.getPdf(getDatos(),
-							new SimpleDateFormat("yyyy-MM-dd").format(this.frmReporte.dtf_fecha_ultima_depre.getValue()));
-					File pdfFile = new File(ReportPdf.SAVE_PATH);
-					
-					VerticalLayout vl_pdf = new VerticalLayout();
-					Embedded pdf = new Embedded("", new FileResource(pdfFile));
-					
-					pdf.setMimeType("application/pdf");
-					pdf.setType(Embedded.TYPE_BROWSER);
-					pdf.setSizeFull();
-					vl_pdf.setSizeFull();
-					vl_pdf.addComponent(pdf);
-					
-					Window subWindow = new Window("Reporte Actualizacion");
-					VerticalLayout subContent = new VerticalLayout();
-					subContent.setMargin(true);
-					subWindow.setContent(vl_pdf);
-					
-					subWindow.setWidth("90%");
-					subWindow.setHeight("90%");
-					subWindow.center();
-					
-					// Open it in the UI
-					getUI().addWindow(subWindow);
-				} catch (IOException e) {
-					e.printStackTrace();
+		if (event.getButton() == btn_excel) {
+						List<String> columnHeaders = new ArrayList<String>();
+						columnHeaders.add("Dependencia");
+						columnHeaders.add("Grupo Contable");
+						columnHeaders.add("Auxiliar Contable");
+						columnHeaders.add("Codigo");
+						columnHeaders.add("Nombre del Activo");
+						columnHeaders.add("Vida Util");
+						columnHeaders.add("Fecha Compra");
+						columnHeaders.add("Valor Compra");
+						columnHeaders.add("Valor Actualizado Gestion Anterior");
+						columnHeaders.add("Depreciacion Actualizada Gestion Anterior");
+						columnHeaders.add("Actualizacion Gestion Actual");
+						columnHeaders.add("Depreciacion Gestion Actual");
+						columnHeaders.add("Actualizacion Acumulada");
+						columnHeaders.add("Depreciacion Acumulada");
+						columnHeaders.add("Valor Neto");
+			SimpleExcel simpleExcel = new SimpleExcel();
+			simpleExcel.save(getDatos(), columnHeaders, "Reporte de Actualizacion de Activos");
+			
+			File pdfFile = new File(simpleExcel.SAVE_PATH);
+			
+			VerticalLayout vl_pdf = new VerticalLayout();
+			Embedded pdf = new Embedded("", new FileResource(pdfFile));
+			
+			pdf.setMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			pdf.setType(Embedded.TYPE_BROWSER);
+			pdf.setSizeFull();
+			vl_pdf.setSizeFull();
+			vl_pdf.addComponent(pdf);
+			
+			Window subWindow = new Window("Reporte Inventario Activos");
+			VerticalLayout subContent = new VerticalLayout();
+			subContent.setMargin(true);
+			subWindow.setContent(vl_pdf);
+			
+			subWindow.setWidth("90%");
+			subWindow.setHeight("90%");
+			subWindow.center();
+			
+			// Open it in the UI
+			getUI().addWindow(subWindow);
+			
+		} else if (event.getButton() == btn_imprimir) {
+			
+			if (event.getButton() == btn_salir) {
+				UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+			} else {
+				if (this.frmReporte.validate()) {
+					ReportPdf reporte = new ReportPdf();
+					try {
+						reporte.getPdf(getDatos(),
+								new SimpleDateFormat("yyyy-MM-dd").format(this.frmReporte.dtf_fecha_ultima_depre.getValue()));
+						File pdfFile = new File(ReportPdf.SAVE_PATH);
+						
+						VerticalLayout vl_pdf = new VerticalLayout();
+						Embedded pdf = new Embedded("", new FileResource(pdfFile));
+						
+						pdf.setMimeType("application/pdf");
+						pdf.setType(Embedded.TYPE_BROWSER);
+						pdf.setSizeFull();
+						vl_pdf.setSizeFull();
+						vl_pdf.addComponent(pdf);
+						
+						Window subWindow = new Window("Reporte Actualizacion");
+						VerticalLayout subContent = new VerticalLayout();
+						subContent.setMargin(true);
+						subWindow.setContent(vl_pdf);
+						
+						subWindow.setWidth("90%");
+						subWindow.setHeight("90%");
+						subWindow.center();
+						
+						// Open it in the UI
+						getUI().addWindow(subWindow);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
+				buildMessages(this.frmReporte.getMessage());
 			}
-			buildMessages(this.frmReporte.getMessage());
+		} else if (event.getButton() == btn_salir) {
+			
 		}
 	}
 }

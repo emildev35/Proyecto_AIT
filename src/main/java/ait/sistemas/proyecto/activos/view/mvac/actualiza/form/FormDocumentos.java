@@ -71,6 +71,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		setMargin(true);
 		this.txt_codigo_activo.setWidth("90%");
 		this.txt_nombre_activo.setWidth("90%");
+		this.txt_nombre_documento.setWidth("100%");
 		this.field_ubicacion_documento.setWidth("90%");
 		this.field_ubicacion_documento.setWidth("90%");
 		this.field_ubicacion_documento.setButtonCaption("Subir Documento");
@@ -213,14 +214,6 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		grid_documentos.setHeightByRows(7);
 		grid_documentos.setWidth("100%");
 		grid_documentos.setSelectionMode(SelectionMode.MULTI);
-		
-		// Grid.Column caracteritica_column =
-		// this.grid_documentos.getColumn("Nombre");
-		// Grid.Column nombre_column =
-		// this.grid_documentos.getColumn("Caracteristica");
-		//
-		// caracteritica_column.setHeaderCaption("Caracteristica").setExpandRatio(2);
-		// nombre_column.setHeaderCaption("Nombre Componente").setExpandRatio(1);
 		Responsive.makeResponsive(this);
 	}
 	

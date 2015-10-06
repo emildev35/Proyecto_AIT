@@ -497,6 +497,7 @@ public class PDFRevalorizacionGenerador {
 					sum_depgestact_por_dependencia = 0;
 					sum_actacu_por_dependencia = 0;
 					sum_neto_por_dependencia = 0;
+					sum_por_dependencia = 0;
 					
 					numero_dependencias += 1;
 				}
@@ -579,12 +580,6 @@ public class PDFRevalorizacionGenerador {
 					: table.getContent()[i][12]);
 			
 			
-//			sum_valcompra_dependencia += sum_valcompra_auxiliares_contables;
-//			sum_valactgesant_dependencia += sum_valactgesant_auxiliares_contables;
-//			sum_actgesact_dependencia += sum_actgesact_auxiliares_contables;
-//			sum_depacugestant_dependencia += sum_depacugestant_auxiliares_contables;
-//			sum_depgestact_dependencia += sum_depgestact_auxiliares_contables;
-//			sum_actacu_dependencia += sum_actacu_auxiliares_contables;
 			
 			can_auxiliares_contables++;
 			tableTopY -= table.getRowHeight();
@@ -620,6 +615,14 @@ public class PDFRevalorizacionGenerador {
 
 		can_dependencia += can_grupo_contable;
 		can_por_dependencia += can_grupo_contable;
+		sum_valcompra_por_dependencia += sum_valcompra_grupo_contable;
+		sum_valactgesant_por_dependencia += sum_valactgesant_grupo_contable;
+		sum_actgesact_por_dependencia += sum_actgesact_grupo_contable;
+		sum_depacugestant_por_dependencia += sum_depacugestant_grupo_contable;
+		sum_depgestact_por_dependencia += sum_depgestact_grupo_contable;
+		sum_actacu_por_dependencia += sum_actacu_grupo_contable;
+		sum_por_dependencia += sum_grupo_contable;
+		sum_neto_por_dependencia += sum_neto_grupo_contable;
 
 		sum_dependencia += sum_grupo_contable;
 		sum_neto_dependencia += sum_neto_grupo_contable;

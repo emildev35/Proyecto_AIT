@@ -54,6 +54,11 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
+/**
+ * Formulario de Caracteristicas Generales de un Activo
+ * @author franzemil
+ *
+ */
 public class FormDatosGenerales extends GridLayout implements ClickListener, ValueChangeListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -239,7 +244,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	}
 	
 	private void buildtxtIdActivo() {
-		this.txt_codigo_activo.setValue(String.valueOf(activoimpl.getIdAcivo(session.getId_dependecia())));
+		this.txt_codigo_activo.setValue(String.valueOf(activoimpl.getIdAcivo()));
 	}
 	
 	private void clean() {

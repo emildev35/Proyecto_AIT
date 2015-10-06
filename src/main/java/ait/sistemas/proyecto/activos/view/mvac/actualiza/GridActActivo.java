@@ -78,7 +78,10 @@ public class GridActActivo extends Grid {
 		removeColumn("ACT_No_Resolucion_Baja");
 		removeColumn("ACT_Nombre_Proveedor");
 		removeColumn("ACT_Vida_Residual");
-		removeColumn("ACT_Vida_Util_Remanente");
+		removeColumn("ACT_Actualizacion_Gestion_Actual");
+		removeColumn("ACT_Depreciacion_Gestion_Actual");
+		removeColumn("ACT_Fecha_Ultima_Depreciacion");
+		removeColumn("ACT_Fecha_Ultima_Revalorizacion");
 		
 		builGrid("0");
 	}
