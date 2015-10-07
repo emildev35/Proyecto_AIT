@@ -67,6 +67,26 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+
+	/**
+	 * Retorna Lista de Activos Por Grupo Contable y Dependencia
+	 * @param id_dependencia
+	 * @param grupo
+	 * @param fecha
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> activosByGrupoDependencia(short id_dependencia, String grupo, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoByGrupoDependencia " + "@Dependencia=?1,"
+				+ "@Grupo_Contable=?2, " + "@fecha=?3 ",
+				ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, grupo);
+		query.setParameter(3, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
 	/**
 	 * Activos Sin Asignar Por Dependencia
 	 * @param id_dependencia

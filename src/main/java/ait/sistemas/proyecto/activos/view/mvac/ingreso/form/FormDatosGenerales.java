@@ -371,6 +371,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public boolean validate() {
 		try {
 			this.binderDatosGeneraler.commit();
+			if(dtf_fecha_incorporacion.getValue().getTime() < dtf_fecha_compra.getValue().getTime()){
+				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
+				return false;
+			}
 			return true;
 			
 		} catch (CommitException cme) {
