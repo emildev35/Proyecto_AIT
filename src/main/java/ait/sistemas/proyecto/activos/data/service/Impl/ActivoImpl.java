@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -322,6 +323,15 @@ public class ActivoImpl {
 		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
 		return result;
 	}
+	@SuppressWarnings("unchecked")
+	public List<ActivoGrid> getActivosbyACyGC (String grupo_contable, String auxiliar_contable) {
+		String str_query_act_disponibles = "EXEC Mvac_ActivosbyACyGC @ACT_Auxiliar_Contable=?1,@ACT_Grupo_Contable=?2 ";
+		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple")
+				.setParameter(1, auxiliar_contable)
+				.setParameter(2, grupo_contable);
+		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
+		return result;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getActivosDisponibles(short dependencia, String grupo_contable, String auxiliar_contable) {
@@ -373,6 +383,22 @@ public class ActivoImpl {
 				+ "@Fecha=?2 ");
 		query.setParameter(1,data.getNro_documento_referencia());
 		query.setParameter(2,data.getFecha_nro_referencia());
+		try {
+			int result = (Integer) query.getSingleResult();
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	/**
+	 * Realizara copias del  activo n veces
+	 */
+	public int addCopiaActivo(BigDecimal codigo, int no_copias) {
+		Query query = em.createNativeQuery("EXEC Mvac_CopiaActivo_I "
+				+ "@Codigo_Activo=?1, "
+				+ "@No_Copias=?2 ");
+		query.setParameter(1, codigo);
+		query.setParameter(2, no_copias);
 		try {
 			int result = (Integer) query.getSingleResult();
 			return result;

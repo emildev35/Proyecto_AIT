@@ -1,8 +1,10 @@
-package ait.sistemas.proyecto.activos.view.reva.revaloriza;
+package ait.sistemas.proyecto.activos.view.mvac.copiaactivo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
@@ -11,6 +13,8 @@ import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.common.view.HomeView;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -31,39 +35,42 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class VRevalorizaP extends VerticalLayout implements View, ClickListener {
-
-	private static final long serialVersionUID = 1L;
-
-	private Button btn_revalorizar = new Button("Revalorizar");
-	private Button btn_salir = new Button("Salir");
-	private FormRevalorizaP frm_revaloriza_p = new FormRevalorizaP();
-	private final ActivoImpl activo_impl = new ActivoImpl();
-	private CssLayout hl_errores = new CssLayout();
-	private List<BarMessage> msg = new ArrayList<BarMessage>();
-	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
+public class VCopiaactivoA extends VerticalLayout implements View, ClickListener, SelectionListener {
 	
-	public VRevalorizaP() {
-
-		this.btn_revalorizar.addClickListener(this);
+	private static final long serialVersionUID = 1L;
+	
+	private FormCopiaActivo frm_copia = new FormCopiaActivo();
+	private CssLayout hl_errores= new CssLayout();
+	private Button btn_salir= new Button("Salir");
+	private Button btn_copias = new Button("Generar Copias");
+	private ActivoImpl activo_impl = new ActivoImpl();
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
+	
+	private ActivoGrid activo;
+	public VCopiaactivoA() {
+		this.btn_copias.addClickListener(this);
 		this.btn_salir.addClickListener(this);
+		this.frm_copia.grid_solicitud.addSelectionListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
+		buildGrid();
 		Responsive.makeResponsive(this);
 		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
 		buildMessages(msg);
 	}
-
+	private void buildGrid() {
+	}
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		GridLayout btn_grid = new GridLayout(2, 1);
 		btn_grid.setResponsive(true);
 		btn_grid.setSizeFull();
-		this.btn_revalorizar.setStyleName(AitTheme.BTN_SUBMIT);
-		btn_grid.addComponent(this.btn_revalorizar);
-		btn_grid.setComponentAlignment(btn_revalorizar, Alignment.TOP_CENTER);
-		btn_revalorizar.setIcon(FontAwesome.SAVE);
+		this.btn_copias.setStyleName(AitTheme.BTN_SUBMIT);
+		btn_grid.addComponent(this.btn_copias);
+		btn_grid.setComponentAlignment(btn_copias, Alignment.TOP_CENTER);
+		btn_copias.setIcon(FontAwesome.SAVE);
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
 		btn_grid.addComponent(this.btn_salir);
@@ -72,24 +79,34 @@ public class VRevalorizaP extends VerticalLayout implements View, ClickListener 
 		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
-
+	
 	private Component buildFormContent() {
+		
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		 Panel frmPanel = new Panel("Formulario de Revalorizacion de Activos ");
-		 frmPanel.setIcon(FontAwesome.SAVE);
-		 frmPanel.setStyleName(AitTheme.PANEL_FORM);
-		 frmPanel.setWidth("40%");
+		formContent.setMargin(true);
+		formContent.addComponent(frm_copia);
+		Panel gridPanel = new Panel("Seleccione el Activo del cual desea obtener copias");
+//		gridPanel.setWidth("100%");
+		gridPanel.setIcon(FontAwesome.TABLE);
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setContent(this.frm_copia.getgrid_solicitud());
+		formContent.addComponent(gridPanel);
+		Panel Panelcopia = new Panel("Copias a Realizar del Activo");
+		Panelcopia.setWidth("17%");
+		Panelcopia.setIcon(FontAwesome.SAVE);
+		Panelcopia.setStyleName(AitTheme.PANEL_FORM);
 		 GridLayout gridl_res = new GridLayout(2, 1);
 			gridl_res.setSizeFull();
 			gridl_res.setColumnExpandRatio(0, 0);
-			gridl_res.addComponent(this.frm_revaloriza_p.dt_fecha, 0,0);
-			gridl_res.addComponent(this.frm_revaloriza_p.txt_no_resolucion, 1,0);
-			frmPanel.setContent(gridl_res);
-		 formContent.addComponent(frmPanel);
+			gridl_res.setMargin(true);
+			gridl_res.addComponent(this.frm_copia.txt_no_copias, 0,0);
+			Panelcopia.setContent(gridl_res);
+		formContent.addComponent(Panelcopia);
+		Responsive.makeResponsive(formContent);
 		return formContent;
 	}
-
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
@@ -98,52 +115,56 @@ public class VRevalorizaP extends VerticalLayout implements View, ClickListener 
 		navPanel.setContent(nav);
 		return navPanel;
 	}
-
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
-
 	}
-
+	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
-
+		
 		for (BarMessage barMessage : mensages) {
 			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-
+		
 	}
-
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_revalorizar) {
-			this.frm_revaloriza_p.clearMessages();
-			if (activo_impl.getResol(frm_revaloriza_p.txt_no_resolucion.getValue()) == 1){
-			if (this.frm_revaloriza_p.validate()) {
-				if (this.activo_impl.RevalorizaActivos(this.frm_revaloriza_p.getData()) > 0){
-				this.frm_revaloriza_p.update();
-				this.frm_revaloriza_p.clearMessages();
-				Notification.show(Messages.SUCCESS_MESSAGE);
-				} else {
+		if (event.getButton() == this.btn_copias) {
+			if (this.frm_copia.validate()) {
+//				Object row = grid_activos.setSelectionMode(SelectionMode.SINGLE);
+				
+				if (activo_impl.addCopiaActivo(new BigDecimal(this.activo.getId_activo()),Integer.parseInt(frm_copia.txt_no_copias.getValue()))>0) {
+					
+					this.frm_copia.clear();
+					
+					Notification.show(Messages.SUCCESS_MESSAGE);
+				}
+				else{
 					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 				}
-			
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
-			}
-			else{
-				Notification.show(Messages.NO_EXISTE_RESOL, Type.ERROR_MESSAGE);
-//				msg.add(new BarMessage("Formulario", Messages.NO_EXISTE_RESOL));
-//				buildMessages(msg);
-			}
-//			buildMessages(this.frm_revaloriza_p.getMessage());
-			
-		}else{
+			buildMessages(this.frm_copia.getMensajes());
+			this.frm_copia.clearMessages();
+		}
+		else {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 	}
+
+	@Override
+	public void select(SelectionEvent event) {
+		System.out.print("entra select1");
+		if ((ActivoGrid)frm_copia.grid_solicitud.getSelectedRow() != null) {
+			this.activo  = (ActivoGrid)this.frm_copia.grid_solicitud.getSelectedRow();
+		}
+	}
+	
 }
