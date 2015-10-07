@@ -47,19 +47,21 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
 	private FieldGroup binder_solicitud;
 	
-	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
+	private MovimientoImpl movimientoimpl = new MovimientoImpl();
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
 	private GridSolactivos grid_solicitud = new GridSolactivos();
+	private GridSolactivos grid_solicitados = new GridSolactivos();
 	
+	private List<ActivoGrid> activosSolicitados = new ArrayList<ActivoGrid>();
 	public FormSolactivos() {
 		
-		super(6, 3);
+		super(6, 2);
 		setSpacing(true);
 		setWidth("100%");
 		setMargin(true);
-		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<Integer>(0));
+		pitm_solicitud.addItemProperty("id_solicitud", new ObjectProperty<String>(""));
 		pitm_solicitud.addItemProperty("fecha_solicitud", new ObjectProperty<Date>(new Date()));
 		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
 		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
@@ -100,7 +102,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void buildId() {
-		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short)3)));
+		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short) 1)));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
 	
@@ -114,6 +116,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void fillcbAuxiliarContable(String id_grupo) {
+		cb_auxiliar_contable.removeAllItems();
 		cb_auxiliar_contable.setNullSelectionAllowed(false);
 		for (AuxiliaresContablesModel auxiliar_contable : auxiliarimpl.getreporte(id_grupo)) {
 			cb_auxiliar_contable.addItem(auxiliar_contable);
@@ -162,7 +165,6 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		
 		try {
 			this.binder_solicitud.commit();
-			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
 			return true;
 		} catch (CommitException e) {
 			try {
@@ -174,7 +176,8 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 			}
 			try {
 				this.cb_auxiliar_contable.validate();
-			} catch (EmptyValueException ex) {this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), ex.getMessage()));
+			} catch (EmptyValueException ex) {
+				this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), ex.getMessage()));
 				this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), Messages.EMPTY_MESSAGE));
 			} catch (InvalidValueException ex) {
 				this.mensajes.add(new BarMessage(cb_auxiliar_contable.getCaption(), ex.getMessage()));
@@ -187,7 +190,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
+		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
 		
 		result.setId_dependencia(usuario.getId_dependecia());
 		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
@@ -196,10 +199,8 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		result.setFecha_registro(fecha_registro);
 		result.setUsuario(usuario.getCi());
 		result.setObservacion("");
-		result.setTipo_movimiento((short)1);
-		for (Object row : grid_solicitud.getSelectedRows()) {
-			ActivoGrid activo = (ActivoGrid) row;
-			
+		result.setTipo_movimiento((short) 1);
+		for (ActivoGrid activo : this.activosSolicitados) {
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
 			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
@@ -207,7 +208,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
-			detalle.setTipo_movimiento((short)1);
+			detalle.setTipo_movimiento((short) 1);
 			result.addDetalle(detalle);
 		}
 		
@@ -234,12 +235,32 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	public Component getgrid_solicitud() {
 		return this.grid_solicitud;
 	}
-
-	public void clear() {
+	public Component getgridSolicitados() {
+		return this.grid_solicitados;
+	}
 	
+	public void clear() {
 		this.binder_solicitud.clear();
 		buildId();
-		this.grid_solicitud = new GridSolactivos();
+		this.grid_solicitud.update("", "");
+		this.grid_solicitados.update("", "");
+	}
+	
+	public void addActivo() {
+		
+		for (Object row : grid_solicitud.getSelectedRows()) {
+			ActivoGrid activo = (ActivoGrid) row;
+			this.activosSolicitados.add(activo);
+		}
+		this.grid_solicitados.update(this.activosSolicitados);
+	}
+
+	public void deleteActivo() {
+		for (Object row : grid_solicitados.getSelectedRows()) {
+			ActivoGrid activo = (ActivoGrid) row;
+			this.activosSolicitados.remove(activo);
+		}
+		this.grid_solicitados.update(this.activosSolicitados);
 		
 	}
 }
