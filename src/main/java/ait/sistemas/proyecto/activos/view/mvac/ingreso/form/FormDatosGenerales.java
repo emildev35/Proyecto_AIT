@@ -38,6 +38,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.data.validator.DateRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
@@ -181,7 +182,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.dtf_fecha_compra.addValidator(new NullValidator("", false));
 		this.dtf_fecha_incorporacion.setRequired(true);
 		this.dtf_fecha_incorporacion.addValidator(new NullValidator("", false));
+		this.dtf_fecha_incorporacion.addValidator(new DateRangeValidator(Messages.BAD_DATE, new Date(0), new Date(), null));
 		this.txt_valor_compra.setRequired(true);
+		this.dtf_fecha_compra.addValidator(new DateRangeValidator(Messages.BAD_DATE, new Date(0), new Date(), null));
 		this.txt_valor_compra.addValidator(new NullValidator("", false));
 		this.txt_tipo_cambio_ufv.setRequired(true);
 		this.txt_tipo_cambio_ufv.addValidator(new NullValidator("", false));
