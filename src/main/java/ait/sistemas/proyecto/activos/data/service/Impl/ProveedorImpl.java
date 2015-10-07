@@ -36,7 +36,7 @@ public class ProveedorImpl implements Dao<Proveedore> {
 		return resultlist;
 	}
 	
-	public List<ProveedoresModel> getallreporte(Short id_ciudad,Short id_dependencia) {
+	public List<ProveedoresModel> getallreporte(Short id_ciudad, Short id_dependencia) {
 		this.em.getEntityManagerFactory().getCache().evict(ProveedoresModel.class);
 		Query query = em.createNativeQuery("exec Mant_Proveedor_Dependencia_Ciudad_Q "
 				+ "@PRV_Dependencia=?1,"
@@ -149,6 +149,13 @@ public class ProveedorImpl implements Dao<Proveedore> {
 		Query query = this.em.createNativeQuery(str_get_by_dependencia, "archive-map-proveedor")
 				.setParameter(1, id_dependencia);
 		List<ProveedoresModel> result = query.getResultList();
+		return result;
+	}
+	public ProveedoresModel get(String nitProveedor){
+		String str_get_by_dependencia = "EXEC Mant_Proveedor_UQ @Id_Proveedor=?1";
+		Query query = this.em.createNativeQuery(str_get_by_dependencia, "archive-map-proveedor")
+				.setParameter(1, nitProveedor);
+		ProveedoresModel result = (ProveedoresModel)query.getSingleResult();
 		return result;
 	}
 }

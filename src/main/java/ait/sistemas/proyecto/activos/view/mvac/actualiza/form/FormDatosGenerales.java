@@ -38,6 +38,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.data.validator.DateRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
@@ -61,8 +62,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Button btn_guardar_datos_generales = new Button("Guardar Datos Generales");
-	private Button btn_guardar = new Button("Guardar");
+	private Button btn_guardar_datos_generales = new Button("Actualizar Datos Generales");
+	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_salir = new Button("Salir");
 	
 	public ComboBox cb_tipo_activo = new ComboBox("Tipo de Activo");
@@ -80,6 +81,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public ComboBox cb_ubicacion_fisica = new ComboBox("Ubicacion Fisica");
 	public ComboBox cb_inmueble = new ComboBox("Inmueble");
 	public DateField dtf_fecha_comodato = new DateField("Fecha ComoDato");
+
 	
 	final PropertysetItem pitmDatosGenerales = new PropertysetItem();
 	private FieldGroup binderDatosGeneraler;
@@ -172,6 +174,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_nombre_activo.addValidator(new NullValidator("", false));
 		this.dtf_fecha_compra.setRequired(true);
 		this.dtf_fecha_compra.addValidator(new NullValidator("", false));
+		this.dtf_fecha_compra.addValidator(new DateRangeValidator(Messages.BAD_DATE, new Date(0), new Date(), null));
 		this.dtf_fecha_incorporacion.setRequired(true);
 		this.dtf_fecha_incorporacion.addValidator(new NullValidator("", false));
 		this.txt_valor_compra.setRequired(true);
@@ -202,8 +205,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_nombre_activo.setEnabled(false);
 		
 		buildForm();
-		fillActivo();
 		Responsive.makeResponsive(this);
+		fillActivo();
 	}
 	
 	private void buildForm() {
@@ -223,7 +226,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		pnActivos.setIcon(FontAwesome.EDIT);
 		
 		addComponent(pnActivos, 0, 0, 5, 0);
-
+		
 		addComponent(this.cb_tipo_activo, 0, 1, 1, 1);
 		
 		addComponent(this.dtf_fecha_compra, 2, 1);
@@ -250,7 +253,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		buildcbInmueble();
 		
 	}
-	
 	
 	private void clean() {
 		this.binderDatosGeneraler.clear();
@@ -335,14 +337,17 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_guardar_datos_generales);
-		this.btn_guardar_datos_generales.addStyleName("ait-buttons-btn");
+		this.btn_guardar_datos_generales.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar_datos_generales.setIcon(FontAwesome.EDIT);
 		this.btn_guardar_datos_generales.addClickListener(this);
-		buttonContent.addStyleName("ait-buttons");
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_guardar);
-		this.btn_guardar.addStyleName("ait-buttons-btn");
+		this.btn_guardar.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar.setIcon(FontAwesome.EDIT);
 		this.btn_guardar.addClickListener(this);
 		buttonContent.addComponent(this.btn_salir);
-		this.btn_salir.addStyleName("ait-buttons-btn");
+		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
+		this.btn_salir.setIcon(FontAwesome.UNDO);
 		this.btn_salir.addClickListener(this);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
@@ -365,6 +370,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public boolean validate() {
 		try {
 			this.binderDatosGeneraler.commit();
+			if (dtf_fecha_incorporacion.getValue().getTime() > dtf_fecha_compra.getValue().getTime()) {
+				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
+				return false;
+			}
 			return true;
 			
 		} catch (CommitException cme) {
@@ -482,7 +491,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.mensajes = new ArrayList<BarMessage>();
 		if (event.getButton() == this.btn_guardar) {
 			if (validate()) {
-				save();
+				update();
 				getUI().getSession().setAttribute("activo", null);
 				Notification.show(Messages.SUCCESS_MESSAGE);
 				
@@ -492,7 +501,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		}
 		if (event.getButton() == this.btn_guardar_datos_generales) {
 			if (validate()) {
-				save();
+				update();
 				this.father.tbs_form.setSelectedTab(1);
 				
 			} else {
@@ -504,7 +513,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		}
 	}
 	
-	public void save() {
+	public void update() {
 		
 		DatosGeneralesActivos datos_generales = new DatosGeneralesActivos();
 		datos_generales.setTipo_activo(((Tipos_Activo) cb_tipo_activo.getValue()).getTAC_Id_Tipo_Activo());
@@ -525,10 +534,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				.getORF_Organismo_Financiador());
 		datos_generales.setId_ubicacion_fisica(((UbicacionesFisicasModel) cb_ubicacion_fisica.getValue())
 				.getUBF_Ubicacion_Fisica());
+		
 		if (dtf_fecha_comodato.getValue() != null) {
 			datos_generales.setFecha_como_dato(new java.sql.Date(this.dtf_fecha_comodato.getValue().getTime()));
 		}
-		if (activoimpl.add(datos_generales)) {
+		if (activoimpl.update(datos_generales)) {
 			ActivoSession activo_session = new ActivoSession(datos_generales.getId_activo(), datos_generales.getId_dependencia(),
 					datos_generales.getNombre_activo());
 			UI.getCurrent().getSession().setAttribute("activo", activo_session);
@@ -551,14 +561,16 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			buildcbUbicacionesFisicas(inmueble.getINM_Inmueble());
 		}
 		
-		if (this.dtf_fecha_incorporacion.getValue() != null && event.getProperty().getValue() == this.dtf_fecha_incorporacion.getValue()) {
-			List<TipoCambio> tipo_cambio = this.tipocambioimpl.getTipoCambio(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
-				
-			if(tipo_cambio.size()==0){
+		if (this.dtf_fecha_incorporacion.getValue() != null
+				&& event.getProperty().getValue() == this.dtf_fecha_incorporacion.getValue()) {
+			List<TipoCambio> tipo_cambio = this.tipocambioimpl.getTipoCambio(new java.sql.Date(this.dtf_fecha_incorporacion
+					.getValue().getTime()));
+			
+			if (tipo_cambio.size() == 0) {
 				this.mensajes.add(new BarMessage("TIPO CAMBIO", Messages.EMPTY_TIPO_CAMBIO));
 				father.addComponent(buildMessages());
 				this.txt_tipo_cambio_ufv.setEnabled(true);
-			}else{
+			} else {
 				this.txt_tipo_cambio_ufv.setEnabled(false);
 				if (tipo_cambio.get(0).getMoneda().equals("SUS")) {
 					this.txt_tipo_cambio_ufv.setValue(tipo_cambio.get(1).getTipo_cambio().toString().replace(".", ","));
@@ -569,13 +581,51 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		}
 	}
 	
-	
 	private void fillActivo() {
 		if (UI.getCurrent().getSession().getAttribute("activo") != null) {
 			this.sessionactivo = (ActivoSession) UI.getCurrent().getSession().getAttribute("activo");
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
+			
+			try {
+				// LLenado de los campos del Formulario
+				DatosGeneralesActivos datosGenerales = activoimpl.getDatosGenerales(sessionactivo.getCodigo());
+				
+				cb_tipo_activo.setValue(tipoactimpl.get(datosGenerales.getTipo_activo()));
+				cb_grupo_contable.setValue(grupocontableimpl.get(datosGenerales.getId_grupo_contable()));
+				cb_auxiliar_contable.setValue(auxcontableimpl.get(datosGenerales.getId_auxiliar_contalbe(),
+						datosGenerales.getId_grupo_contable()));
+				txt_vida_util.setValue(String.valueOf(datosGenerales.getVida_util()));
+				cb_fuente_financiamiento.setValue(fuente_financiamientoimpl.getone(datosGenerales.getId_fuente_financiamiento()));
+				cb_organismo_financiador
+						.setValue(organismo_financiadorimpl.getone(datosGenerales.getId_organimismo_financiador()));
+				txt_valor_compra.setValue(datosGenerales.getValor().toString());
+				dtf_fecha_comodato.setValue(datosGenerales.getFecha_como_dato());
+				dtf_fecha_compra.setValue(datosGenerales.getFecha_compra());
+				dtf_fecha_incorporacion.setValue(datosGenerales.getFecha_incorporacion());
+				txt_tipo_cambio_ufv.setValue(datosGenerales.getTipo_cambio_ufv().toString());
+				UbicacionesFisicasModel ubicacion = ubicacionimpl.get(datosGenerales.getId_dependencia(),
+						datosGenerales.getId_ubicacion_fisica());
+				cb_inmueble.setValue(inmuebleimpl.get(datosGenerales.getId_dependencia(), ubicacion.getUBF_Inmueble_ID()));
+				cb_ubicacion_fisica.setValue(ubicacion);
+			} catch (Exception ex) {
+			}
+			if (!activoimpl.esModificable(sessionactivo.getCodigo())) {
+				dtf_fecha_compra.setEnabled(false);
+				dtf_fecha_incorporacion.setEnabled(false);
+				cb_grupo_contable.setEnabled(false);
+				txt_vida_util.setEnabled(false);
+				txt_valor_compra.setEnabled(false);
+			}
+			this.btn_guardar.setEnabled(true);
+			this.btn_guardar_datos_generales.setEnabled(true);
+			this.btn_guardar.setEnabled(true);
+			} else {	
+			Notification.show(Messages.ACTIVO_NO_ENCONTRADO, Type.ERROR_MESSAGE);
+
+			this.btn_guardar.setEnabled(false);
+			this.btn_guardar_datos_generales.setEnabled(false);
+			this.btn_guardar.setEnabled(false);
 		}
-		
 	}
 }

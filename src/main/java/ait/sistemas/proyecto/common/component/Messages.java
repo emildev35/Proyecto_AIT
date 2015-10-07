@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.common.component;
 
+
 public class Messages {
 	/**
 	 * Este Mensaje se utilizara cuando un accion de registro en base de datos
@@ -87,6 +88,7 @@ public class Messages {
 	 * Mensaje para verificar que una fecha sea mayor a la ultima depreciacion
 	 */
 	public static final String INVALIT_DATE = "La fecha debe ser Mayor a la fecha de la ultima depreciacion";
+	public static final String BAD_DATE= "Este Activo viene del Futuro?";
 	/**
 	 * Utilizado en casos donde el String que se desee utilizar tenga el valor
 	 * de null
@@ -151,4 +153,12 @@ public class Messages {
 	 * La resolucion no existe
 	 */
 	public static final String NO_EXISTE_RESOL = "La Resolucion no existe";
+	/**
+	 * La fecha de Incorporacion no puede ser menor a la Fecha de Compra
+	 */
+	public static final String BAD_FECHA_INCORPORACION = "La Fecha de Incorporacion no Puede ser menor a la Fecha de Compra";
+	/**
+	 * Activo no Seleccionado
+	 */
+	public static final String ACTIVO_NO_ENCONTRADO = "Activo no Seleccionado";
 }

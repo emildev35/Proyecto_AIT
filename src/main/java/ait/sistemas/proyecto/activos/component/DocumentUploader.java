@@ -6,8 +6,6 @@ import java.io.OutputStream;
 
 import ait.sistemas.proyecto.common.component.PathValues;
 
-import com.vaadin.server.Page;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload.Receiver;
 
 public class DocumentUploader implements Receiver {
@@ -21,7 +19,7 @@ public class DocumentUploader implements Receiver {
 			file = new File(PathValues.DOCUMENT_PATH + filename);
 			fos = new FileOutputStream(file);
 		} catch (final java.io.FileNotFoundException e) {
-			new Notification("Extension de Documento no Valido<br/>", e.getMessage(), Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
+
 			return null;
 		}
 		return fos;
@@ -29,7 +27,7 @@ public class DocumentUploader implements Receiver {
 	public String getFile() {
 		if(file==null){
 			return "";
-		}
+		}	
 		return file.getAbsolutePath().equals(null)?"":file.getAbsolutePath();
 	}
 	

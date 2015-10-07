@@ -6,15 +6,18 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.ComponenteImpl;
 import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
@@ -27,7 +30,6 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
@@ -39,7 +41,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_salir = new Button("Salir");
-	private Button btn_guardar = new Button("Guardar");
+	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
@@ -54,6 +56,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	private final ActivoImpl activoimpl = new ActivoImpl();
+	private final ComponenteImpl componenteimpl = new ComponenteImpl();
 	
 	List<Componente> componentes = new ArrayList<Componente>();
 	
@@ -103,7 +106,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		setColumnExpandRatio(0, 1);
 		setColumnExpandRatio(1, 2);
 		
-		Panel pn_activo = new Panel();
+		Panel pn_activo = new Panel("ACTIVO FIJO");
 		GridLayout grid_activo = new GridLayout(2, 1);
 		grid_activo.setWidth("100%");
 		grid_activo.setMargin(true);
@@ -114,9 +117,8 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		grid_activo.setColumnExpandRatio(0, 1);
 		grid_activo.setColumnExpandRatio(1, 4);
 		pn_activo.setContent(grid_activo);
-		addComponent(pn_activo, 0, 0, 2, 0);
 		
-		Panel pn_componentes = new Panel();
+		Panel pn_componentes = new Panel("AGREGE Y MODIFIQUE COMPONENTES");
 		GridLayout gridl_componentes = new GridLayout(2, 2);
 		gridl_componentes.setWidth("100%");
 		gridl_componentes.setMargin(true);
@@ -127,19 +129,30 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		gridl_componentes.addComponent(this.txt_caracteristica_componente, 1, 0);
 		gridl_componentes.addComponent(this.grid_componente, 0, 1, 1, 1);
 		pn_componentes.setContent(gridl_componentes);
+		
+		pn_activo.setStyleName(AitTheme.PANEL_FORM);
+		pn_activo.setIcon(FontAwesome.EDIT);
+		pn_componentes.setStyleName(AitTheme.PANEL_FORM);
+		pn_componentes.setIcon(FontAwesome.EDIT);
+		
 		addComponent(pn_componentes, 0, 1, 2, 2);
+		addComponent(pn_activo, 0, 0, 2, 0);
 	}
 	
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_agregar.setIcon(FontAwesome.SAVE);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_eliminar.setStyleName("ait-buttons-btn");
+		this.btn_eliminar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
-		this.btn_guardar.setStyleName("ait-buttons-btn");
+		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_guardar);
-		this.btn_salir.setStyleName("ait-buttons-btn");
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_salir.setIcon(FontAwesome.UNDO);
 		buttonContent.addComponent(this.btn_salir);
 		return buttonContent;
 	}
@@ -150,30 +163,35 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			if (validate()) {
 				this.componentes.add(new Componente(this.txt_nombre_componente.getValue(), this.txt_caracteristica_componente
 						.getValue()));
+			} else {
+				this.mensajes.add(new BarMessage("Fomulario", "Debe Llenar los Datos del Componente"));
 			}
 			buildGrid();
 		}
 		if (event.getButton() == this.btn_salir) {
 		}
 		if (event.getButton() == this.btn_guardar) {
-			if (validate() && this.componentes.size() > 0) {
-				if (activoimpl.addComponentes(componentes, sessionactivo)) {
-					Notification.show(Messages.SUCCESS_MESSAGE);
-					this.binderCaracteristicas.clear();
-					
-				} else {
-					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-				}
-				this.componentes = new ArrayList<Componente>();
-				buildGrid();
+			// if (this.componentes.size() > 0) {
+			if (activoimpl.addComponentes(componentes, sessionactivo)) {
+				Notification.show(Messages.SUCCESS_MESSAGE);
+				this.father.tbs_form.setSelectedTab(3);
 			}
+			this.componentes = new ArrayList<Componente>();
+			buildGrid();
+			// }
+			// else{
+			// this.mensajes.add(new BarMessage("Fomulario",
+			// "Debe Tener al Menos un Componente en el Grid"));
+			// }
 		}
 		if (event.getButton() == this.btn_eliminar) {
 			
 			for (Object elemnt : this.grid_componente.getSelectedRows()) {
 				this.componentes.remove((Componente) elemnt);
 			}
+			buildGrid();
 		}
+		father.addComponent(buildMessages());
 	}
 	
 	public Component buildMessages() {
@@ -194,7 +212,6 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			this.binderCaracteristicas.commit();
 			return true;
 		} catch (CommitException cme) {
-			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			return false;
 		}
 	}
@@ -227,8 +244,16 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			this.sessionactivo = (ActivoSession) UI.getCurrent().getSession().getAttribute("activo");
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
+			this.componentes = this.componenteimpl.getComponentes(sessionactivo.getCodigo());
+			buildGrid();
+			this.btn_agregar.setEnabled(true);
+			this.btn_eliminar.setEnabled(true);
+			this.btn_guardar.setEnabled(true);
+		} else {
+			this.btn_agregar.setEnabled(false);
+			this.btn_eliminar.setEnabled(false);
+			this.btn_guardar.setEnabled(false);
 		}
-		
 	}
 	
 }

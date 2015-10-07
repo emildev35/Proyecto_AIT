@@ -33,10 +33,10 @@ public class ActivoImpl {
 		this.em = emf.createEntityManager();
 	}
 	
-	public int getIdAcivo() {
-		int result = 0;
+	public long getIdAcivo() {
+		long result = 0;
 		Query query = this.em.createNativeQuery("EXEC MVAC_INGRESO_GET_ID");
-		result = (Integer) query.getSingleResult();
+		result = (Long) query.getSingleResult();
 		return (result + 1);
 	}
 	
@@ -65,6 +65,26 @@ public class ActivoImpl {
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_dependencia);
 		query.setParameter(2, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
+
+	/**
+	 * Retorna Lista de Activos Por Grupo Contable y Dependencia
+	 * @param id_dependencia
+	 * @param grupo
+	 * @param fecha
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> activosByGrupoDependencia(short id_dependencia, String grupo, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivoByGrupoDependencia " + "@Dependencia=?1,"
+				+ "@Grupo_Contable=?2, " + "@fecha=?3 ",
+				ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_dependencia);
+		query.setParameter(2, grupo);
+		query.setParameter(3, fecha);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
@@ -269,12 +289,39 @@ public class ActivoImpl {
 		return (result > 0) ? true : false;
 	}
 	
+	public boolean update(DatosGeneralesActivos datos_generales) {
+		
+		String str_datos_generales = "EXEC Mvac_Activos_U" + " @Id_Activos=?1, " + "@Id_Dependencia=?2, " + "@Nombre_Activo=?3, "
+				+ "@Tipo_Activo=?4, " + "@Fecha_Compra=?5, " + "@Valor=?6, " + "@Tipo_Cambio_UFV=?7, " + "@Grupo_Contable=?8, "
+				+ "@Auxiliar_Contable=?9, " + "@Vida_Util=?10, " + "@Fuente_Financiamiento=?11, "
+				+ "@Organismo_Financiador=?12, " + "@Ubicacion_Fisica=?13, " + "@Fecha_ComoDato=?14, "
+				+ "@Fecha_Incorporacion=?15," + "@Tipo_Cambio_Dolar=?16";
+		
+		Query query = this.em.createNativeQuery(str_datos_generales).setParameter(1, datos_generales.getId_activo())
+				.setParameter(2, datos_generales.getId_dependencia()).setParameter(3, datos_generales.getNombre_activo())
+				.setParameter(4, datos_generales.getTipo_activo()).setParameter(5, datos_generales.getFecha_compra())
+				.setParameter(6, datos_generales.getValor()).setParameter(7, datos_generales.getTipo_cambio_ufv())
+				.setParameter(8, datos_generales.getId_grupo_contable())
+				.setParameter(9, datos_generales.getId_auxiliar_contalbe()).setParameter(10, datos_generales.getVida_util())
+				.setParameter(11, datos_generales.getId_fuente_financiamiento())
+				.setParameter(12, datos_generales.getId_organimismo_financiador())
+				.setParameter(13, datos_generales.getId_ubicacion_fisica())
+				.setParameter(14, datos_generales.getFecha_como_dato())
+				.setParameter(15, datos_generales.getFecha_incorporacion())
+				.setParameter(16, datos_generales.getTipo_cambio_dolar());
+		
+		int result = (Integer) query.getSingleResult();
+		
+		return (result > 0) ? true : false;
+	}
 	public boolean addCaracteristica(CaracteristicasActivo caracteristicas) {
 		String str_add_caracteristicas = "EXEC MVAC_INGRESO_CARACTERISTICA_A" + " @Id_Activos=?1, " + "@Id_Dependencia=?2, "
 				+ "@Nit_Proveedor=?3, " + "@Marca=?4, " + "@Numero_Serie=?5, " + "@Numero_Garantia=?6, " + "@Numero_Ruat=?7, "
 				+ "@Numero_Folio_Real=?8, " + "@Numero_Poliza_Seguro=?9, " + "@Numero_Contrato_Mantenimiento=?10, "
 				+ "@Vencimiento_Garantia=?11, " + "@Vencimiento_Seguro=?12, " + "@Vencimiento_Contrato_Mantenumiento=?13, "
-				+ "@Ubicacion_Imagen=?14";
+				+ "@Ubicacion_Imagen=?14,"
+				+ "@Numero_Licencia=?15,"
+				+ "@Vencimiento_Licencia=?16";
 		
 		Query query = this.em.createNativeQuery(str_add_caracteristicas).setParameter(1, caracteristicas.getCodigo())
 				.setParameter(2, caracteristicas.getDependencia()).setParameter(3, caracteristicas.getNit_proveedor())
@@ -286,7 +333,9 @@ public class ActivoImpl {
 				.setParameter(11, caracteristicas.getVencimiento_garantia())
 				.setParameter(12, caracteristicas.getVencimiento_seguro())
 				.setParameter(13, caracteristicas.getVencimiento_contrato_mantenumiento())
-				.setParameter(14, caracteristicas.getUbicacion_imagen());
+				.setParameter(14, caracteristicas.getUbicacion_imagen())
+				.setParameter(15, caracteristicas.getNumeroLicencia())
+				.setParameter(16, caracteristicas.getVencimientoLicencia());
 		
 		int result = (Integer) query.getSingleResult();
 		
@@ -294,6 +343,11 @@ public class ActivoImpl {
 	}
 	
 	public boolean addComponentes(List<Componente> componentes, ActivoSession sessionactivo) {
+
+	Query query = this.em.createNativeQuery("Mvac_QuitarComponentes_Q @Id_Activo=?1")
+				.setParameter(1, sessionactivo.getCodigo());
+		query.getSingleResult();
+		
 		final ComponenteImpl componenteimpl = new ComponenteImpl();
 		for (Componente componente : componentes) {
 			if (!componenteimpl.add(sessionactivo.getCodigo(), sessionactivo.getDependencia(), componente.getNombre(),
@@ -304,9 +358,12 @@ public class ActivoImpl {
 		return true;
 	}
 	
-	public boolean addDocumentos(List<Documento> documetnos, ActivoSession sessionactivo) {
+	public boolean addDocumentos(List<Documento> documentos, ActivoSession sessionactivo) {
+		Query query = this.em.createNativeQuery("Mvac_QuitarDocumentos_Q @Id_Activo=?1")
+				.setParameter(1, sessionactivo.getCodigo());
+		query.getSingleResult();
 		final DocumentoRespaldoImpl documentoimpl = new DocumentoRespaldoImpl();
-		for (Documento componente : documetnos) {
+		for (Documento componente : documentos) {
 			if (!documentoimpl.add(sessionactivo.getCodigo(), sessionactivo.getDependencia(), componente.getNombre(),
 					componente.getDireccion())) {
 				return false;
@@ -407,4 +464,36 @@ public class ActivoImpl {
 		}
 	}
 	
+	/**
+	 * Retorna los Datos Generales de un Activo Dependiendo el Codigo de Activo
+	 * @param idActivo
+	 * @return
+	 */
+	public DatosGeneralesActivos getDatosGenerales(long idActivo){
+		
+		Query query = this.em.createNativeQuery("EXEC Mvac_GetDatosGenerales @Id_Activo=?1", "datos-generales")
+				.setHint(QueryHints.REFRESH, HintValues.TRUE)
+				.setParameter(1, idActivo);
+		DatosGeneralesActivos result = (DatosGeneralesActivos)query.getSingleResult();
+		return result;
+	}
+	/**
+	 * Retorna las caracteristicas de un Activo dependiendo del Codigo de Activo
+	 * @param idActivo
+	 * @return
+	 */
+	public CaracteristicasActivo getCaracteristicas(long idActivo){
+		Query query = this.em.createNativeQuery("EXEC Mvac_GetCaracteristicasActivos @Id_Activo=?1", "caracteristicas")
+				.setHint(QueryHints.REFRESH, HintValues.TRUE)
+				.setParameter(1, idActivo);
+		CaracteristicasActivo result = (CaracteristicasActivo)query.getSingleResult();
+		return result;
+	}
+	
+	public boolean esModificable(long idActivo){
+		Query query = this.em.createNativeQuery("EXEC Mvac_EsModificable @Id_Activo=?1")
+				.setParameter(1, idActivo);
+		int result = (Integer)query.getSingleResult();
+		return result > 0 ? true : false;
+	}
 }

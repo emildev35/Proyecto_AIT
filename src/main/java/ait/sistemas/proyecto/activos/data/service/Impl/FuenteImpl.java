@@ -41,7 +41,10 @@ public class FuenteImpl implements Dao<Fuentes_Financiamiento> {
 	
 	@Override
 	public Fuentes_Financiamiento getone(long id) {
-		return null;
+		Query query = em.createNativeQuery("Para_Fuente_UQ @Id_Fuente=?1", Fuentes_Financiamiento.class).setHint( 
+				QueryHints.REFRESH, HintValues.TRUE).setParameter(1, id);
+		Fuentes_Financiamiento resultlist = (Fuentes_Financiamiento)query.getSingleResult();
+		return resultlist;
 	}
 	
 	@Override

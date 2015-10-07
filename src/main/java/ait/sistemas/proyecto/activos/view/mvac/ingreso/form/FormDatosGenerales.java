@@ -27,6 +27,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -37,7 +38,9 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.data.validator.DateRangeValidator;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -56,6 +59,7 @@ import com.vaadin.ui.UI;
 
 /**
  * Formulario de Caracteristicas Generales de un Activo
+ * 
  * @author franzemil
  *
  */
@@ -178,7 +182,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.dtf_fecha_compra.addValidator(new NullValidator("", false));
 		this.dtf_fecha_incorporacion.setRequired(true);
 		this.dtf_fecha_incorporacion.addValidator(new NullValidator("", false));
+		this.dtf_fecha_incorporacion.addValidator(new DateRangeValidator(Messages.BAD_DATE, new Date(0), new Date(), null));
 		this.txt_valor_compra.setRequired(true);
+		this.dtf_fecha_compra.addValidator(new DateRangeValidator(Messages.BAD_DATE, new Date(0), new Date(), null));
 		this.txt_valor_compra.addValidator(new NullValidator("", false));
 		this.txt_tipo_cambio_ufv.setRequired(true);
 		this.txt_tipo_cambio_ufv.addValidator(new NullValidator("", false));
@@ -332,14 +338,17 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_guardar_datos_generales);
-		this.btn_guardar_datos_generales.addStyleName("ait-buttons-btn");
+		this.btn_guardar_datos_generales.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar_datos_generales.setIcon(FontAwesome.SAVE);
 		this.btn_guardar_datos_generales.addClickListener(this);
-		buttonContent.addStyleName("ait-buttons");
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_guardar);
-		this.btn_guardar.addStyleName("ait-buttons-btn");
+		this.btn_guardar.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar.setIcon(FontAwesome.SAVE);
 		this.btn_guardar.addClickListener(this);
 		buttonContent.addComponent(this.btn_salir);
-		this.btn_salir.addStyleName("ait-buttons-btn");
+		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
+		this.btn_salir.setIcon(FontAwesome.UNDO);
 		this.btn_salir.addClickListener(this);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
@@ -362,6 +371,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public boolean validate() {
 		try {
 			this.binderDatosGeneraler.commit();
+			if(dtf_fecha_incorporacion.getValue().getTime() < dtf_fecha_compra.getValue().getTime()){
+				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
+				return false;
+			}
 			return true;
 			
 		} catch (CommitException cme) {
@@ -549,15 +562,17 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			buildcbUbicacionesFisicas(inmueble.getINM_Inmueble());
 		}
 		
-		if (this.dtf_fecha_incorporacion.getValue() != null && event.getProperty().getValue() == this.dtf_fecha_incorporacion.getValue()) {
-			List<TipoCambio> tipo_cambio = this.tipocambioimpl.getTipoCambio(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
-				
-			if(tipo_cambio.size()==0){
+		if (this.dtf_fecha_incorporacion.getValue() != null
+				&& event.getProperty().getValue() == this.dtf_fecha_incorporacion.getValue()) {
+			List<TipoCambio> tipo_cambio = this.tipocambioimpl.getTipoCambio(new java.sql.Date(this.dtf_fecha_incorporacion
+					.getValue().getTime()));
+			
+			if (tipo_cambio.size() == 0) {
 				this.mensajes.add(new BarMessage("TIPO CAMBIO", Messages.EMPTY_TIPO_CAMBIO));
 				father.addComponent(buildMessages());
 				this.txt_tipo_cambio_dolar.setEnabled(true);
 				this.txt_tipo_cambio_ufv.setEnabled(true);
-			}else{
+			} else {
 				this.txt_tipo_cambio_dolar.setEnabled(false);
 				this.txt_tipo_cambio_ufv.setEnabled(false);
 				if (tipo_cambio.get(0).getMoneda().equals("SUS")) {

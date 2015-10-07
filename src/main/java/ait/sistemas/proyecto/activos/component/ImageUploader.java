@@ -42,4 +42,10 @@ public class ImageUploader implements Receiver, SucceededListener {
     public Embedded getImage() {
 		return image;
 	}
+
+	public void setFile(File img) {
+		this.image.setSource(new FileResource(img));
+        this.image.setWidth("100%");
+        this.image.setHeight("100%");
+	}
 }

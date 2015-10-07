@@ -46,8 +46,21 @@ public class GrupoImpl implements Dao<Grupos_Contable> {
 		return resultlist;
 	}
 	
+	@Override
 	public Grupos_Contable getone(long id) {
 		return null;
+	}
+	/**
+	 * Retorn un GrupoContableModel por el id
+	 * @param id
+	 * @return
+	 */
+	public GruposContablesModel get(String id) {
+		Query query = em.createNativeQuery("Para_Grupo_UQ " + "@Id_Grupo=?1 ",
+				GruposContablesModel.class);
+		query.setParameter(1, id);
+		GruposContablesModel resultlist = (GruposContablesModel)query.getSingleResult();
+		return resultlist;
 	}
 	
 	public Grupos_Contable add(Grupos_Contable table) {

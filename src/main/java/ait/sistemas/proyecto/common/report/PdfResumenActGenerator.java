@@ -21,10 +21,7 @@ public class PdfResumenActGenerator {
 
 	private PDDocument doc;
 
-	private int intactualpage = 0;
-	private int intNumberoftotalPages;
 
-	// Generates document from Table object
 	public boolean generatePDF(Table table, String savePath) throws IOException {
 		boolean result = false;
 		doc = null;
@@ -41,7 +38,6 @@ public class PdfResumenActGenerator {
 		return result;
 	}
 
-	// Configures basic setup for the table and draws it page by page
 	public void drawTable(PDDocument doc, Table table) throws IOException {
 
 		Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue() - 1;
@@ -56,13 +52,11 @@ public class PdfResumenActGenerator {
 		String grupo_contable = "";
 		String auxiliar_contable = "";
 
-		float sum_dependencia = 0;
 		float sum_grupo_contable = 0;
 		float sum_auxiliares_contables = 0;
 		float sum_neto_dependencia = 0;
 		float sum_neto_grupo_contable = 0;
 		float sum_neto_auxiliares_contables = 0;
-		int can_dependencia = 0;
 		int can_grupo_contable = 0;
 		int can_auxiliares_contables = 0;
 
@@ -98,7 +92,6 @@ public class PdfResumenActGenerator {
 				/**
 				 * Suma de Dependencias
 				 */
-				sum_dependencia += sum_grupo_contable;
 				sum_neto_dependencia += sum_neto_auxiliares_contables;
 				sum_grupo_contable = 0;
 				sum_neto_auxiliares_contables = 0;
@@ -125,7 +118,6 @@ public class PdfResumenActGenerator {
 				sum_auxiliares_contables = 0;
 				sum_neto_auxiliares_contables = 0;
 
-				String[] mgru = { grupo_contable, auxiliar_contable };
 
 				r++;
 				if (!table.getContent()[i][1].equals(grupo_contable)) {
@@ -144,8 +136,6 @@ public class PdfResumenActGenerator {
 						tableTopY -= table.getRowHeight();
 						r++;
 					}
-					can_dependencia += can_grupo_contable;
-					sum_dependencia += sum_grupo_contable;
 					sum_neto_dependencia += sum_neto_dependencia;
 					can_grupo_contable = 0;
 					sum_grupo_contable = 0;
@@ -195,8 +185,6 @@ public class PdfResumenActGenerator {
 		sum_grupo_contable += sum_grupo_contable;
 		sum_neto_grupo_contable += sum_neto_auxiliares_contables;
 
-		can_dependencia += can_grupo_contable;
-		sum_dependencia += sum_grupo_contable;
 		sum_neto_dependencia += sum_neto_dependencia;
 
 		
@@ -385,20 +373,7 @@ public class PdfResumenActGenerator {
 		}
 	}
 
-	private void writeContentLineContables(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
-			float nextTextY, Table table) throws IOException {
 
-		contentStream.setFont(table.getTextFont(), table.getFontSize());
-
-		for (int i = 0; i < lineContent.length; i++) {
-			String text = lineContent[i];
-			contentStream.beginText();
-			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.showText(text != null ? text : "");
-			contentStream.endText();
-			nextTextX += table.getWidth() / 4;
-		}
-	}
 
 	private PDPage generatePage(PDDocument doc, Table table) {
 		PDPage page = new PDPage();

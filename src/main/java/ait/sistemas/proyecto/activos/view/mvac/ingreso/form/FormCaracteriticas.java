@@ -12,12 +12,14 @@ import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,6 +60,11 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	public DateField dtf_vencimiento_seguro = new DateField("Fecha de  Vcto de Seguro");
 	public TextField txt_numero_contrato_mantenimiento = new TextField("N. de Contrato de Mantenimiento");
 	public DateField dtf_vcto_contrato_mantenimientno = new DateField("Fecha de Vcto de Contrato");
+	
+	public TextField nroLicencia = new TextField("N. Licencia");
+	public DateField dtfVctoLicencia = new DateField("Vcto. Licencia");
+
+	
 	public TextField txt_nombre_imagen = new TextField();
 	
 	private GridLayout grid_activo_fijo = new GridLayout(6, 1);
@@ -81,7 +88,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	public FormCaracteriticas(VActivoA father) {
 		
-		super(7, 7);
+		super(7, 8);
 		setWidth("100%");
 		setSpacing(true);
 		setMargin(true);
@@ -99,6 +106,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.dtf_vencimiento_seguro.setWidth("90%");
 		this.txt_numero_contrato_mantenimiento.setWidth("90%");
 		this.dtf_vcto_contrato_mantenimientno.setWidth("90%");
+		this.nroLicencia.setWidth("90%");
+		this.dtfVctoLicencia.setWidth("90%");
 		
 		pitmCaracteristicas.addItemProperty("codigo", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("proveedor", new ObjectProperty<ProveedoresModel>(new ProveedoresModel()));
@@ -114,6 +123,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<Integer>(0));
 		pitmCaracteristicas.addItemProperty("vencimiento_contrato_mantenimiento", new ObjectProperty<Date>(new Date()));
 		pitmCaracteristicas.addItemProperty("nombre_imagen", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("numero_licencia", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("vencimiento_licencia", new ObjectProperty<Date>(new Date()));
 		
 		this.binderCaracteristicas = new FieldGroup(pitmCaracteristicas);
 		
@@ -153,8 +164,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		grid_activo_fijo.addComponent(this.txt_codigo_activo, 0, 0);
 		grid_activo_fijo.addComponent(this.txt_nombre_activo, 1, 0, 5, 0);
 		
-		
-		final Panel pn_activo = new Panel();
+		final Panel pn_activo = new Panel("ACTIVO FIJO");
 		grid_activo_fijo.setSizeFull();
 		grid_activo_fijo.setMargin(true);
 		pn_activo.setContent(grid_activo_fijo);
@@ -178,7 +188,10 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		grid_caracteristica.addComponent(this.txt_numero_contrato_mantenimiento, 0, 5, 2, 5);
 		grid_caracteristica.addComponent(this.dtf_vcto_contrato_mantenimientno, 3, 5, 5, 5);
 		
-		final Panel pn_caracteristicas = new Panel();
+		grid_caracteristica.addComponent(this. nroLicencia, 0, 6, 2, 6);
+		grid_caracteristica.addComponent(this.dtfVctoLicencia, 3, 6, 5, 6);
+		
+		final Panel pn_caracteristicas = new Panel("CARACTERISTICAS DEL ACTIVO");
 		grid_caracteristica.setSizeFull();
 		grid_caracteristica.setMargin(true);
 		pn_caracteristicas.setContent(grid_caracteristica);
@@ -186,13 +199,22 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		
 		grid_imagen.addComponent(this.frm_imagen, 0, 0);
 		
-		final Panel pn_imagen = new Panel();
+		final Panel pn_imagen = new Panel("FOTOGRAFIA DEL ACTIVO");
 		pn_imagen.setContent(grid_imagen);
 		grid_imagen.setMargin(true);
 		grid_imagen.setSizeFull();
 		pn_imagen.setSizeFull();
 		addComponent(pn_imagen, 6, 0, 6, 6);
 		
+		pn_activo.setStyleName(AitTheme.PANEL_FORM);
+		pn_activo.setIcon(FontAwesome.EDIT);
+
+		pn_imagen.setStyleName(AitTheme.PANEL_FORM);
+		pn_imagen.setIcon(FontAwesome.IMAGE);
+
+		pn_caracteristicas.setStyleName(AitTheme.PANEL_FORM);
+		pn_caracteristicas.setIcon(FontAwesome.EDIT);
+
 		buildcbProveedor();
 		
 	}
@@ -222,6 +244,12 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			Notification.show(sessionactivo.getNombre_activo());
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
+			
+			this.btn_guardar.setEnabled(true);
+			this.btn_guardar_caracteristicas.setEnabled(true);
+		} else {
+			this.btn_guardar.setEnabled(false);
+			this.btn_guardar_caracteristicas.setEnabled(false);
 		}
 	}
 	
@@ -238,14 +266,17 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_guardar_caracteristicas);
-		this.btn_guardar_caracteristicas.addStyleName("ait-buttons-btn");
+		this.btn_guardar_caracteristicas.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar_caracteristicas.setIcon(FontAwesome.SAVE);
 		this.btn_guardar_caracteristicas.addClickListener(this);
-		buttonContent.addStyleName("ait-buttons");
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_guardar);
-		this.btn_guardar.addStyleName("ait-buttons-btn");
+		this.btn_guardar.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar.setIcon(FontAwesome.SAVE);
 		this.btn_guardar.addClickListener(this);
 		buttonContent.addComponent(this.btn_salir);
-		this.btn_salir.addStyleName("ait-buttons-btn");
+		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
+		this.btn_salir.setIcon(FontAwesome.UNDO);
 		this.btn_salir.addClickListener(this);
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
@@ -311,6 +342,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		caracteristicas.setNumero_poliza_seguro(txt_numero_poliza_seguro.getValue());
 		caracteristicas.setNumero_ruat(txt_numero_ruat.getValue());
 		caracteristicas.setNumero_serie(txt_numero_serie.getValue());
+		caracteristicas.setNumeroLicencia(nroLicencia.getValue());
 		if (dtf_vencimiento_garantia.getValue() != null) {
 			caracteristicas.setVencimiento_garantia(new java.sql.Date(dtf_vencimiento_garantia.getValue().getTime()));
 		}
@@ -320,6 +352,9 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		}
 		if (dtf_vencimiento_seguro.getValue() != null) {
 			caracteristicas.setVencimiento_seguro(new java.sql.Date(dtf_vencimiento_seguro.getValue().getTime()));
+		}
+		if (dtfVctoLicencia.getValue() != null) {
+			caracteristicas.setVencimientoLicencia(new java.sql.Date(dtfVctoLicencia.getValue().getTime()));
 		}
 		caracteristicas.setUbicacion_imagen(this.frm_imagen.getFile());
 		

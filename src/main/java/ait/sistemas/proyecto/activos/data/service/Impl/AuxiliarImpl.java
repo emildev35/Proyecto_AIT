@@ -45,6 +45,15 @@ public class AuxiliarImpl implements Dao<Auxiliares_Contable> {
 		return resultlist;
 	}
 
+	public AuxiliaresContablesModel get(String idGrupo, String idAux) {
+		this.em.getEntityManagerFactory().getCache().evict(AuxiliaresContablesModel.class);
+		Query query = em.createNativeQuery("exec Para_Auxiliar_UQ @id_aux=?1, @id_grup=?2", "archive-map-a").setHint(QueryHints.REFRESH, HintValues.TRUE)
+				.setParameter(1, idAux)
+				.setParameter(2, idAux);
+		AuxiliaresContablesModel resultlist = (AuxiliaresContablesModel)query.getSingleResult();
+		return resultlist;
+	}
+
 	public Auxiliares_Contable getone(long id) {
 		return null;
 	}

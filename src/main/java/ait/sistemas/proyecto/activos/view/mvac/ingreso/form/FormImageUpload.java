@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto.activos.view.mvac.ingreso.form;
 
+import java.io.File;
+
 import ait.sistemas.proyecto.activos.component.ImageUploader;
 
 import com.vaadin.server.Responsive;
@@ -28,5 +30,10 @@ public class FormImageUpload extends VerticalLayout {
 			return "";
 		}
 		return reciver.file.getAbsolutePath().equals(null)?"":reciver.file.getAbsolutePath();
+	}
+	
+	public void setImage(String path){
+		
+		this.reciver.setFile(new File(path));
 	}
 }

@@ -35,6 +35,18 @@ public class TiposactImpl implements Dao<Tipos_Activo> {
 		return resultlist;
 	}
 
+	/**
+	 * Retorna un Tipo de Activo por su Codigo
+	 * @param idTipoActivo
+	 * @return
+	 */
+	public Tipos_Activo get(short idTipoActivo) {
+		Query query = em.createNativeQuery("Para_Tiposact_UQ @TAC_Id_Tipo_Activo=?1", Tipos_Activo.class)
+				.setHint(QueryHints.REFRESH, HintValues.TRUE)
+				.setParameter(1, idTipoActivo);
+		Tipos_Activo resultlist = (Tipos_Activo) query.getSingleResult();		
+		return resultlist;
+	}
 	@Override
 	public Tipos_Activo getone(long id) {
 		return null;
