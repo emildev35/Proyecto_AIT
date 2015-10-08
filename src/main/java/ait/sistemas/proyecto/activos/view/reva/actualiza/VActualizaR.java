@@ -142,7 +142,8 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 			
 			double valor_DAA = activo.getACT_DAA() == null ? 0 : activo.getACT_DAA().doubleValue();
 			String str_DAA = String.valueOf(valor_DAA);
-			String[] row = { activo.getACT_Dependencia(), 
+			String[] row = { 
+					activo.getACT_Dependencia(), 
 					activo.getACT_Grupo_Contable(),
 					activo.getACT_Auxiliar_Contable(),
 					activo.getACT_Codigo_Activo(),

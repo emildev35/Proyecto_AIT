@@ -27,7 +27,7 @@ public class Util {
 			String valor_str = formater.format(d_valor);
 			return valor_str;
 		} catch (NumberFormatException ex) {
-			return "0";
+			return string;
 		}
 	}
 	
