@@ -48,7 +48,7 @@ public class ReportPdf {
 
 
 
-	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
+	public boolean getPdf(Acta data) throws IOException {
 
 		return new PdfActaGenerator().generatePDF(build(data), SAVE_PATH);
 

@@ -350,5 +350,28 @@ ConnecctionActivos conn = new ConnecctionActivos();
 		}
 		
 	}
-
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getActaEbyFuncionario(String ci_funcionario, short Tipo_Movimento) {
+		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
+		Query query = em.createNativeQuery("exec Mvac_ActabyFuncionarioTipo "
+				+ "@CMV_Funcionario_Destino=?1, "
+				+ "@Tipo_Movimiento=?2 ", "cmovimiento")
+		.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, ci_funcionario);
+		query.setParameter(2, Tipo_Movimento);
+		List<Movimiento> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Movimiento> getActaDbyFuncionario(String ci_funcionario, short Tipo_Movimento) {
+		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
+		Query query = em.createNativeQuery("exec Mvac_ActaDbyFuncionarioTipo "
+				+ "@CMV_Funcionario_Destino=?1, "
+				+ "@Tipo_Movimiento=?2 ", "cmovimiento")
+				.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, ci_funcionario);
+		query.setParameter(2, Tipo_Movimento);
+		List<Movimiento> resultlist = query.getResultList();
+		return resultlist;
+	}
 }
