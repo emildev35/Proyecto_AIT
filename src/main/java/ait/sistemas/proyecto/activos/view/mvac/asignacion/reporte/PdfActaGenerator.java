@@ -90,17 +90,17 @@ public class PdfActaGenerator {
 		String footertitulotext = String.format("Responsabilidad por el manejo de bienes:");
 		String footertext1 = String
 				.format("Numero III art. 116 del DS 0181, todos los servidores publicos son responsables por el debido uso, custodia, preservacion y solicitud de servicios de mantenimiento"
-						+ " de los bienes que les fueron asignados de acuerdo al regimen de Responsabilidad por la funcion");
+						+ " de los bienes que les fueron  ");
 		String footertext2 = String
-				.format("Publica establecido en la Ley N° 1178 y sus reglamentos.Asimismo el art. 157 numerales I.Los servidores publicos quedan prohibidos de a) Usar los bienes para benficio "
-						+ "particular o privado. b) Permitir el uso para beneficio particular o privado. c) Prestar o");
+				.format("asignados de acuerdo al regimen de Responsabilidad por la funcion Publica establecido en la Ley N° 1178 y sus reglamentos.Asimismo el art. 157 numerales I.Los servidores publicos quedan");
 		String footertext3 = String
-				.format("transferir el bien a otro empleado publico. d) Enajenar el bien por cuenta propia e) Dañar o alterar sus caracteristicas fisicas o tecnicas f) Poner en riesgo el bien."
-						+ " g) Ingresar bienes particulares sin autorizacion de la Unidad Responsable de Activos Fijos. h) Sacar");
+				.format("prohibidos de a) Usar los bienes para benficio particular o privado.b) Permitir el uso para beneficio particular o privado. c) Prestar o transferir el bien a otro empleado publico. d) Enajenar el bien");
 		String footertext4 = String
-				.format("bienes  de la entidad sin autoizacion de la Unidad o Responsable de Activos Fijos y II.La no observacion a estas prohibiciones generara responsabilidades "
-						+ "establecidas en la Ley 1178 y sus reglamentos.");
+				.format("por cuenta propia e) Dañar o alterar sus caracteristicas fisicas o tecnicas f) Poner en riesgo el bien.g) Ingresar bienes particulares sin autorizacion de la Unidad Responsable de Activos Fijos. "
+						+ "");
+		String footertext5 = String.format("h) Sacar bienes  de la entidad sin autoizacion de la Unidad o Responsable de Activos Fijos y II.La no observacion a estas prohibiciones generara responsabilidades establecidas en la Ley 1178");
 		
+		String footertext6 = String.format(" y sus reglamentos.");
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(footertitulotext);
@@ -132,6 +132,20 @@ public class PdfActaGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(footertext4);
+		contentStream.endText();
+
+		nextTextY -= table.getRowHeight() * 0.5;
+		
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText(footertext5);
+		contentStream.endText();
+
+		nextTextY -= table.getRowHeight() * 0.5;
+		
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText(footertext6);
 		contentStream.endText();
 		
 		nextTextY -= (table.getRowHeight() + table.getMargin());

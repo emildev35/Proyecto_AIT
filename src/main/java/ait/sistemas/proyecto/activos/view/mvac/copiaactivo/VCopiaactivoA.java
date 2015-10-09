@@ -161,7 +161,6 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 
 	@Override
 	public void select(SelectionEvent event) {
-		System.out.print("entra select1");
 		if ((ActivoGrid)frm_copia.grid_solicitud.getSelectedRow() != null) {
 			this.activo  = (ActivoGrid)this.frm_copia.grid_solicitud.getSelectedRow();
 		}

@@ -1,4 +1,4 @@
-package ait.sistemas.proyecto.activos.view.mvac.asignacion;
+package ait.sistemas.proyecto.activos.view.mvac.actatrans;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,118 +8,111 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
-import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
-import ait.sistemas.proyecto.common.report.pdf.movimiento.Firma;
 import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.ReportPdf;
-import ait.sistemas.proyecto.common.report.pdf.movimiento.TablaActivos;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.report.Column;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.Firma;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.TablaActivos;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.common.view.HomeView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class VAsignacionA extends VerticalLayout implements View, ClickListener, SelectionListener {
+public class VActaTransR extends VerticalLayout implements View, ClickListener,SelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private FormAsignacion frm_asignacion;
-	private CssLayout hl_errores;
-	private Button btn_asignacion;
-	private Button btn_imprimir;
-	private GridSolasignacion grid_asignacion;
-	private GridDetalle grid_Detalle = new GridDetalle();
+	private FormReporte frm_asignacio = new FormReporte();
+	private CssLayout hl_errores = new CssLayout();;
+	private Button btn_imprimir = new Button("Imprimir");
+	private Button btn_salir = new Button("Salir");
 	private ActasImpl acta_impl = new ActasImpl();
-	private Movimiento data;
-	// private MovimientoReporte data_reporte;
-	int r = 0;
-
-	public VAsignacionA() {
-
-		this.frm_asignacion = new FormAsignacion();
-		this.btn_imprimir = new Button("Imprimir");
-		this.btn_asignacion = new Button("Asignar Activos");
-		this.btn_asignacion.addClickListener(this);
+	private List<BarMessage> msg = new ArrayList<BarMessage>();
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+//	private GridActaEntrega grid_Acta = new GridActaEntrega();
+	private Movimiento movimiento;
+	
+	public VActaTransR() {
 		this.btn_imprimir.addClickListener(this);
-		this.grid_asignacion = new GridSolasignacion();
-		this.grid_asignacion.addSelectionListener(this);
-		this.hl_errores = new CssLayout();
-
+		this.btn_salir.addClickListener(this);
+		this.frm_asignacio.grid_Acta.addSelectionListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
-	}
-
-	private Component buildFormContent() {
-
-		VerticalLayout formContent = new VerticalLayout();
-
-		Panel gridPanel = new Panel();
-		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Solicitudes Pendientes de Asignacio");
-		gridPanel.setContent(this.grid_asignacion);
-		// formContent.setMargin(true);
-		Panel grid2Panel = new Panel();
-		grid2Panel.setWidth("100%");
-		grid2Panel.setCaption("Activos Fijos Solicitados");
-		grid2Panel.setContent(this.grid_Detalle);
-		// formContent.setMargin(true);
-
-		formContent.addComponent(gridPanel);
-		formContent.addComponent(this.frm_asignacion);
-		formContent.addComponent(grid2Panel);
-		Responsive.makeResponsive(formContent);
-		return formContent;
-
-	}
-
-	private Component buildNavBar() {
-		Panel navPanel = new Panel();
-		HorizontalLayout nav = new HorizontalLayout();
-		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos >>"));
-		nav.addComponent(new Label("Movimiento de Activos >>"));
-		nav.addComponent(new Label("Asignacion >>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
-		navPanel.setContent(nav);
-		return navPanel;
+		Responsive.makeResponsive(this);
+		msg.add(new BarMessage("Formulario",
+				"Debe llenar los campos de seleccion de por C.I. o por Dependencia"));
+		buildMessages(msg);
 	}
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_asignacion.setStyleName("ait-buttons-btn");
-		buttonContent.addComponent(this.btn_asignacion);
-		this.btn_imprimir.setStyleName("ait-buttons-btn");
+		GridLayout btn_grid = new GridLayout(2, 1);
+		btn_grid.setResponsive(true);
+		btn_grid.setSizeFull();
+		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
+		btn_grid.addComponent(this.btn_imprimir);
+		btn_grid.setComponentAlignment(btn_imprimir, Alignment.TOP_CENTER);
+		btn_imprimir.setIcon(FontAwesome.PRINT);
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
-		buttonContent.addComponent(this.btn_imprimir);
-		Responsive.makeResponsive(buttonContent);
+		btn_grid.addComponent(this.btn_salir);
+		btn_salir.setIcon(FontAwesome.UNDO);
+		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
+		buttonContent.addComponent(btn_grid);
 		return buttonContent;
+	}
+
+	private Component buildFormContent() {
+
+		VerticalLayout vl_form = new VerticalLayout();
+
+		vl_form.addComponent(frm_asignacio);
+
+		return vl_form;
+	}
+
+	private Component buildNavBar() {
+		Panel navPanel = new Panel();
+		navPanel.addStyleName("ait-content-nav");
+		HorizontalLayout nav = new HorizontalLayout();
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
+		navPanel.setContent(nav);
+		return navPanel;
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
 	}
 
-	private void buildMessages(List<BarMessage> mensages) {
+	public void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
@@ -132,38 +125,15 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 
 	}
 
-	@Override
-	public void select(SelectionEvent event) {
-
-		if ((Movimiento) this.grid_asignacion.getSelectedRow() != null) {
-			this.frm_asignacion.setData((Movimiento) this.grid_asignacion.getSelectedRow());
-
-			data = (Movimiento) this.grid_asignacion.getSelectedRow();
-			grid_Detalle.update(data.getNro_documento(), data.getId_dependencia(), data.getTipo_movimiento());
-		}
-	}
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_asignacion) {
-			if (this.frm_asignacion.validate()) {
-				this.acta_impl.addActaAsignacion(this.frm_asignacion.getData());
-				this.grid_Detalle.vaciar();
-				this.frm_asignacion.update();
-				this.frm_asignacion.buidId();
-				this.grid_asignacion.update();
-				Notification.show(Messages.SUCCESS_MESSAGE);
-			} else {
-				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-			}
-			buildMessages(this.frm_asignacion.getMensajes());
-			this.frm_asignacion.clearMessages();
-		}
+
 		if (event.getButton() == this.btn_imprimir) {
+			if (this.frm_asignacio.validate()) {
 			ReportPdf reporte = new ReportPdf();
-			List<MovimientoReporte> data_reporte = acta_impl.ReporteActa(frm_asignacion.txt_no_acta.getValue(),
-					(short) 2);
+			List<MovimientoReporte> data_reporte = acta_impl.ReporteActa(String.valueOf(this.movimiento.getNro_documento()+1),
+					(short)6);
 			try {
 				reporte.getPdf(getActa(data_reporte));
 			} catch (NumberFormatException | IOException e) {
@@ -190,6 +160,13 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 
 			// Open it in the UI
 			getUI().addWindow(subWindow);
+		} else {
+			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+		}
+		}
+		
+		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 	}
 
@@ -210,8 +187,8 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		String[][] activos = new String[data.size()*2][3];
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
-		columns.add(new Column("Nombre del Activo", 345));
-		columns.add(new Column("Caracteriticas y Componentes", 550));
+		columns.add(new Column("Nombre del Activo", 300));
+		columns.add(new Column("Caracteriticas y Componentes", 375));
 
 		List<Firma> firmas = new ArrayList<Firma>();
 		firmas.add(new Firma("Funcionario Encargado", 50));
@@ -250,5 +227,17 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 		tabla.setRowheigth(15);
 		acta.setTb_activos(tabla);
 		return acta;
+	}
+
+	@Override
+	public void select(SelectionEvent event) {
+	
+			if ((Movimiento)frm_asignacio.grid_Acta.getSelectedRow() != null) {
+				this.movimiento  = (Movimiento)this.frm_asignacio.grid_Acta.getSelectedRow();
+			}
+			
+			msg = new ArrayList<BarMessage>();
+			msg.add(new BarMessage("Boton", Messages.PRESS_PRINT_BTN));
+			buildMessages(msg);
 	}
 }

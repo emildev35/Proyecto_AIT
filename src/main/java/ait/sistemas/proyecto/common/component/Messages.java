@@ -76,6 +76,10 @@ public class Messages {
 	 */
 	public static final String SELECT_MOVIMIENTO = "Seleccione un Movimiento";
 	/**
+	 * Seleccione el Acta
+	 */
+	public static final String SELECT_ACTA = "Seleccione el Acta";
+	/**
 	 * Mensaje utilizado cuando no se encontro un tipo de cambio al momento de
 	 * seleccionar un fecha
 	 */
