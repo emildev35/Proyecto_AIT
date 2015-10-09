@@ -51,6 +51,19 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> ActivosbyAuxiliarFecha(String id_auxiliar, String grupoContable, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliarFecha_Q " 
+				+ "@ACT_Auxiliar_Contable=?1, "
+				+ "@ACT_Grupo_Contable=?2, "
+				+ "@Fecha=?3 ", ActivosModel.class);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_auxiliar);
+		query.setParameter(2, grupoContable);
+		query.setParameter(3, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> activosgrid_by_auxiliar(String id_auxiliar) {
@@ -244,6 +257,17 @@ public class ActivoImpl {
 		query.setParameter(1, id_activo);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
+	}
+		@SuppressWarnings("unchecked")
+		public List<ActivosModel> getActivosbyCodigoFecha(long id_activo, Date fecha) {
+			Query query = em.createNativeQuery("Mvac_ActivobyCodigoFecha_Q " 
+					+ "@ACT_Codigo_Activo=?1, "
+					+ "@Fecha", "mapeo-activo");
+			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+			query.setParameter(1, id_activo);
+			query.setParameter(2, fecha);
+			List<ActivosModel> resultlist = query.getResultList();
+			return resultlist;
 	}
 	
 	@SuppressWarnings("unchecked")
