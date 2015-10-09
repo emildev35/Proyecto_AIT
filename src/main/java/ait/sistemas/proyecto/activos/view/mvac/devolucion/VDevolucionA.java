@@ -166,8 +166,7 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 			List<MovimientoReporte> data_reporte = acta_impl.ReporteActa(frm_devolucion.txt_no_acta.getValue(),
 					(short) 4);
 			try {
-				reporte.getPdf(getActa(data_reporte), Short.parseShort(frm_devolucion.txt_no_acta.getValue()),
-						(short) 4);
+				reporte.getPdf(getActa(data_reporte));
 			} catch (NumberFormatException | IOException e) {
 				e.printStackTrace();
 			}
@@ -212,8 +211,8 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 		String[][] activos = new String[data.size()*2][3];
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Codigo", 30));
-		columns.add(new Column("Nombre del Activo", 345));
-		columns.add(new Column("Caracteriticas y Componentes", 550));
+		columns.add(new Column("Nombre del Activo", 300));
+		columns.add(new Column("Caracteriticas y Componentes", 375));
 
 		List<Firma> firmas = new ArrayList<Firma>();
 		firmas.add(new Firma("Funcionario Encargado", 50));

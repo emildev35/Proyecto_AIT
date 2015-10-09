@@ -91,14 +91,14 @@ public class PdfActaGenerator {
 		String footertitulotext = String.format("Liberacion de  responsabilidades:");
 		String footertext1 = String
 				.format("Art. 148 del DS 0181.I. Para ser liberado de la responsabilidad el servidor publico debera devolver a la Unidad de Responsable de Activos Fijos, el o los bienes que "
-						+ "estaban a su cargo, debiendo recabar la conformidad escrita de esta Unidad Responsable.");
+						+ "estaban a su cargo, debiendo recabar ");
 		String footertext2 = String
-				.format("Mientras no lo haga, estara sujeto al regimen de Responsabilidad por la Funcion Publica establecida en la Ley N° 1178 y sus reglamentos. II. El servidor publico "
-						+ "mientras se encuentre en instalaciones de la entidad publica prestando servicios sera responsable");
+				.format("la conformidad escrita de esta Unidad Responsable.Mientras no lo haga, estara sujeto al regimen de Responsabilidad por la Funcion Publica establecida en la Ley N° 1178 y sus reglamentos. ");
 		String footertext3 = String
-				.format("por el debido uso y custodia de los bienes a su cargo. III. La Unidad Administrativa es responsable de ejecutar las acciones necesarias para proporcionar "
-						+ "los mecanismos para asegurar la custodia de los bienes asignados a los servidores publicos.");
+				.format("II. El servidor publico  mientras se encuentre en instalaciones de la entidad publica prestando servicios sera responsable por el debido uso y custodia de los bienes a su cargo. III. La Unidad ");
 
+		String footertext4 = String.format("Administrativa es responsable de ejecutar las acciones necesarias para proporcionar los mecanismos para asegurar la custodia de los bienes asignados a los servidores publicos.");
+		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(footertitulotext);
@@ -123,6 +123,13 @@ public class PdfActaGenerator {
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(footertext3);
+		contentStream.endText();
+
+		nextTextY -= table.getRowHeight() * 0.5;
+		
+		contentStream.beginText();
+		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+		contentStream.showText(footertext4);
 		contentStream.endText();
 
 		nextTextY -= (table.getRowHeight() + table.getMargin());

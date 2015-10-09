@@ -8,7 +8,7 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
-import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.ReportPdf;
+import ait.sistemas.proyecto.activos.view.mvac.devolucion.reporte.ReportPdf;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.report.Column;
