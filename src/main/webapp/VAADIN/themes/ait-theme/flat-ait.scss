@@ -5,7 +5,7 @@ $v-font-weight--header: 400;
 $v-background-color: #fff;
 $v-focus-color: rgb(150,190,90);
 $v-luminance-threshold: 180;
-$v-border: 2px solid v-shade;
+$v-border: 2px solid #656565;
 $v-border-radius: 6px;
 $v-bevel: false;
 $v-gradient: false;
@@ -32,6 +32,7 @@ $v-app-loading-text: "Espere un momento por favor ...";
 @import "components/ait-menu.scss";
 @import "components/ait-panel.scss";
 @import "components/ait-button-bar.scss";
+@import "components/ait-tabsheet.scss";
 @import "common.scss";
 
 @mixin ait-theme {
@@ -40,6 +41,7 @@ $v-app-loading-text: "Espere un momento por favor ...";
 	@include ait-content-bar-button;
 	@include ait-pn-grid;
 	@include ait-theme-common;
+	@include ait-tabsheet;
 	
 /* 	@mixin valo-panel-caption-style($background-color: $v-background-color,  */
 /* 	 $bevel: $v-bevel, */

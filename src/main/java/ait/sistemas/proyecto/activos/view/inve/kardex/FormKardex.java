@@ -120,11 +120,11 @@ public class FormKardex extends GridLayout implements ValueChangeListener, Click
 		}
 	}
 	
-	private void fillcbAcivo(String id_auxiliar) {
+	private void fillcbAcivo(String id_auxiliar, String grupoContable) {
 		cb_Activos.removeAllItems();
 		cb_Activos.setNullSelectionAllowed(false);
 		cb_Activos.setInputPrompt("Seleccione el Activo");
-		for (ActivosModel activo : activo_impl.activos_by_auxiliar(id_auxiliar)) {
+		for (ActivosModel activo : activo_impl.activos_by_auxiliar(id_auxiliar, grupoContable)) {
 			cb_Activos.addItem(activo.getACT_Codigo_Activo());
 			cb_Activos.setItemCaption(activo.getACT_Codigo_Activo(), activo.getACT_Nombre_Activo());
 		}
@@ -221,12 +221,12 @@ public class FormKardex extends GridLayout implements ValueChangeListener, Click
 			fillcbAuxiliar((String) this.cb_Grupo.getValue());
 		}
 		if (event.getProperty().getValue() == this.cb_Auxiliar.getValue() && (String) this.cb_Auxiliar.getValue() != null) {
-			fillcbAcivo((String) this.cb_Auxiliar.getValue());
+			fillcbAcivo((String) this.cb_Auxiliar.getValue(), (String)this.cb_Grupo.getValue());
 		}
 	}
 	
 	public String getActivo() {
-		if (txt_codigoActivo.getValue() != null) {
+		if (txt_codigoActivo.getValue() != null && !txt_codigoActivo.getValue().equals("")) {
 			return this.txt_codigoActivo.getValue().toString();
 		}
 		return cb_Activos.getValue().toString();

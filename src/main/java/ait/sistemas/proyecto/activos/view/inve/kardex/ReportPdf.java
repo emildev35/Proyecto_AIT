@@ -102,18 +102,19 @@ public class ReportPdf {
 
 		KardexElement[][] content = data;
 		List<Column> columns_componentes = new ArrayList<Column>();
-		columns_componentes.add(new Column("Nombre del Componente", 350));
-		columns_componentes.add(new Column("Caracteristicas", 375));
+		columns_componentes.add(new Column("Nombre del Componente", 135));
+		columns_componentes.add(new Column("Caracteristicas", 590));
 
 		List<Column> columns_documentos = new ArrayList<Column>();
-		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 350));
-		columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 375));
+		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 135));
+		columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 590));
 
 		String[][] componentes = getComponentes(Long.parseLong(data[0][0].getContenido()), dependencia);
 		String[][] documentos = getDocumentos(Long.parseLong(data[0][0].getContenido()), dependencia);
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 
-		Kardex table = new KardexBuilder().setCellMargin(CELL_MARGIN).setelement(content)
+		Kardex table = new KardexBuilder()
+				.setCellMargin(CELL_MARGIN).setelement(content)
 				.setColumnsComponentes(columns_componentes).setComponentes(componentes)
 				.setColumnsDocumentos(columns_documentos).setDocumentos(documentos).setHeight(tableHeight)
 				.setNumberOfRows(content.length).setNumberOfRowsComponentes(componentes.length)

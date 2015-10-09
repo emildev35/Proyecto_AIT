@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -155,7 +156,11 @@ public class ProveedorImpl implements Dao<Proveedore> {
 		String str_get_by_dependencia = "EXEC Mant_Proveedor_UQ @Id_Proveedor=?1";
 		Query query = this.em.createNativeQuery(str_get_by_dependencia, "archive-map-proveedor")
 				.setParameter(1, nitProveedor);
+		try{
 		ProveedoresModel result = (ProveedoresModel)query.getSingleResult();
-		return result;
+			return result;
+		}catch(NoResultException ex){
+			return new ProveedoresModel();
+		}
 	}
 }

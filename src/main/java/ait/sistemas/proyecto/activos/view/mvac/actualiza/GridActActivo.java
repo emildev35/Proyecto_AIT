@@ -82,8 +82,9 @@ public class GridActActivo extends Grid {
 		removeColumn("ACT_Depreciacion_Gestion_Actual");
 		removeColumn("ACT_Fecha_Ultima_Depreciacion");
 		removeColumn("ACT_Fecha_Ultima_Revalorizacion");
-		
-		builGrid("0");
+		removeColumn("ACT_Grupo_Contable");
+		removeColumn("ACT_Auxiliar_Contable");
+		builGrid("0", "0");
 	}
 	
 	/**
@@ -91,7 +92,7 @@ public class GridActActivo extends Grid {
 	 */
 	public void update() {
 		bean_activos = null;
-		builGrid("0");
+		builGrid("0", "0");
 	}
 	
 	/**
@@ -99,17 +100,15 @@ public class GridActActivo extends Grid {
 	 * el codigo del auxliar contable
 	 * @param auxiliar
 	 */
-	public void builGrid(String auxiliar) {
-		this.bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class, activoimpl.activos_by_auxiliar(auxiliar));
+	public void builGrid(String auxiliar, String grupoContable) {
+		this.bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class, activoimpl.activos_by_auxiliar(auxiliar, grupoContable));
 		
 		setContainerDataSource(bean_activos);
 		
 		getColumn("ACT_Codigo_Activo").setHeaderCaption("CODIGO").setExpandRatio(1);
-		getColumn("ACT_Grupo_Contable").setHeaderCaption("GRUPO CONTABLE").setExpandRatio(4);
-		getColumn("ACT_Auxiliar_Contable").setHeaderCaption("AUXILIAR CONTABLE").setExpandRatio(4);
 		getColumn("ACT_Nombre_Activo").setHeaderCaption("NOMBRE ACTIVO").setExpandRatio(7);
 		
-		setColumnOrder("ACT_Grupo_Contable", "ACT_Auxiliar_Contable", "ACT_Codigo_Activo", "ACT_Nombre_Activo");
+		setColumnOrder("ACT_Codigo_Activo", "ACT_Nombre_Activo");
 	}
 	
 }

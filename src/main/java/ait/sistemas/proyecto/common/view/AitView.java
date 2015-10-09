@@ -4,6 +4,7 @@ import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 public class AitView {
 	
+
 	public static String getNavText(Arbol_menus menu) {
 		if (menu == null) {
 			return "";

@@ -8,6 +8,7 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.common.view.HomeView;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -42,12 +43,9 @@ import com.vaadin.ui.VerticalLayout;
 public class VActualizaM extends VerticalLayout implements View, ClickListener, SelectionListener, TextChangeListener {
 	
 	private static final long serialVersionUID = 1L;
-
-
 	
 	private FormSeleccion frm_seleccion;
 	private CssLayout hl_errores;
-	private Button btn_guardar = new Button("Guardar");
 	private Button btn_actualizar = new Button("Actualizar");
 	private Button btn_salir = new Button("Salir");
 	
@@ -59,7 +57,6 @@ public class VActualizaM extends VerticalLayout implements View, ClickListener, 
 		
 		this.frm_seleccion = new FormSeleccion();
 		
-		this.btn_guardar.addClickListener(this);
 		this.btn_actualizar.addClickListener(this);
 		this.btn_salir.addClickListener(this);
 		
@@ -96,10 +93,6 @@ public class VActualizaM extends VerticalLayout implements View, ClickListener, 
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		
-		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
-		btn_guardar.setIcon(FontAwesome.SAVE);
-		buttonContent.addComponent(this.btn_guardar);
 		
 		this.btn_actualizar.setStyleName(AitTheme.BTN_SUBMIT);
 		btn_actualizar.setIcon(FontAwesome.EDIT);
@@ -147,12 +140,8 @@ public class VActualizaM extends VerticalLayout implements View, ClickListener, 
 			buildMessages(this.frm_seleccion.getMensajes());
 			this.frm_seleccion.clearMessages();
 		}
-		if (event.getButton() == this.btn_guardar) {
-			
-		}
-		
 		if (event.getButton() == this.btn_salir) {
-			
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 	}
 	
@@ -163,7 +152,7 @@ public class VActualizaM extends VerticalLayout implements View, ClickListener, 
 	@Override
 	public void select(SelectionEvent event) {
 		msgs = new ArrayList<BarMessage>();
-		msgs.add(new BarMessage("Formulario", "Presione el Boton de Actualizar para Modificar los Datos del Activo"));
+		msgs.add(new BarMessage("Formulario", "Presione el Boton de Actualizar para Modificar los Datos del Activo Seleccionado"));
 		buildMessages(msgs);
 	}
 	
@@ -174,7 +163,7 @@ public class VActualizaM extends VerticalLayout implements View, ClickListener, 
 	@Override
 	public void textChange(TextChangeEvent event) {
 		msgs = new ArrayList<BarMessage>();
-		msgs.add(new BarMessage("Formulario", "Presione el Boton de Actualizar para Modificar los Datos del Activo"));
+		msgs.add(new BarMessage("Formulario", "Presione el Boton de Actualizar para Modificar los Datos del Activo Seleccionado"));
 		buildMessages(msgs);
 	}
 	

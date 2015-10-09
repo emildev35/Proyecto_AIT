@@ -304,7 +304,10 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 				SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 				String a = "ALL";
 				if (frmReporte.getActivo().equals(a)) {
-					List<ActivosModel> data = activo_impl.activos_by_auxiliar(frmReporte.cb_Auxiliar.getValue().toString());
+					List<ActivosModel> data = activo_impl.activos_by_auxiliar(
+							frmReporte.cb_Auxiliar.getValue().toString(),
+							frmReporte.cb_Grupo.getValue().toString()
+							);
 					reporte.getPdfKardexGeneratorMulti(getData(data), frmReporte.cb_Activos.getValue(),
 							session.getId_dependecia(),
 							new SimpleDateFormat("dd-MM-yyy").format(frmReporte.dtf_fechaElaboracion.getValue()));

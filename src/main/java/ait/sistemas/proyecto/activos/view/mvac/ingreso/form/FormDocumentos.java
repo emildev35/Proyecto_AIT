@@ -47,7 +47,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
-	public TextField txt_codigo_activo = new TextField("Codigo Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public TextField txt_nombre_documento = new TextField("Nombre Documento");
 	
@@ -77,6 +77,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		this.field_ubicacion_documento.setWidth("90%");
 		this.field_ubicacion_documento.setButtonCaption("Subir Documento");
 		
+		
 		pitmDocumentos.addItemProperty("nombre", new ObjectProperty<String>(""));
 		pitmDocumentos.addItemProperty("id", new ObjectProperty<String>(""));
 		pitmDocumentos.addItemProperty("nombre_activo", new ObjectProperty<String>(""));
@@ -98,6 +99,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		buildForm();
 		buildGrid();
 		
+		this.txt_nombre_documento.setWidth("100%");
 		this.father = father;
 	}
 	
@@ -106,7 +108,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		setColumnExpandRatio(0, 1);
 		setColumnExpandRatio(1, 2);
 		
-		Panel pn_activo = new Panel("ACTIVO FIJO");
+		Panel pn_activo = new Panel("IDENTIFICACION DEL ACTIVO");
 		GridLayout grid_activo = new GridLayout(2, 1);
 		grid_activo.setWidth("100%");
 		grid_activo.setMargin(true);

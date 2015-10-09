@@ -19,7 +19,7 @@ public class FormImageUpload extends VerticalLayout {
 	
 	public FormImageUpload() {
 		upload.addSucceededListener(reciver);
-		upload.setButtonCaption("Cargar Imagen");
+		upload.setButtonCaption("Subir Imagen al Servidor");
 		addComponent(upload);
 		addComponent(reciver.getImage());
 		Responsive.makeResponsive(this);

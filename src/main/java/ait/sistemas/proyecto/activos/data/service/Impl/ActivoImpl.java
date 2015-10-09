@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 import java.util.List;
 
@@ -41,10 +42,12 @@ public class ActivoImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ActivosModel> activos_by_auxiliar(String id_auxiliar) {
-		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliar " + "@ACT_Auxiliar_Contable=?1 ", ActivosModel.class);
+	public List<ActivosModel> activos_by_auxiliar(String id_auxiliar, String grupoContable) {
+		Query query = em.createNativeQuery("Mvac_ActivosPorAuxiliar " + "@ACT_Auxiliar_Contable=?1, "
+				+ "@ACT_Grupo_Contable=?2", ActivosModel.class);
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_auxiliar);
+		query.setParameter(2, grupoContable);
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
@@ -300,7 +303,8 @@ public class ActivoImpl {
 		Query query = this.em.createNativeQuery(str_datos_generales).setParameter(1, datos_generales.getId_activo())
 				.setParameter(2, datos_generales.getId_dependencia()).setParameter(3, datos_generales.getNombre_activo())
 				.setParameter(4, datos_generales.getTipo_activo()).setParameter(5, datos_generales.getFecha_compra())
-				.setParameter(6, datos_generales.getValor()).setParameter(7, datos_generales.getTipo_cambio_ufv())
+				.setParameter(6, datos_generales.getValor().setScale(3, RoundingMode.UP).toString())
+				.setParameter(7, String.valueOf(datos_generales.getTipo_cambio_ufv()))
 				.setParameter(8, datos_generales.getId_grupo_contable())
 				.setParameter(9, datos_generales.getId_auxiliar_contalbe()).setParameter(10, datos_generales.getVida_util())
 				.setParameter(11, datos_generales.getId_fuente_financiamiento())
@@ -309,7 +313,9 @@ public class ActivoImpl {
 				.setParameter(14, datos_generales.getFecha_como_dato())
 				.setParameter(15, datos_generales.getFecha_incorporacion())
 				.setParameter(16, datos_generales.getTipo_cambio_dolar());
-		
+		System.out.println(datos_generales.getValor().doubleValue());
+		System.out.println(String.valueOf(datos_generales.getTipo_cambio_ufv()));
+
 		int result = (Integer) query.getSingleResult();
 		
 		return (result > 0) ? true : false;

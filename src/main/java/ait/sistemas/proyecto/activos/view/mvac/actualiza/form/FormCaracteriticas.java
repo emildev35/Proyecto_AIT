@@ -47,7 +47,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_salir = new Button("Salir");
 	
-	public TextField txt_codigo_activo = new TextField("Codigo Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public ComboBox cb_proveedor = new ComboBox("Proveedor");
 	public TextField txt_marca = new TextField("Marca");
@@ -63,7 +63,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	public DateField dtf_vcto_contrato_mantenimientno = new DateField("Fecha de Vcto de Contrato");
 	public TextField nroLicencia = new TextField("N. Licencia");
 	public DateField dtfVctoLicencia = new DateField("Vcto. Licencia");
-
+	
 	public TextField txt_nombre_imagen = new TextField();
 	
 	private GridLayout grid_activo_fijo = new GridLayout(6, 1);
@@ -110,15 +110,15 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		pitmCaracteristicas.addItemProperty("codigo", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("proveedor", new ObjectProperty<ProveedoresModel>(new ProveedoresModel()));
 		pitmCaracteristicas.addItemProperty("marca", new ObjectProperty<String>(""));
-		pitmCaracteristicas.addItemProperty("numero_serie", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_serie", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_garantia", new ObjectProperty<Date>(new Date()));
-		pitmCaracteristicas.addItemProperty("numero_ruat", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_folio_real", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_poliza_seguro", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_ruat", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("numero_folio_real", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("numero_poliza_seguro", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_seguro", new ObjectProperty<Date>(new Date()));
-		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_contrato_mantenimiento", new ObjectProperty<Date>(new Date()));
 		pitmCaracteristicas.addItemProperty("nombre_imagen", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("numero_licencia", new ObjectProperty<String>(""));
@@ -147,7 +147,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.father = father;
 		
 		fuildForm();
-		buildcbProveedor();
+buildcbProveedor();
 		fillActivo();
 	}
 	
@@ -164,8 +164,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		grid_activo_fijo.addComponent(this.txt_codigo_activo, 0, 0);
 		grid_activo_fijo.addComponent(this.txt_nombre_activo, 1, 0, 5, 0);
 		
-		
-		final Panel pn_activo = new Panel("ACTIVO FIJO");
+		final Panel pn_activo = new Panel("IDENTIFACOR DEL ACTIVO");
 		grid_activo_fijo.setSizeFull();
 		grid_activo_fijo.setMargin(true);
 		pn_activo.setContent(grid_activo_fijo);
@@ -189,7 +188,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		grid_caracteristica.addComponent(this.txt_numero_contrato_mantenimiento, 0, 5, 2, 5);
 		grid_caracteristica.addComponent(this.dtf_vcto_contrato_mantenimientno, 3, 5, 5, 5);
 		
-		grid_caracteristica.addComponent(this. nroLicencia, 0, 6, 2, 6);
+		grid_caracteristica.addComponent(this.nroLicencia, 0, 6, 2, 6);
 		grid_caracteristica.addComponent(this.dtfVctoLicencia, 3, 6, 5, 6);
 		
 		final Panel pn_caracteristicas = new Panel("EDITE LAS CARACTERISTICAS DE LOS ACTIVOS");
@@ -208,10 +207,10 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		
 		pn_imagen.setStyleName(AitTheme.PANEL_FORM);
 		pn_imagen.setIcon(FontAwesome.IMAGE);
-
+		
 		pn_activo.setStyleName(AitTheme.PANEL_FORM);
 		pn_activo.setIcon(FontAwesome.EDIT);
-
+		
 		pn_caracteristicas.setStyleName(AitTheme.PANEL_FORM);
 		pn_caracteristicas.setIcon(FontAwesome.IMAGE);
 		addComponent(pn_imagen, 6, 0, 6, 6);
@@ -242,27 +241,36 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			Notification.show(sessionactivo.getNombre_activo());
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
-
+			
 			CaracteristicasActivo caracteristicaActivo = activoimpl.getCaracteristicas(sessionactivo.getCodigo());
-			this.txt_numero_serie.setValue(caracteristicaActivo.getNumero_serie());
-			this.txt_numero_ruat.setValue(caracteristicaActivo.getNumero_ruat());
-			this.txt_numero_contrato_mantenimiento.setValue(caracteristicaActivo.getNumero_contrato_mantenimiento());
-			this.txt_numero_folio_real.setValue(caracteristicaActivo.getNumero_folio_real());
-			this.txt_numero_garantia.setValue(caracteristicaActivo.getNumero_garantia());
-			this.txt_numero_poliza_seguro.setValue(caracteristicaActivo.getNumero_poliza_seguro());
-			this.txt_marca.setValue(caracteristicaActivo.getMarca());
+			this.txt_numero_serie.setValue(caracteristicaActivo.getNumero_serie() == null ? "" : caracteristicaActivo
+					.getNumero_serie());
+			this.txt_numero_ruat.setValue(caracteristicaActivo.getNumero_ruat() == null ? "" : caracteristicaActivo
+					.getNumero_ruat());
+			this.txt_numero_contrato_mantenimiento.setValue(caracteristicaActivo.getNumero_contrato_mantenimiento() == null ? ""
+					: caracteristicaActivo.getNumero_contrato_mantenimiento());
+			this.txt_numero_folio_real.setValue(caracteristicaActivo.getNumero_folio_real() == null ? "" : caracteristicaActivo
+					.getNumero_folio_real());
+			this.txt_numero_garantia.setValue(caracteristicaActivo.getNumero_garantia() == null ? "" : caracteristicaActivo
+					.getNumero_garantia());
+			this.txt_numero_poliza_seguro.setValue(caracteristicaActivo.getNumero_poliza_seguro() == null ? ""
+					: caracteristicaActivo.getNumero_poliza_seguro());
+			this.txt_marca.setValue(caracteristicaActivo.getMarca() == null ? "" : caracteristicaActivo.getMarca());
 			this.dtf_vcto_contrato_mantenimientno.setValue(caracteristicaActivo.getVencimiento_contrato_mantenumiento());
 			this.dtf_vencimiento_garantia.setValue(caracteristicaActivo.getVencimiento_garantia());
 			this.dtf_vencimiento_seguro.setValue(caracteristicaActivo.getVencimiento_seguro());
 			this.dtfVctoLicencia.setValue(caracteristicaActivo.getVencimientoLicencia());
 			this.cb_proveedor.setValue(proveedorimpl.get(caracteristicaActivo.getNit_proveedor()));
-			this.frm_imagen.setImage(caracteristicaActivo.getUbicacion_imagen());
-			this.txt_tiempo_garantia.setValue("0");
-			this.nroLicencia.setValue(caracteristicaActivo.getNumeroLicencia());
+			if (caracteristicaActivo.getUbicacion_imagen() != null) {
+				this.frm_imagen.setImage(caracteristicaActivo.getUbicacion_imagen());
+			}
+			this.nroLicencia.setValue(caracteristicaActivo.getNumeroLicencia() == null ? "" : caracteristicaActivo
+					.getNumeroLicencia());
 			this.btn_guardar.setEnabled(true);
 			this.btn_guardar_caracteristicas.setEnabled(true);
 			this.btn_guardar.setEnabled(true);
 		} else {
+			this.mensajes.add(new BarMessage("Formulario", Messages.ACTIVO_NO_ENCONTRADO));
 			this.btn_guardar.setEnabled(false);
 			this.btn_guardar_caracteristicas.setEnabled(false);
 			this.btn_guardar.setEnabled(false);
@@ -384,6 +392,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
+		buildcbProveedor();
 		fillActivo();
 	}
 }

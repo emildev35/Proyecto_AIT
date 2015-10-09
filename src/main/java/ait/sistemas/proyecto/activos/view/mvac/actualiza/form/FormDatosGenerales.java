@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.view.mvac.actualiza.form;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,8 +68,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	private Button btn_salir = new Button("Salir");
 	
 	public ComboBox cb_tipo_activo = new ComboBox("Tipo de Activo");
-	public TextField txt_codigo_activo = new TextField("Codigo del Activo");
-	public TextField txt_nombre_activo = new TextField("Nombre del Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
+	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public DateField dtf_fecha_compra = new DateField("Fecha Compra");
 	public TextField txt_valor_compra = new TextField("Valor de la Compra (Bs)", "######,###BS");
 	public DateField dtf_fecha_incorporacion = new DateField("Fecha de Incorporacion");
@@ -132,8 +133,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		pitmDatosGenerales.addItemProperty("nombre_activo", new ObjectProperty<String>(""));
 		pitmDatosGenerales.addItemProperty("fecha_compra", new ObjectProperty<Date>(new Date()));
 		pitmDatosGenerales.addItemProperty("fecha_incorporacion", new ObjectProperty<Date>(new Date()));
-		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<BigDecimal>(new BigDecimal("0")));
-		pitmDatosGenerales.addItemProperty("tipo_cambio_ufv", new ObjectProperty<BigDecimal>(new BigDecimal("0")));
+		pitmDatosGenerales.addItemProperty("valor_compra", new ObjectProperty<String>(""));
+		pitmDatosGenerales.addItemProperty("tipo_cambio_ufv", new ObjectProperty<String>(""));
 		pitmDatosGenerales.addItemProperty("vida_util", new ObjectProperty<Integer>(0));
 		pitmDatosGenerales
 				.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
@@ -204,6 +205,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.txt_codigo_activo.setEnabled(false);
 		this.txt_nombre_activo.setEnabled(false);
 		
+		this.txt_valor_compra.setStyleName(AitTheme.TF_NUMBER);
+		this.txt_tipo_cambio_ufv.setStyleName(AitTheme.TF_NUMBER);
+		this.txt_vida_util.setStyleName(AitTheme.TF_NUMBER);
+		
 		buildForm();
 		Responsive.makeResponsive(this);
 		fillActivo();
@@ -256,8 +261,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	private void clean() {
 		this.binderDatosGeneraler.clear();
-		this.txt_tipo_cambio_ufv.setValue("0,0");
-		this.txt_valor_compra.setValue("0,0");
 		this.txt_vida_util.setValue("0");
 	}
 	
@@ -370,10 +373,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public boolean validate() {
 		try {
 			this.binderDatosGeneraler.commit();
-			if (dtf_fecha_incorporacion.getValue().getTime() > dtf_fecha_compra.getValue().getTime()) {
-				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
-				return false;
-			}
+//			if (dtf_fecha_incorporacion.getValue().getTime() > dtf_fecha_compra.getValue().getTime()) {
+//				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
+//				return false;
+//			}
 			return true;
 			
 		} catch (CommitException cme) {
@@ -522,8 +525,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		datos_generales.setId_activo(Long.parseLong(this.txt_codigo_activo.getValue()));
 		datos_generales.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
 		datos_generales.setFecha_incorporacion(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
-		datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue()));
-		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue().toString().replace(",", ".")));
+		datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue().replace(",", ".")).setScale(3, RoundingMode.UP));
+		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue().replace(",",".")));
 		datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue()).getGRC_Grupo_Contable());
 		datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable.getValue())
 				.getAUC_Auxiliar_Contable());
@@ -599,11 +602,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				cb_fuente_financiamiento.setValue(fuente_financiamientoimpl.getone(datosGenerales.getId_fuente_financiamiento()));
 				cb_organismo_financiador
 						.setValue(organismo_financiadorimpl.getone(datosGenerales.getId_organimismo_financiador()));
-				txt_valor_compra.setValue(datosGenerales.getValor().toString());
+				txt_valor_compra.setValue(String.valueOf(datosGenerales.getValor().doubleValue()).replace(".", ","));
 				dtf_fecha_comodato.setValue(datosGenerales.getFecha_como_dato());
 				dtf_fecha_compra.setValue(datosGenerales.getFecha_compra());
 				dtf_fecha_incorporacion.setValue(datosGenerales.getFecha_incorporacion());
-				txt_tipo_cambio_ufv.setValue(datosGenerales.getTipo_cambio_ufv().toString());
+				txt_tipo_cambio_ufv.setValue(String.valueOf(datosGenerales.getTipo_cambio_ufv()).replace(".", ","));
 				UbicacionesFisicasModel ubicacion = ubicacionimpl.get(datosGenerales.getId_dependencia(),
 						datosGenerales.getId_ubicacion_fisica());
 				cb_inmueble.setValue(inmuebleimpl.get(datosGenerales.getId_dependencia(), ubicacion.getUBF_Inmueble_ID()));
@@ -621,8 +624,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			this.btn_guardar_datos_generales.setEnabled(true);
 			this.btn_guardar.setEnabled(true);
 			} else {	
-			Notification.show(Messages.ACTIVO_NO_ENCONTRADO, Type.ERROR_MESSAGE);
-
+			this.mensajes.add(new BarMessage("Formulario", Messages.ACTIVO_NO_ENCONTRADO));
+			this.father.addComponent(buildMessages());
 			this.btn_guardar.setEnabled(false);
 			this.btn_guardar_datos_generales.setEnabled(false);
 			this.btn_guardar.setEnabled(false);

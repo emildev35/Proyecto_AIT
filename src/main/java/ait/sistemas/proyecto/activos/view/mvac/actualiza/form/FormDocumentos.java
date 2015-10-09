@@ -48,7 +48,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
-	public TextField txt_codigo_activo = new TextField("Codigo Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public TextField txt_nombre_documento = new TextField("Nombre Documento");
 	
@@ -107,8 +107,9 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		setSpacing(true);
 		setColumnExpandRatio(0, 1);
 		setColumnExpandRatio(1, 2);
+		this.txt_nombre_documento.setWidth("100%");
 		
-		Panel pn_activo = new Panel("ACTIVO FIJO");
+		Panel pn_activo = new Panel("IDENTIFICADOR ACTIVO");
 		GridLayout grid_activo = new GridLayout(2, 1);
 		grid_activo.setWidth("100%");
 		grid_activo.setMargin(true);
@@ -148,7 +149,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_eliminar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_eliminar.setStyleName(AitTheme.BTN_DELETE);
 		this.btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
 		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
