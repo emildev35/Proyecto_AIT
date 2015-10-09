@@ -41,7 +41,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_salir = new Button("Salir");
-	private Button btn_guardar = new Button("Guardar");
+	private Button btn_guardar = new Button("Guardar y Añadir Otro");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
@@ -90,7 +90,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		
 		this.txt_codigo_activo.setEnabled(false);
 		this.txt_nombre_activo.setEnabled(false);
-		this.txt_codigo_activo.setWidth("90%");
+		this.txt_codigo_activo.setWidth("75px");
 		this.txt_nombre_activo.setWidth("100%");
 		this.txt_nombre_componente.setWidth("90%");
 		this.txt_caracteristica_componente.setWidth("90%");
@@ -143,7 +143,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_eliminar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_eliminar.setStyleName(AitTheme.BTN_DELETE);
 		this.btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
 		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
@@ -161,6 +161,8 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			if (validate()) {
 				this.componentes.add(new Componente(this.txt_nombre_componente.getValue(), this.txt_caracteristica_componente
 						.getValue()));
+				this.txt_nombre_componente.setValue("");
+				this.txt_caracteristica_componente.setValue("");
 			}
 			buildGrid();
 		}
@@ -188,18 +190,6 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		}
 	}
 	
-	public Component buildMessages() {
-		
-		CssLayout hl_errores = new CssLayout();
-		hl_errores.removeAllComponents();
-		hl_errores.addStyleName("ait-error-bar");
-		for (BarMessage barMessage : this.mensajes) {
-			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
-			lbError.setStyleName(barMessage.getType());
-			hl_errores.addComponent(lbError);
-		}
-		return hl_errores;
-	}
 	
 	public boolean validate() {
 		try {
@@ -219,13 +209,10 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		grid_componente.setWidth("100%");
 		grid_componente.setSelectionMode(SelectionMode.MULTI);
 		
-		// Grid.Column caracteritica_column =
-		// this.grid_componente.getColumn("Nombre");
-		// Grid.Column nombre_column =
-		// this.grid_componente.getColumn("Caracteristica");
-		//
-		// caracteritica_column.setHeaderCaption("Caracteristica").setExpandRatio(2);
-		// nombre_column.setHeaderCaption("Nombre Componente").setExpandRatio(1);
+		try{
+			grid_componente.removeColumn("id");
+		}catch(Exception ex){}
+		grid_componente.setColumnOrder("nombre", "caracteristica");
 		Responsive.makeResponsive(this);
 	}
 	

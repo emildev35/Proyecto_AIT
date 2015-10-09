@@ -7,10 +7,12 @@ import ait.sistemas.proyecto.activos.component.model.Componente;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ComponenteImpl;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
 import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -26,7 +28,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -45,6 +46,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
+	private Button btn_seleccionar = new Button("Seleccionar");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
@@ -90,6 +92,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		this.btn_salir.addClickListener(this);
 		this.btn_guardar.addClickListener(this);
 		this.btn_eliminar.addClickListener(this);
+		this.btn_seleccionar.addClickListener(this);
 		
 		this.txt_codigo_activo.setEnabled(false);
 		this.txt_nombre_activo.setEnabled(false);
@@ -155,6 +158,9 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
 		buttonContent.addComponent(this.btn_salir);
+		this.btn_seleccionar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_seleccionar.setIcon(FontAwesome.SEARCH);
+		buttonContent.addComponent(this.btn_seleccionar);
 		return buttonContent;
 	}
 	
@@ -164,27 +170,24 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			if (validate()) {
 				this.componentes.add(new Componente(this.txt_nombre_componente.getValue(), this.txt_caracteristica_componente
 						.getValue()));
+				this.txt_caracteristica_componente.setValue("");
+				this.txt_nombre_activo.setValue("");
 			} else {
 				this.mensajes.add(new BarMessage("Fomulario", "Debe Llenar los Datos del Componente"));
 			}
 			buildGrid();
 		}
 		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 		if (event.getButton() == this.btn_guardar) {
-			// if (this.componentes.size() > 0) {
 			if (activoimpl.addComponentes(componentes, sessionactivo)) {
 				Notification.show(Messages.SUCCESS_MESSAGE);
 				this.father.tbs_form.setSelectedTab(3);
 			}
 			this.componentes = new ArrayList<Componente>();
 			buildGrid();
-			// }
-			// else{
-			// this.mensajes.add(new BarMessage("Fomulario",
-			// "Debe Tener al Menos un Componente en el Grid"));
-			// }
-		}
+	}
 		if (event.getButton() == this.btn_eliminar) {
 			
 			for (Object elemnt : this.grid_componente.getSelectedRows()) {
@@ -192,7 +195,10 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			}
 			buildGrid();
 		}
-		father.addComponent(buildMessages());
+		if (event.getButton() == btn_seleccionar) {
+			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
+		}
+		father.buildMessages(this.mensajes);
 	}
 	
 	public Component buildMessages() {
@@ -224,18 +230,11 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		grid_componente.setHeightByRows(7);
 		grid_componente.setWidth("100%");
 		grid_componente.setSelectionMode(SelectionMode.MULTI);
-		try{
-		for (Column componente : grid_componente.getColumns()) {
-			System.out.println(componente.getPropertyId());
+		try {
+			grid_componente.removeColumn("id");
+		} catch (Exception ex) {
 		}
-		grid_componente.removeColumn("id");	
-		}catch(IllegalArgumentException ex){}
-		// Grid.Column caracteritica_column =
-		// this.grid_componente.getColumn("Nombre");
-		// Grid.Column nombre_column =
-		// this.grid_componente.getColumn("Caracteristica");
-		// caracteritica_column.setHeaderCaption("Caracteristica").setExpandRatio(2);
-		// nombre_column.setHeaderCaption("Nombre Componente").setExpandRatio(1);
+		grid_componente.setColumnOrder("nombre", "caracteristica");
 		Responsive.makeResponsive(this);
 	}
 	

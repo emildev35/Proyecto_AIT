@@ -45,5 +45,14 @@ public class Documento implements Serializable {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+
+	public short getId() {
+		return id;
+	}
+
+	public void setId(short id) {
+		this.id = id;
+	}
+		
 	
 }

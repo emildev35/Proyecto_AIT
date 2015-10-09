@@ -13,6 +13,7 @@ import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -43,7 +44,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar_caracteristicas = new Button("Guardar Caracteristicas");
-	private Button btn_guardar = new Button("Guardar");
+	private Button btn_guardar = new Button("Guardar y Añadir Otro");
 	private Button btn_salir = new Button("Salir");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
@@ -113,14 +114,14 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		pitmCaracteristicas.addItemProperty("proveedor", new ObjectProperty<ProveedoresModel>(new ProveedoresModel()));
 		pitmCaracteristicas.addItemProperty("marca", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("numero_serie", new ObjectProperty<String>(""));
-		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_garantia", new ObjectProperty<Date>(new Date()));
 		pitmCaracteristicas.addItemProperty("numero_ruat", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_folio_real", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_poliza_seguro", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_folio_real", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("numero_poliza_seguro", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_seguro", new ObjectProperty<Date>(new Date()));
-		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_contrato_mantenimiento", new ObjectProperty<Date>(new Date()));
 		pitmCaracteristicas.addItemProperty("nombre_imagen", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("numero_licencia", new ObjectProperty<String>(""));
@@ -221,21 +222,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	private void clean() {
 		this.binderCaracteristicas.clear();
-		this.txt_numero_serie.setValue("0");
-		this.txt_numero_ruat.setValue("0");
-		this.txt_numero_contrato_mantenimiento.setValue("0");
-		this.txt_numero_folio_real.setValue("0");
-		this.txt_numero_garantia.setValue("0");
-		this.txt_numero_poliza_seguro.setValue("0");
-		this.txt_tiempo_garantia.setValue("0");
-		this.txt_nombre_activo.setValue("");
-		this.txt_numero_serie.setInputPrompt("Ingrese un Numero de Serie");
-		this.txt_numero_ruat.setInputPrompt("Ingrese un Numero de Ruat");
-		this.txt_numero_contrato_mantenimiento.setInputPrompt("Ingrese un Numero de Contrato de Mantenimiento");
-		this.txt_numero_folio_real.setInputPrompt("Ingrese un Numero de Folio Real");
-		this.txt_numero_garantia.setInputPrompt("Ingrese un Numero de Garantia");
-		this.txt_numero_poliza_seguro.setInputPrompt("Ingrese un Numero de Poliza de Seguro");
-		this.txt_tiempo_garantia.setInputPrompt("Ingreso el Tiempo de Garantia");
 	}
 	
 	public void fillActivo() {
@@ -278,6 +264,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
 		this.btn_salir.addClickListener(this);
+		
+
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
@@ -326,8 +314,9 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			}
 		}
 		if (event.getButton() == this.btn_salir) {
-			
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
+	
 	}
 	
 	public void save() {
@@ -369,5 +358,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		fillActivo();
+		father.buildMessages(new ArrayList<BarMessage>());
 	}
 }

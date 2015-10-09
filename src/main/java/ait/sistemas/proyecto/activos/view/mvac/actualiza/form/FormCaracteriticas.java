@@ -9,6 +9,7 @@ import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.model.ProveedoresModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
 import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormImageUpload;
 import ait.sistemas.proyecto.common.component.BarMessage;
@@ -46,6 +47,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	private Button btn_guardar_caracteristicas = new Button("Actualizar Caracteristicas");
 	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_salir = new Button("Salir");
+	private Button btn_seleccion = new Button("Seleccion");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
@@ -147,7 +149,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.father = father;
 		
 		fuildForm();
-buildcbProveedor();
+		buildcbProveedor();
 		fillActivo();
 	}
 	
@@ -219,26 +221,11 @@ buildcbProveedor();
 	
 	private void clean() {
 		this.binderCaracteristicas.clear();
-		this.txt_numero_serie.setValue("0");
-		this.txt_numero_ruat.setValue("0");
-		this.txt_numero_contrato_mantenimiento.setValue("0");
-		this.txt_numero_folio_real.setValue("0");
-		this.txt_numero_garantia.setValue("0");
-		this.txt_numero_poliza_seguro.setValue("0");
-		this.txt_nombre_activo.setValue("");
-		this.txt_numero_serie.setInputPrompt("Ingrese un Numero de Serie");
-		this.txt_numero_ruat.setInputPrompt("Ingrese un Numero de Ruat");
-		this.txt_numero_contrato_mantenimiento.setInputPrompt("Ingrese un Numero de Contrato de Mantenimiento");
-		this.txt_numero_folio_real.setInputPrompt("Ingrese un Numero de Folio Real");
-		this.txt_numero_garantia.setInputPrompt("Ingrese un Numero de Garantia");
-		this.txt_numero_poliza_seguro.setInputPrompt("Ingrese un Numero de Poliza de Seguro");
-		this.txt_tiempo_garantia.setInputPrompt("Ingreso el Tiempo de Garantia");
 	}
 	
 	public void fillActivo() {
 		if (UI.getCurrent().getSession().getAttribute("activo") != null) {
 			this.sessionactivo = (ActivoSession) UI.getCurrent().getSession().getAttribute("activo");
-			Notification.show(sessionactivo.getNombre_activo());
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
 			
@@ -298,6 +285,10 @@ buildcbProveedor();
 		this.btn_guardar.addStyleName(AitTheme.BTN_SUBMIT);
 		this.btn_salir.setIcon(FontAwesome.SAVE);
 		this.btn_guardar.addClickListener(this);
+		buttonContent.addComponent(this.btn_seleccion);
+		this.btn_seleccion.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_seleccion.setIcon(FontAwesome.SEARCH);
+		this.btn_seleccion.addClickListener(this);
 		buttonContent.addComponent(this.btn_salir);
 		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
@@ -338,7 +329,7 @@ buildcbProveedor();
 				save();
 				clean();
 			} else {
-				father.addComponent(buildMessages());
+				father.buildMessages(this.mensajes);
 			}
 		}
 		if (event.getButton() == this.btn_guardar_caracteristicas) {
@@ -346,11 +337,15 @@ buildcbProveedor();
 				save();
 				this.father.tbs_form.setSelectedTab(2);
 			} else {
-				father.addComponent(buildMessages());
+				father.buildMessages(this.mensajes);
 			}
 		}
 		if (event.getButton() == this.btn_salir) {
 			
+			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
+		}
+		if (event.getButton() == this.btn_seleccion) {
+			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
 		}
 	}
 	
@@ -394,5 +389,6 @@ buildcbProveedor();
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		buildcbProveedor();
 		fillActivo();
+		this.father.buildMessages(new ArrayList<BarMessage>());
 	}
 }

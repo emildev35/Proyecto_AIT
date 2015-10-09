@@ -8,6 +8,9 @@ import java.util.List;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.CodeBar;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -24,6 +27,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -44,6 +48,8 @@ public class VEtiquetaR extends VerticalLayout implements View, ClickListener {
 	
 	private CssLayout hl_errores = new CssLayout();
 	
+	private Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	
 	public VEtiquetaR() {
 		List<BarMessage> msg_inf = new ArrayList<BarMessage>();
 		msg_inf.add(new BarMessage("Fomulario", Messages.CODE_BAR_INFO));
@@ -55,11 +61,11 @@ public class VEtiquetaR extends VerticalLayout implements View, ClickListener {
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		buttonContent.addStyleName("ait-buttons");
-		this.btn_imprimir.addStyleName("ait-buttons-btn");
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
+		this.btn_imprimir.addStyleName(AitTheme.BTN_PRINT);
 		this.btn_imprimir.setIcon(FontAwesome.FILE_PDF_O);
 		this.btn_imprimir.addClickListener(this);
-		this.btn_salir.addStyleName("ait-buttons-btn");
+		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.addClickListener(this);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
 		buttonContent.addComponent(this.btn_imprimir);
@@ -72,6 +78,8 @@ public class VEtiquetaR extends VerticalLayout implements View, ClickListener {
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Formulario de Impresion");
 		frmPanel.setContent(this.frmEtiqueta);
@@ -79,6 +87,8 @@ public class VEtiquetaR extends VerticalLayout implements View, ClickListener {
 		formContent.addComponent(frmPanel);
 		
 		Panel frmgrid = new Panel();
+		frmgrid.setStyleName(AitTheme.PANEL_GRID);
+		frmgrid.setIcon(FontAwesome.EDIT);
 		frmgrid.setWidth("100%");
 		frmgrid.setCaption("SELECCIONE LOS ACTIVOS PARA LA IMPRESION DE LAS ETIQUETAS");
 		frmgrid.setContent(this.frmEtiqueta.getGrid());
@@ -92,9 +102,7 @@ public class VEtiquetaR extends VerticalLayout implements View, ClickListener {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
 		nav.addStyleName("ait-content-nav");
-		nav.addComponent(new Label("Activos » "));
-		nav.addComponent(new Label("Inventarios » "));
-		nav.addComponent(new Label("<strong>Generacion de Etiquetas</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

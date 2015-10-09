@@ -8,10 +8,12 @@ import ait.sistemas.proyecto.activos.component.model.Documento;
 import ait.sistemas.proyecto.activos.component.session.ActivoSession;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.DocumentoRespaldoImpl;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
 import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -47,6 +49,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
+	private Button btn_seleccion = new Button("Seleccionar Otro");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
@@ -61,7 +64,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	private final ActivoImpl activoimpl = new ActivoImpl();
-
+	
 	private final DocumentoRespaldoImpl documentoimpl = new DocumentoRespaldoImpl();
 	
 	ActivoSession sessionactivo;
@@ -74,12 +77,12 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		setWidth("100%");
 		setSpacing(true);
 		setMargin(true);
-		this.txt_codigo_activo.setWidth("90%");
+		this.txt_codigo_activo.setWidth("75px");
 		this.txt_nombre_activo.setWidth("90%");
 		this.txt_nombre_documento.setWidth("100%");
 		this.field_ubicacion_documento.setWidth("90%");
 		this.field_ubicacion_documento.setWidth("90%");
-		this.field_ubicacion_documento.setButtonCaption("Subir Documento");
+		this.field_ubicacion_documento.setButtonCaption("Subir Documento al Servidor");
 		
 		pitmDocumentos.addItemProperty("nombre", new ObjectProperty<String>(""));
 		pitmDocumentos.addItemProperty("id", new ObjectProperty<String>(""));
@@ -98,6 +101,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		this.btn_salir.addClickListener(this);
 		this.btn_guardar.addClickListener(this);
 		this.btn_eliminar.addClickListener(this);
+		this.btn_seleccion.addClickListener(this);
 		buildForm();
 		buildGrid();
 		this.father = father;
@@ -137,7 +141,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		
 		pn_documentos.setStyleName(AitTheme.PANEL_FORM);
 		pn_documentos.setIcon(FontAwesome.EDIT);
-
+		
 		pn_activo.setStyleName(AitTheme.PANEL_FORM);
 		pn_activo.setIcon(FontAwesome.EDIT);
 		addComponent(pn_documentos, 0, 1, 2, 2);
@@ -145,6 +149,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	
 	public Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
+		
 		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
 		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addStyleName("ait-buttons");
@@ -155,6 +160,9 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
 		this.btn_guardar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_guardar);
+		this.btn_seleccion.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_seleccion.setIcon(FontAwesome.SEARCH);
+		buttonContent.addComponent(this.btn_seleccion);
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
 		buttonContent.addComponent(this.btn_salir);
@@ -167,6 +175,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 			if (validate()) {
 				if (!this.reciver.getFile().equals("")) {
 					this.documentos.add(new Documento(this.txt_nombre_documento.getValue(), this.reciver.getFile()));
+					this.txt_nombre_documento.setValue("");
 				} else {
 					Notification.show("Debe Presionar el Boton de " + this.field_ubicacion_documento.getButtonCaption());
 				}
@@ -176,6 +185,10 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 			buildGrid();
 		}
 		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		}
+		if (event.getButton() == this.btn_seleccion) {
+			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
 		}
 		if (event.getButton() == this.btn_guardar) {
 			if (validate() && this.documentos.size() > 0) {
@@ -196,6 +209,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 			}
 			buildGrid();
 		}
+		father.buildMessages(this.mensajes);
 	}
 	
 	public Component buildMessages() {
@@ -228,12 +242,20 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		grid_documentos.setHeightByRows(7);
 		grid_documentos.setWidth("100%");
 		grid_documentos.setSelectionMode(SelectionMode.MULTI);
+		try {
+			grid_documentos.removeColumn("id");
+		} catch (Exception ex) {
+		}
+		grid_documentos.setColumnOrder("nombre", "direccion");
+		grid_documentos.getColumn("nombre").setExpandRatio(1);
+		grid_documentos.getColumn("direccion").setExpandRatio(5);
 		Responsive.makeResponsive(this);
 	}
 	
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		fillActivo();
+		
 	}
 	
 	private void fillActivo() {

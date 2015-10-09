@@ -43,6 +43,8 @@ import com.vaadin.ui.VerticalLayout;
 public class VActualizaM extends VerticalLayout implements View, ClickListener, SelectionListener, TextChangeListener {
 	
 	private static final long serialVersionUID = 1L;
+
+	public static final String URL = "/activos/mvac/actualiza/VActualizaM";
 	
 	private FormSeleccion frm_seleccion;
 	private CssLayout hl_errores;

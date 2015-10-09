@@ -86,15 +86,23 @@ public class GridActivos extends Grid {
 		removeColumn("ACT_No_Informe_Baja");
 		removeColumn("ACT_No_Poliza_Seguro");
 		removeColumn("ACT_No_RUAT");
-		removeColumn("ACT_No_Serie");
 		removeColumn("ACT_Tipo_Activo");
 		removeColumn("ACT_Marca");
 		removeColumn("ACT_Organismo_Financiador_ID");
 		removeColumn("ACT_Organismo_Financiador");
 		removeColumn("ACT_No_Acta_Entrega");
 		removeColumn("ACT_Partidas_Presupuestarias");
+
+		removeColumn("ACT_Actualizacion_Gestion_Actual");
+		removeColumn("ACT_Depreciacion_Gestion_Actual");
+		removeColumn("ACT_Fecha_Ultima_Depreciacion");
+		removeColumn("ACT_Fecha_Ultima_Revalorizacion");
+		removeColumn("ACT_Motivo_Baja");
+		removeColumn("ACT_No_Resolucion_Baja");
+		removeColumn("ACT_Vida_Residual");
 		
 		getColumn("ACT_Codigo_Activo").setHeaderCaption("CODIGO").setExpandRatio(1);
+		getColumn("ACT_No_Serie").setHeaderCaption("SERIE").setExpandRatio(2);
 		getColumn("ACT_Nombre_Activo").setHeaderCaption("NOMBRE ACTIVO").setExpandRatio(4);
 		getColumn("ACT_Nombre_Proveedor").setHeaderCaption("NOMBRE PROVEEDOR").setExpandRatio(3);
 		

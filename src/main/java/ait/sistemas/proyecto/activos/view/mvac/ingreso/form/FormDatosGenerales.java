@@ -289,8 +289,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		buildcbOrganismoFinanciador();
 		buildcbInmueble();
 		
-		this.mensajes.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
-		this.father.addComponent(buildMessages());
 	}
 	
 	private void buildtxtIdActivo() {
@@ -397,29 +395,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
-	/**
-	 * Genera todos los labels de los mensajes del Sistema 
-	 * pero sin pasarse de 4
-	 * @return
-	 */
-	public Component buildMessages() {
-		int r = 0;
-		CssLayout hl_errores = new CssLayout();
-		hl_errores.removeAllComponents();
-		hl_errores.addStyleName("ait-error-bar");
-		for (BarMessage barMessage : this.mensajes) {
-			if(r>3){
-				continue;
-			}
-			r++;
-			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
-			lbError.setStyleName(barMessage.getType());
-			lbError.setContentMode(ContentMode.HTML);
-			hl_errores.addComponent(lbError);
-		}
-		this.mensajes = new ArrayList<BarMessage>();
-		return hl_errores;
-	}
+	
 	
 	public boolean validate() {
 		try {
@@ -553,7 +529,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				Notification.show(Messages.SUCCESS_MESSAGE);
 				
 			} else {
-				father.addComponent(buildMessages());
+				father.buildMessages(this.mensajes);
 			}
 		}
 		if (event.getButton() == this.btn_guardar_datos_generales) {
@@ -562,7 +538,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				this.father.tbs_form.setSelectedTab(1);
 				
 			} else {
-				father.addComponent(buildMessages());
+				father.buildMessages(this.mensajes);
 			}
 		}
 		if (event.getButton() == this.btn_salir) {
@@ -625,10 +601,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			
 			if (tipo_cambio.size() == 0) {
 				this.mensajes.add(new BarMessage("TIPO CAMBIO", Messages.EMPTY_TIPO_CAMBIO));
-				father.addComponent(buildMessages());
 				this.txt_tipo_cambio_dolar.setEnabled(true);
 				this.txt_tipo_cambio_ufv.setEnabled(true);
 			} else {
+				this.mensajes = new ArrayList<BarMessage>();
 				this.txt_tipo_cambio_dolar.setEnabled(false);
 				this.txt_tipo_cambio_ufv.setEnabled(false);
 				if (tipo_cambio.get(0).getMoneda().equals("SUS")) {
@@ -639,6 +615,8 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 					this.txt_tipo_cambio_dolar.setValue(tipo_cambio.get(1).getTipo_cambio().toString().replace(".", ","));
 				}
 			}
+			this.father.buildMessages(this.mensajes);
 		}
+		
 	}
 }

@@ -25,10 +25,12 @@ import ait.sistemas.proyecto.activos.data.service.Impl.OrganismoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.TiposactImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.UbicacionImpl;
+import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaM;
 import ait.sistemas.proyecto.activos.view.mvac.actualiza.VActualizaTabM;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -43,7 +45,6 @@ import com.vaadin.data.validator.DateRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -52,7 +53,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
@@ -66,6 +66,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	private Button btn_guardar_datos_generales = new Button("Actualizar Datos Generales");
 	private Button btn_guardar = new Button("Actualizar");
 	private Button btn_salir = new Button("Salir");
+	private Button btn_seleccion = new Button("Seleccion");
 	
 	public ComboBox cb_tipo_activo = new ComboBox("Tipo de Activo");
 	public TextField txt_codigo_activo = new TextField("Codigo");
@@ -82,7 +83,6 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	public ComboBox cb_ubicacion_fisica = new ComboBox("Ubicacion Fisica");
 	public ComboBox cb_inmueble = new ComboBox("Inmueble");
 	public DateField dtf_fecha_comodato = new DateField("Fecha ComoDato");
-
 	
 	final PropertysetItem pitmDatosGenerales = new PropertysetItem();
 	private FieldGroup binderDatosGeneraler;
@@ -113,7 +113,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.father = father;
 		
 		this.cb_tipo_activo.setWidth("100%");
-		this.txt_codigo_activo.setWidth("100%");
+		this.txt_codigo_activo.setWidth("75px");
 		this.txt_nombre_activo.setWidth("100%");
 		this.dtf_fecha_compra.setWidth("100%");
 		this.dtf_fecha_incorporacion.setWidth("100%");
@@ -348,6 +348,10 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		this.btn_guardar.addStyleName(AitTheme.BTN_SUBMIT);
 		this.btn_guardar.setIcon(FontAwesome.EDIT);
 		this.btn_guardar.addClickListener(this);
+		buttonContent.addComponent(this.btn_seleccion);
+		this.btn_seleccion.addStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_seleccion.setIcon(FontAwesome.SEARCH);
+		this.btn_seleccion.addClickListener(this);
 		buttonContent.addComponent(this.btn_salir);
 		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
@@ -356,27 +360,16 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		return buttonContent;
 	}
 	
-	public Component buildMessages() {
-		CssLayout hl_errores = new CssLayout();
-		hl_errores.removeAllComponents();
-		hl_errores.addStyleName("ait-error-bar");
-		for (BarMessage barMessage : this.mensajes) {
-			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
-			lbError.setStyleName(barMessage.getType());
-			lbError.setContentMode(ContentMode.HTML);
-			hl_errores.addComponent(lbError);
-		}
-		this.mensajes = new ArrayList<BarMessage>();
-		return hl_errores;
-	}
-	
 	public boolean validate() {
 		try {
 			this.binderDatosGeneraler.commit();
-//			if (dtf_fecha_incorporacion.getValue().getTime() > dtf_fecha_compra.getValue().getTime()) {
-//				this.mensajes.add(new BarMessage(dtf_fecha_incorporacion.getCaption(), Messages.BAD_FECHA_INCORPORACION));
-//				return false;
-//			}
+			// if (dtf_fecha_incorporacion.getValue().getTime() >
+			// dtf_fecha_compra.getValue().getTime()) {
+			// this.mensajes.add(new
+			// BarMessage(dtf_fecha_incorporacion.getCaption(),
+			// Messages.BAD_FECHA_INCORPORACION));
+			// return false;
+			// }
 			return true;
 			
 		} catch (CommitException cme) {
@@ -499,7 +492,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				Notification.show(Messages.SUCCESS_MESSAGE);
 				
 			} else {
-				father.addComponent(buildMessages());
+				
 			}
 		}
 		if (event.getButton() == this.btn_guardar_datos_generales) {
@@ -508,12 +501,16 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				this.father.tbs_form.setSelectedTab(1);
 				
 			} else {
-				father.addComponent(buildMessages());
 			}
 		}
 		if (event.getButton() == this.btn_salir) {
-			
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
+		if (event.getButton() == this.btn_seleccion) {
+			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
+		}
+		father.buildMessages(this.mensajes);
+		this.mensajes = new ArrayList<BarMessage>();
 	}
 	
 	public void update() {
@@ -526,7 +523,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 		datos_generales.setFecha_compra(new java.sql.Date(this.dtf_fecha_compra.getValue().getTime()));
 		datos_generales.setFecha_incorporacion(new java.sql.Date(this.dtf_fecha_incorporacion.getValue().getTime()));
 		datos_generales.setValor(new BigDecimal(txt_valor_compra.getValue().replace(",", ".")).setScale(3, RoundingMode.UP));
-		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue().replace(",",".")));
+		datos_generales.setTipo_cambio_ufv(new BigDecimal(txt_tipo_cambio_ufv.getValue().replace(",", ".")));
 		datos_generales.setId_grupo_contable(((GruposContablesModel) cb_grupo_contable.getValue()).getGRC_Grupo_Contable());
 		datos_generales.setId_auxiliar_contalbe(((AuxiliaresContablesModel) cb_auxiliar_contable.getValue())
 				.getAUC_Auxiliar_Contable());
@@ -554,6 +551,7 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
+		this.mensajes = new ArrayList<BarMessage>();
 		if (this.cb_grupo_contable.getValue() != null && event.getProperty().getValue() == this.cb_grupo_contable.getValue()) {
 			GruposContablesModel grupo_contable = (GruposContablesModel) this.cb_grupo_contable.getValue();
 			buildcbAxiliaresContables(grupo_contable.getGRC_Grupo_Contable());
@@ -569,9 +567,11 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			List<TipoCambio> tipo_cambio = this.tipocambioimpl.getTipoCambio(new java.sql.Date(this.dtf_fecha_incorporacion
 					.getValue().getTime()));
 			
-			if (tipo_cambio.size() == 0) {
+			if (tipo_cambio.size() < 2) {
+				
 				this.mensajes.add(new BarMessage("TIPO CAMBIO", Messages.EMPTY_TIPO_CAMBIO));
-				father.addComponent(buildMessages());
+				father.buildMessages(this.mensajes);
+				
 				this.txt_tipo_cambio_ufv.setEnabled(true);
 			} else {
 				this.txt_tipo_cambio_ufv.setEnabled(false);
@@ -580,6 +580,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 				} else {
 					this.txt_tipo_cambio_ufv.setValue(tipo_cambio.get(0).getTipo_cambio().toString().replace(".", ","));
 				}
+				
+				father.buildMessages(new ArrayList<BarMessage>());
+				this.mensajes = new ArrayList<BarMessage>();
 			}
 		}
 	}
@@ -623,9 +626,9 @@ public class FormDatosGenerales extends GridLayout implements ClickListener, Val
 			this.btn_guardar.setEnabled(true);
 			this.btn_guardar_datos_generales.setEnabled(true);
 			this.btn_guardar.setEnabled(true);
-			} else {	
+		} else {
 			this.mensajes.add(new BarMessage("Formulario", Messages.ACTIVO_NO_ENCONTRADO));
-			this.father.addComponent(buildMessages());
+			this.mensajes = new ArrayList<BarMessage>();
 			this.btn_guardar.setEnabled(false);
 			this.btn_guardar_datos_generales.setEnabled(false);
 			this.btn_guardar.setEnabled(false);
