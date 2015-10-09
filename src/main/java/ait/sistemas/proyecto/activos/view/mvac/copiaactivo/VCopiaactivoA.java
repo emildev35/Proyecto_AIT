@@ -83,15 +83,17 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 	private Component buildFormContent() {
 		
 		VerticalLayout formContent = new VerticalLayout();
+		formContent.addComponent(frm_copia);
 		formContent.setSpacing(true);
 		formContent.setMargin(true);
-		formContent.addComponent(frm_copia);
+		
 		Panel gridPanel = new Panel("Seleccione el Activo del cual desea obtener copias");
 //		gridPanel.setWidth("100%");
 		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setStyleName(AitTheme.PANEL_GRID);
 		gridPanel.setContent(this.frm_copia.getgrid_solicitud());
 		formContent.addComponent(gridPanel);
+		
 		Panel Panelcopia = new Panel("Copias a Realizar del Activo");
 		Panelcopia.setWidth("17%");
 		Panelcopia.setIcon(FontAwesome.SAVE);

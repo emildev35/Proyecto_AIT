@@ -107,13 +107,12 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener {
 	
 	private void buildContent() {
 		
-//		Panel pn_solicitud = new Panel("Copias a Realiar del Activo");
 		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
 		pn_activos.setIcon(FontAwesome.SAVE);
 		pn_activos.setStyleName(AitTheme.PANEL_FORM);
 		GridLayout gridl_activos = new GridLayout(2, 1);
 		gridl_activos.setSizeFull();
-		gridl_activos.setMargin(true);
+//		gridl_activos.setMargin(true);
 		gridl_activos.addComponent(this.cb_grupo_contable, 0, 0);
 		gridl_activos.addComponent(this.cb_auxiliar_contable, 1, 0);
 		pn_activos.setContent(gridl_activos);
