@@ -19,10 +19,10 @@
 	.ait-btn-submit {
 		padding: 4px;
 		height: 95%;
-
 		background-color: rgb(92, 184, 92);
 		border: 2px solid rgb(76, 174, 76);
 		color: white;
+		margin-right: 7%;
 	}
 	
 	.ait-btn-exit {
@@ -31,6 +31,8 @@
 		background-color: rgb(255, 108, 96);
 		border-color: rgb(255, 108, 96);
 		color: white;
+		float: right;
+		margin-right: 18%;
 	}
 	.ait-btn-print{
 		padding: 4px;
@@ -38,11 +40,13 @@
 	  	background-color: rgb(241, 197, 0);
 	    border-color: rgb(241, 197, 0);
 	    color: white;
+		margin-right: 7%;
 	}
 	.ait-btn-word {
 		padding: 4px;
 		height: 95%;
 
+		margin-right: 10%;
 		background-color: #5e67ff;
 		border: 2px solid #5e67ff;
 		color: white;
@@ -54,6 +58,7 @@
 		background-color: #00c033;
 		border-color: #00c033;
 		color: white;
+		margin-right: 7%;
 	}
 	.ait-btn-pdf{
 		padding: 4px;
@@ -61,6 +66,15 @@
 	  	background-color: rgb(255, 108, 96);
 	    border-color: rgb(255, 108, 96);
 	    color: white;
+		margin-right: 7%;
+	}
+	.ait-btn-eliminar{
+		padding: 4px;
+		height: 95%;
+	  	background-color: rgb(255, 108, 96);
+	    border-color: rgb(255, 108, 96);
+	    color: white;
+		margin-right: 7%;
 	}
 	
 }

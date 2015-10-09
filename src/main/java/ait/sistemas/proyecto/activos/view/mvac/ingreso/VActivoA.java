@@ -37,7 +37,7 @@ public class VActivoA extends VerticalLayout implements View{
 	
 	private Component buildFormContent() {
 		tbs_form = new TabSheet();
-		
+		tbs_form.setStyleName("framed centered-tabs");
 		VerticalLayout vl_generales = new VerticalLayout();
 		vl_generales.addComponents(this.frm_datos_generales, this.frm_datos_generales.buildButtonBar());
 		tbs_form.addTab(vl_generales, "Datos Generales");

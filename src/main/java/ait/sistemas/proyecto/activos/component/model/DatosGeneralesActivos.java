@@ -53,30 +53,6 @@ public class DatosGeneralesActivos {
 	public DatosGeneralesActivos() {
 	}
 
-
-	public DatosGeneralesActivos(long id_activo, short id_dependencia, String nombre_activo, short tipo_activo,
-			Date fecha_compra, Date fecha_incorporacion, BigDecimal valor, BigDecimal tipo_cambio_ufv,
-			BigDecimal tipo_cambio_dolar, String id_grupo_contable, String id_auxiliar_contalbe, int vida_util,
-			int id_fuente_financiamiento, short id_organimismo_financiador, int id_ubicacion_fisica, Date fecha_como_dato) {
-		this.id_activo = id_activo;
-		this.id_dependencia = id_dependencia;
-		this.nombre_activo = nombre_activo;
-		this.tipo_activo = tipo_activo;
-		this.fecha_compra = fecha_compra;
-		this.fecha_incorporacion = fecha_incorporacion;
-		this.valor = valor;
-		this.tipo_cambio_ufv = tipo_cambio_ufv;
-		this.tipo_cambio_dolar = tipo_cambio_dolar;
-		this.id_grupo_contable = id_grupo_contable;
-		this.id_auxiliar_contalbe = id_auxiliar_contalbe;
-		this.vida_util = vida_util;
-		this.id_fuente_financiamiento = id_fuente_financiamiento;
-		this.id_organimismo_financiador = id_organimismo_financiador;
-		this.id_ubicacion_fisica = id_ubicacion_fisica;
-		this.fecha_como_dato = fecha_como_dato;
-	}
-
-
 	public long getId_activo() {
 		return id_activo;
 	}
@@ -122,6 +98,7 @@ public class DatosGeneralesActivos {
 	}
 
 	public void setValor(BigDecimal valor) {
+
 		this.valor = valor;
 	}
 

@@ -45,7 +45,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
-	public TextField txt_codigo_activo = new TextField("Codigo Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public TextField txt_nombre_componente = new TextField("Nombre Componente");
 	public TextField txt_caracteristica_componente = new TextField("Caracterisitca Componente");
@@ -104,7 +104,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		setColumnExpandRatio(0, 1);
 		setColumnExpandRatio(1, 2);
 		
-		Panel pn_activo = new Panel("ACTIVO FIJO");
+		Panel pn_activo = new Panel("IDENTIFICACION DEL ACTIVO");
 		GridLayout grid_activo = new GridLayout(2, 1);
 		grid_activo.setWidth("100%");
 		grid_activo.setMargin(true);

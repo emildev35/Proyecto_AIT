@@ -26,6 +26,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -45,7 +46,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
-	public TextField txt_codigo_activo = new TextField("Codigo Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public TextField txt_nombre_componente = new TextField("Nombre Componente");
 	public TextField txt_caracteristica_componente = new TextField("Caracterisitca Componente");
@@ -106,7 +107,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		setColumnExpandRatio(0, 1);
 		setColumnExpandRatio(1, 2);
 		
-		Panel pn_activo = new Panel("ACTIVO FIJO");
+		Panel pn_activo = new Panel("IDETIFICADOR ACTIVO");
 		GridLayout grid_activo = new GridLayout(2, 1);
 		grid_activo.setWidth("100%");
 		grid_activo.setMargin(true);
@@ -145,7 +146,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_eliminar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_eliminar.setStyleName(AitTheme.BTN_DELETE);
 		this.btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
 		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
@@ -223,12 +224,16 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		grid_componente.setHeightByRows(7);
 		grid_componente.setWidth("100%");
 		grid_componente.setSelectionMode(SelectionMode.MULTI);
-		
+		try{
+		for (Column componente : grid_componente.getColumns()) {
+			System.out.println(componente.getPropertyId());
+		}
+		grid_componente.removeColumn("id");	
+		}catch(IllegalArgumentException ex){}
 		// Grid.Column caracteritica_column =
 		// this.grid_componente.getColumn("Nombre");
 		// Grid.Column nombre_column =
 		// this.grid_componente.getColumn("Caracteristica");
-		//
 		// caracteritica_column.setHeaderCaption("Caracteristica").setExpandRatio(2);
 		// nombre_column.setHeaderCaption("Nombre Componente").setExpandRatio(1);
 		Responsive.makeResponsive(this);

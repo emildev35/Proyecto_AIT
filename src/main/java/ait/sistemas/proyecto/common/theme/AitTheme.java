@@ -13,7 +13,10 @@ public class AitTheme {
 	public static final String BTN_PRINT = "ait-btn-print";
 	public static final String BTN_WORD = "ait-btn-word";
 	public static final String BTN_PDF = "ait-btn-pdf";
+	public static final String BTN_DELETE = "ait-btn-eliminar";
 	public static final String BTN_EXCEL = "ait-btn-excel";
 	public static final String BUTTONS_BAR = "ait-buttons";
+	public static final String TAB_SHEET = "ait-tsheet";
+	public static final String TF_NUMBER = "ait-tf-number";
 	
 }

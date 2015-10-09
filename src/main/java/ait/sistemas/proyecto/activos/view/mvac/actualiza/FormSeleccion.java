@@ -69,7 +69,7 @@ public class FormSeleccion extends GridLayout implements ValueChangeListener {
 		binder_actActivo.bind(this.cb_grupoContable, "grupo");
 		binder_actActivo.bind(this.cb_auxiliarContable, "auxiliar");
 		
-		txt_codigoActivo.setWidth("100%");
+		txt_codigoActivo.setWidth("75px");
 		cb_grupoContable.setWidth("100%");
 		cb_auxiliarContable.setWidth("100%");
 		
@@ -171,7 +171,10 @@ public class FormSeleccion extends GridLayout implements ValueChangeListener {
 			fillcbAuxiliarContable((GruposContablesModel) cb_grupoContable.getValue());
 		}
 		if (event.getProperty() == cb_auxiliarContable && cb_auxiliarContable.getValue() != null) {
-			this.grid_actActivo.builGrid(((AuxiliaresContablesModel) cb_auxiliarContable.getValue()).getAUC_Auxiliar_Contable());
+			this.grid_actActivo.builGrid(
+					((AuxiliaresContablesModel) cb_auxiliarContable.getValue()).getAUC_Auxiliar_Contable(),
+					((AuxiliaresContablesModel) cb_auxiliarContable.getValue()).getAUC_Grupo_Contable_ID()
+					);
 		}
 	}
 	

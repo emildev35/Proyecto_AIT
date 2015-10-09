@@ -46,7 +46,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	private Button btn_guardar = new Button("Guardar");
 	private Button btn_salir = new Button("Salir");
 	
-	public TextField txt_codigo_activo = new TextField("Codigo Activo");
+	public TextField txt_codigo_activo = new TextField("Codigo");
 	public TextField txt_nombre_activo = new TextField("Nombre Activo");
 	public ComboBox cb_proveedor = new ComboBox("Proveedor");
 	public TextField txt_marca = new TextField("Marca");
@@ -112,7 +112,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		pitmCaracteristicas.addItemProperty("codigo", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("proveedor", new ObjectProperty<ProveedoresModel>(new ProveedoresModel()));
 		pitmCaracteristicas.addItemProperty("marca", new ObjectProperty<String>(""));
-		pitmCaracteristicas.addItemProperty("numero_serie", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_serie", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<Integer>(0));
 		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<Integer>(0));
 		pitmCaracteristicas.addItemProperty("vencimiento_garantia", new ObjectProperty<Date>(new Date()));
@@ -164,7 +164,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		grid_activo_fijo.addComponent(this.txt_codigo_activo, 0, 0);
 		grid_activo_fijo.addComponent(this.txt_nombre_activo, 1, 0, 5, 0);
 		
-		final Panel pn_activo = new Panel("ACTIVO FIJO");
+		final Panel pn_activo = new Panel("IDENTIFICACION DEL ACTIVO");
 		grid_activo_fijo.setSizeFull();
 		grid_activo_fijo.setMargin(true);
 		pn_activo.setContent(grid_activo_fijo);
