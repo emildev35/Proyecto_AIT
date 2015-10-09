@@ -20,7 +20,6 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -64,34 +63,30 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 	}
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		GridLayout btn_grid = new GridLayout(2, 1);
-		btn_grid.setResponsive(true);
-		btn_grid.setSizeFull();
 		this.btn_copias.setStyleName(AitTheme.BTN_SUBMIT);
-		btn_grid.addComponent(this.btn_copias);
-		btn_grid.setComponentAlignment(btn_copias, Alignment.TOP_CENTER);
+		buttonContent.addComponent(this.btn_copias);
 		btn_copias.setIcon(FontAwesome.SAVE);
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
-		btn_grid.addComponent(this.btn_salir);
+		buttonContent.addComponent(this.btn_salir);
 		btn_salir.setIcon(FontAwesome.UNDO);
-		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
-		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 	
 	private Component buildFormContent() {
 		
 		VerticalLayout formContent = new VerticalLayout();
+		formContent.addComponent(frm_copia);
 		formContent.setSpacing(true);
 		formContent.setMargin(true);
-		formContent.addComponent(frm_copia);
+		
 		Panel gridPanel = new Panel("Seleccione el Activo del cual desea obtener copias");
 //		gridPanel.setWidth("100%");
 		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setStyleName(AitTheme.PANEL_GRID);
 		gridPanel.setContent(this.frm_copia.getgrid_solicitud());
 		formContent.addComponent(gridPanel);
+		
 		Panel Panelcopia = new Panel("Copias a Realizar del Activo");
 		Panelcopia.setWidth("17%");
 		Panelcopia.setIcon(FontAwesome.SAVE);

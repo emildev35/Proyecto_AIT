@@ -28,18 +28,16 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -74,19 +72,13 @@ public class VActaEntregaR extends VerticalLayout implements View, ClickListener
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		GridLayout btn_grid = new GridLayout(2, 1);
-		btn_grid.setResponsive(true);
-		btn_grid.setSizeFull();
 		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
-		btn_grid.addComponent(this.btn_imprimir);
-		btn_grid.setComponentAlignment(btn_imprimir, Alignment.TOP_CENTER);
+		buttonContent.addComponent(this.btn_imprimir);
 		btn_imprimir.setIcon(FontAwesome.PRINT);
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
-		btn_grid.addComponent(this.btn_salir);
+		buttonContent.addComponent(this.btn_salir);
 		btn_salir.setIcon(FontAwesome.UNDO);
-		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
-		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 

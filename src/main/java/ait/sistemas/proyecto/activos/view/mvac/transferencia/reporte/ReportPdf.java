@@ -11,7 +11,7 @@ import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
 
 public class ReportPdf {
 	// Page configuration
-	private static final PDRectangle PAGE_SIZE = PDRectangle.LEGAL;
+	private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
 	private static final float MARGIN = 60;
 	private static final boolean IS_LANDSCAPE = true;
 
@@ -53,7 +53,7 @@ public class ReportPdf {
 //	private static final int HEADER_SIZE = 3;
 	public static String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Acta-Movimiento" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
-	public boolean getPdf(Acta data, long no_documento, short tipo_movimiento) throws IOException {
+	public boolean getPdf(Acta data) throws IOException {
 
 		return new PdfActaGenerator().generatePDF(build(data), SAVE_PATH);
 

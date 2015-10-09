@@ -19,11 +19,11 @@ public class ReportPdf {
 	 // Page configuration
     private static final PDRectangle PAGE_SIZE = PDRectangle.LETTER;
     private static final float MARGIN = 60;
-    private static final boolean IS_LANDSCAPE = false;
+    private static final boolean IS_LANDSCAPE = true;
 
     // Font for textFont
     private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-    private static final float FONT_SIZE = 10;
+    private static final float FONT_SIZE = 9;
     
     /**
      * Font for footer report
@@ -66,12 +66,12 @@ public class ReportPdf {
 
     private static Table createContent(String[][] data , String strDependencia) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("Codigo", 55));	
-        columns.add(new Column("Apellidos y Nombre", 150));
+        columns.add(new Column("Codigo", 45));	
+        columns.add(new Column("Apellidos y Nombre", 215));
         columns.add(new Column("Dependencia", 65));
-        columns.add(new Column("Unidad Organizacional", 110));
-        columns.add(new Column("Telefono", 55));
-        columns.add(new Column("Interno", 55));
+        columns.add(new Column("Unidad Organizacional", 250));
+        columns.add(new Column("Telefono", 65));
+        columns.add(new Column("Interno", 65));
         
  
         String[][] content = data;
