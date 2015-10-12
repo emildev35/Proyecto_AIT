@@ -51,7 +51,6 @@ public class Detalle implements Serializable{
 	private Date fecha_registro;
 	private String nombre_activo;
 	private String motivo_baja;
-	
 	private int nro_seguro;
 	private Date vto_seguro;
 	private int nro_garantia;

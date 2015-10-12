@@ -8,13 +8,17 @@ import ait.sistemas.proyecto.activos.data.model.Autorizacion;
 import ait.sistemas.proyecto.activos.data.service.Impl.AutorizacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -45,6 +49,8 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 	
 	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	private final AutorizacionImpl autorizacionimpl = new AutorizacionImpl();
+	
+	private Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VAutorizacionA() {
 		this.btn_aprobar.addClickListener(this);
@@ -79,9 +85,13 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 		formContent.setMargin(true);
 		
 		Panel pnfrm_documentos = new Panel("Documento");
+		pnfrm_documentos.setStyleName(AitTheme.PANEL_FORM);
 		Panel pngrid_documentos = new Panel("Documentos Pendientes de Autorizacion");
+		pngrid_documentos.setStyleName(AitTheme.PANEL_GRID);
 		Panel pnfrm_autorizacion = new Panel("Autorizacion / Rechazo");
+		pnfrm_autorizacion.setStyleName(AitTheme.PANEL_FORM);
 		Panel pngrid_detalle = new Panel("Detalle de Activos");
+		pngrid_detalle.setStyleName(AitTheme.PANEL_GRID);
 		
 		pnfrm_documentos.setWidth("100%");
 		pngrid_documentos.setWidth("100%");
@@ -104,12 +114,9 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
-		navPanel.addStyleName("ait-content-nav");
+		navPanel.addStyleName(AitTheme.NAV_BAR);
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Movimientos de Activos Fijos>>"));
-		nav.addComponent(new Label("Autorizaciones>>"));
-		
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}
@@ -174,8 +181,6 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 		}
 		if (event.getButton() == this.btn_salir) {
 			frm_autorizacion.validate();
-			// this.frm_solicitud.updateId();
-			
 		}
 	}
 	

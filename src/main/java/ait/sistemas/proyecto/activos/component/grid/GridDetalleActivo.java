@@ -33,6 +33,8 @@ public class GridDetalleActivo extends Grid {
 		removeColumn("vto_seguro");
 		removeColumn("nro_garantia");
 		removeColumn("vto_garantia");
+		removeColumn("nueva_vida_util");
+		removeColumn("nuevo_valor");
 		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo");
 		getColumn("nombre_activo").setExpandRatio(5).setHeaderCaption("Nombre Activo");
 		Responsive.makeResponsive(this);
@@ -54,6 +56,8 @@ public class GridDetalleActivo extends Grid {
 		removeColumn("vto_seguro");
 		removeColumn("nro_garantia");
 		removeColumn("vto_garantia");
+		removeColumn("nueva_vida_util");
+		removeColumn("nuevo_valor");
 		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo");
 		getColumn("nombre_activo").setExpandRatio(5).setHeaderCaption("Nombre Activo");
 		Responsive.makeResponsive(this);

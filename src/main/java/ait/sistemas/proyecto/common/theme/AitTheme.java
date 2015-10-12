@@ -18,5 +18,6 @@ public class AitTheme {
 	public static final String BUTTONS_BAR = "ait-buttons";
 	public static final String TAB_SHEET = "ait-tsheet";
 	public static final String TF_NUMBER = "ait-tf-number";
+	public static final String NAV_BAR = "ait-content-nav";
 	
 }
