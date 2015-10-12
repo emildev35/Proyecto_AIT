@@ -5,9 +5,13 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.service.Impl.TipoAutorizacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -20,6 +24,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class VAutorizadoA extends VerticalLayout implements View, ClickListener {
@@ -33,6 +38,8 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 	private GridAutorizado grid_autorizacion = new GridAutorizado();
 	private final TipoAutorizacionImpl tipo_autorizacionimpl = new TipoAutorizacionImpl();
 	
+	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	
 	public VAutorizadoA() {
 		this.btn_agregar.addClickListener(this);
 		this.btn_limpiar.addClickListener(this);
@@ -45,11 +52,15 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
+		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_limpiar.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		
+		this.btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_limpiar.setIcon(FontAwesome.UNDO);
 		buttonContent.addComponent(this.btn_limpiar);
+
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		return buttonContent;
 	}
 	
@@ -58,14 +69,18 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);
 		frmPanel.setWidth("100%");
-		frmPanel.setCaption("Formulario Ciudad");
+		frmPanel.setCaption("SELECCION DE PERSONAL Y NIVEL DE AUTORIZACION");
 		frmPanel.setContent(this.frm_autorizacion);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
 		gridPanel.setWidth("100%");
-		gridPanel.setCaption("Grid Ciudad");
+		gridPanel.setCaption("AUTORIZACIONES");
+		gridPanel.setCaption("AUTORIZACIONES");
 		gridPanel.setContent(this.grid_autorizacion);
 		formContent.setMargin(true);
 		formContent.addComponent(frmPanel);
@@ -78,10 +93,7 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		Panel navPanel = new Panel();
 		navPanel.addStyleName("ait-content-nav");
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Recursos Humanos>>"));
-		nav.addComponent(new Label("Ciudad>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

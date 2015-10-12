@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -27,9 +28,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
@@ -41,7 +40,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_salir = new Button("Salir");
-	private Button btn_guardar = new Button("Guardar y Añadir Otro");
+	private Button btn_guardar = new Button("Guardar Componentes");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
@@ -167,16 +166,19 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 			buildGrid();
 		}
 		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getSession().setAttribute("activo", null);
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 		if (event.getButton() == this.btn_guardar) {
-//			if (validate() && this.componentes.size() > 0) {
-				if (activoimpl.addComponentes(componentes, sessionactivo)) {
-					Notification.show(Messages.SUCCESS_MESSAGE);
-					this.binderCaracteristicas.clear();
-					father.tbs_form.setTabIndex(3);
-//	} else {
-//					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-//				}
+			// if (validate() && this.componentes.size() > 0) {
+			if (activoimpl.addComponentes(componentes, sessionactivo)) {
+				Notification.show(Messages.SUCCESS_MESSAGE);
+				this.binderCaracteristicas.clear();
+				father.tbs_form.setSelectedTab(3);
+				// } else {
+				// Notification.show(Messages.NOT_SUCCESS_MESSAGE,
+				// Type.ERROR_MESSAGE);
+				// }
 				this.componentes = new ArrayList<Componente>();
 				buildGrid();
 			}
@@ -190,13 +192,12 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		}
 	}
 	
-	
 	public boolean validate() {
 		try {
 			this.binderCaracteristicas.commit();
 			return true;
 		} catch (CommitException cme) {
-			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+			this.mensajes.add(new BarMessage("Formulario", cme.getMessage()));
 			return false;
 		}
 	}
@@ -209,9 +210,10 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		grid_componente.setWidth("100%");
 		grid_componente.setSelectionMode(SelectionMode.MULTI);
 		
-		try{
+		try {
 			grid_componente.removeColumn("id");
-		}catch(Exception ex){}
+		} catch (Exception ex) {
+		}
 		grid_componente.setColumnOrder("nombre", "caracteristica");
 		Responsive.makeResponsive(this);
 	}

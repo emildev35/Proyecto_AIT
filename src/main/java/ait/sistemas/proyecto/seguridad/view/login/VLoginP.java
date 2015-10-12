@@ -3,6 +3,8 @@ package ait.sistemas.proyecto.seguridad.view.login;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.HomeView;
@@ -112,6 +114,9 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 						} else {
 							Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 						}
+					} catch (NoResultException e) {
+						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
+						e.printStackTrace();
 					} catch (SQLException e) {
 						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 						e.printStackTrace();
@@ -126,6 +131,9 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 						} else {
 							Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 						}
+					} catch (NoResultException e) {
+						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
+						e.printStackTrace();
 					} catch (SQLException e) {
 						Notification.show(Messages.LOGIN_ERROR, Type.ERROR_MESSAGE);
 						e.printStackTrace();

@@ -117,7 +117,7 @@ public class GridActivos extends Grid {
 		bean_activos.addAll(activoimpl.getactivosbydependencia(dependencia));
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(7);
+		setHeightByRows(10);
 		setSelectionMode(SelectionMode.MULTI);
 		Responsive.makeResponsive(this);
 	}
@@ -129,11 +129,9 @@ public class GridActivos extends Grid {
 	public void buildGrid(short dependencia, short unidad_organizacional) {
 		bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class);
 		bean_activos.addAll(activoimpl.getactivos(unidad_organizacional));
-		
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
-		
+		setHeightByRows(10);
 		Responsive.makeResponsive(this);
 	}
 	/**
@@ -146,7 +144,7 @@ public class GridActivos extends Grid {
 		
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
+		setHeightByRows(10);
 		
 		Responsive.makeResponsive(this);
 	}

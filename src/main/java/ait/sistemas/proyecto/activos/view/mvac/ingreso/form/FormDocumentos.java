@@ -11,6 +11,7 @@ import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -28,7 +29,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
@@ -43,7 +43,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_salir = new Button("Salir");
-	private Button btn_guardar = new Button("Guardar y Añadir Otro");
+	private Button btn_guardar = new Button("Guardar Documentos");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
@@ -176,12 +176,15 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 			buildGrid();
 		}
 		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getSession().setAttribute("activo", null);
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 		if (event.getButton() == this.btn_guardar) {
 			if (activoimpl.addDocumentos(documentos, sessionactivo)) {
-				Notification.show(Messages.SUCCESS_MESSAGE);
 				this.bindeDocumentos.clear();
 				this.mensajes.add(new BarMessage("Formulario", "Operacion Exitosa"));
+				UI.getCurrent().getSession().setAttribute("activo", null);
+				this.father.tbs_form.setSelectedTab(0);
 			} else {
 				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}

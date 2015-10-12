@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.SqlResultSetMapping;
 
 @SqlResultSetMapping(name = "activo-simple", entities = { @EntityResult(entityClass = ActivoGrid.class, fields = {
-		@FieldResult(name = "id_activo", column = "codigo_activo"),
+		@FieldResult(name = "serie", column = "serie_activo") ,
+		@FieldResult(name = "id_activo", column = "codigo_activo"), 
 		@FieldResult(name = "nombre", column = "nombre_activo") }) })
 @Entity
 public class ActivoGrid {
@@ -15,6 +16,8 @@ public class ActivoGrid {
 	private long id_activo;
 	
 	private String nombre;
+	
+	private String serie;
 	
 	public ActivoGrid() {
 	}
@@ -38,6 +41,14 @@ public class ActivoGrid {
 	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
+	
+	public String getSerie() {
+		return serie;
 	}
 	
 }

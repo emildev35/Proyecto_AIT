@@ -11,6 +11,7 @@ import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -35,7 +36,7 @@ public class VSolactivosA extends VerticalLayout implements View, ClickListener 
 	private Button btn_limpiar = new Button("Salir");
 	private Button btn_agregar = new Button("Solicitar Activo");
 	private Button btn_anular = new Button("Anular Seleccon de Activos");
-	private Button btnSolicitar = new Button("Solicitar");
+	private Button btnSolicitar = new Button("Guardar Solicitud");
 	
 	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 	private  MovimientoImpl movimientoimpl = new MovimientoImpl();
@@ -59,9 +60,13 @@ public class VSolactivosA extends VerticalLayout implements View, ClickListener 
 		CssLayout buttonContent = new CssLayout();
 		
 		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		this.btn_anular.setStyleName(AitTheme.BTN_PRINT);
+		this.btn_anular.setIcon(FontAwesome.TRASH_O);
 		this.btnSolicitar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btnSolicitar.setIcon(FontAwesome.SAVE);
 		this.btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_limpiar.setIcon(FontAwesome.TRASH_O);
 
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		
@@ -76,12 +81,17 @@ public class VSolactivosA extends VerticalLayout implements View, ClickListener 
 		
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
+
 		Panel gridPanel = new Panel("Activos Fijos Disponibles : Selecciona los Activos");
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("ACTIVOS FIJOS DISPONIBLE: Seleccione los Activos Fijos Requeridos");
 		gridPanel.setContent(this.frm_solicitud.getgrid_solicitud());
 
 		Panel gridSolicitados = new Panel("ACTIVOS FIJOS SOLICITADOS");
+		gridSolicitados.setStyleName(AitTheme.PANEL_GRID);
+		gridSolicitados.setIcon(FontAwesome.TABLE);
 		gridSolicitados.setWidth("100%");
 		gridSolicitados.setCaption("ACTIVOS SOLICITADOS");
 		gridSolicitados.setContent(this.frm_solicitud.getgridSolicitados());

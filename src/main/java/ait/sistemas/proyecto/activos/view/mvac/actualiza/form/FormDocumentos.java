@@ -239,7 +239,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		BeanItemContainer<Documento> bean_documentos = new BeanItemContainer<Documento>(Documento.class, this.documentos);
 		grid_documentos.setContainerDataSource(bean_documentos);
 		grid_documentos.setHeightMode(HeightMode.ROW);
-		grid_documentos.setHeightByRows(7);
+		grid_documentos.setHeightByRows(10);
 		grid_documentos.setWidth("100%");
 		grid_documentos.setSelectionMode(SelectionMode.MULTI);
 		try {

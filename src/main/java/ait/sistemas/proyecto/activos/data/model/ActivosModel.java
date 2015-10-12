@@ -673,14 +673,14 @@ public class ActivosModel implements Serializable {
 		double AG = CAI * ((ufvf / ufvi) - 1);
 		double CA = AG + CAI;
 		
-		double DAI = 0;
+//		double DAI = 0;
 		double division = ufvf / ufvi;
 		
 		BigDecimal bd = new BigDecimal(division);
 		
 		division = bd.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		
-		double ADA = DAI * ((ufvf / ufvi) - 1);
+//		double ADA = DAI * ((ufvf / ufvi) - 1);
 		
 		/**
 		 * Tiempo en dias desde la Fecha de Incorporacion hasta la Fecha de

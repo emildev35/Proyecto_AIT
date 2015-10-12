@@ -22,12 +22,16 @@ public class GridSolactivos extends Grid{
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(4);
+		setHeightByRows(6);
 		setSizeFull();
 		Column id_activo = getColumn("id_activo").setExpandRatio(1).setRenderer(new NumberRenderer(new DecimalFormat("####")));
 		id_activo.setHeaderCaption("Codigo");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
+		id_activo.setExpandRatio(1);
+		nombre_activo.setExpandRatio(15);
+		getColumn("serie").setExpandRatio(2);
+		setColumnOrder("id_activo", "serie", "nombre");
 	}
 	public void update(String grupo_contable, String auxiliar_contable){
 		removeAllColumns();
@@ -38,6 +42,10 @@ public class GridSolactivos extends Grid{
 		id_activo.setHeaderCaption("Codigo");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
+		setColumnOrder("id_activo", "serie", "nombre");
+		id_activo.setExpandRatio(1);
+		nombre_activo.setExpandRatio(15);
+		getColumn("serie").setExpandRatio(2);
 	}
 	
 	public void updateasignados(String ci_usuario){
@@ -59,6 +67,10 @@ public class GridSolactivos extends Grid{
 		id_activo.setHeaderCaption("Codigo");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
-		
+		setColumnOrder("id_activo", "serie", "nombre");
+		id_activo.setExpandRatio(1);
+		nombre_activo.setExpandRatio(15);
+		getColumn("serie").setExpandRatio(2);
+			
 	}
 }

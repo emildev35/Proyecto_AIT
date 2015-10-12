@@ -280,6 +280,7 @@ public class ActivoImpl {
 	public List<ComponentesModel> getcomponente(long id_activo, short id_dependencia) {
 		Query query = em.createNativeQuery("Mvac_ActivobyComponente " + "@COM_Codigo_Activo=?1, " + "@COM_Dependencia=?2",
 				"mapeo-componente");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_activo);
 		query.setParameter(2, id_dependencia);
 		List<ComponentesModel> resultlist = query.getResultList();
@@ -290,6 +291,7 @@ public class ActivoImpl {
 	public List<DocumentosRespaldoModel> getdocumento(long id_activo, short id_dependencia) {
 		Query query = em.createNativeQuery("Mvac_ActivobyDocumentoRespaldo " + "@DOR_Codigo_Activo=?1," + "@DOR_Dependencia=?2 ",
 				"mapeo-documento");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_activo);
 		query.setParameter(2, id_dependencia);
 		List<DocumentosRespaldoModel> resultlist = query.getResultList();

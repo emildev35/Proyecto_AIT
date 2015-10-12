@@ -19,7 +19,9 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "servidor_publico", column = "servidor_publico"),
 		@FieldResult(name = "usuario_id", column = "usuario_id"),
 		@FieldResult(name = "nivel_autorizacion", column = "nivel_autorizacion"),
-		@FieldResult(name = "nivel_autorizacion_id", column = "nivel_autorizacion_id") }) })
+		@FieldResult(name = "nivel_autorizacion_id", column = "nivel_autorizacion_id"), 
+		@FieldResult(name = "unidadOrganizacional", column = "unidad_organizacional"),
+		@FieldResult(name = "unidadOrganizacionalId", column = "unidad_organizacional_id")	}) })
 @Entity
 public class TipoAutorizacionModel {
 	@Id
@@ -43,6 +45,10 @@ public class TipoAutorizacionModel {
 	
 	private String nivel_autorizacion;
 	private short nivel_autorizacion_id;
+	
+	private String unidadOrganizacional;
+	private short unidadOrganizacionalId;
+	
 	
 	public TipoAutorizacionModel() {
 	}
@@ -155,5 +161,31 @@ public class TipoAutorizacionModel {
 	public void setNivel_autorizacion_id(short nivel_autorizacion_id) {
 		this.nivel_autorizacion_id = nivel_autorizacion_id;
 	}
+
+
+
+	public String getUnidadOrganizacional() {
+		return unidadOrganizacional;
+	}
+
+
+
+	public void setUnidadOrganizacional(String unidadOrganizacional) {
+		this.unidadOrganizacional = unidadOrganizacional;
+	}
+
+
+
+	public short getUnidadOrganizacionalId() {
+		return unidadOrganizacionalId;
+	}
+
+
+
+	public void setUnidadOrganizacionalId(short unidadOrganizacionalId) {
+		this.unidadOrganizacionalId = unidadOrganizacionalId;
+	}
+	
+	
 	
 }
