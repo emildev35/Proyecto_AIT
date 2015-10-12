@@ -34,6 +34,12 @@ public class PersonalImpl implements Dao<Personal> {
 		List<PersonalModel> resultlist = query.getResultList();		
 		return resultlist;
 	}
+	public List<PersonalModel> getPersonal() {
+		this.em.getEntityManagerFactory().getCache().evict(PersonalModel.class);
+		Query query = em.createNativeQuery("exec Rrhh_PersonalOrdenDep_Q", "archive-map-p").setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<PersonalModel> resultlist = query.getResultList();		
+		return resultlist;
+	}
 	public List<PersonalModel> getbyUnidad(short unidad_organizacional) {
 		this.em.getEntityManagerFactory().getCache().evict(PersonalModel.class);
 		Query query = em.createNativeQuery("exec Rrhh_PersonaByUnidad_Q @Unidad_Organizacional_Id=?1", "archive-map-p").setHint(QueryHints.REFRESH, HintValues.TRUE);

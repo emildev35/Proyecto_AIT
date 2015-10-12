@@ -11,9 +11,9 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
-import ait.sistemas.proyecto.common.report.PDFTableGenerator;
 import ait.sistemas.proyecto.common.report.Table;
 import ait.sistemas.proyecto.common.report.TableBuilder;
+import ait.sistemas.proyecto.common.report.pdf.personal.PDFPersonalGenerator;
 
 public class ReportPdf {
 	 // Page configuration
@@ -60,13 +60,13 @@ public class ReportPdf {
     public boolean getPdf(String[][] data,String strDependencia) throws IOException{
     	
  
-        return new PDFTableGenerator().generatePDF(createContent(data, strDependencia), SAVE_PATH);
+        return new PDFPersonalGenerator().generatePDF(createContent(data, strDependencia), SAVE_PATH);
         
     }
 
     private static Table createContent(String[][] data , String strDependencia) {
         List<Column> columns = new ArrayList<Column>();
-        columns.add(new Column("Codigo", 45));	
+        columns.add(new Column("C.I.", 45));	
         columns.add(new Column("Apellidos y Nombre", 215));
         columns.add(new Column("Dependencia", 65));
         columns.add(new Column("Unidad Organizacional", 250));

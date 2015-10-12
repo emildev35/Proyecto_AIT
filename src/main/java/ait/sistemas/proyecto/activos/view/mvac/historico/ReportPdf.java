@@ -10,7 +10,8 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
+import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
+import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.ProveedorImpl;
 import ait.sistemas.proyecto.common.component.PathValues;
 import ait.sistemas.proyecto.common.report.Column;
@@ -65,10 +66,11 @@ public class ReportPdf {
 
 	private static final int HEADER_SIZE = 4;
 
-	public  String SAVE_PATH = PathValues.PATH_REPORTS + "kardex-" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public  String SAVE_PATH = PathValues.PATH_REPORTS + "Historico-" + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 	final ProveedorImpl provedorimpl = new ProveedorImpl();
-	final ActivoImpl activoimpl = new ActivoImpl();
+//	final ActivoImpl activoimpl = new ActivoImpl();
+	final MovimientoImpl movimiento_impl = new MovimientoImpl();
 
 	public boolean getPdf(HisotricoElement[][] data, Object id_activo, Date fecha) throws IOException {
 
@@ -76,19 +78,23 @@ public class ReportPdf {
 
 	}
 
-	private String[][] getComponentes(long id_activo, Date id_dependencia) {
-//		String[][] result = new String[this.activoimpl.getcomponente(id_activo, id_dependencia).size()][2];
-//		int r = 0;
-//		for (ComponentesModel componente : this.activoimpl.getcomponente(id_activo, id_dependencia)) {
-//			String[] row = { componente.getCOM_Nombre_Componente(), componente.getCOM_Caracteristica_Componente() };
-//			result[r] = row;
-//			r++;
-//		}
-//		return result;
-		return null;
+	private String[][] getComponentes(long id_activo, Date fecha) {
+		String[][] result = new String[this.movimiento_impl.getMovimientobyActivo(id_activo,new java.sql.Date (fecha.getTime())).size()][2];
+		int r = 0;
+		for (MovimientoReporte movimiento : this.movimiento_impl.getMovimientobyActivo(id_activo,new java.sql.Date( fecha.getTime()))) {
+			String[] row = { new SimpleDateFormat("dd-MM-yyyy").format(movimiento.getCMV_Fecha_Registro()), 
+					movimiento.getCaracteristicas(),
+					movimiento.getNo_Acta(),
+					movimiento.getUsuario_Origen(),
+					movimiento.getUsuario_Destino()};
+			result[r] = row;
+			r++;
+		}
+		return result;
+//		return null;
 	}
 
-	private String[][] getDocumentos(long id_activo, Date id_dependencia) {
+//	private String[][] getDocumentos(long id_activo, Date id_dependencia) {
 //		String[][] result = new String[this.activoimpl.getdocumento(id_activo, id_dependencia).size()][2];
 //		int r = 0;
 //		for (DocumentosRespaldoModel documento : this.activoimpl.getdocumento(id_activo, id_dependencia)) {
@@ -97,30 +103,38 @@ public class ReportPdf {
 //			r++;
 //		}
 //		return result;
-		return null;
-	}
+//		return null;
+//	}
 
 	private Historico createContent(HisotricoElement[][] data,  Date fecha) {
 
 		HisotricoElement[][] content = data;
 		List<Column> columns_componentes = new ArrayList<Column>();
-		columns_componentes.add(new Column("Nombre del Componente", 135));
-		columns_componentes.add(new Column("Caracteristicas", 590));
+		columns_componentes.add(new Column("Fecha", 50));
+		columns_componentes.add(new Column("Tipo Movimiento", 135));
+		columns_componentes.add(new Column("No Documento", 80));
+		columns_componentes.add(new Column("Funcionario Origen", 230));
+		columns_componentes.add(new Column("Funcionario Destino", 230));
 
-		List<Column> columns_documentos = new ArrayList<Column>();
-		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 135));
-		columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 590));
+//		List<Column> columns_documentos = new ArrayList<Column>();
+//		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 135));
+//		columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 590));
 
 		String[][] componentes = getComponentes(Long.parseLong(data[0][0].getContenido()), fecha);
-		String[][] documentos = getDocumentos(Long.parseLong(data[0][0].getContenido()), fecha);
+//		String[][] documentos = getDocumentos(Long.parseLong(data[0][0].getContenido()), fecha);
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
 
 		Historico table = new HistoricoBuilder()
 				.setCellMargin(CELL_MARGIN).setelement(content)
-				.setColumnsComponentes(columns_componentes).setComponentes(componentes)
-				.setColumnsDocumentos(columns_documentos).setDocumentos(documentos).setHeight(tableHeight)
-				.setNumberOfRows(content.length).setNumberOfRowsComponentes(componentes.length)
-				.setNumberOfRowsDocumentos(documentos.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
+				.setColumnsComponentes(columns_componentes)
+				.setComponentes(componentes)
+//				.setColumnsDocumentos(columns_documentos)
+//				.setDocumentos(documentos)
+				.setHeight(tableHeight)
+				.setNumberOfRows(content.length)
+				.setNumberOfRowsComponentes(componentes.length)
+//				.setNumberOfRowsDocumentos(documentos.length)
+				.setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
 				.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
 				.setTextTitleFont(TEXT_FONT_TITLE).setFontSizeTextTitle(FONT_TITLE_SIZE)
 				.setrowTitleHeigth(ROW_TITLE_HEIGHT).setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE)
@@ -142,23 +156,29 @@ public class ReportPdf {
 			HisotricoElement[][] content = data[i];
 
 			List<Column> columns_componentes = new ArrayList<Column>();
-			columns_componentes.add(new Column("Nombre del Componente", 350));
-			columns_componentes.add(new Column("Caracteristicas", 375));
+			columns_componentes.add(new Column("Fecha", 50));
+			columns_componentes.add(new Column("Tipo Movimiento", 135));
+			columns_componentes.add(new Column("No Documento", 80));
+			columns_componentes.add(new Column("Funcionario Origen", 230));
+			columns_componentes.add(new Column("Funcionario Destino", 230));
 
-			List<Column> columns_documentos = new ArrayList<Column>();
-			columns_documentos.add(new Column("Nombre del Documento de Respaldo", 350));
-			columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 375));
+//			List<Column> columns_documentos = new ArrayList<Column>();
+//			columns_documentos.add(new Column("Nombre del Documento de Respaldo", 350));
+//			columns_documentos.add(new Column("Ubicacion del Documento de Respaldo", 375));
 
 			String[][] componentes = getComponentes(Long.parseLong(data[i][0][0].getContenido()), fecha);
-			String[][] documentos = getDocumentos(Long.parseLong(data[i][0][0].getContenido()), fecha);
-			float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight()
-					- (2 * MARGIN);
+//			String[][] documentos = getDocumentos(Long.parseLong(data[i][0][0].getContenido()), fecha);
+//			float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight()
+//					- (2 * MARGIN);
 
 			Historico kardex = new HistoricoBuilder().setCellMargin(CELL_MARGIN).setelement(content)
 					.setColumnsComponentes(columns_componentes).setComponentes(componentes)
-					.setColumnsDocumentos(columns_documentos).setDocumentos(documentos).setHeight(tableHeight)
-					.setNumberOfRows(content.length).setNumberOfRowsComponentes(componentes.length)
-					.setNumberOfRowsDocumentos(documentos.length).setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
+//					.setColumnsDocumentos(columns_documentos)
+//					.setDocumentos(documentos).setHeight(tableHeight)
+					.setNumberOfRows(content.length)
+					.setNumberOfRowsComponentes(componentes.length)
+//					.setNumberOfRowsDocumentos(documentos.length)
+					.setRowHeight(ROW_HEIGHT).setMargin(MARGIN)
 					.setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE).setTextFont(TEXT_FONT).setFontSize(FONT_SIZE)
 					.setTextTitleFont(TEXT_FONT_TITLE).setFontSizeTextTitle(FONT_TITLE_SIZE)
 					.setrowTitleHeigth(ROW_TITLE_HEIGHT).setHeaderFont(HEADER_FONT).setFontSizeHeader(HEADER_FONT_SIZE)

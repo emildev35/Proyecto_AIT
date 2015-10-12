@@ -262,7 +262,7 @@ public class ActivoImpl {
 		public List<ActivosModel> getActivosbyCodigoFecha(long id_activo, Date fecha) {
 			Query query = em.createNativeQuery("Mvac_ActivobyCodigoFecha_Q " 
 					+ "@ACT_Codigo_Activo=?1, "
-					+ "@Fecha", "mapeo-activo");
+					+ "@Fecha=?2", "mapeo-activo");
 			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 			query.setParameter(1, id_activo);
 			query.setParameter(2, fecha);

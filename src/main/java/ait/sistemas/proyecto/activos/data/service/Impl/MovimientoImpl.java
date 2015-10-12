@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -16,6 +17,7 @@ import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.component.model.CmovimientoDocumento;
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
+import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
 import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 
 public class MovimientoImpl {
@@ -372,6 +374,18 @@ ConnecctionActivos conn = new ConnecctionActivos();
 		query.setParameter(1, ci_funcionario);
 		query.setParameter(2, Tipo_Movimento);
 		List<Movimiento> resultlist = query.getResultList();
+		return resultlist;
+	}
+	@SuppressWarnings("unchecked")
+	public List<MovimientoReporte> getMovimientobyActivo(long cod_Activo, Date fecha) {
+		this.em.getEntityManagerFactory().getCache().evict(MovimientoReporte.class);
+		Query query = em.createNativeQuery("exec Mvac_MovimientobyActivo_Q "
+				+ "@Codigo_Activo=?1, "
+				+ "@Fecha=?2 ", "reporte-movimiento")
+				.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, cod_Activo);
+		query.setParameter(2, fecha);
+		List<MovimientoReporte> resultlist = query.getResultList();
 		return resultlist;
 	}
 }

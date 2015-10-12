@@ -75,6 +75,9 @@ public class FormReporte extends GridLayout{
 			cbDependencia.addItem(dependencia.getDEP_Dependencia());
 			cbDependencia.setItemCaption(dependencia.getDEP_Dependencia(), dependencia.getDEP_Nombre_Dependencia());
 		}
+		short a = 0;
+		cbDependencia.addItem(a);
+		cbDependencia.setItemCaption(a, "Todas las Dependencias");
 	}
 	private void buildContent() {
 		this.binderPersonal.clear();

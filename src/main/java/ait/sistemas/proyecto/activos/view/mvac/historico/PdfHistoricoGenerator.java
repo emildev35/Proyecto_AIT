@@ -41,7 +41,7 @@ public class PdfHistoricoGenerator {
 		// Calcula la cantidad de filas por pagina
 		Integer rowsPerPage = new Double(Math.floor((kardex.getHeight() - 2 * kardex.getMargin())/ kardex.getRowHeight())).intValue() - 3;
 		
-		int r = kardex.getElemenos().length + kardex.getHeaderSize();
+		int r =  kardex.getHeaderSize();
 		
 		PDPage page = new PDPage();
 		page.setMediaBox(kardex.getPageSize());
@@ -82,7 +82,7 @@ public class PdfHistoricoGenerator {
 		contentStream.setFont(kardex.getTexttitleFont(), kardex.getFontSize());
 		nextTextY -= kardex.getRowHeight();
 		nextTextX = kardex.getMargin() + kardex.getCellMargin();
-		r += 3;
+		r += 4;
 		contentStream.setFont(kardex.getTextFont(), kardex.getFontSize());
 		// Write content
 		for (int i = 0; i < kardex.getComponentes().length; i++) {
@@ -103,55 +103,57 @@ public class PdfHistoricoGenerator {
 				this.doc.addPage(page);
 				
 				contentStream = generateContentStream(doc, page, kardex);
+				writeHeader(contentStream, nextTextX, kardex);
 				
-				nextTextY -= kardex.getRowHeight();
+				nextTextY -= kardex.getRowHeight()*4;
 				drawTableComponentGrid(kardex, kardex.getComponentes(), contentStream, nextTextY);
 				nextTextY -= kardex.getRowHeight() / 2;
 				writeContentLineComponent(kardex.getColumnsComponentsNamesAsArray(), contentStream, nextTextX, nextTextY, kardex);
 				contentStream.setFont(kardex.getTexttitleFont(), kardex.getFontSize());
 				nextTextY -= kardex.getRowHeight()*1.1;
+				r+=4;
 			}
 			nextTextX = kardex.getMargin() + kardex.getCellMargin();
 		}
 		// Tabla de Documentos
-		nextTextY -= kardex.getRowHeight();
-		
-		drawTableDocumentGrid(kardex, kardex.getDocumentos(), contentStream, nextTextY);
-		nextTextY -= kardex.getRowHeight() / 2;
-		contentStream.setFont(kardex.getTexttitleFont(), kardex.getFontSize());
-		writeContentLineDocument(kardex.getColumnsDocumentsNamesAsArray(), contentStream, nextTextX, nextTextY, kardex);
-		nextTextY -= kardex.getRowHeight();
-		nextTextX = kardex.getMargin() + kardex.getCellMargin();
-		r += 3;
-		contentStream.setFont(kardex.getTextFont(), kardex.getFontSize());
-		// Write content
-		for (int i = 0; i < kardex.getDocumentos().length; i++) {
-			writeContentLineDocument(kardex.getDocumentos()[i], contentStream, nextTextX, nextTextY, kardex);
-			nextTextY -= kardex.getRowHeight();
-			r++;
-			if (r >= rowsPerPage) {
-				contentStream.close();
-				nextTextY = kardex.isLandscape() ? kardex.getPageSize().getWidth() - kardex.getMargin() : kardex.getPageSize()
-						.getHeight() - kardex.getMargin();
-				page = new PDPage();
-				page.setMediaBox(kardex.getPageSize());
-				if (kardex.isLandscape()) {
-					page.setRotation(90);
-				}
-				r = 1;
-				this.doc.addPage(page);
-				contentStream = generateContentStream(doc, page, kardex);
-				
-				
-				nextTextY -= kardex.getRowHeight();
-				drawTableDocumentGrid(kardex, kardex.getDocumentos(), contentStream, nextTextY);
-				nextTextY -= kardex.getRowHeight() / 2;
-				contentStream.setFont(kardex.getTexttitleFont(), kardex.getFontSize());
-				writeContentLineDocument(kardex.getColumnsDocumentsNamesAsArray(), contentStream, nextTextX, nextTextY, kardex);
-				nextTextY -= kardex.getRowHeight()*1.1;
-			}
-			nextTextX = kardex.getMargin() + kardex.getCellMargin();
-		}
+//		nextTextY -= kardex.getRowHeight();
+//		
+//		drawTableDocumentGrid(kardex, kardex.getDocumentos(), contentStream, nextTextY);
+//		nextTextY -= kardex.getRowHeight() / 2;
+//		contentStream.setFont(kardex.getTexttitleFont(), kardex.getFontSize());
+//		writeContentLineDocument(kardex.getColumnsDocumentsNamesAsArray(), contentStream, nextTextX, nextTextY, kardex);
+//		nextTextY -= kardex.getRowHeight();
+//		nextTextX = kardex.getMargin() + kardex.getCellMargin();
+//		r += 3;
+//		contentStream.setFont(kardex.getTextFont(), kardex.getFontSize());
+//		// Write content
+//		for (int i = 0; i < kardex.getDocumentos().length; i++) {
+//			writeContentLineDocument(kardex.getDocumentos()[i], contentStream, nextTextX, nextTextY, kardex);
+//			nextTextY -= kardex.getRowHeight();
+//			r++;
+//			if (r >= rowsPerPage) {
+//				contentStream.close();
+//				nextTextY = kardex.isLandscape() ? kardex.getPageSize().getWidth() - kardex.getMargin() : kardex.getPageSize()
+//						.getHeight() - kardex.getMargin();
+//				page = new PDPage();
+//				page.setMediaBox(kardex.getPageSize());
+//				if (kardex.isLandscape()) {
+//					page.setRotation(90);
+//				}
+//				r = 1;
+//				this.doc.addPage(page);
+//				contentStream = generateContentStream(doc, page, kardex);
+//				
+//				
+//				nextTextY -= kardex.getRowHeight();
+//				drawTableDocumentGrid(kardex, kardex.getDocumentos(), contentStream, nextTextY);
+//				nextTextY -= kardex.getRowHeight() / 2;
+//				contentStream.setFont(kardex.getTexttitleFont(), kardex.getFontSize());
+//				writeContentLineDocument(kardex.getColumnsDocumentsNamesAsArray(), contentStream, nextTextX, nextTextY, kardex);
+//				nextTextY -= kardex.getRowHeight()*1.1;
+//			}
+//			nextTextX = kardex.getMargin() + kardex.getCellMargin();
+//		}
 		contentStream.close();
 		drawFooter(doc, kardex); 
 	}
