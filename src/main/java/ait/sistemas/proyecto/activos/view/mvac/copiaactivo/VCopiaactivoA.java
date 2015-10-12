@@ -125,19 +125,14 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-		
 	}
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_copias) {
 			if (this.frm_copia.validate()) {
-//				Object row = grid_activos.setSelectionMode(SelectionMode.SINGLE);
-				
 				if (activo_impl.addCopiaActivo(new BigDecimal(this.activo.getId_activo()),Integer.parseInt(frm_copia.txt_no_copias.getValue()))>0) {
-					
 					this.frm_copia.clear();
-					
 					Notification.show(Messages.SUCCESS_MESSAGE);
 				}
 				else{

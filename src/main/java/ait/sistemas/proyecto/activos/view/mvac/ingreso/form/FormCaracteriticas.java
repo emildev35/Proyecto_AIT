@@ -13,6 +13,7 @@ import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -29,7 +30,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
@@ -43,7 +43,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar_caracteristicas = new Button("Guardar Caracteristicas");
-	private Button btn_guardar = new Button("Guardar");
+	private Button btn_guardar = new Button("Guardar Componentes");
 	private Button btn_salir = new Button("Salir");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
@@ -63,7 +63,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	public TextField nroLicencia = new TextField("N. Licencia");
 	public DateField dtfVctoLicencia = new DateField("Vcto. Licencia");
-
 	
 	public TextField txt_nombre_imagen = new TextField();
 	
@@ -113,14 +112,14 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		pitmCaracteristicas.addItemProperty("proveedor", new ObjectProperty<ProveedoresModel>(new ProveedoresModel()));
 		pitmCaracteristicas.addItemProperty("marca", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("numero_serie", new ObjectProperty<String>(""));
-		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_garantia", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("tiempo_garantia", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_garantia", new ObjectProperty<Date>(new Date()));
 		pitmCaracteristicas.addItemProperty("numero_ruat", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_folio_real", new ObjectProperty<Integer>(0));
-		pitmCaracteristicas.addItemProperty("numero_poliza_seguro", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_folio_real", new ObjectProperty<String>(""));
+		pitmCaracteristicas.addItemProperty("numero_poliza_seguro", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_seguro", new ObjectProperty<Date>(new Date()));
-		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<Integer>(0));
+		pitmCaracteristicas.addItemProperty("numero_contrato_mantenumiento", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("vencimiento_contrato_mantenimiento", new ObjectProperty<Date>(new Date()));
 		pitmCaracteristicas.addItemProperty("nombre_imagen", new ObjectProperty<String>(""));
 		pitmCaracteristicas.addItemProperty("numero_licencia", new ObjectProperty<String>(""));
@@ -188,7 +187,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		grid_caracteristica.addComponent(this.txt_numero_contrato_mantenimiento, 0, 5, 2, 5);
 		grid_caracteristica.addComponent(this.dtf_vcto_contrato_mantenimientno, 3, 5, 5, 5);
 		
-		grid_caracteristica.addComponent(this. nroLicencia, 0, 6, 2, 6);
+		grid_caracteristica.addComponent(this.nroLicencia, 0, 6, 2, 6);
 		grid_caracteristica.addComponent(this.dtfVctoLicencia, 3, 6, 5, 6);
 		
 		final Panel pn_caracteristicas = new Panel("CARACTERISTICAS DEL ACTIVO");
@@ -208,34 +207,19 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		
 		pn_activo.setStyleName(AitTheme.PANEL_FORM);
 		pn_activo.setIcon(FontAwesome.EDIT);
-
+		
 		pn_imagen.setStyleName(AitTheme.PANEL_FORM);
 		pn_imagen.setIcon(FontAwesome.IMAGE);
-
+		
 		pn_caracteristicas.setStyleName(AitTheme.PANEL_FORM);
 		pn_caracteristicas.setIcon(FontAwesome.EDIT);
-
+		
 		buildcbProveedor();
 		
 	}
 	
 	private void clean() {
 		this.binderCaracteristicas.clear();
-		this.txt_numero_serie.setValue("0");
-		this.txt_numero_ruat.setValue("0");
-		this.txt_numero_contrato_mantenimiento.setValue("0");
-		this.txt_numero_folio_real.setValue("0");
-		this.txt_numero_garantia.setValue("0");
-		this.txt_numero_poliza_seguro.setValue("0");
-		this.txt_tiempo_garantia.setValue("0");
-		this.txt_nombre_activo.setValue("");
-		this.txt_numero_serie.setInputPrompt("Ingrese un Numero de Serie");
-		this.txt_numero_ruat.setInputPrompt("Ingrese un Numero de Ruat");
-		this.txt_numero_contrato_mantenimiento.setInputPrompt("Ingrese un Numero de Contrato de Mantenimiento");
-		this.txt_numero_folio_real.setInputPrompt("Ingrese un Numero de Folio Real");
-		this.txt_numero_garantia.setInputPrompt("Ingrese un Numero de Garantia");
-		this.txt_numero_poliza_seguro.setInputPrompt("Ingrese un Numero de Poliza de Seguro");
-		this.txt_tiempo_garantia.setInputPrompt("Ingreso el Tiempo de Garantia");
 	}
 	
 	public void fillActivo() {
@@ -278,21 +262,9 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.btn_salir.addStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
 		this.btn_salir.addClickListener(this);
+		
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
-	}
-	
-	public Component buildMessages() {
-		
-		CssLayout hl_errores = new CssLayout();
-		hl_errores.removeAllComponents();
-		hl_errores.addStyleName("ait-error-bar");
-		for (BarMessage barMessage : this.mensajes) {
-			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
-			lbError.setStyleName(barMessage.getType());
-			hl_errores.addComponent(lbError);
-		}
-		return hl_errores;
 	}
 	
 	public boolean validate() {
@@ -314,20 +286,18 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 				save();
 				clean();
 			} else {
-				father.addComponent(buildMessages());
+				father.buildMessages(this.mensajes);
 			}
 		}
 		if (event.getButton() == this.btn_guardar_caracteristicas) {
-			if (validate()) {
-				save();
-				this.father.tbs_form.setSelectedTab(2);
-			} else {
-				father.addComponent(buildMessages());
-			}
+			save();
+			this.father.tbs_form.setSelectedTab(2);
 		}
 		if (event.getButton() == this.btn_salir) {
-			
+			UI.getCurrent().getSession().setAttribute("activo", null);
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
+		
 	}
 	
 	public void save() {
@@ -335,7 +305,9 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		caracteristicas.setCodigo(this.txt_codigo_activo.getValue());
 		caracteristicas.setDependencia(this.sessionactivo.getDependencia());
 		caracteristicas.setMarca(this.txt_marca.getValue());
-		caracteristicas.setNit_proveedor(((ProveedoresModel) this.cb_proveedor.getValue()).getPRV_NIT());
+		if (cb_proveedor.getValue() != null) {
+			caracteristicas.setNit_proveedor(((ProveedoresModel) this.cb_proveedor.getValue()).getPRV_NIT());
+		}
 		caracteristicas.setNumero_contrato_mantenimiento(this.txt_numero_contrato_mantenimiento.getValue());
 		caracteristicas.setNumero_folio_real(this.txt_numero_folio_real.getValue());
 		caracteristicas.setNumero_garantia(txt_numero_garantia.getValue());
@@ -369,5 +341,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		fillActivo();
+		this.mensajes.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		father.buildMessages(this.mensajes);
+		this.mensajes = new ArrayList<BarMessage>();
 	}
 }

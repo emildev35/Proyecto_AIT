@@ -11,6 +11,7 @@ import ait.sistemas.proyecto.activos.view.mvac.ingreso.VActivoA;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -28,7 +29,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
@@ -43,7 +43,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_salir = new Button("Salir");
-	private Button btn_guardar = new Button("Guardar");
+	private Button btn_guardar = new Button("Guardar Documentos");
 	private Button btn_agregar = new Button("Agregar Componente");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
@@ -71,12 +71,11 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		setWidth("100%");
 		setSpacing(true);
 		setMargin(true);
-		this.txt_codigo_activo.setWidth("90%");
+		this.txt_codigo_activo.setWidth("75px");
 		this.txt_nombre_activo.setWidth("90%");
 		this.field_ubicacion_documento.setWidth("90%");
 		this.field_ubicacion_documento.setWidth("90%");
-		this.field_ubicacion_documento.setButtonCaption("Subir Documento");
-		
+		this.field_ubicacion_documento.setButtonCaption("Subir Documento al Servidor");
 		
 		pitmDocumentos.addItemProperty("nombre", new ObjectProperty<String>(""));
 		pitmDocumentos.addItemProperty("id", new ObjectProperty<String>(""));
@@ -87,6 +86,8 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		bindeDocumentos.bind(this.txt_nombre_documento, "nombre");
 		bindeDocumentos.bind(this.txt_nombre_activo, "id");
 		bindeDocumentos.bind(this.txt_codigo_activo, "nombre_activo");
+		
+		txt_nombre_documento.setRequired(true);
 		
 		this.txt_codigo_activo.setEnabled(false);
 		this.txt_nombre_activo.setEnabled(false);
@@ -134,7 +135,6 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		gridl_documentos.addComponent(this.grid_documentos, 0, 1, 1, 1);
 		pn_documentos.setContent(gridl_documentos);
 		
-		
 		pn_activo.setStyleName(AitTheme.PANEL_FORM);
 		pn_activo.setIcon(FontAwesome.EDIT);
 		pn_documentos.setStyleName(AitTheme.PANEL_FORM);
@@ -166,6 +166,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 			if (validate()) {
 				if (!this.reciver.getFile().equals("")) {
 					this.documentos.add(new Documento(this.txt_nombre_documento.getValue(), this.reciver.getFile()));
+					this.txt_nombre_documento.setValue("");
 				} else {
 					Notification.show("Debe Presionar el Boton de " + this.field_ubicacion_documento.getButtonCaption());
 				}
@@ -175,18 +176,20 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 			buildGrid();
 		}
 		if (event.getButton() == this.btn_salir) {
+			UI.getCurrent().getSession().setAttribute("activo", null);
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 		if (event.getButton() == this.btn_guardar) {
-			if (validate() && this.documentos.size() > 0) {
-				if (activoimpl.addDocumentos(documentos, sessionactivo)) {
-					Notification.show(Messages.SUCCESS_MESSAGE);
-					this.bindeDocumentos.clear();
-				} else {
-					Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-				}
-				this.documentos = new ArrayList<Documento>();
-				buildGrid();
+			if (activoimpl.addDocumentos(documentos, sessionactivo)) {
+				this.bindeDocumentos.clear();
+				this.mensajes.add(new BarMessage("Formulario", "Operacion Exitosa"));
+				UI.getCurrent().getSession().setAttribute("activo", null);
+				this.father.tbs_form.setSelectedTab(0);
+			} else {
+				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
 			}
+			this.documentos = new ArrayList<Documento>();
+			buildGrid();
 		}
 		if (event.getButton() == this.btn_eliminar) {
 			
@@ -197,25 +200,12 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		}
 	}
 	
-	public Component buildMessages() {
-		
-		CssLayout hl_errores = new CssLayout();
-		hl_errores.removeAllComponents();
-		hl_errores.addStyleName("ait-error-bar");
-		for (BarMessage barMessage : this.mensajes) {
-			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName());
-			lbError.setStyleName(barMessage.getType());
-			hl_errores.addComponent(lbError);
-		}
-		return hl_errores;
-	}
-	
 	public boolean validate() {
 		try {
 			this.bindeDocumentos.commit();
 			return true;
 		} catch (CommitException cme) {
-			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+			this.mensajes.add(new BarMessage("Nombre Activo", "Datos Erroneos"));
 			return false;
 		}
 	}
@@ -228,13 +218,12 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		grid_documentos.setWidth("100%");
 		grid_documentos.setSelectionMode(SelectionMode.MULTI);
 		
-		// Grid.Column caracteritica_column =
-		// this.grid_documentos.getColumn("Nombre");
-		// Grid.Column nombre_column =
-		// this.grid_documentos.getColumn("Caracteristica");
-		//
-		// caracteritica_column.setHeaderCaption("Caracteristica").setExpandRatio(2);
-		// nombre_column.setHeaderCaption("Nombre Componente").setExpandRatio(1);
+		grid_documentos.setColumnOrder("nombre", "direccion");
+		try {
+			grid_documentos.removeColumn("id");
+			
+		} catch (Exception e) {
+		}
 		Responsive.makeResponsive(this);
 	}
 	

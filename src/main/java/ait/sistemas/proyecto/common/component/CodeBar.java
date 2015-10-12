@@ -103,7 +103,7 @@ public class CodeBar {
 			if (auxiliar_contable.length() == 1) {
 				auxiliar_contable = "0" + auxiliar_contable;
 			}
-			String codigo_barras = String.format("%s-%s-%s", grupo_contable, auxiliar_contable, codigo);
+			String codigo_barras = String.format("%s%s%s", grupo_contable, auxiliar_contable, codigo);
 			bean.generateBarcode(canvas, codigo_barras);
 			canvas.finish();
 		} catch (IOException e) {

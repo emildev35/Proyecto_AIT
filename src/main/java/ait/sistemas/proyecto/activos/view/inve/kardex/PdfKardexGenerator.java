@@ -235,7 +235,7 @@ public class PdfKardexGenerator {
 					}
 				}
 			}
-			contentStream.showText(contenido != null && !titulo.equals("null") ? contenido : "");
+			contentStream.showText(contenido != null && !contenido.equals("null") && !contenido.equals("null null null") ? contenido : "");
 			contentStream.endText();
 			
 			nextTextX += lineContent[i].getAncho();

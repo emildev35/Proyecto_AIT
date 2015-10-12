@@ -1,9 +1,14 @@
 package ait.sistemas.proyecto.activos.view.mvac.ingreso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormCaracteriticas;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormComponentes;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormDatosGenerales;
 import ait.sistemas.proyecto.activos.view.mvac.ingreso.form.FormDocumentos;
+import ait.sistemas.proyecto.common.component.BarMessage;
+import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.view.AitView;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
@@ -11,6 +16,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -28,11 +34,18 @@ public class VActivoA extends VerticalLayout implements View{
 	private FormDocumentos frm_documentos = new FormDocumentos(this);
 	public TabSheet tbs_form;
 	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	private  List<BarMessage> mensajes = new ArrayList<BarMessage>();
+	
+	private CssLayout hl_errores =  new CssLayout();
+	
 
 	public VActivoA() {
 		setWidth("100%");	
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
+		addComponent(hl_errores);
+		this.mensajes.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		buildMessages(this.mensajes);
 	}
 	
 	private Component buildFormContent() {
@@ -72,5 +85,14 @@ public class VActivoA extends VerticalLayout implements View{
 	public void enter(ViewChangeEvent event) {
 		
 	}
-	
+
+	public void buildMessages(List<BarMessage> mensajes) {
+		hl_errores.removeAllComponents();
+		hl_errores.addStyleName("ait-error-bar");
+		for (BarMessage barMessage : mensajes) {
+			Label lbError = new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName(), ContentMode.HTML);
+			lbError.setStyleName(barMessage.getType());
+			hl_errores.addComponent(lbError);
+		}
+	}
 }

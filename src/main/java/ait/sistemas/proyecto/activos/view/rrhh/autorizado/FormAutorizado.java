@@ -37,6 +37,8 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	private TextField txt_orden = new TextField("Orden");
 	public ComboBox cb_dependencia = new ComboBox("Dependencia");
 	public ComboBox cb_dependencia_movimiento = new ComboBox("Dependencia del Movimiento");
+	public ComboBox cb_unidad_movimiento = new ComboBox("Unidad Organizacional del Movimiento");
+	
 	public ComboBox cb_unidad = new ComboBox("Unidad Organizacional");
 	public ComboBox cb_servidor_publico = new ComboBox("Sevidor Publico");
 	public ComboBox cb_nivel_autorizacion = new ComboBox("Nivel de Autorizacion");
@@ -60,6 +62,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		
 		pitm_autorizacion.addItemProperty("tipo_movimiento", new ObjectProperty<Tipos_Movimiento>(new Tipos_Movimiento()));
 		pitm_autorizacion.addItemProperty("dependencia", new ObjectProperty<Dependencia>(new Dependencia()));
+		pitm_autorizacion.addItemProperty("unidad", new ObjectProperty<Unidades_Organizacionale>(new Unidades_Organizacionale()));
 		pitm_autorizacion.addItemProperty("servidor_publico", new ObjectProperty<PersonalModel>(new PersonalModel()));
 		pitm_autorizacion.addItemProperty("nivel_autorizacion", new ObjectProperty<Integer>(0));
 		pitm_autorizacion.addItemProperty("orden", new ObjectProperty<Integer>(1));
@@ -68,6 +71,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		
 		binder_autorizacion.bind(this.cb_nivel_autorizacion, "nivel_autorizacion");
 		binder_autorizacion.bind(this.cb_dependencia_movimiento, "dependencia");
+		binder_autorizacion.bind(this.cb_unidad_movimiento, "unidad");
 		binder_autorizacion.bind(this.cb_tipo_movimiento, "tipo_movimiento");
 		binder_autorizacion.bind(this.cb_servidor_publico, "servidor_publico");
 		binder_autorizacion.bind(this.txt_orden, "orden");
@@ -78,9 +82,13 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		this.cb_dependencia_movimiento.setRequired(true);
 		this.cb_dependencia_movimiento.addValidator(new NullValidator("No Nulo", false));
 		
+		this.cb_unidad_movimiento.setRequired(true);
+		this.cb_unidad_movimiento.addValidator(new NullValidator("No Nulo", false));
+		
 		this.txt_orden.setRequired(true);
 		this.txt_orden.addValidator(new NullValidator("No Nulo", false));
-//		this.txt_orden.addValidator(new RegexpValidator("[0-9]", Messages.NUMBER_VALUE));
+		// this.txt_orden.addValidator(new RegexpValidator("[0-9]",
+		// Messages.NUMBER_VALUE));
 		
 		this.cb_nivel_autorizacion.setRequired(true);
 		this.cb_nivel_autorizacion.addValidator(new NullValidator("No Nulo", false));
@@ -92,6 +100,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		this.cb_unidad.addValueChangeListener(this);
 		this.cb_dependencia_movimiento.addValueChangeListener(this);
 		this.cb_tipo_movimiento.addValueChangeListener(this);
+		this.cb_unidad_movimiento.addValueChangeListener(this);
 		
 		txt_orden.setWidth("30%");
 		cb_dependencia.setWidth("90%");
@@ -100,6 +109,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		cb_servidor_publico.setWidth("90%");
 		cb_nivel_autorizacion.setWidth("90%");
 		cb_tipo_movimiento.setWidth("90%");
+		cb_unidad_movimiento.setWidth("90%");
 		
 		this.txt_orden.setEnabled(false);
 		
@@ -109,15 +119,19 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		buildCbNivelAutorizacion();
 		Responsive.makeResponsive(this);
 		
+		cb_unidad.setInputPrompt("Seleccione un aUnidad Organizacional");
+		cb_unidad_movimiento.setInputPrompt("Seleccione un aUnidad Organizacional");
+		cb_servidor_publico.setInputPrompt("Seleccion un Servidor Publico");
+		
 	}
 	
-
 	private void buildContent() {
 		this.binder_autorizacion.clear();
 		this.txt_orden.setValue("0");
 		addComponent(this.cb_tipo_movimiento, 0, 0);
 		addComponent(this.cb_dependencia_movimiento, 1, 0);
-		addComponent(this.txt_orden, 2, 0);
+		addComponent(this.cb_unidad_movimiento, 2, 0);
+		addComponent(this.txt_orden, 3, 0);
 		addComponent(this.cb_dependencia, 0, 1);
 		addComponent(this.cb_unidad, 1, 1);
 		addComponent(this.cb_servidor_publico, 2, 1);
@@ -127,12 +141,10 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	public void update() {
 		binder_autorizacion.clear();
 		txt_orden.setValue("1");
+		cb_unidad.clear();
+		cb_servidor_publico.clear();
+		cb_dependencia.clear();
 	}
-	
-	// public void enabled() {
-	// this.txt_nombre_ciudad.setEnabled(false);
-	// this.txt_sigla_ciudad.setEnabled(false);
-	// }
 	
 	public List<BarMessage> getMensajes() {
 		return mensajes;
@@ -177,10 +189,8 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	}
 	
 	public boolean validate() {
-		
 		try {
 			this.binder_autorizacion.commit();
-			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
 			return true;
 		} catch (CommitException e) {
 			try {
@@ -224,13 +234,18 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 			Unidades_Organizacionale unidad = (Unidades_Organizacionale) cb_unidad.getValue();
 			buildCbServidor(unidad);
 		}
-		
-		if (event.getProperty() == cb_dependencia_movimiento && cb_dependencia_movimiento.getValue() != null
-				&& cb_tipo_movimiento.getValue()!=null || event.getProperty() == cb_tipo_movimiento && cb_tipo_movimiento.getValue() != null
-				&& cb_dependencia_movimiento.getValue()!=null) {
+		if (event.getProperty() == cb_dependencia_movimiento && cb_dependencia_movimiento.getValue() != null) {
 			Dependencia dependencia = (Dependencia) cb_dependencia_movimiento.getValue();
+			buildCbUnidadMovimiento(dependencia);
+		}
+		if (event.getProperty() == cb_unidad_movimiento && cb_unidad_movimiento.getValue() != null
+				&& cb_tipo_movimiento.getValue() != null || event.getProperty() == cb_tipo_movimiento
+				&& cb_tipo_movimiento.getValue() != null && cb_dependencia_movimiento.getValue() != null) {
+			Dependencia dependencia = (Dependencia) cb_dependencia_movimiento.getValue();
+			Unidades_Organizacionale unidad = (Unidades_Organizacionale) cb_unidad_movimiento.getValue();
 			Tipos_Movimiento tipo_movimiento = (Tipos_Movimiento) cb_tipo_movimiento.getValue();
-			buildNivelAutorizacion(dependencia.getDEP_Dependencia(), tipo_movimiento.getTMV_Tipo_Movimiento());
+			buildNivelAutorizacion(dependencia.getDEP_Dependencia(), unidad.getUNO_Unidad_Organizacional(),
+					tipo_movimiento.getTMV_Tipo_Movimiento());
 		}
 		
 	}
@@ -242,6 +257,16 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		for (Unidades_Organizacionale unidad : unidad_impl.getunidad(dependencia.getDEP_Dependencia())) {
 			this.cb_unidad.addItem(unidad);
 			this.cb_unidad.setItemCaption(unidad, unidad.getUNO_Nombre_Unidad_Organizacional());
+		}
+	}
+	
+	private void buildCbUnidadMovimiento(Dependencia dependencia) {
+		cb_unidad_movimiento.removeAllItems();
+		cb_unidad_movimiento.setInputPrompt("Seleccione una Unidad Organizacional");
+		cb_unidad_movimiento.setNullSelectionAllowed(false);
+		for (Unidades_Organizacionale unidad : unidad_impl.getunidad(dependencia.getDEP_Dependencia())) {
+			this.cb_unidad_movimiento.addItem(unidad);
+			this.cb_unidad_movimiento.setItemCaption(unidad, unidad.getUNO_Nombre_Unidad_Organizacional());
 		}
 	}
 	
@@ -257,28 +282,23 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 							+ personal.getPER_Apellido_Materno());
 		}
 	}
-	private void buildNivelAutorizacion(short dependencia, short tipo_movimiento) {
-		this.txt_orden.setValue(String.valueOf(tipomov_impl.getNivelAutorizacion(dependencia, tipo_movimiento)));
+	
+	private void buildNivelAutorizacion(short dependencia, short unidad, short tipo_movimiento) {
+		this.txt_orden.setValue(String.valueOf(tipomov_impl.getNivelAutorizacion(dependencia, unidad, tipo_movimiento)));
 	}
 	
 	public TipoAutorizacionModel getData() {
 		TipoAutorizacionModel resul = new TipoAutorizacionModel();
-		resul.setDependencia_id(((Dependencia)cb_dependencia_movimiento.getValue()).getDEP_Dependencia());
-		resul.setTipo_movimiento_id(((Tipos_Movimiento)cb_tipo_movimiento.getValue()).getTMV_Tipo_Movimiento());
+		resul.setDependencia_id(((Dependencia) cb_dependencia_movimiento.getValue()).getDEP_Dependencia());
+		resul.setTipo_movimiento_id(((Tipos_Movimiento) cb_tipo_movimiento.getValue()).getTMV_Tipo_Movimiento());
 		resul.setOrden(Short.valueOf(txt_orden.getValue()));
 		resul.setNivel_autorizacion_id(Short.parseShort(cb_nivel_autorizacion.getValue().toString()));
-		resul.setCi(((PersonalModel)cb_servidor_publico.getValue()).getPER_CI_Empleado());
-		
-
+		resul.setCi(((PersonalModel) cb_servidor_publico.getValue()).getPER_CI_Empleado());
+		resul.setUnidadOrganizacionalId(((Unidades_Organizacionale) cb_unidad_movimiento.getValue())
+				.getUNO_Unidad_Organizacional());
 		long lnMilis = new Date().getTime();
 		resul.setFecha_registro(new java.sql.Date(lnMilis));
 		return resul;
 	}
 	
-	// public void setData(Ciudade data) {
-	// this.txt_id_ciudad.setValue(String.valueOf(data.getCIU_Ciudad()));
-	// this.txt_nombre_ciudad.setValue(String.valueOf(data.getCIU_Nombre_Ciudad()));
-	// this.txt_sigla_ciudad.setValue(String.valueOf(data.getCIU_Sigla()));
-	//
-	// }
 }

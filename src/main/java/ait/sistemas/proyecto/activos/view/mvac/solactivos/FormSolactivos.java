@@ -14,6 +14,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -25,6 +26,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
@@ -36,7 +38,9 @@ import com.vaadin.ui.UI;
 
 public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	private static final long serialVersionUID = 1L;
-	private TextField txt_id_solicitud = new TextField("Id. Solicitud");
+	
+	private TextField txt_solicitante = new TextField("Funcionario Solicitante");
+	private TextField txt_id_solicitud = new TextField("No. Solicitud");
 	public DateField dtf_fecha_soliciud = new DateField("Fecha Solicitud");
 	
 	public ComboBox cb_grupo_contable = new ComboBox("Grupo Contable");
@@ -54,7 +58,9 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	private GridSolactivos grid_solicitud = new GridSolactivos();
 	private GridSolactivos grid_solicitados = new GridSolactivos();
 	
+	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	private List<ActivoGrid> activosSolicitados = new ArrayList<ActivoGrid>();
+	
 	public FormSolactivos() {
 		
 		super(6, 2);
@@ -94,6 +100,9 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		dtf_fecha_soliciud.setWidth("90%");
 		cb_grupo_contable.setWidth("90%");
 		cb_auxiliar_contable.setWidth("90%");
+		txt_solicitante.setWidth("90%");
+		txt_solicitante.setEnabled(false);
+		txt_solicitante.setValue(session.getFull_name());
 		
 		fillcbGrupoContable();
 		buildContent();
@@ -128,15 +137,21 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		
 		Panel pn_solicitud = new Panel("Solicitud de Movimiento de Activos");
 		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
+		pn_solicitud.setStyleName(AitTheme.PANEL_FORM);
+		pn_solicitud.setIcon(FontAwesome.EDIT);
 		
-		GridLayout gridl_solicitud = new GridLayout(2, 1);
+		pn_activos.setStyleName(AitTheme.PANEL_FORM);
+		pn_activos.setIcon(FontAwesome.EDIT);
+		
+		GridLayout gridl_solicitud = new GridLayout(6, 1);
 		gridl_solicitud.setSizeFull();
-		// gridl_solicitud.setMargin(true);
-		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
-		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
+		gridl_solicitud.setMargin(true);
+		gridl_solicitud.addComponent(this.txt_solicitante, 0, 0, 3, 0);
+		gridl_solicitud.addComponent(this.txt_id_solicitud, 4, 0);
+		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 5, 0);
 		pn_solicitud.setContent(gridl_solicitud);
 		
-		this.addComponent(pn_solicitud, 4, 0, 5, 0);
+		this.addComponent(pn_solicitud, 0, 0, 5, 0);
 		
 		GridLayout gridl_activos = new GridLayout(2, 1);
 		gridl_activos.setSizeFull();
@@ -235,6 +250,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	public Component getgrid_solicitud() {
 		return this.grid_solicitud;
 	}
+	
 	public Component getgridSolicitados() {
 		return this.grid_solicitados;
 	}
@@ -254,7 +270,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		}
 		this.grid_solicitados.update(this.activosSolicitados);
 	}
-
+	
 	public void deleteActivo() {
 		for (Object row : grid_solicitados.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;

@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
+import ait.sistemas.proyecto.activos.data.service.Impl.TipoCambioImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
@@ -48,6 +51,7 @@ public class FormKardex extends GridLayout implements ValueChangeListener, Click
 	final PropertysetItem pitm_Kardex = new PropertysetItem();
 	private FieldGroup binder_Kardex;
 	
+	private final TipoCambioImpl tipoCambioImpl = new TipoCambioImpl();
 	Panel pnCodigo;
 	Panel pnCombos;
 	
@@ -183,7 +187,13 @@ public class FormKardex extends GridLayout implements ValueChangeListener, Click
 	}
 	
 	public boolean validate() {
-		if (txt_codigoActivo.getValue() != null) {
+		try{
+			tipoCambioImpl.getTipoCambioUFV(new java.sql.Date(this.dtf_fechaElaboracion.getValue().getTime()));
+		}catch(NoResultException ex){
+			this.mensajes.add(new BarMessage("Tipo Cambio", Messages.TIPO_CAMBIO));
+			return false;
+		}
+		if (txt_codigoActivo.getValue() != null && !txt_codigoActivo.getValue().equals("")) {
 			return true;
 		}
 		try {
