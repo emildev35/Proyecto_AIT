@@ -111,6 +111,29 @@ public class VPersonalR extends VerticalLayout implements View, ClickListener {
 		}
 		return data;
 	}
+	public String[][] getDatosALL() {
+		
+		List<PersonalModel> lista = personal_impl.getPersonal();
+		
+		this.data = new String[lista.size()][6];
+		this.r = 0;
+		for (PersonalModel personal : lista) {
+			String fullname = String.format("%s %s %s",
+					personal.getPER_Apellido_Paterno(),
+					personal.getPER_Apellido_Materno(),
+					personal.getPER_Nombres());
+			String[] row = { 
+					personal.getPER_CI_Empleado(), 
+					fullname,
+					personal.getPER_Dependencia(),
+					personal.getPER_Unidad_Organizacional(),
+					personal.getPER_No_Telefono_Oficina(),
+					personal.getPER_No_Interno() };
+			this.data[r] = row;
+			this.r++;
+		}
+		return data;
+	}
 	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
@@ -130,9 +153,16 @@ public class VPersonalR extends VerticalLayout implements View, ClickListener {
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
+				short a = 0;
+				if ((Short) this.frmReporte.cbDependencia.getValue() == a) {
+					// int [][] datas = activo_impl.getProvedoreCuidad();
+					reporte.getPdf(getDatosALL(), "Todas las Dependencias");
+				}
+				else{
 				reporte.getPdf(getData(), this.frmReporte.cbDependencia
 						.getItemCaption(this.frmReporte.cbDependencia
 								.getValue()));
+			}
 				File pdfFile = new File(ReportPdf.SAVE_PATH);
 
 				VerticalLayout vl_pdf = new VerticalLayout();

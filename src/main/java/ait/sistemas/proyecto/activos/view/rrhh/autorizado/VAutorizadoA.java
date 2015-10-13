@@ -71,6 +71,7 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		formContent.setMargin(true);
 		Panel gridPanel = new Panel();
 		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("AUTORIZACIONES");
 		gridPanel.setCaption("AUTORIZACIONES");

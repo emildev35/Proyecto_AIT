@@ -2,9 +2,7 @@ package ait.sistemas.proyecto.activos.view.mvac.historico;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -95,14 +93,14 @@ public class VHistoricoR extends VerticalLayout implements View, ClickListener {
 		HisotricoElement[][][] kardex_elements = new HisotricoElement[lista.size()][8][7];
 		
 		for (ActivosModel activos : lista) {
-			activos.setACT_Actualizacion_Acumulada_Gestion_Anterior(new BigDecimal("0"));
-			activos.setACT_Actualizacion_Acumulada(new BigDecimal("0"));
-			activos.setACT_Depresiacion_Acumulada(new BigDecimal("0"));
+//			activos.setACT_Actualizacion_Acumulada_Gestion_Anterior(new BigDecimal("0"));
+//			activos.setACT_Actualizacion_Acumulada(new BigDecimal("0"));
+//			activos.setACT_Depresiacion_Acumulada(new BigDecimal("0"));
 			
-			if (activos.getACT_Fecha_Baja() == null && activos.getACT_No_Resolucion_Baja() == null) {
-				
-				activos.Actualizar(this.frmReporte.dtf_fechaElaboracion.getValue());
-			}
+//			if (activos.getACT_Fecha_Baja() == null && activos.getACT_No_Resolucion_Baja() == null) {
+//				
+//				activos.Actualizar(this.frmReporte.dtf_fechaElaboracion.getValue());
+//			}
 			
 			kardex_elements[r][0][0] = new HisotricoElement();
 			kardex_elements[r][0][0].setAncho(75);
@@ -120,159 +118,153 @@ public class VHistoricoR extends VerticalLayout implements View, ClickListener {
 			kardex_elements[r][0][2].setContenido(activos.getACT_No_Serie());
 			
 			kardex_elements[r][1][0] = new HisotricoElement();
-			kardex_elements[r][1][0].setAncho(340);
-			kardex_elements[r][1][0].setTitulo("Grupo Contable");
-			kardex_elements[r][1][0].setContenido(activos.getACT_Grupo_Contable());
+			kardex_elements[r][1][0].setAncho(360);
+			kardex_elements[r][1][0].setTitulo("Dependencia");
+			kardex_elements[r][1][0].setContenido(activos.getACT_Dependencia());
 			
 			kardex_elements[r][1][1] = new HisotricoElement();
-			kardex_elements[r][1][1].setAncho(340);
-			kardex_elements[r][1][1].setTitulo("Auxiliar Contable");
-			kardex_elements[r][1][1].setContenido(activos.getACT_Auxiliar_Contable());
-			
-			kardex_elements[r][1][2] = new HisotricoElement();
-			kardex_elements[r][1][2].setAncho(45);
-			kardex_elements[r][1][2].setTitulo("Vida Util");
-			kardex_elements[r][1][2].setContenido(String.valueOf(activos.getACT_Vida_Util()));
+			kardex_elements[r][1][1].setAncho(365);
+			kardex_elements[r][1][1].setTitulo("Unidad Origanizaicional");
+			if (activos.getACT_CI_Empleado_Asignado() != null) {
+				kardex_elements[r][1][1].setContenido(activos.getACT_Auxiliar_Contable());//unidad organizacional
+			} else {
+				kardex_elements[r][1][1].setContenido("");
+			}
 			
 			kardex_elements[r][2][0] = new HisotricoElement();
 			kardex_elements[r][2][0].setAncho(200);
-			kardex_elements[r][2][0].setTitulo("Partida");
-			kardex_elements[r][2][0].setContenido(activos.getACT_Partidas_Presupuestarias());
+			kardex_elements[r][2][0].setTitulo("Inmueble");
+			kardex_elements[r][2][0].setContenido(activos.getACT_Inmueble());
 			
 			kardex_elements[r][2][1] = new HisotricoElement();
 			kardex_elements[r][2][1].setAncho(200);
-			kardex_elements[r][2][1].setTitulo("Fuente Financimiento");
-			kardex_elements[r][2][1].setContenido(activos.getACT_Fuente_Financiamiento());
-			
-			kardex_elements[r][2][2] = new HisotricoElement();
-			kardex_elements[r][2][2].setAncho(200);
-			kardex_elements[r][2][2].setTitulo("Organismo Financiador");
-			kardex_elements[r][2][2].setContenido(activos.getACT_Organismo_Financiador());
-			
-			kardex_elements[r][2][3] = new HisotricoElement();
-			kardex_elements[r][2][3].setAncho(125);
-			kardex_elements[r][2][3].setTitulo("N. Comprobante de Gasto");
-			kardex_elements[r][2][3].setContenido(String.valueOf(activos.getACT_No_Comprobante_Gasto()));
+			kardex_elements[r][2][1].setTitulo("Ubicacion Fisica");
+			kardex_elements[r][2][1].setContenido(activos.getACT_Ubicacion_Fisica_Activo());
 			
 			kardex_elements[r][3][0] = new HisotricoElement();
-			kardex_elements[r][3][0].setAncho(200);
-			kardex_elements[r][3][0].setTitulo("Proveedor");
-			kardex_elements[r][3][0].setContenido(activos.getACT_Nombre_Proveedor());
-			
-			kardex_elements[r][3][1] = new HisotricoElement();
-			kardex_elements[r][3][1].setAncho(185);
-			kardex_elements[r][3][1].setTitulo("Marca");
-			kardex_elements[r][3][1].setContenido(activos.getACT_Marca());
-			
-			kardex_elements[r][3][2] = new HisotricoElement();
-			kardex_elements[r][3][2].setAncho(60);
-			kardex_elements[r][3][2].setTitulo("F. Compra");
-			kardex_elements[r][3][2].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos.getACT_Fecha_Compra()));
-			
-			kardex_elements[r][3][3] = new HisotricoElement();
-			kardex_elements[r][3][3].setAncho(75);
-			kardex_elements[r][3][3].setTitulo("Valor Compra (Bs)");
-			kardex_elements[r][3][3].setContenido(String.valueOf(activos.getACT_Valor_Compra()));
-			
-			kardex_elements[r][3][4] = new HisotricoElement();
-			kardex_elements[r][3][4].setAncho(65);
-			kardex_elements[r][3][4].setTitulo("F. Incorporacion");
-			kardex_elements[r][3][4].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos.getACT_Fecha_Incorporacion()));
-			
-			kardex_elements[r][3][5] = new HisotricoElement();
-			kardex_elements[r][3][5].setAncho(70);
-			kardex_elements[r][3][5].setTitulo("Tipo Cambio ($u$)");
-			kardex_elements[r][3][5].setContenido(String.valueOf(activos.getACT_Tipo_Cambio_Dolar()));
-			
-			kardex_elements[r][3][6] = new HisotricoElement();
-			kardex_elements[r][3][6].setAncho(70);
-			kardex_elements[r][3][6].setTitulo("Tipo Cambio (UFV)");
-			kardex_elements[r][3][6].setContenido(String.valueOf(activos.getACT_Tipo_Cambio_UFV()));
-			
-			kardex_elements[r][4][0] = new HisotricoElement();
-			kardex_elements[r][4][0].setAncho(50);
-			kardex_elements[r][4][0].setTitulo("N.Folio Real");
-			kardex_elements[r][4][0].setContenido(activos.getACT_No_Folio_Real());
-			
-			kardex_elements[r][4][1] = new HisotricoElement();
-			kardex_elements[r][4][1].setAncho(50);
-			kardex_elements[r][4][1].setTitulo("N. Ruat");
-			kardex_elements[r][4][1].setContenido(activos.getACT_No_RUAT());
-			
-			kardex_elements[r][4][2] = new HisotricoElement();
-			kardex_elements[r][4][2].setAncho(80);
-			kardex_elements[r][4][2].setTitulo("N. Poliza de Seguro");
-			kardex_elements[r][4][2].setContenido(activos.getACT_No_Poliza_Seguro());
-			
-			kardex_elements[r][4][3] = new HisotricoElement();
-			kardex_elements[r][4][3].setAncho(90);
-			kardex_elements[r][4][3].setTitulo("Vencimiento Seguro");
-			if (activos.getACT_Fecha_Vencimiento_Mantenimiento() != null) {
-				kardex_elements[r][4][3].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos
-						.getACT_Fecha_Vencimiento_Seguro()));
+			kardex_elements[r][3][0].setAncho(300);
+			kardex_elements[r][3][0].setTitulo("Servidor Público");
+			if (activos.getACT_CI_Empleado_Asignado() != null) {
+				kardex_elements[r][3][0].setContenido(activos.getACT_Nombre_Empleado() + " " + activos.getACT_APaterno_Empleado()
+						+ " " + activos.getACT_AMaterno_Empleado());
 			} else {
-				kardex_elements[r][4][3].setContenido("");
+				kardex_elements[r][3][0].setContenido("");
 			}
 			
-			kardex_elements[r][4][4] = new HisotricoElement();
-			kardex_elements[r][4][4].setAncho(100);
-			kardex_elements[r][4][4].setTitulo("N. Contrato Mantenimiento");
-			kardex_elements[r][4][4].setContenido(activos.getACT_No_Contrato_Mantenimiento());
-			
-			kardex_elements[r][4][5] = new HisotricoElement();
-			kardex_elements[r][4][5].setAncho(80);
-			kardex_elements[r][4][5].setTitulo("Contrato Mantenimiento");
-			if (activos.getACT_Fecha_Vencimiento_Mantenimiento() != null) {
-				kardex_elements[r][4][5].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos
-						.getACT_Fecha_Vencimiento_Mantenimiento()));
-			} else {
-				kardex_elements[r][4][5].setContenido("");
-			}
-			
-			kardex_elements[r][4][6] = new HisotricoElement();
-			kardex_elements[r][4][6].setAncho(100);
-			kardex_elements[r][4][6].setTitulo("Vcto. Contrato Mantenimiento");
-			if (activos.getACT_Fecha_Vencimiento_Mantenimiento() != null) {
-				kardex_elements[r][4][6].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos
-						.getACT_Fecha_Vencimiento_Mantenimiento() == null));
-			} else {
-				kardex_elements[r][4][6].setContenido("");
-			}
-			kardex_elements[r][5][0] = new HisotricoElement();
-			kardex_elements[r][5][0].setAncho(200);
-			kardex_elements[r][5][0].setTitulo("Inmueble");
-			kardex_elements[r][5][0].setContenido(activos.getACT_Inmueble());
-			
-			kardex_elements[r][5][1] = new HisotricoElement();
-			kardex_elements[r][5][1].setAncho(200);
-			kardex_elements[r][5][1].setTitulo("Ubicacion Fisica");
-			kardex_elements[r][5][1].setContenido(activos.getACT_Ubicacion_Fisica_Activo());
-			
-			kardex_elements[r][5][2] = new HisotricoElement();
-			kardex_elements[r][5][2].setAncho(200);
-			kardex_elements[r][5][2].setTitulo("En Custodio del Servidor Publico");
-			kardex_elements[r][5][2].setContenido(activos.getACT_Nombre_Empleado() + " " + activos.getACT_APaterno_Empleado()
-					+ " " + activos.getACT_AMaterno_Empleado());
-			
-			kardex_elements[r][6][0] = new HisotricoElement();
-			kardex_elements[r][6][0].setAncho(130);
-			kardex_elements[r][6][0].setTitulo("Actualización");
-			kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada().floatValue()));
-			
-			kardex_elements[r][6][1] = new HisotricoElement();
-			kardex_elements[r][6][1].setAncho(100);
-			kardex_elements[r][6][1].setTitulo("Depreciación");
-			kardex_elements[r][6][1].setContenido(String.valueOf(activos.getACT_Depresiacion_Acumulada().floatValue()));
-			
-			kardex_elements[r][6][2] = new HisotricoElement();
-			kardex_elements[r][6][2].setAncho(70);
-			kardex_elements[r][6][2].setTitulo("Vida Util Residual");
-			kardex_elements[r][6][2].setContenido(String.valueOf(activos.getACT_Vida_Residual()));
-			
-			kardex_elements[r][6][3] = new HisotricoElement();
-			kardex_elements[r][6][3].setAncho(100);
-			kardex_elements[r][6][3].setTitulo("Valor del bien a la Fecha");
-			kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Valor_Neto().floatValue()));
+//			kardex_elements[r][3][1] = new HisotricoElement();
+//			kardex_elements[r][3][1].setAncho(185);
+//			kardex_elements[r][3][1].setTitulo("Marca");
+//			kardex_elements[r][3][1].setContenido(activos.getACT_Marca());
+//			
+//			kardex_elements[r][3][2] = new HisotricoElement();
+//			kardex_elements[r][3][2].setAncho(60);
+//			kardex_elements[r][3][2].setTitulo("F. Compra");
+//			kardex_elements[r][3][2].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos.getACT_Fecha_Compra()));
+//			
+//			kardex_elements[r][3][3] = new HisotricoElement();
+//			kardex_elements[r][3][3].setAncho(75);
+//			kardex_elements[r][3][3].setTitulo("Valor Compra (Bs)");
+//			kardex_elements[r][3][3].setContenido(String.valueOf(activos.getACT_Valor_Compra()));
+//			
+//			kardex_elements[r][3][4] = new HisotricoElement();
+//			kardex_elements[r][3][4].setAncho(65);
+//			kardex_elements[r][3][4].setTitulo("F. Incorporacion");
+//			kardex_elements[r][3][4].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos.getACT_Fecha_Incorporacion()));
+//			
+//			kardex_elements[r][3][5] = new HisotricoElement();
+//			kardex_elements[r][3][5].setAncho(70);
+//			kardex_elements[r][3][5].setTitulo("Tipo Cambio ($u$)");
+//			kardex_elements[r][3][5].setContenido(String.valueOf(activos.getACT_Tipo_Cambio_Dolar()));
+//			
+//			kardex_elements[r][3][6] = new HisotricoElement();
+//			kardex_elements[r][3][6].setAncho(70);
+//			kardex_elements[r][3][6].setTitulo("Tipo Cambio (UFV)");
+//			kardex_elements[r][3][6].setContenido(String.valueOf(activos.getACT_Tipo_Cambio_UFV()));
+//			
+//			kardex_elements[r][4][0] = new HisotricoElement();
+//			kardex_elements[r][4][0].setAncho(50);
+//			kardex_elements[r][4][0].setTitulo("N.Folio Real");
+//			kardex_elements[r][4][0].setContenido(activos.getACT_No_Folio_Real());
+//			
+//			kardex_elements[r][4][1] = new HisotricoElement();
+//			kardex_elements[r][4][1].setAncho(50);
+//			kardex_elements[r][4][1].setTitulo("N. Ruat");
+//			kardex_elements[r][4][1].setContenido(activos.getACT_No_RUAT());
+//			
+//			kardex_elements[r][4][2] = new HisotricoElement();
+//			kardex_elements[r][4][2].setAncho(80);
+//			kardex_elements[r][4][2].setTitulo("N. Poliza de Seguro");
+//			kardex_elements[r][4][2].setContenido(activos.getACT_No_Poliza_Seguro());
+//			
+//			kardex_elements[r][4][3] = new HisotricoElement();
+//			kardex_elements[r][4][3].setAncho(90);
+//			kardex_elements[r][4][3].setTitulo("Vencimiento Seguro");
+//			if (activos.getACT_Fecha_Vencimiento_Mantenimiento() != null) {
+//				kardex_elements[r][4][3].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos
+//						.getACT_Fecha_Vencimiento_Seguro()));
+//			} else {
+//				kardex_elements[r][4][3].setContenido("");
+//			}
+//			
+//			kardex_elements[r][4][4] = new HisotricoElement();
+//			kardex_elements[r][4][4].setAncho(100);
+//			kardex_elements[r][4][4].setTitulo("N. Contrato Mantenimiento");
+//			kardex_elements[r][4][4].setContenido(activos.getACT_No_Contrato_Mantenimiento());
+//			
+//			kardex_elements[r][4][5] = new HisotricoElement();
+//			kardex_elements[r][4][5].setAncho(80);
+//			kardex_elements[r][4][5].setTitulo("Contrato Mantenimiento");
+//			if (activos.getACT_Fecha_Vencimiento_Mantenimiento() != null) {
+//				kardex_elements[r][4][5].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos
+//						.getACT_Fecha_Vencimiento_Mantenimiento()));
+//			} else {
+//				kardex_elements[r][4][5].setContenido("");
+//			}
+//			
+//			kardex_elements[r][4][6] = new HisotricoElement();
+//			kardex_elements[r][4][6].setAncho(100);
+//			kardex_elements[r][4][6].setTitulo("Vcto. Contrato Mantenimiento");
+//			if (activos.getACT_Fecha_Vencimiento_Mantenimiento() != null) {
+//				kardex_elements[r][4][6].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos
+//						.getACT_Fecha_Vencimiento_Mantenimiento() == null));
+//			} else {
+//				kardex_elements[r][4][6].setContenido("");
+//			}
+//			kardex_elements[r][5][0] = new HisotricoElement();
+//			kardex_elements[r][5][0].setAncho(200);
+//			kardex_elements[r][5][0].setTitulo("Inmueble");
+//			kardex_elements[r][5][0].setContenido(activos.getACT_Inmueble());
+//			
+//			kardex_elements[r][5][1] = new HisotricoElement();
+//			kardex_elements[r][5][1].setAncho(200);
+//			kardex_elements[r][5][1].setTitulo("Ubicacion Fisica");
+//			kardex_elements[r][5][1].setContenido(activos.getACT_Ubicacion_Fisica_Activo());
+//			
+//			kardex_elements[r][5][2] = new HisotricoElement();
+//			kardex_elements[r][5][2].setAncho(200);
+//			kardex_elements[r][5][2].setTitulo("En Custodio del Servidor Publico");
+//			kardex_elements[r][5][2].setContenido(activos.getACT_Nombre_Empleado() + " " + activos.getACT_APaterno_Empleado()
+//					+ " " + activos.getACT_AMaterno_Empleado());
+//			
+//			kardex_elements[r][6][0] = new HisotricoElement();
+//			kardex_elements[r][6][0].setAncho(130);
+//			kardex_elements[r][6][0].setTitulo("Actualización");
+//			kardex_elements[r][6][0].setContenido(String.valueOf(activos.getACT_Actualizacion_Acumulada().floatValue()));
+//			
+//			kardex_elements[r][6][1] = new HisotricoElement();
+//			kardex_elements[r][6][1].setAncho(100);
+//			kardex_elements[r][6][1].setTitulo("Depreciación");
+//			kardex_elements[r][6][1].setContenido(String.valueOf(activos.getACT_Depresiacion_Acumulada().floatValue()));
+//			
+//			kardex_elements[r][6][2] = new HisotricoElement();
+//			kardex_elements[r][6][2].setAncho(70);
+//			kardex_elements[r][6][2].setTitulo("Vida Util Residual");
+//			kardex_elements[r][6][2].setContenido(String.valueOf(activos.getACT_Vida_Residual()));
+//			
+//			kardex_elements[r][6][3] = new HisotricoElement();
+//			kardex_elements[r][6][3].setAncho(100);
+//			kardex_elements[r][6][3].setTitulo("Valor del bien a la Fecha");
+//			kardex_elements[r][6][3].setContenido(String.valueOf(activos.getACT_Valor_Neto().floatValue()));
 			r++;
 			
 		}
@@ -322,7 +314,7 @@ public class VHistoricoR extends VerticalLayout implements View, ClickListener {
 				vl_pdf.setSizeFull();
 				vl_pdf.addComponent(pdf);
 				
-				Window subWindow = new Window("Reporte Kardex");
+				Window subWindow = new Window("Reporte Historico de Activos Fijos");
 				VerticalLayout subContent = new VerticalLayout();
 				subContent.setMargin(true);
 				subWindow.setContent(vl_pdf);

@@ -256,5 +256,4 @@ public class Movimiento {
 		this.tipo_movimiento_nuevo = tipo_movimiento_nuevo;
 	}
 
-	
 }

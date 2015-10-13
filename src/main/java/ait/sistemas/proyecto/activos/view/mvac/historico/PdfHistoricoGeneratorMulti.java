@@ -39,26 +39,32 @@ public class PdfHistoricoGeneratorMulti {
 	
 	public void drawkardex(PDDocument doc, Historico[] kardex) throws IOException {
 		
+		// for (int i = 0; i < kardex.length; i++) {
+		// Integer rowsPerPage = new Double(Math.floor(kardex[i].getHeight() /
+		// kardex[i].getRowHeight())).intValue() - 1;
+		// // intNumberPages += new
+		// Double(Math.ceil((kardex[i].getNumberOfRows().floatValue() +
+		// kardex[i].getHeaderSize())
+		// // / rowsPerPage)).intValue();
+		// }
 		for (int i = 0; i < kardex.length; i++) {
-			Integer rowsPerPage = new Double(Math.floor(kardex[i].getHeight() / kardex[i].getRowHeight())).intValue() - 1;
-			intNumberPages += new Double(Math.ceil((kardex[i].getNumberOfRows().floatValue() + kardex[i].getHeaderSize())
-					/ rowsPerPage)).intValue();
-		}
-		for (int i = 0; i < kardex.length; i++) {
-			Integer rowsPerPage = new Double(Math.floor(kardex[i].getHeight() / kardex[i].getRowHeight())).intValue() - 1;
-			Integer numberOfPages = new Double(Math.ceil((kardex[i].getNumberOfRows().floatValue() + kardex[i].getHeaderSize())
-					/ rowsPerPage)).intValue();
+			// Integer rowsPerPage = new Double(Math.floor(kardex[i].getHeight()
+			// / kardex[i].getRowHeight())).intValue() - 1;
+			// Integer numberOfPages = new
+			// Double(Math.ceil((kardex[i].getNumberOfRows().floatValue() +
+			// kardex[i].getHeaderSize())
+			// / rowsPerPage)).intValue();
 			
-			for (int pageCount = 0; pageCount < numberOfPages; pageCount++) {
-				PDPage page = new PDPage();
-				page.setMediaBox(kardex[i].getPageSize());
-				if (kardex[i].isLandscape()) {
-					page.setRotation(90);
-				}
-				this.doc.addPage(page);
-				PDPageContentStream contentStream = generateContentStream(doc, page, kardex[i]);
-				drawCurrentPage(kardex[i], contentStream, pageCount);
+			// for (int pageCount = 0; pageCount < 1; pageCount++) {
+			PDPage page = new PDPage();
+			page.setMediaBox(kardex[i].getPageSize());
+			if (kardex[i].isLandscape()) {
+				page.setRotation(90);
 			}
+			this.doc.addPage(page);
+			PDPageContentStream contentStream = generateContentStream(doc, page, kardex[i]);
+			drawCurrentPage(kardex[i], contentStream, 1);
+			// }
 		}
 		
 	}
@@ -67,17 +73,18 @@ public class PdfHistoricoGeneratorMulti {
 	private void drawCurrentPage(Historico table, PDPageContentStream contentStream, int pageCount) throws IOException {
 		float tableTopY;
 		
+		int r = table.getHeaderSize();
 		tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize().getHeight()
 				- table.getMargin();
 		
 		float nextTextX = table.getMargin() + table.getCellMargin();
-		if (pageCount == 0) {
-			tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin()
-					- (table.getRowHeight() * table.getHeaderSize()) : table.getPageSize().getHeight() - table.getMargin()
-					- table.getRowHeight() - (table.getRowHeight() * table.getHeaderSize());
-			
-			writeHeader(contentStream, nextTextX, table);
-		}
+		// if (pageCount == 0) {
+		tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin()
+				- (table.getRowHeight() * table.getHeaderSize()) : table.getPageSize().getHeight() - table.getMargin()
+				- table.getRowHeight() - (table.getRowHeight() * table.getHeaderSize());
+		
+		writeHeader(contentStream, nextTextX, table);
+		// }
 		
 		drawTableGrid(table, contentStream, tableTopY);
 		// Calculate center alignment for text in cell considering font
@@ -86,18 +93,18 @@ public class PdfHistoricoGeneratorMulti {
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
 		// nextTextY -= table.getRowHeight();
 		
-		if (pageCount == 0) {
-			// Write content
-			for (int i = 0; i < table.getElemenos().length; i++) {
-				if (table.getElemenos()[i][0] == null) {
-					continue;
-				}
-				writeContentLine(table.getElemenos()[i], contentStream, nextTextX, nextTextY, table);
-				nextTextY -= (table.getRowHeight() + table.getRowTitleHeight());
-				nextTextX = table.getMargin() + table.getCellMargin();
+		// if (pageCount == 0) {
+		// Write content
+		for (int i = 0; i < table.getElemenos().length; i++) {
+			if (table.getElemenos()[i][0] == null) {
+				continue;
 			}
-			
+			writeContentLine(table.getElemenos()[i], contentStream, nextTextX, nextTextY, table);
+			nextTextY -= (table.getRowHeight() + table.getRowTitleHeight());
+			nextTextX = table.getMargin() + table.getCellMargin();
 		}
+		
+		// }
 		// Tabla de Componentes
 		nextTextY -= table.getRowHeight();
 		drawTableComponentGrid(table, table.getComponentes(), contentStream, nextTextY);
@@ -106,32 +113,37 @@ public class PdfHistoricoGeneratorMulti {
 		contentStream.setFont(table.getTexttitleFont(), table.getFontSize());
 		nextTextY -= table.getRowHeight();
 		nextTextX = table.getMargin() + table.getCellMargin();
-		
+		r += 4;
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
 		// Write content
-		
-		for (int i = 0; i < table.getDocumentos().length; i++) {
-			writeContentLineComponent(table.getComponentes()[i], contentStream, nextTextX, nextTextY, table);
-			nextTextY -= table.getRowHeight();
-			nextTextX = table.getMargin() + table.getCellMargin();
+		if (!table.getComponentes().equals(null)) {
+			for (int i = 0; i < table.getComponentes().length; i++) {
+				writeContentLineComponent(table.getComponentes()[i], contentStream, nextTextX, nextTextY, table);
+				nextTextY -= table.getRowHeight();
+				
+				nextTextX = table.getMargin() + table.getCellMargin();
+			}
 		}
 		// Tabla de Documentos
-		nextTextY -= table.getRowHeight();
-		
-		drawTableDocumentGrid(table, table.getDocumentos(), contentStream, nextTextY);
-		nextTextY -= table.getRowHeight() / 2;
-		contentStream.setFont(table.getTexttitleFont(), table.getFontSize());
-		writeContentLineDocument(table.getColumnsDocumentsNamesAsArray(), contentStream, nextTextX, nextTextY, table);
-		nextTextY -= table.getRowHeight();
-		nextTextX = table.getMargin() + table.getCellMargin();
-		
-		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		// Write content
-		for (int i = 0; i < table.getDocumentos().length; i++) {
-			writeContentLineDocument(table.getDocumentos()[i], contentStream, nextTextX, nextTextY, table);
-			nextTextY -= table.getRowHeight();
-			nextTextX = table.getMargin() + table.getCellMargin();
-		}
+		// nextTextY -= table.getRowHeight();
+		//
+		// drawTableDocumentGrid(table, table.getDocumentos(), contentStream,
+		// nextTextY);
+		// nextTextY -= table.getRowHeight() / 2;
+		// contentStream.setFont(table.getTexttitleFont(), table.getFontSize());
+		// writeContentLineDocument(table.getColumnsDocumentsNamesAsArray(),
+		// contentStream, nextTextX, nextTextY, table);
+		// nextTextY -= table.getRowHeight();
+		// nextTextX = table.getMargin() + table.getCellMargin();
+		//
+		// contentStream.setFont(table.getTextFont(), table.getFontSize());
+		// // Write content
+		// for (int i = 0; i < table.getDocumentos().length; i++) {
+		// writeContentLineDocument(table.getDocumentos()[i], contentStream,
+		// nextTextX, nextTextY, table);
+		// nextTextY -= table.getRowHeight();
+		// nextTextX = table.getMargin() + table.getCellMargin();
+		// }
 		writeFooter(contentStream, nextTextX, 0, table, pageCount);
 		contentStream.close();
 	}
@@ -233,20 +245,6 @@ public class PdfHistoricoGeneratorMulti {
 		
 	}
 	
-	// Writes the content for one line
-	private void writeContentLineDocument(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
-			float nextTextY, Historico table) throws IOException {
-		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		for (int i = 0; i < table.getColumns_documentos().size(); i++) {
-			String text = lineContent[i];
-			contentStream.beginText();
-			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.showText(text != null ? text : "");
-			contentStream.endText();
-			nextTextX += table.getColumns_documentos().get(i).getWidth();
-		}
-	}
-	
 	private void writeContentLineComponent(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
 			float nextTextY, Historico table) throws IOException {
 		contentStream.setFont(table.getTextFont(), table.getFontSize());
@@ -266,49 +264,25 @@ public class PdfHistoricoGeneratorMulti {
 		float nextY = tableTopY;
 		
 		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i <= table.getNumberOfRowsComponentes() + 1; i++) {
+		for (int i = 0; i <= 1; i++) {
 			
 			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(i), nextY);
 			nextY -= table.getRowHeight();
 		}
 		
 		// Modificado solo pra el titulo para grilla modificar por
-		final float tableYLength = table.getRowHeight() + (table.getRowHeight() * currentPageContent.length);
-		final float tableBottomY = tableTopY - tableYLength;
+		// final float tableYLength = table.getRowHeight() +
+		// (table.getRowHeight() * currentPageContent.length);
+		// final float tableBottomY = tableTopY - tableYLength;
 		
 		float nextX = table.getMargin();
 		
 		// Modificado para solo el tititulo para grilla completa modificar por
 		for (int i = 0; i < table.getColumns_componentes().size(); i++) {
-			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
+			contentStream.drawLine(nextX, tableTopY, nextX, tableTopY - table.getRowHeight());
 			nextX += table.getColumns_componentes().get(i).getWidth();
 		}
-		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-	}
-	
-	private void drawTableDocumentGrid(Historico table, String[][] currentPageContent, PDPageContentStream contentStream,
-			float tableTopY) throws IOException {
-		// Draw row lines
-		float nextY = tableTopY;
-		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i <= table.getNumberOfRowsDocumentos() + 1; i++) {
-			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(i), nextY);
-			nextY -= table.getRowHeight();
-		}
-		
-		// Modificado solo pra el titulo para grilla modificar por
-		final float tableYLength = table.getRowHeight() + (table.getRowHeight() * currentPageContent.length);
-		final float tableBottomY = tableTopY - tableYLength;
-		
-		float nextX = table.getMargin();
-		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i < table.getColumns_documentos().size(); i++) {
-			contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
-			nextX += table.getColumns_documentos().get(i).getWidth();
-		}
-		contentStream.drawLine(nextX, tableTopY, nextX, tableBottomY);
+		contentStream.drawLine(nextX, tableTopY, nextX, tableTopY - table.getRowHeight());
 	}
 	
 	private void writeHeader(PDPageContentStream contentStream, float nextTextX, Historico table) throws IOException {
@@ -331,7 +305,7 @@ public class PdfHistoricoGeneratorMulti {
 		DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");
 		String fecha = fechaHora.format(date);
 		
-		nextTextX += 800;
+		nextTextX += table.getWidth(0) - table.getMargin() - 30;
 		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
@@ -339,7 +313,7 @@ public class PdfHistoricoGeneratorMulti {
 		contentStream.endText();
 		
 		nextTextX = nextTextXCopy;
-		nextTextY -= table.getRowHeight() * 0.75;
+		nextTextY -= table.getRowHeight() * 0.70;
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
 		contentStream.showText(usuario.getUnidad());
@@ -348,7 +322,7 @@ public class PdfHistoricoGeneratorMulti {
 		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
 		String strhora = hora.format(date);
 		
-		nextTextX += 800;
+		nextTextX += table.getWidth(0) - table.getMargin() - 30;
 		
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
