@@ -82,11 +82,25 @@ public class ReportPdf {
 		String[][] result = new String[this.movimiento_impl.getMovimientobyActivo(id_activo,new java.sql.Date (fecha.getTime())).size()][2];
 		int r = 0;
 		for (MovimientoReporte movimiento : this.movimiento_impl.getMovimientobyActivo(id_activo,new java.sql.Date( fecha.getTime()))) {
+			String fecha_rechazo = "";
+			if (movimiento.getCMV_Fecha_Rechazo() != null )
+			{
+				fecha_rechazo = new SimpleDateFormat("dd-MM-yyyy").format(movimiento.getCMV_Fecha_Rechazo());
+			}
+			String fecha_autorizacion = "";
+			if (movimiento.getCMV_Fecha_Autorizacion() != null)
+			{
+				fecha_autorizacion = new SimpleDateFormat("dd-MM-yyyy").format(movimiento.getCMV_Fecha_Autorizacion());
+			}
+			
 			String[] row = { new SimpleDateFormat("dd-MM-yyyy").format(movimiento.getCMV_Fecha_Registro()), 
 					movimiento.getCaracteristicas(),
 					movimiento.getNo_Acta(),
 					movimiento.getUsuario_Origen(),
-					movimiento.getUsuario_Destino()};
+					movimiento.getUsuario_Destino(),
+					fecha_autorizacion,
+					fecha_rechazo
+					};
 			result[r] = row;
 			r++;
 		}
@@ -112,9 +126,11 @@ public class ReportPdf {
 		List<Column> columns_componentes = new ArrayList<Column>();
 		columns_componentes.add(new Column("Fecha", 50));
 		columns_componentes.add(new Column("Tipo Movimiento", 135));
-		columns_componentes.add(new Column("No Documento", 80));
-		columns_componentes.add(new Column("Funcionario Origen", 230));
-		columns_componentes.add(new Column("Funcionario Destino", 230));
+		columns_componentes.add(new Column("No Documento", 70));
+		columns_componentes.add(new Column("Funcionario Origen", 160));
+		columns_componentes.add(new Column("Funcionario Destino", 160));
+		columns_componentes.add(new Column("Fecha Autorizacion", 75));
+		columns_componentes.add(new Column("Fecha Rechazo", 75));
 
 //		List<Column> columns_documentos = new ArrayList<Column>();
 //		columns_documentos.add(new Column("Nombre del Documento de Respaldo", 135));

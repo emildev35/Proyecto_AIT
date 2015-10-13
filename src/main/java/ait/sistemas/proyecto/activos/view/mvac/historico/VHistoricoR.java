@@ -124,7 +124,7 @@ public class VHistoricoR extends VerticalLayout implements View, ClickListener {
 			
 			kardex_elements[r][1][1] = new HisotricoElement();
 			kardex_elements[r][1][1].setAncho(365);
-			kardex_elements[r][1][1].setTitulo("Unidad Origanizaicional");
+			kardex_elements[r][1][1].setTitulo("Unidad Organizacional");
 			if (activos.getACT_CI_Empleado_Asignado() != null) {
 				kardex_elements[r][1][1].setContenido(activos.getACT_Auxiliar_Contable());//unidad organizacional
 			} else {
@@ -143,7 +143,7 @@ public class VHistoricoR extends VerticalLayout implements View, ClickListener {
 			
 			kardex_elements[r][3][0] = new HisotricoElement();
 			kardex_elements[r][3][0].setAncho(300);
-			kardex_elements[r][3][0].setTitulo("Servidor Público");
+			kardex_elements[r][3][0].setTitulo("Servidor Público Responsable");
 			if (activos.getACT_CI_Empleado_Asignado() != null) {
 				kardex_elements[r][3][0].setContenido(activos.getACT_Nombre_Empleado() + " " + activos.getACT_APaterno_Empleado()
 						+ " " + activos.getACT_AMaterno_Empleado());
