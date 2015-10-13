@@ -20,6 +20,7 @@ public class GridActivos extends Grid{
 	 * muestra los activos que no estan dados de baja
 	 */
 	public GridActivos() {
+		removeAllColumns();
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);

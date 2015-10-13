@@ -500,7 +500,7 @@ public class ActivoImpl {
 	 * Realizara copias del activo n veces
 	 */
 	public int addCopiaActivo(BigDecimal codigo, int no_copias) {
-		Query query = em.createNativeQuery("EXEC Mvac_CopiaActivo_I " + "@Codigo_Activo=?1, " + "@No_Copias=?2 ");
+		Query query = em.createNativeQuery("EXEC Mvac_ActivoCopia_I " + "@Codigo_Activo=?1, " + "@No_Copias=?2 ");
 		query.setParameter(1, codigo);
 		query.setParameter(2, no_copias);
 		try {
