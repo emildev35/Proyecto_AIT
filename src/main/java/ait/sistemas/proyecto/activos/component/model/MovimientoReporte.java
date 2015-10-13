@@ -21,6 +21,8 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "Usuario_Destino", column = "Usuario_Destino"),
 	@FieldResult(name = "CMV_No_Documento", column = "CMV_No_Documento"),
 	@FieldResult(name = "CMV_Fecha_Registro", column = "CMV_Fecha_Registro"),
+	@FieldResult(name = "CMV_Fecha_Autorizacion", column = "CMV_Fecha_Autorizacion"),
+	@FieldResult(name = "CMV_Fecha_Rechazo", column = "CMV_Fecha_Rechazo"),
 	@FieldResult(name = "Codigo_Activo", column = "Codigo_Activo"),
 	@FieldResult(name = "Nombre_Activo", column = "Nombre_Activo"),
 	@FieldResult(name = "Componentes", column = "Componentes"),
@@ -42,6 +44,8 @@ public class MovimientoReporte {
 	private String Usuario_Destino;
 	private long CMV_No_Documento;
 	private Date CMV_Fecha_Registro;
+	private Date CMV_Fecha_Autorizacion;
+	private Date CMV_Fecha_Rechazo;
 	private String Codigo_Activo;
 	private String Nombre_Activo;
 	private String Componentes;
@@ -103,6 +107,19 @@ public class MovimientoReporte {
 	}
 	public void setCMV_Fecha_Registro(Date cMV_Fecha_Registro) {
 		CMV_Fecha_Registro = cMV_Fecha_Registro;
+	}
+	
+	public Date getCMV_Fecha_Autorizacion() {
+		return CMV_Fecha_Autorizacion;
+	}
+	public void setCMV_Fecha_Autorizacion(Date cMV_Fecha_Autorizacion) {
+		CMV_Fecha_Autorizacion = cMV_Fecha_Autorizacion;
+	}
+	public Date getCMV_Fecha_Rechazo() {
+		return CMV_Fecha_Rechazo;
+	}
+	public void setCMV_Fecha_Rechazo(Date cMV_Fecha_Rechazo) {
+		CMV_Fecha_Rechazo = cMV_Fecha_Rechazo;
 	}
 	public String getCodigo_Activo() {
 		return Codigo_Activo;
