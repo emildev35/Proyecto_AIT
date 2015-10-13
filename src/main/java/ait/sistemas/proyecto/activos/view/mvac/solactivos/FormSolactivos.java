@@ -236,7 +236,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 			GruposContablesModel grupo = (GruposContablesModel) cb_grupo_contable.getValue();
 			fillcbAuxiliarContable(grupo.getGRC_Grupo_Contable());
 		}
-		if (event.getProperty() == cb_auxiliar_contable && this.cb_auxiliar_contable.getValue() != null) {
+		if (event.getProperty() == cb_auxiliar_contable && this.cb_auxiliar_contable.getValue() != null && this.cb_grupo_contable.getValue() != null) {
 			AuxiliaresContablesModel auxiliar = (AuxiliaresContablesModel) cb_auxiliar_contable.getValue();
 			buildGrid(auxiliar.getAUC_Auxiliar_Contable());
 		}
@@ -260,6 +260,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		buildId();
 		this.grid_solicitud.update("", "");
 		this.grid_solicitados.update("", "");
+		this.activosSolicitados.clear();
 	}
 	
 	public void addActivo() {

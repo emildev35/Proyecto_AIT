@@ -49,8 +49,6 @@ public class MovimientoImpl {
 	}
 	
 	public int addMovimiento(Movimiento data) {
-		this.emf = null;
-		this.em = null;
 		EntityManagerFactory emfdos = Persistence.createEntityManagerFactory("AIT-Activos");
 		EntityManager emdos = emfdos.createEntityManager();
 		String str_cabezera = "EXEC Mvac_CMovimiento_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"

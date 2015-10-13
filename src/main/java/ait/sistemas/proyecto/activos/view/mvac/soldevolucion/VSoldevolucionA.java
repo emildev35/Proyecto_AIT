@@ -7,9 +7,13 @@ import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
+import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -20,6 +24,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -35,6 +40,9 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 	CssLayout hl_errores = new CssLayout();
 	private  MovimientoImpl movimiento_impl = new MovimientoImpl();
 	
+	
+	private Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	
 	public VSoldevolucionA() {
 		this.btn_imprimir.addClickListener(this);
 		this.btn_generar_solicitud.addClickListener(this);
@@ -48,12 +56,15 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_generar_solicitud.setStyleName("ait-buttons-btn");
+		this.btn_generar_solicitud.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_generar_solicitud.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_generar_solicitud);
-		this.btn_imprimir.setStyleName("ait-buttons-btn");
+		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
+		this.btn_imprimir.setIcon(FontAwesome.PRINT);
 		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_salir.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_salir.setIcon(FontAwesome.UNDO);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_salir);
 		return buttonContent;
 	}
@@ -63,6 +74,8 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
 		Panel gridPanel = new Panel("Activos Fijos Asignados : Selecciona los Activos");
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Activos Asignados");
 		gridPanel.setContent(frm_mantenimiento.getgrid_solicitud());
@@ -75,12 +88,9 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
-		navPanel.addStyleName("ait-content-nav");
+		navPanel.addStyleName(AitTheme.BUTTONS_BAR);
 		HorizontalLayout nav = new HorizontalLayout();
-		nav.addComponent(new Label("Activos>>"));
-		nav.addComponent(new Label("Movimiento de Activos>>"));
-		nav.addComponent(new Label("Solicitud Devolucion>>"));
-		nav.addComponent(new Label("<strong>Agregar</strong>", ContentMode.HTML));
+		nav.addComponent(new Label(AitView.getNavText(menu), ContentMode.HTML));
 		navPanel.setContent(nav);
 		return navPanel;
 	}

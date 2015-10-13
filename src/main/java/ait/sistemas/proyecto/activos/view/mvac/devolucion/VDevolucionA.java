@@ -15,12 +15,14 @@ import ait.sistemas.proyecto.common.report.Column;
 import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
 import ait.sistemas.proyecto.common.report.pdf.movimiento.Firma;
 import ait.sistemas.proyecto.common.report.pdf.movimiento.TablaActivos;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -75,8 +77,12 @@ public class VDevolucionA extends VerticalLayout implements View, ClickListener,
 		gridPanel.setWidth("100%");
 		gridPanel.setCaption("Solicitudes de Devoluciones");
 		gridPanel.setContent(this.grid_asignacion);
+		gridPanel.setStyleName(AitTheme.PANEL_GRID);
+		gridPanel.setIcon(FontAwesome.TABLE);
 	//	formContent.setMargin(true);
 		Panel grid2Panel = new Panel();
+		grid2Panel.setStyleName(AitTheme.PANEL_GRID);
+		grid2Panel.setIcon(FontAwesome.TABLE);
 		grid2Panel.setWidth("100%");
 		grid2Panel.setCaption("Detalle de activos para devolucion");
 		grid2Panel.setContent(this.grid_Detalle);

@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -17,6 +18,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
@@ -34,6 +36,8 @@ public class FormSoldevolucion extends GridLayout {
 	
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
+	private TextField txtFuncionario = new TextField("Funcionario Solicitante");
+	
 	private PropertysetItem pitm_mantenimiento = new PropertysetItem();
 	private FieldGroup binder_mantenimiento;
 	
@@ -41,7 +45,7 @@ public class FormSoldevolucion extends GridLayout {
 	
 	private GridSoldevolucion grid_mantenimiento = new GridSoldevolucion();
 	
-	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
+	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	
 	public FormSoldevolucion() {
 		
@@ -56,7 +60,7 @@ public class FormSoldevolucion extends GridLayout {
 		
 		binder_mantenimiento.bind(this.txt_id_solicitud, "id_solicitud");
 		binder_mantenimiento.bind(this.dtf_fecha_soliciud, "fecha_solicitud");
-
+		
 		binder_mantenimiento.clear();
 		
 		this.txt_id_solicitud.setEnabled(false);
@@ -65,41 +69,42 @@ public class FormSoldevolucion extends GridLayout {
 		this.dtf_fecha_soliciud.setEnabled(false);
 		this.dtf_fecha_soliciud.addValidator(new NullValidator("No Nulo", false));
 		
-		
 		txt_id_solicitud.setWidth("90%");
 		dtf_fecha_soliciud.setWidth("90%");
-
+		txtFuncionario.setWidth("100%");
+		txtFuncionario.setEnabled(false);
 		
 		this.grid_mantenimiento.update(session.getCi());
+		this.txtFuncionario.setValue(session.getFull_name());
 		buildContent();
 		buildId();
 		Responsive.makeResponsive(this);
 	}
 	
 	private void buildId() {
-		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short)4)));
+		this.txt_id_solicitud.setValue(String.valueOf(movimientoimpl.getId((short) 4)));
 		this.dtf_fecha_soliciud.setValue(new Date());
 	}
 	
-	
-	
 	private void buildContent() {
 		
-		Panel pn_solicitud = new Panel("Solicitud de Movimiento de Activos");
+		Panel pn_solicitud = new Panel("Solicitud de Devolucion de Activos");
+		pn_solicitud.setStyleName(AitTheme.PANEL_FORM);
+		pn_solicitud.setIcon(FontAwesome.EDIT);
 		
-		GridLayout gridl_solicitud = new GridLayout(2, 1);
+		GridLayout gridl_solicitud = new GridLayout(6, 1);
 		gridl_solicitud.setSizeFull();
 		gridl_solicitud.setMargin(true);
-		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
-		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
+		gridl_solicitud.addComponent(this.txt_id_solicitud, 4, 0);
+		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 5, 0);
+		gridl_solicitud.addComponent(this.txtFuncionario, 0, 0, 2, 0);
 		pn_solicitud.setContent(gridl_solicitud);
 		
-		this.addComponent(pn_solicitud, 4, 0, 5, 0);
+		this.addComponent(pn_solicitud, 0, 0, 5, 0);
 		
 		GridLayout gridl_activos = new GridLayout(2, 1);
 		gridl_activos.setSizeFull();
 		gridl_activos.setMargin(true);
-		
 		
 	}
 	
@@ -123,7 +128,6 @@ public class FormSoldevolucion extends GridLayout {
 			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
 			return true;
 		} catch (CommitException e) {
-			
 			
 			return false;
 		}
@@ -157,9 +161,6 @@ public class FormSoldevolucion extends GridLayout {
 		}
 		return result;
 	}
-	
-	
-
 	
 	public Component getgrid_solicitud() {
 		return this.grid_mantenimiento;

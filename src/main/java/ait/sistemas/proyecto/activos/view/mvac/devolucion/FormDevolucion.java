@@ -8,6 +8,7 @@ import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -19,6 +20,7 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
@@ -105,7 +107,11 @@ public class FormDevolucion extends GridLayout implements ValueChangeListener{
 	}
 	private void buildContent() {
 		Panel pn_solicitud = new Panel("Solicitud de Activos");
+		pn_solicitud.setStyleName(AitTheme.PANEL_FORM);
+		pn_solicitud.setIcon(FontAwesome.EDIT);
 		Panel pn_acta = new Panel("Acta de Entrega");
+		pn_acta.setStyleName(AitTheme.PANEL_FORM);
+		pn_acta.setIcon(FontAwesome.EDIT);
 		
 		GridLayout gridl_solicitud = new GridLayout(2, 2);
 		gridl_solicitud.setSizeFull();
