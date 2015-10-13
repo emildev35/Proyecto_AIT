@@ -52,6 +52,7 @@ public class VOtorgaryRA extends VerticalLayout implements View, ClickListener {
 	private Component builFormContent() {
 		final VerticalLayout vlfrmContent = new VerticalLayout();
 		vlfrmContent.setMargin(true);
+		vlfrmContent.setSpacing(true);
 		
 		Panel pnfrmOpcionPerfil = new Panel("Formulario de Permisos");
 		pnfrmOpcionPerfil.setStyleName(AitTheme.PANEL_FORM);
@@ -59,8 +60,8 @@ public class VOtorgaryRA extends VerticalLayout implements View, ClickListener {
 		pnfrmOpcionPerfil.setContent(this.frm_otorgar);
 		
 		Panel pngridOpcionPerfil = new Panel("Grid de Opciones");
-		pngridOpcionPerfil.setStyleName(AitTheme.PANEL_FORM);
-		pngridOpcionPerfil.setIcon(FontAwesome.EDIT);
+		pngridOpcionPerfil.setStyleName(AitTheme.PANEL_GRID);
+		pngridOpcionPerfil.setIcon(FontAwesome.TABLE);
 		pngridOpcionPerfil.setContent(this.frm_otorgar.grid_otorgar);
 		
 		vlfrmContent.addComponent(pnfrmOpcionPerfil);

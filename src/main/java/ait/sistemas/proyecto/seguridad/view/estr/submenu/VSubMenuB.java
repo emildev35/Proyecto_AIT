@@ -5,7 +5,6 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
-import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
@@ -24,8 +23,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -137,17 +134,11 @@ public class VSubMenuB extends VerticalLayout implements View, ValueChangeListen
 		}
 	}
 	private void eliminar() {
-		try {
-			this.menu.deleteSubsistema(this.frm_subMenu.getData().getAME_Id_Identificador());
-			Notification.show(Messages.SUCCESS_MESSAGE);
-			this.frm_subMenu.update();
-			this.grid_subMenu.update(frm_subMenu.getMenu());
-			Notification.show(Messages.SUCCESS_MESSAGE);
-		} catch (Exception e) {
-			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-		}buildMessages(this.frm_subMenu.getMensajes());
-		
+		buildMessages(menu.delete(this.frm_subMenu.getData().getAME_Id_Identificador()));
+		this.frm_subMenu.update();
+		this.grid_subMenu.update(frm_subMenu.getMenu());
 		this.frm_subMenu.clearMessages();
+		
 	}
 	@Override
 	public void onClose(ConfirmDialog dialog) {

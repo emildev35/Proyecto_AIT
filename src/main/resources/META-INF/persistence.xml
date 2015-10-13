@@ -42,6 +42,7 @@
 		<class>ait.sistemas.proyecto.activos.component.model.Documento</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoSoporte</class>
 		<class>ait.sistemas.proyecto.activos.data.model.EstadoSoporte</class>
+		<class>ait.sistemas.proyecto.common.component.BarMessage</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
@@ -50,7 +51,7 @@
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="sa" />
-			<property name="javax.persistence.lock.timeout" value="100"/>
+			<property name="javax.persistence.lock.timeout" value="100" />
 		</properties>
 	</persistence-unit>
 
@@ -72,6 +73,7 @@
 		<class>ait.sistemas.proyecto.seguridad.component.model.PermisoPerfil</class>
 		<class>ait.sistemas.proyecto.seguridad.component.model.PermisosUsuario</class>
 		<class>ait.sistemas.proyecto.seguridad.component.model.SessionModel</class>
+		<class>ait.sistemas.proyecto.common.component.BarMessage</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
@@ -98,6 +100,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UbicacionesFisicasModel</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.Unidades_Organizacionale</class>
 		<class>ait.sistemas.proyecto.activos.data.model_rrhh.UnidadesOrganizacionalesModel</class>
+		<class>ait.sistemas.proyecto.common.component.BarMessage</class>
 		<properties>
 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
@@ -110,5 +113,5 @@
 			<property name="eclipselink.cache.shared.default" value="false" />
 		</properties>
 	</persistence-unit>
-	
+
 </persistence>
