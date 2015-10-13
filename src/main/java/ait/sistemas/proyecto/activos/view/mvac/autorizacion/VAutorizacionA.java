@@ -17,6 +17,7 @@ import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -67,13 +68,13 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_aprobar.setStyleName("ait-buttons-btn");
+		this.btn_aprobar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_aprobar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_aprobar);
-		this.btn_rechazar.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_rechazar.setStyleName(AitTheme.BTN_DELETE);
 		buttonContent.addComponent(this.btn_rechazar);
-		this.btn_salir.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_salir);
 		return buttonContent;
 	}

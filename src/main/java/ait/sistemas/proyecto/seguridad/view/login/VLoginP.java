@@ -15,6 +15,8 @@ import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.UsuarioImpl;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -50,6 +52,18 @@ public class VLoginP extends VerticalLayout implements View, ClickListener {
 		setWidth("100%");
 		this.btn_submit.addClickListener(this);
 		
+		/**
+		 * Evento de Boton Enter para el Login
+		 */
+		addShortcutListener(new ShortcutListener("ENTER", KeyCode.ENTER, new int[] {}) {
+			
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void handleAction(Object sender, Object target) {
+				btn_submit.click();
+			}
+		});
 		addComponent(buildNavBar());
 		addComponent(buildButtonBar());
 		addComponent(buildForm());

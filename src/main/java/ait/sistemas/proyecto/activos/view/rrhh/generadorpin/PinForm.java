@@ -19,6 +19,8 @@ public class PinForm extends VerticalLayout {
 	
 	public PinForm() {
 		setSizeFull();
+		setMargin(true);
+		setSpacing(true);
 		txt_pin.setEnabled(false);
 		addComponent(txt_pin);
 		setComponentAlignment(txt_pin, Alignment.MIDDLE_CENTER);

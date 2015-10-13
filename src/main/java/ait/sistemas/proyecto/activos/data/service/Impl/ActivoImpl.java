@@ -51,12 +51,11 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ActivosModel> ActivosbyAuxiliarFecha(String id_auxiliar, String grupoContable, Date fecha) {
-		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliarFecha_Q " 
-				+ "@ACT_Auxiliar_Contable=?1, "
-				+ "@ACT_Grupo_Contable=?2, "
-				+ "@Fecha=?3 ", ActivosModel.class);
+		Query query = em.createNativeQuery("Mvac_ActivosbyAuxiliarFecha_Q " + "@ACT_Auxiliar_Contable=?1, "
+				+ "@ACT_Grupo_Contable=?2, " + "@Fecha=?3 ", ActivosModel.class);
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_auxiliar);
 		query.setParameter(2, grupoContable);
@@ -264,16 +263,15 @@ public class ActivoImpl {
 		List<ActivosModel> resultlist = query.getResultList();
 		return resultlist;
 	}
-		@SuppressWarnings("unchecked")
-		public List<ActivosModel> getActivosbyCodigoFecha(long id_activo, Date fecha) {
-			Query query = em.createNativeQuery("Mvac_ActivobyCodigoFecha_Q " 
-					+ "@ACT_Codigo_Activo=?1, "
-					+ "@Fecha", "mapeo-activo");
-			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
-			query.setParameter(1, id_activo);
-			query.setParameter(2, fecha);
-			List<ActivosModel> resultlist = query.getResultList();
-			return resultlist;
+	
+	@SuppressWarnings("unchecked")
+	public List<ActivosModel> getActivosbyCodigoFecha(long id_activo, Date fecha) {
+		Query query = em.createNativeQuery("Mvac_ActivobyCodigoFecha_Q " + "@ACT_Codigo_Activo=?1, " + "@Fecha", "mapeo-activo");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_activo);
+		query.setParameter(2, fecha);
+		List<ActivosModel> resultlist = query.getResultList();
+		return resultlist;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -408,6 +406,14 @@ public class ActivoImpl {
 		return true;
 	}
 	
+	/**
+	 * Lista los Activo que no Esten Datos de Baja o esten Pendientes dentro de
+	 * un Movimiento
+	 * 
+	 * @param grupo_contable
+	 * @param auxiliar_contable
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getDisponibles(String grupo_contable, String auxiliar_contable) {
 		String str_query_act_disponibles = "EXEC Mvact_Select_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2";

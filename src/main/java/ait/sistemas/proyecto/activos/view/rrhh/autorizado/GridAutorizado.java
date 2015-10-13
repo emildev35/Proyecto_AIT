@@ -25,7 +25,7 @@ public class GridAutorizado extends Grid {
 	
 	public void buildGrid() {
 		bean_tipo_autorizacion = new BeanItemContainer<TipoAutorizacionModel>(TipoAutorizacionModel.class,
-				this.tipo_autorizacion_impl.getall());
+				this.tipo_autorizacion_impl.getallGrid());
 		setContainerDataSource(bean_tipo_autorizacion);
 		setHeightMode(HeightMode.ROW);
 		setHeightByRows(15);
@@ -43,11 +43,11 @@ public class GridAutorizado extends Grid {
 		setColumnOrder("tipo_movimiento", "dependencia", "unidadOrganizacional", "orden", "nivel_autorizacion",
 				"servidor_publico");
 		
-		getColumn("tipo_movimiento").setHeaderCaption("Tipos de Movimiento").setExpandRatio(3);
+		getColumn("tipo_movimiento").setHeaderCaption("Tipos de Movimiento").setExpandRatio(5);
 		getColumn("orden").setHeaderCaption("Orden").setExpandRatio(1);
-		getColumn("nivel_autorizacion").setHeaderCaption("Nivel de Autorizacion").setExpandRatio(2);
-		getColumn("dependencia").setHeaderCaption("Dependencia").setExpandRatio(3);
-		getColumn("servidor_publico").setHeaderCaption("Servidor Publico").setExpandRatio(2);
+		getColumn("nivel_autorizacion").setHeaderCaption("Nivel de Autorizacion").setExpandRatio(4);
+		getColumn("dependencia").setHeaderCaption("Dependencia").setExpandRatio(1);
+		getColumn("servidor_publico").setHeaderCaption("Servidor Publico").setExpandRatio(10);
 		
 		Responsive.makeResponsive(this);
 	}

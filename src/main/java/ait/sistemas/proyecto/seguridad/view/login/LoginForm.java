@@ -23,7 +23,8 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 /**
- * Formulario de Login 
+ * Formulario de Login
+ * 
  * @author franzemil
  *
  */
@@ -67,8 +68,14 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 		this.txt_id_usuario.setWidth("50%");
 		this.pwd_password.setWidth("50%");
 		this.pwd_password_verification.setWidth("50%");
+		
+		this.txt_id_usuario.focus();
+		this.txt_id_usuario.setTabIndex(0);
+		this.pwd_password.setTabIndex(0);
+		this.pwd_password_verification.setTabIndex(1);
 		buildForm();
 		Responsive.makeResponsive(this);
+		
 	}
 	
 	private void buildForm() {
@@ -132,6 +139,7 @@ public class LoginForm extends GridLayout implements TextChangeListener {
 				this.pwd_password.setEnabled(false);
 				break;
 			case 0:
+				this.pwd_password.setTabIndex(0);
 				this.pwd_password.setEnabled(true);
 				if (getComponent(0, 2) == null) {
 					addComponent(this.pwd_password_verification, 1, 2);

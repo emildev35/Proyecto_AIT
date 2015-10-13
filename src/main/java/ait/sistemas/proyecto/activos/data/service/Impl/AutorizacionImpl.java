@@ -57,6 +57,7 @@ public class AutorizacionImpl {
 		query.setParameter(10, autorizacion.getAUT_Fecha_Rechazo());
 		query.setParameter(11, autorizacion.getAUT_Fecha_Registro());
 		
+		System.out.println(autorizacion.getAUT_PIN_Autoriza_Rechaza());
 		int result = (Integer)query.getSingleResult();
 		return result;
 	}

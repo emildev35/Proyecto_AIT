@@ -33,7 +33,7 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 	
 	private FormAutorizado frm_autorizacion = new FormAutorizado();
 	private CssLayout hl_errores = new CssLayout();
-	private Button btn_limpiar = new Button("Limpiar");
+	private Button btn_limpiar = new Button("Salir");
 	private Button btn_agregar = new Button("Guardar");
 	private GridAutorizado grid_autorizacion = new GridAutorizado();
 	private final TipoAutorizacionImpl tipo_autorizacionimpl = new TipoAutorizacionImpl();
@@ -68,14 +68,7 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true);
-		Panel frmPanel = new Panel();
-		frmPanel.setStyleName(AitTheme.PANEL_FORM);
-		frmPanel.setIcon(FontAwesome.EDIT);
-		frmPanel.setWidth("100%");
-		frmPanel.setCaption("SELECCION DE PERSONAL Y NIVEL DE AUTORIZACION");
-		frmPanel.setContent(this.frm_autorizacion);
 		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
 		Panel gridPanel = new Panel();
 		gridPanel.setStyleName(AitTheme.PANEL_GRID);
 		gridPanel.setWidth("100%");
@@ -83,7 +76,8 @@ public class VAutorizadoA extends VerticalLayout implements View, ClickListener 
 		gridPanel.setCaption("AUTORIZACIONES");
 		gridPanel.setContent(this.grid_autorizacion);
 		formContent.setMargin(true);
-		formContent.addComponent(frmPanel);
+
+		formContent.addComponent(frm_autorizacion);
 		formContent.addComponent(gridPanel);
 		Responsive.makeResponsive(formContent);
 		return formContent;

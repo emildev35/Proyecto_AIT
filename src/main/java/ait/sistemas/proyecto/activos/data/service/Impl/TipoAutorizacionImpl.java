@@ -51,7 +51,15 @@ public class TipoAutorizacionImpl {
 		List<TipoAutorizacionModel> result = query.getResultList();
 		return result;
 	}
+
 	
+	public List<TipoAutorizacionModel> getallGrid() {
+		String str_get_by_dependencia = "EXEC Act_getTipoAutorizacion_Q";
+		Query query = this.em.createNativeQuery(str_get_by_dependencia, "tipo-autorizacion");
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<TipoAutorizacionModel> result = query.getResultList();
+		return result;
+	}
 	
 	public List<TipoAutorizacionModel> getallbyusuario(String id_usuario) {
 		String str_get_by_dependencia = "EXEC Act_getTipoAutorizacionByUsuario @Id_Usuario=?1";

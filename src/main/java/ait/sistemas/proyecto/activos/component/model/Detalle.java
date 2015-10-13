@@ -30,6 +30,7 @@ import javax.persistence.SqlResultSetMapping;
 	@FieldResult(name = "nombre_activo", column = "nombre_activo"),
 	@FieldResult(name = "motivo_baja", column = "motivo_baja"),
 	@FieldResult(name = "nro_seguro", column = "nro_seguro"),
+	@FieldResult(name = "serie", column = "serie"),
 	@FieldResult(name = "vto_seguro", column = "vto_seguro"),
 	@FieldResult(name = "nro_garantia", column = "nro_garantia"),
 	@FieldResult(name = "vto_garantia", column = "vto_garantia"),
@@ -51,9 +52,10 @@ public class Detalle implements Serializable{
 	private Date fecha_registro;
 	private String nombre_activo;
 	private String motivo_baja;
-	private int nro_seguro;
+	private String nro_seguro;
 	private Date vto_seguro;
-	private int nro_garantia;
+	private String serie;
+	private String nro_garantia;
 	private Date vto_garantia;
 	private BigDecimal nuevo_valor;
 	private int nueva_vida_util;
@@ -131,10 +133,10 @@ public class Detalle implements Serializable{
 	public void setMotivo_baja(String motivo_baja) {
 		this.motivo_baja = motivo_baja;
 	}
-	public int getNro_seguro() {
+	public String getNro_seguro() {
 		return nro_seguro;
 	}
-	public void setNro_seguro(int nro_seguro) {
+	public void setNro_seguro(String nro_seguro) {
 		this.nro_seguro = nro_seguro;
 	}
 	public Date getVto_seguro() {
@@ -143,10 +145,10 @@ public class Detalle implements Serializable{
 	public void setVto_seguro(Date vto_seguro) {
 		this.vto_seguro = vto_seguro;
 	}
-	public int getNro_garantia() {
+	public String getNro_garantia() {
 		return nro_garantia;
 	}
-	public void setNro_garantia(int nro_garantia) {
+	public void setNro_garantia(String nro_garantia) {
 		this.nro_garantia = nro_garantia;
 	}
 	public Date getVto_garantia() {
@@ -167,6 +169,13 @@ public class Detalle implements Serializable{
 	public void setNueva_vida_util(int nueva_vida_util) {
 		this.nueva_vida_util = nueva_vida_util;
 	}
+	public String getSerie() {
+		return serie;
+	}
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
+	
 
 	
 }

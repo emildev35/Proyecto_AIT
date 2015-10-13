@@ -15,6 +15,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TiposmovImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.UnidadImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -25,9 +26,11 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
 public class FormAutorizado extends GridLayout implements ValueChangeListener {
@@ -36,8 +39,8 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	public ComboBox cb_tipo_movimiento = new ComboBox("Tipo de  Movimiento");
 	private TextField txt_orden = new TextField("Orden");
 	public ComboBox cb_dependencia = new ComboBox("Dependencia");
-	public ComboBox cb_dependencia_movimiento = new ComboBox("Dependencia del Movimiento");
-	public ComboBox cb_unidad_movimiento = new ComboBox("Unidad Organizacional del Movimiento");
+	public ComboBox cb_dependencia_movimiento = new ComboBox("Dependencia");
+	public ComboBox cb_unidad_movimiento = new ComboBox("Unidad Organizacional");
 	
 	public ComboBox cb_unidad = new ComboBox("Unidad Organizacional");
 	public ComboBox cb_servidor_publico = new ComboBox("Sevidor Publico");
@@ -128,14 +131,47 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	private void buildContent() {
 		this.binder_autorizacion.clear();
 		this.txt_orden.setValue("0");
-		addComponent(this.cb_tipo_movimiento, 0, 0);
-		addComponent(this.cb_dependencia_movimiento, 1, 0);
-		addComponent(this.cb_unidad_movimiento, 2, 0);
-		addComponent(this.txt_orden, 3, 0);
-		addComponent(this.cb_dependencia, 0, 1);
-		addComponent(this.cb_unidad, 1, 1);
-		addComponent(this.cb_servidor_publico, 2, 1);
-		addComponent(this.cb_nivel_autorizacion, 3, 1);
+		
+		GridLayout gridlMovimiento = new GridLayout(4, 1);
+		gridlMovimiento.setMargin(true);
+		gridlMovimiento.setSpacing(true);
+		gridlMovimiento.setWidth("100%");
+		
+		gridlMovimiento.setColumnExpandRatio(0, 1);
+		gridlMovimiento.setColumnExpandRatio(1, 0.3f);
+		gridlMovimiento.setColumnExpandRatio(2, 1);
+		gridlMovimiento.setColumnExpandRatio(3, 1);
+		
+		gridlMovimiento.addComponent(this.cb_tipo_movimiento, 0, 0);
+		gridlMovimiento.addComponent(this.cb_dependencia_movimiento, 1, 0);
+		gridlMovimiento.addComponent(this.cb_unidad_movimiento, 2, 0);
+		gridlMovimiento.addComponent(this.txt_orden, 3, 0);
+		
+		GridLayout gridlFuncionario = new GridLayout(4, 1);
+		gridlFuncionario.setMargin(true);
+		gridlFuncionario.setSpacing(true);
+		gridlFuncionario.setWidth("100%");
+		gridlFuncionario.setColumnExpandRatio(0, 0.3f);
+		gridlFuncionario.setColumnExpandRatio(1, 1);
+		gridlFuncionario.setColumnExpandRatio(2, 1);
+		gridlFuncionario.setColumnExpandRatio(3, 1);
+		
+		gridlFuncionario.addComponent(this.cb_dependencia, 0, 0);
+		gridlFuncionario.addComponent(this.cb_unidad, 1, 0);
+		gridlFuncionario.addComponent(this.cb_servidor_publico, 2, 0);
+		gridlFuncionario.addComponent(this.cb_nivel_autorizacion, 3, 0);
+		
+		Panel pnMovimiento = new Panel("SELECCION DEL TIPO MOVIMIENTO POR DEPENDENCIA");
+		pnMovimiento.setContent(gridlMovimiento);
+		pnMovimiento.setStyleName(AitTheme.PANEL_FORM);
+		pnMovimiento.setIcon(FontAwesome.EDIT);
+		Panel pnFuncionario = new Panel("REGISTRO DE DATOS FUNCIONARIO CON AUTORIZACION");
+		pnFuncionario.setContent(gridlFuncionario);
+		pnFuncionario.setStyleName(AitTheme.PANEL_FORM);
+		pnFuncionario.setIcon(FontAwesome.EDIT);
+		
+		addComponent(pnMovimiento, 0, 0, 3, 0);
+		addComponent(pnFuncionario, 0, 1, 3, 1);
 	}
 	
 	public void update() {
@@ -161,10 +197,10 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		cb_dependencia_movimiento.setNullSelectionAllowed(false);
 		for (Dependencia dependencia : dependencia_impl.getall()) {
 			this.cb_dependencia.addItem(dependencia);
-			this.cb_dependencia.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
+			this.cb_dependencia.setItemCaption(dependencia, dependencia.getDEP_Sigla());
 			
 			this.cb_dependencia_movimiento.addItem(dependencia);
-			this.cb_dependencia_movimiento.setItemCaption(dependencia, dependencia.getDEP_Nombre_Dependencia());
+			this.cb_dependencia_movimiento.setItemCaption(dependencia, dependencia.getDEP_Sigla());
 		}
 	}
 	
