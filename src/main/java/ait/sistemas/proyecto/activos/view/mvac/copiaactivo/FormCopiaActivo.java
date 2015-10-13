@@ -1,11 +1,8 @@
 package ait.sistemas.proyecto.activos.view.mvac.copiaactivo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
@@ -16,68 +13,77 @@ import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.MouseEvents.ClickEvent;
+import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 
-public class FormCopiaActivo extends GridLayout implements ValueChangeListener {
+public class FormCopiaActivo extends GridLayout implements ValueChangeListener, TextChangeListener,ClickListener {
 	private static final long serialVersionUID = 1L;
 	
+	public TextField txt_codigo = new TextField("Codigo"); 
+
 	public ComboBox cb_grupo_contable = new ComboBox("Grupo Contable");
 	public ComboBox cb_auxiliar_contable = new ComboBox("Auxiliar Contable");
 	
 	public TextField txt_no_copias = new TextField("No Copias"); 
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
-	private PropertysetItem pitm_solicitud = new PropertysetItem();
-	private FieldGroup binder_solicitud;
+	private PropertysetItem pitm_copia = new PropertysetItem();
+	private FieldGroup binder_copia;
 	
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
-	public GridActivos grid_solicitud = new GridActivos();
-	
+	public GridActivos grid_activos = new GridActivos();
+	Panel pn_activos;
+	Panel pn_gc_ac;
 	public FormCopiaActivo() {
 		
 		super(6, 5);
 		setSpacing(true);
 		setWidth("100%");
 		setMargin(true);
-		pitm_solicitud.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
-		pitm_solicitud.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
+		pitm_copia.addItemProperty("codigo", new ObjectProperty<String>(""));
+		pitm_copia.addItemProperty("grupo_contable", new ObjectProperty<GruposContablesModel>(new GruposContablesModel()));
+		pitm_copia.addItemProperty("auxiliar_contable", new ObjectProperty<AuxiliaresContablesModel>(
 				new AuxiliaresContablesModel()));
-		pitm_solicitud.addItemProperty("copias", new ObjectProperty<String>(""));
+		pitm_copia.addItemProperty("copias", new ObjectProperty<String>(""));
 		
-		this.binder_solicitud = new FieldGroup(this.pitm_solicitud);
+		this.binder_copia = new FieldGroup(this.pitm_copia);
 		
-		binder_solicitud.bind(this.cb_grupo_contable, "grupo_contable");
-		binder_solicitud.bind(this.cb_auxiliar_contable, "auxiliar_contable");
-		binder_solicitud.bind(this.txt_no_copias, "copias");
-		binder_solicitud.clear();
+		binder_copia.bind(this.txt_codigo, "codigo");
+		binder_copia.bind(this.cb_grupo_contable, "grupo_contable");
+		binder_copia.bind(this.cb_auxiliar_contable, "auxiliar_contable");
+		binder_copia.bind(this.txt_no_copias, "copias");
+		binder_copia.clear();
 		
+		this.txt_codigo.addTextChangeListener(this);
 		this.txt_no_copias.setRequired(true);
 		this.txt_no_copias.addValidator(new NullValidator("No Nulo", false));
 		
-		this.cb_grupo_contable.setRequired(true);
-		this.cb_grupo_contable.addValidator(new NullValidator("No Nulo", false));
+//		this.cb_grupo_contable.setRequired(true);
+//		this.cb_grupo_contable.addValidator(new NullValidator("No Nulo", false));
 		cb_grupo_contable.setInputPrompt("Seleccione un Grupo Contable");
 		cb_grupo_contable.addValueChangeListener(this);
-		this.cb_auxiliar_contable.setRequired(true);
+//		this.cb_auxiliar_contable.setRequired(true);
 		cb_auxiliar_contable.addValueChangeListener(this);
-		this.cb_auxiliar_contable.addValidator(new NullValidator("No Nulo", false));
+//		this.cb_auxiliar_contable.addValidator(new NullValidator("No Nulo", false));
 		cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
 		
+		txt_codigo.setWidth("60%");
 		txt_no_copias.setWidth("90%");
 		cb_grupo_contable.setWidth("90%");
 		cb_auxiliar_contable.setWidth("90%");
@@ -106,31 +112,38 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener {
 	}
 	
 	private void buildContent() {
-		
-		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
+		pn_activos = new Panel("Codigo Activo");
 		pn_activos.setIcon(FontAwesome.SAVE);
 		pn_activos.setStyleName(AitTheme.PANEL_FORM);
+		pn_activos.setWidth("37%");
+		GridLayout gridl_solicitud = new GridLayout(1, 1);
+		gridl_solicitud.setSizeFull();
+		gridl_solicitud.setColumnExpandRatio(0, 0);
+		// gridl_solicitud.setMargin(true);
+		gridl_solicitud.addComponent(this.txt_codigo, 0, 0);
+		pn_activos.setContent(gridl_solicitud);
+		
+		this.addComponent(pn_activos, 0, 1, 1, 1);
+		
+		pn_gc_ac = new Panel("Seleccione un Grupo y Auxiliar Contable");
+		pn_gc_ac.setIcon(FontAwesome.SAVE);
+		pn_gc_ac.setStyleName(AitTheme.PANEL_FORM);
 		GridLayout gridl_activos = new GridLayout(2, 1);
 		gridl_activos.setSizeFull();
 //		gridl_activos.setMargin(true);
 		gridl_activos.addComponent(this.cb_grupo_contable, 0, 0);
 		gridl_activos.addComponent(this.cb_auxiliar_contable, 1, 0);
-		pn_activos.setContent(gridl_activos);
+		pn_gc_ac.setContent(gridl_activos);
 		
-		this.addComponent(pn_activos, 0, 1, 5, 1);
-
-//		GridLayout gridl_solicitud = new GridLayout(1, 1);
-//		gridl_solicitud.setSizeFull();
-//		// gridl_solicitud.setMargin(true);
-//		gridl_solicitud.addComponent(this.txt_no_copias, 0, 0);
-//		pn_solicitud.setContent(gridl_solicitud);
-//		
-//		this.addComponent(pn_solicitud, 0, 4, 1, 4);
+		pn_activos.addClickListener(this);
+		pn_gc_ac.addClickListener(this);
+		
+		this.addComponent(pn_gc_ac, 2, 1, 5, 1);
 		
 	}
 	
 	public void update() {
-		binder_solicitud.clear();
+		binder_copia.clear();
 	}
 	
 	public List<BarMessage> getMensajes() {
@@ -143,28 +156,28 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener {
 	
 	public boolean validate() {
 		
-		try {
-			binder_solicitud.commit();
+		if (txt_codigo.getValue() != null) {
 			return true;
 		}
-			catch (CommitException ex) {
-				Map<Field<?>, InvalidValueException> invalid_fields = ex.getInvalidFields();
-				Iterator<Field<?>> it = invalid_fields.keySet().iterator();
-				while (it.hasNext()) {
-					Field<?> key = (Field<?>) it.next();
-					mensajes.add(new BarMessage(key.getCaption(),
-							invalid_fields.get(key).getMessage() == "" ? Messages.EMPTY_MESSAGE : invalid_fields.get(key)
-									.getMessage()));
-				}
-				return false;
+		try {
+			this.binder_copia.commit();
+			this.mensajes.add(new BarMessage("Formulario", Messages.SUCCESS_MESSAGE, "success"));
+			return true;
+		} catch (CommitException e) {
+			try {
+				this.cb_grupo_contable.validate();
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.cb_grupo_contable.getCaption(), Messages.EMPTY_MESSAGE));
 			}
+			try {
+				this.cb_auxiliar_contable.validate();
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.cb_auxiliar_contable.getCaption(), Messages.EMPTY_MESSAGE));
+			}
+			return false;
+		}
 	}
 	
-	public ActivosModel setData() {
-		ActivosModel resul = new ActivosModel();
-		resul.setACT_Codigo_Activo(resul.getACT_Codigo_Activo());
-		return resul;
-	}
 //	public void setData(ActivosModel data){	
 //		data.getACT_Codigo_Activo().setValue(String.valueOf(data.getACT_Codigo_Activo()));
 //		this.txt_nombre_ciudad.setValue(String.valueOf(data.getCIU_Nombre_Ciudad()));
@@ -185,17 +198,46 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener {
 	
 	private void buildGrid(String auc_Auxiliar_Contable) {
 		GruposContablesModel grupo = (GruposContablesModel) cb_grupo_contable.getValue();
-		this.grid_solicitud.update(grupo.getGRC_Grupo_Contable(), auc_Auxiliar_Contable);
+		this.grid_activos.update(grupo.getGRC_Grupo_Contable(), auc_Auxiliar_Contable);
 	}
 	
-	public Component getgrid_solicitud() {
-		return this.grid_solicitud;
+	public Component getgrid_activos() {
+		return this.grid_activos;
 	}
 
 	public void clear() {
 	
-		this.binder_solicitud.clear();
-		this.grid_solicitud = new GridActivos();
+		this.binder_copia.clear();
+		this.grid_activos = new GridActivos();
 		
+	}
+
+	@Override
+	public void textChange(TextChangeEvent event) {
+		if (event.getComponent() == txt_codigo) {
+
+			if (event.getComponent().toString().length() > 0) {
+				try {
+					this.grid_activos.updateActivo(event.getText());
+					
+				} catch (NumberFormatException ex) {
+				}
+			}
+		}
+	}
+
+	@Override
+	public void click(ClickEvent event) {
+		if (event.getSource() == pn_activos) {
+			this.cb_auxiliar_contable.setEnabled(false);
+			this.cb_grupo_contable.setEnabled(false);
+			this.txt_codigo.setEnabled(true);
+		}
+		
+		if (event.getSource() == pn_gc_ac) {
+			this.cb_auxiliar_contable.setEnabled(true);
+			this.cb_grupo_contable.setEnabled(true);
+			this.txt_codigo.setEnabled(false);
+		}
 	}
 }

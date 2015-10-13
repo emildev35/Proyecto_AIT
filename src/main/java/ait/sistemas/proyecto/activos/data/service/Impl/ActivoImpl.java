@@ -443,7 +443,14 @@ public class ActivoImpl {
 		List<ActivoGrid> resultlist = query.getResultList();
 		return resultlist;
 	}
-	
+	@SuppressWarnings("unchecked")
+	public List<ActivoGrid> getActivoGrid(long cod_Activo) {
+		Query query = em.createNativeQuery("exec Mvac_ActivobyCodigo_Q @Codigo_Activo=?1", "activo-simple").setHint(
+				QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, cod_Activo);
+		List<ActivoGrid> resultlist = query.getResultList();
+		return resultlist;
+	}
 	@SuppressWarnings("unchecked")
 	public List<MovimientoReporte> ActivosbyUsuario(String ci_usuario, Date fecha) {
 		Query query = em.createNativeQuery("exec Mvac_ActivosbyFuncionario_Q @CI_Usuario=?1, " + "@fecha=?2 ",

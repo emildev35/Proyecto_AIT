@@ -16,7 +16,9 @@ public class GridActivos extends Grid{
 	private BeanItemContainer<ActivoGrid> bean_activos;
 
 	final ActivoImpl activoimpl = new ActivoImpl();
-	
+	/**
+	 * muestra los activos que no estan dados de baja
+	 */
 	public GridActivos() {
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
@@ -24,8 +26,12 @@ public class GridActivos extends Grid{
 		setHeightByRows(11);
 		setWidth("100%");
 		
+		setColumnOrder("id_activo","serie", "nombre");
+		
 		Column id_activo = getColumn("id_activo").setExpandRatio(0);
 		id_activo.setHeaderCaption("Codigo");
+		Column serie = getColumn("serie").setExpandRatio(2);
+		serie.setHeaderCaption("Serie");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
 	}
@@ -38,22 +44,34 @@ public class GridActivos extends Grid{
 		setWidth("100%");
 		
 //		setSelectionMode(SelectionMode.MULTI);
+		setColumnOrder("id_activo","serie", "nombre");
 		Column id_activo = getColumn("id_activo").setExpandRatio(0);
 		id_activo.setHeaderCaption("Codigo");
 		id_activo.setRenderer(new NumberRenderer(
 			    new DecimalFormat("####")));
+		Column serie = getColumn("serie").setExpandRatio(2);
+		serie.setHeaderCaption("Serie");
+		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
+		nombre_activo.setHeaderCaption("Nombre Activo");
+	}
+	public void updateActivo(String cod_Activo){
+		removeAllColumns();
+		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getActivoGrid(Long.parseLong(cod_Activo)));
+		setContainerDataSource(bean_activos);
+		setHeightMode(HeightMode.ROW);
+		setHeightByRows(11);
+		setWidth("100%");
+		
+//		setSelectionMode(SelectionMode.MULTI);
+		setColumnOrder("id_activo","serie", "nombre");
+		Column id_activo = getColumn("id_activo").setExpandRatio(0);
+		id_activo.setHeaderCaption("Codigo");
+		id_activo.setRenderer(new NumberRenderer(
+				new DecimalFormat("####")));
+		Column serie = getColumn("serie").setExpandRatio(2);
+		serie.setHeaderCaption("Serie");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
 	}
 	
-//	public void updateasignados(String ci_usuario){
-//		removeAllColumns();
-//		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getAsignados(ci_usuario));
-//		setContainerDataSource(bean_activos);
-//		setSelectionMode(SelectionMode.MULTI);
-//		Column id_activo = getColumn("id_activo").setExpandRatio(1);
-//		id_activo.setHeaderCaption("Codigo");
-//		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
-//		nombre_activo.setHeaderCaption("Nombre Activo");
-//	}
 }

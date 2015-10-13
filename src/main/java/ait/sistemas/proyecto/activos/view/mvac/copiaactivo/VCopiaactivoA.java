@@ -50,13 +50,13 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 	public VCopiaactivoA() {
 		this.btn_copias.addClickListener(this);
 		this.btn_salir.addClickListener(this);
-		this.frm_copia.grid_solicitud.addSelectionListener(this);
+		this.frm_copia.grid_activos.addSelectionListener(this);
 		addComponent(buildNavBar());
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 		buildGrid();
 		Responsive.makeResponsive(this);
-		msg.add(new BarMessage("Formulario", Messages.REQUIED_FIELDS));
+		msg.add(new BarMessage("Formulario", "Llenar los campos de criterio de seleccion por Activo o por Grupo y Auxiliar Contable"));
 		buildMessages(msg);
 	}
 	private void buildGrid() {
@@ -84,7 +84,7 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 //		gridPanel.setWidth("100%");
 		gridPanel.setIcon(FontAwesome.TABLE);
 		gridPanel.setStyleName(AitTheme.PANEL_GRID);
-		gridPanel.setContent(this.frm_copia.getgrid_solicitud());
+		gridPanel.setContent(this.frm_copia.getgrid_activos());
 		formContent.addComponent(gridPanel);
 		
 		Panel Panelcopia = new Panel("Copias a Realizar del Activo");
@@ -151,8 +151,8 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 
 	@Override
 	public void select(SelectionEvent event) {
-		if ((ActivoGrid)frm_copia.grid_solicitud.getSelectedRow() != null) {
-			this.activo  = (ActivoGrid)this.frm_copia.grid_solicitud.getSelectedRow();
+		if ((ActivoGrid)frm_copia.grid_activos.getSelectedRow() != null) {
+			this.activo  = (ActivoGrid)this.frm_copia.grid_activos.getSelectedRow();
 		}
 	}
 	

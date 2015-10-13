@@ -154,15 +154,15 @@ public class FormHistorico extends GridLayout implements ValueChangeListener, Cl
 		gridlFecha.setMargin(true);
 		gridlCombos.setMargin(true);
 		
-		Panel pnFecha = new Panel("FECHA ELABORACION");
+		Panel pnFecha = new Panel("Fecha Elaboracion");
 		pnFecha.setContent(gridlFecha);
 		pnFecha.setStyleName(AitTheme.PANEL_PRINT);
 		pnFecha.setIcon(FontAwesome.EDIT);
-		pnCodigo = new Panel("SELECCION POR CODIGO");
+		pnCodigo = new Panel("Seleccion por codigo");
 		pnCodigo.setContent(gridlCodigo);
 		pnCodigo.setStyleName(AitTheme.PANEL_PRINT);
 		pnCodigo.setIcon(FontAwesome.EDIT);
-		pnCombos = new Panel("SELECCION POR GRUPO Y AUXILIAR CONTABLE");
+		pnCombos = new Panel("Seleccion por Grupo y Auxiliar Contable");
 		pnCombos.setContent(gridlCombos);
 		pnCombos.setStyleName(AitTheme.PANEL_PRINT);
 		pnCombos.setIcon(FontAwesome.EDIT);
