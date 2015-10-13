@@ -1,5 +1,7 @@
 package ait.sistemas.proyecto.activos.component.grid;
 
+import java.text.DecimalFormat;
+
 import ait.sistemas.proyecto.activos.component.model.Detalle;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 
@@ -7,6 +9,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.renderers.NumberRenderer;
 
 public class GridDetalleActivo extends Grid {
 
@@ -33,8 +36,12 @@ public class GridDetalleActivo extends Grid {
 		removeColumn("vto_seguro");
 		removeColumn("nro_garantia");
 		removeColumn("vto_garantia");
+		removeColumn("nueva_vida_util");
+		removeColumn("nuevo_valor");
 		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo");
+		getColumn("serie").setExpandRatio(1);
 		getColumn("nombre_activo").setExpandRatio(5).setHeaderCaption("Nombre Activo");
+		setColumnOrder("id_activo", "serie", "nombre_activo");
 		Responsive.makeResponsive(this);
 	}
 	public void update(long nro_documento, short id_dependencia, short tipo_movimiento){
@@ -54,8 +61,12 @@ public class GridDetalleActivo extends Grid {
 		removeColumn("vto_seguro");
 		removeColumn("nro_garantia");
 		removeColumn("vto_garantia");
-		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo");
+		removeColumn("nueva_vida_util");
+		removeColumn("nuevo_valor");
+		getColumn("id_activo").setExpandRatio(1).setHeaderCaption("Codigo").setRenderer(new NumberRenderer(new DecimalFormat("###")));
+		getColumn("serie").setExpandRatio(1);
 		getColumn("nombre_activo").setExpandRatio(5).setHeaderCaption("Nombre Activo");
+		setColumnOrder("id_activo", "serie", "nombre_activo");
 		Responsive.makeResponsive(this);
 	}
 	

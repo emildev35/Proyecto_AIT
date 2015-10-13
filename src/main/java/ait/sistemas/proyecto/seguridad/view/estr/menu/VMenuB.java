@@ -5,7 +5,6 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import ait.sistemas.proyecto.common.component.BarMessage;
-import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
 
@@ -24,14 +23,12 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-
-public class VMenuB extends VerticalLayout implements View, ValueChangeListener, ClickListener, SelectionListener, org.vaadin.dialogs.ConfirmDialog.Listener{
-
+public class VMenuB extends VerticalLayout implements View, ValueChangeListener, ClickListener, SelectionListener,
+		org.vaadin.dialogs.ConfirmDialog.Listener {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_submit;
@@ -47,7 +44,7 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		this.frm_menu.txt_nombre_menu.setEnabled(false);
 		this.frm_menu.txt_nombre_programa.setEnabled(false);
 		this.frm_menu.cb_icons.setEnabled(false);
-//		this.frm_menu.cbSubsistema.setEnabled(false);
+		// this.frm_menu.cbSubsistema.setEnabled(false);
 		this.menu = new MenuImpl();
 		this.btn_submit = new Button("Eliminar");
 		this.btn_limpiar = new Button("Limpiar");
@@ -60,10 +57,11 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		addComponent(buildFormContent());
 		addComponent(buildButtonBar());
 	}
+	
 	private Component buildFormContent() {
 		
 		VerticalLayout formContent = new VerticalLayout();
-		formContent.setSpacing(true	);
+		formContent.setSpacing(true);
 		Panel frmPanel = new Panel();
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Formulario Menu");
@@ -81,6 +79,7 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		return formContent;
 		
 	}
+	
 	private Component buildNavBar() {
 		Panel navPanel = new Panel();
 		HorizontalLayout nav = new HorizontalLayout();
@@ -92,6 +91,7 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		navPanel.setContent(nav);
 		return navPanel;
 	}
+	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
 		buttonContent.addComponent(this.btn_submit);
@@ -104,62 +104,60 @@ public class VMenuB extends VerticalLayout implements View, ValueChangeListener,
 		Responsive.makeResponsive(buttonContent);
 		return buttonContent;
 	}
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
 		
 	}
+	
 	private void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
 		
 		for (BarMessage barMessage : mensages) {
-			Label lbError = new Label(new Label(barMessage.getComponetName()+":"+barMessage.getErrorName()));
+			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
 		}
-	
+		
 	}
 	
 	private void eliminar() {
-		try {
-			this.menu.deleteSubsistema(this.frm_menu.getData().getAME_Id_Identificador());
-			Notification.show(Messages.SUCCESS_MESSAGE);
-			this.frm_menu.update();
-			this.grid_menu.update(frm_menu.getSubsistema());
-			Notification.show(Messages.SUCCESS_MESSAGE);
-		} catch (Exception e) {
-			Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
-		}buildMessages(this.frm_menu.getMensajes());
-		
+		buildMessages(menu.delete(this.frm_menu.getData().getAME_Id_Identificador()));
+		this.frm_menu.update();
+		this.grid_menu.update(frm_menu.getSubsistema());
 		this.frm_menu.clearMessages();
 	}
+	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_submit) {
 			ConfirmDialog.show(getUI(), ("Eliminar " + this.frm_menu.getData().getAME_Nombre()),
-					("Esta Uds Seguro que Desea Eliminar el Sub-Sistema" + this.frm_menu.getData().getAME_Nombre()),
-					"Si", "No", this);	
+					("Esta Uds Seguro que Desea Eliminar el Sub-Sistema" + this.frm_menu.getData().getAME_Nombre()), "Si", "No",
+					this);
 		}
 		if (event.getButton() == this.btn_limpiar) {
 			this.frm_menu.clearMessages();
-		}	
+		}
 	}
+	
 	@Override
 	public void select(SelectionEvent event) {
-		if ((Arbol_menus)this.grid_menu.getSelectedRow() != null) {
-			this.frm_menu.setData((Arbol_menus)this.grid_menu.getSelectedRow());	
-		}		
+		if ((Arbol_menus) this.grid_menu.getSelectedRow() != null) {
+			this.frm_menu.setData((Arbol_menus) this.grid_menu.getSelectedRow());
+		}
 	}
+	
 	@Override
 	public void onClose(ConfirmDialog dialog) {
-		if(dialog.isConfirmed()){
+		if (dialog.isConfirmed()) {
 			eliminar();
-		}else{
+		} else {
 			
 		}
 	}
-
+	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
 		grid_menu.update(frm_menu.getSubsistema());

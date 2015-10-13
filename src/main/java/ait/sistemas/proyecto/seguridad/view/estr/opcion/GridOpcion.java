@@ -28,7 +28,7 @@ public class GridOpcion  extends Grid{
 				Arbol_menus.class, this.menuImpl.getallOpcion(id_submenu));
 		setContainerDataSource(bean_subsistema);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(5);
+		setHeightByRows(10);
 
 		removeColumn("AME_Nivel");
 		removeColumn("AME_Orden");

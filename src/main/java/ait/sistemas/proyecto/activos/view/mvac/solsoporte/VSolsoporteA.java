@@ -6,10 +6,12 @@ import java.util.List;
 import ait.sistemas.proyecto.activos.data.service.Impl.SoporteImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.HomeView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -66,10 +68,12 @@ public class VSolsoporteA extends VerticalLayout implements View, ClickListener 
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_guardar.setStyleName("ait-buttons-btn");
+		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_guardar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_guardar);
-		this.btn_salir.setStyleName("ait-buttons-btn");
-		buttonContent.addStyleName("ait-buttons");
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_salir.setIcon(FontAwesome.UNDO);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		buttonContent.addComponent(this.btn_salir);
 		return buttonContent;
 	}

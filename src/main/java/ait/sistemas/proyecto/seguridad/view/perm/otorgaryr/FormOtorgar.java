@@ -48,6 +48,7 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener, Sele
 	
 	public Grid grid_otorgar = new Grid();
 	
+
 	final PropertysetItem pitmOpcionPerfil = new PropertysetItem();
 	private FieldGroup binderOtorgar;
 	
@@ -55,6 +56,7 @@ public class FormOtorgar extends GridLayout implements ValueChangeListener, Sele
 		super(3, 2);
 		setMargin(true);
 		setWidth("100%");
+		setSpacing(true);
 		
 		this.cb_usuario = new ComboBox("Usuario");
 		this.cbSubSistema = new ComboBox("Sub-Sistema");

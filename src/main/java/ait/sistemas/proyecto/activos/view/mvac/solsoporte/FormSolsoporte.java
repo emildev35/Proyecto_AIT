@@ -14,6 +14,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.TipoSoporteImpl;
 import ait.sistemas.proyecto.activos.view.mvac.solmantenimiento.GridSolmantenimiento;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 import ait.sistemas.proyecto.seguridad.data.service.Impl.MenuImpl;
@@ -26,6 +27,7 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.ComboBox;
@@ -149,10 +151,16 @@ public class FormSolsoporte extends GridLayout {
 		grid_selecccion.setSpacing(true);
 		
 		Panel pn_soporte = new Panel("SOLICITUD DE SOPORTE TECNICO");
+		pn_soporte.setStyleName(AitTheme.PANEL_FORM);
+		pn_soporte.setIcon(FontAwesome.EDIT);
 		pn_soporte.setContent(grid_soporte);
 		Panel pn_seleccion = new Panel("SELECCION DEL TIPO DE SOPORTE Y LA APLICACION");
+		pn_seleccion.setStyleName(AitTheme.PANEL_FORM);
+		pn_seleccion.setIcon(FontAwesome.EDIT);
 		pn_seleccion.setContent(grid_selecccion);
 		Panel pn_grid = new Panel("SELECCION DE ACTIVOS FIJOS ASIGNADOS: Seleccione el (los) Activos para el Servicio de Soporte");
+		pn_grid.setStyleName(AitTheme.PANEL_GRID);
+		pn_grid.setIcon(FontAwesome.TABLE);
 		pn_grid.setContent(this.grid_activos_asignados);
 		
 		addComponent(this.txt_nombre_solicitante, 0, 0, 2, 0);

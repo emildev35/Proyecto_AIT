@@ -12,7 +12,6 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
 import ait.sistemas.proyecto.common.report.Table;
-import ait.sistemas.proyecto.common.report.Util;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.ui.UI;
@@ -56,7 +55,8 @@ public class ReportGenerator {
 		// "Dependencia ", dependencia }, contentStream, tableTopY);
 		writeHeader(contentStream, tableTopY, table);
 		drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
-		drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream, tableTopY);
+		drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
+				contentStream, tableTopY);
 		r++;
 		tableTopY -= table.getRowHeight();
 		
@@ -98,8 +98,8 @@ public class ReportGenerator {
 				// "Dependencia ", dependencia }, contentStream, tableTopY);
 				writeHeader(contentStream, tableTopY, table);
 				drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
-				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
-						tableTopY);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
+						contentStream, tableTopY);
 				r++;
 				tableTopY -= table.getRowHeight();
 				
@@ -136,8 +136,8 @@ public class ReportGenerator {
 				tableTopY -= table.getHeaderSize() * table.getRowHeight();
 				writeHeader(contentStream, tableTopY, table);
 				drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
-				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
-						tableTopY);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
+						contentStream, tableTopY);
 				tableTopY -= table.getRowHeight() * 1.1;
 				// tableTopY -= table.getRowHeight();
 				
@@ -166,8 +166,8 @@ public class ReportGenerator {
 				// "Dependencia ", dependencia }, contentStream, tableTopY);
 				writeHeader(contentStream, tableTopY, table);
 				drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
-				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Grupo/Auxiliar/Codigo)" }, contentStream,
-						tableTopY);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
+						contentStream, tableTopY);
 				r++;
 				tableTopY -= table.getRowHeight();
 				
@@ -273,7 +273,7 @@ public class ReportGenerator {
 		
 		// Draws grid and borders
 		// drawTableGrid(table, strings, contentStream, tableTopY);
-		float nextTextX = table.getMargin() * 24 + table.getCellMargin();
+		float nextTextX = table.getMargin() * 22 + table.getCellMargin();
 		float nextTextY = tableTopY - (table.getRowHeight() / 2)
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
 		writeContentLineOrden(strings, contentStream, nextTextX, nextTextY, table);

@@ -1,14 +1,19 @@
 package ait.sistemas.proyecto.activos.view.rrhh.generadorpin;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.PinModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.PinImpl;
+import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -18,8 +23,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -30,13 +33,18 @@ public class VGeneradorpinP extends VerticalLayout implements View, ClickListene
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_agregar;
+	private CssLayout hl_errores = new CssLayout();
+	private Button btnSalir = new Button("Salir");
 	private GridTipoAutorizacion gridTipoAutorizacion;
 	private PinForm frm_pin = new PinForm();
 	private TextField txt_nombre_servidor = new TextField("Servidor Publico");
 	private final SessionModel session = (SessionModel)UI.getCurrent().getSession().getAttribute("user");
 	private final PinImpl pinimpl = new PinImpl();
+	
+	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
+	
 	public VGeneradorpinP() {
-		this.btn_agregar= new Button("Agregar");
+		this.btn_agregar= new Button("Modificar PIN");
 		this.btn_agregar.addClickListener(this);
 
 		this.gridTipoAutorizacion = new GridTipoAutorizacion(session.getId());
@@ -51,17 +59,37 @@ public class VGeneradorpinP extends VerticalLayout implements View, ClickListene
 
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_agregar.setStyleName("ait-buttons-btn");
+		this.btn_agregar.setStyleName(AitTheme.BTN_SUBMIT);
+		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_agregar);
-		buttonContent.addStyleName("ait-buttons");
+		this.btnSalir.setStyleName(AitTheme.BTN_EXIT);
+		this.btnSalir.setIcon(FontAwesome.UNDO);
+		buttonContent.addComponent(this.btnSalir);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		return buttonContent;
 	}
 
+	
+	private void buildMessages(List<BarMessage> mensages) {
+		this.hl_errores.removeAllComponents();
+		hl_errores.addStyleName("ait-error-bar");
+		this.addComponent(this.hl_errores);
+		
+		for (BarMessage barMessage : mensages) {
+			Label lbError = new Label(barMessage.getComponetName()+":"+barMessage.getErrorName());
+			lbError.setStyleName(barMessage.getType());
+			this.hl_errores.addComponent(lbError);
+		}
+	
+	}
 	private Component buildFormContent() {
 				
 		VerticalLayout formContent = new VerticalLayout();
 		formContent.setSpacing(true	);
+
 		Panel frmPanel = new Panel();
+		frmPanel.setStyleName(AitTheme.PANEL_FORM);
+		frmPanel.setIcon(FontAwesome.EDIT);
 		frmPanel.setWidth("100%");
 		frmPanel.setCaption("Nombre del Servidor Publico");
 		frmPanel.setContent(txt_nombre_servidor);
@@ -74,6 +102,8 @@ public class VGeneradorpinP extends VerticalLayout implements View, ClickListene
 		formContent.setMargin(true);
 		
 		Panel gridpin = new Panel();
+		gridpin.setStyleName(AitTheme.PANEL_GRID);
+		gridpin.setIcon(FontAwesome.TABLE);
 		gridpin.setWidth("100%");
 		gridpin.setCaption("N. PIN");
 		gridpin.setContent(this.frm_pin);
@@ -106,6 +136,7 @@ public class VGeneradorpinP extends VerticalLayout implements View, ClickListene
 
 	@Override
 	public void buttonClick(ClickEvent event) {
+		this.mensajes.clear();
 		if (event.getButton() == this.btn_agregar) {
 			PinModel pin = new PinModel();
 			pin.setCi(session.getCi());
@@ -116,11 +147,13 @@ public class VGeneradorpinP extends VerticalLayout implements View, ClickListene
 			pin.setUnidad_organizacional_id(session.getId_unidad_organizacional());
 			pin.setUsuario_id(session.getId());
 			if(pinimpl.addPIN(pin)){
-				Notification.show(Messages.SUCCESS_MESSAGE);
+				this.mensajes.add(new BarMessage("Fomulario", Messages.SUCCESS_MESSAGE, "success"));
 				frm_pin.updatePin();
 			}else{
-				Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
+				this.mensajes.add(new BarMessage("Fomulario", Messages.NOT_SUCCESS_MESSAGE));
 			}
+			
+			buildMessages(this.mensajes);
 		}
 	}
 }

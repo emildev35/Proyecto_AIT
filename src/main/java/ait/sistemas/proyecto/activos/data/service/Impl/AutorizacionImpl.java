@@ -24,7 +24,7 @@ public class AutorizacionImpl {
 	}
 	@SuppressWarnings("unchecked")
 	public List<DocumentoPendiente> getDocumentosPendientes(String id_usuario){
-		String str_query = "EXEC Mvac_Get_DocumentosbyUsuario @Id_Usuario=?1";
+		String str_query = "EXEC Mvac_GetDocumentoSinAut @Id_Usuario=?1";
 		Query query = this.em.createNativeQuery(str_query, "documento-pendiente");
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_usuario);
@@ -57,6 +57,7 @@ public class AutorizacionImpl {
 		query.setParameter(10, autorizacion.getAUT_Fecha_Rechazo());
 		query.setParameter(11, autorizacion.getAUT_Fecha_Registro());
 		
+		System.out.println(autorizacion.getAUT_PIN_Autoriza_Rechaza());
 		int result = (Integer)query.getSingleResult();
 		return result;
 	}

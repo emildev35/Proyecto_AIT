@@ -254,19 +254,6 @@ public class PdfHistoricoGenerator {
 	}
 	
 	
-	// Writes the content for one line
-	private void writeContentLineDocument(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
-			float nextTextY, Historico table) throws IOException {
-		contentStream.setFont(table.getTextFont(), table.getFontSize());
-		for (int i = 0; i < table.getColumns_documentos().size(); i++) {
-			String text = lineContent[i];
-			contentStream.beginText();
-			contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
-			contentStream.showText(text != null && !text.equals("null") ? text : "");
-			contentStream.endText();
-			nextTextX += table.getColumns_documentos().get(i).getWidth();
-		}
-	}
 	
 	private void writeContentLineComponent(String[] lineContent, PDPageContentStream contentStream, float nextTextX,
 			float nextTextY, Historico table) throws IOException {
@@ -301,28 +288,6 @@ public class PdfHistoricoGenerator {
 		for (int i = 0; i < table.getColumns_componentes().size(); i++) {
 			contentStream.drawLine(nextX, tableTopY, nextX, tableTopY - table.getRowHeight());
 			nextX += table.getColumns_componentes().get(i).getWidth();
-		}
-		contentStream.drawLine(nextX, tableTopY, nextX, tableTopY - table.getRowHeight());
-	}
-	
-	private void drawTableDocumentGrid(Historico table, String[][] currentPageContent, PDPageContentStream contentStream,
-			float tableTopY) throws IOException {
-		// Draw row lines
-		float nextY = tableTopY;
-		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i <= 1; i++) {
-			contentStream.drawLine(table.getMargin(), nextY, table.getMargin() + table.getWidth(i), nextY);
-			nextY -= table.getRowHeight();
-		}
-		
-		
-		float nextX = table.getMargin();
-		
-		// Modificado para solo el tititulo para grilla completa modificar por
-		for (int i = 0; i < table.getColumns_documentos().size(); i++) {
-			contentStream.drawLine(nextX, tableTopY, nextX, tableTopY - table.getRowHeight());
-			nextX += table.getColumns_documentos().get(i).getWidth();
 		}
 		contentStream.drawLine(nextX, tableTopY, nextX, tableTopY - table.getRowHeight());
 	}

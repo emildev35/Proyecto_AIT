@@ -60,7 +60,7 @@ public class FormUsuario extends GridLayout implements ValueChangeListener {
 		this.txtCI.setEnabled(false);
 		this.cbPersonal.addValidator(new NullValidator("", false));
 		this.txtIdenticadorUsuario.addValidator(new NullValidator("", false));
-		this.txtIdenticadorUsuario.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(5, 12), 5, 12, false));
+		this.txtIdenticadorUsuario.addValidator(new StringLengthValidator(Messages.STRING_LENGTH_MESSAGE(5, 25), 5, 25, false));
 		this.cbPersonal.setRequired(true);
 		this.txtIdenticadorUsuario.setRequired(true);
 		buildForm();

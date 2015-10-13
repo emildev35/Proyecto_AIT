@@ -53,9 +53,9 @@ public class ReportPdf {
 	private static final float ROW_HEIGHT = 15;
 	private static final float CELL_MARGIN = 2;
 	
-	private static final int HEADER_SIZE = 4;
+	private static final int HEADER_SIZE = 3;
 	
-	public String SAVE_PATH = PathValues.PATH_REPORTS + "Reporte-Inventario-" + String.valueOf(new java.util.Date().getTime())
+	public String SAVE_PATH = PathValues.PATH_REPORTS + "personal_autorizaciones" + String.valueOf(new java.util.Date().getTime())
 			+ ".pdf";
 	
 	final ActivoImpl activoimpl = new ActivoImpl();
@@ -78,12 +78,9 @@ public class ReportPdf {
 		columns.add(new Column("Unidad Organizacional", 250));
 		columns.add(new Column("Orden", 75));
 		columns.add(new Column("Servidor Publico", 180));
-		columns.add(new Column("Nivel Autorizacion", 80));
+		columns.add(new Column("Nivel Autorizacion", 100));
 		
 		float tableHeight = IS_LANDSCAPE ? PAGE_SIZE.getWidth() - (2 * MARGIN) : PAGE_SIZE.getHeight() - (2 * MARGIN);
-		// Date date = new Date();
-		// DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
-		// String fecha = fechaHora.format(date);
 		Table Inventario = new TableBuilder().setCellMargin(CELL_MARGIN).setContent(content)
 				.setColumns(columns).setContent(content).setHeight(tableHeight).setNumberOfRows(content.length)
 				.setRowHeight(ROW_HEIGHT).setMargin(MARGIN).setPageSize(PAGE_SIZE).setLandscape(IS_LANDSCAPE)
@@ -91,7 +88,7 @@ public class ReportPdf {
 				.setFooterFont(FOOTER_FONT).setFontSizeFooter(FOOTER_FONT_SIZE).setTitleFont(TITLE_FONT)
 				.setFontSizeTitle(TITLE_FONT_SIZE).setSubTitleFont(SUBTITLE_FONT).setFontSizeSubTitle(SUBTITLE_FONT_SIZE)
 				.setHeaderSize(HEADER_SIZE).setUnidad("XXXXXX").setDependencia("XXXXX").setUsuario("XXXXXX")
-				.setTitle("INVENTARIO DE ACTIVOS").setSubTitle("Realizado al : " + fecha).build();
+				.setTitle("PERSONAL CON AUTORIZACIONES").setSubTitle("").build();
 		return Inventario;
 		
 	}
