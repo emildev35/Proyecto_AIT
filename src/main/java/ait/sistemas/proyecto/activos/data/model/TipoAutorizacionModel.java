@@ -12,12 +12,16 @@ import javax.persistence.SqlResultSetMapping;
 		@FieldResult(name = "id_tipo_autorizacion", column = "id_tipo_autorizacion"),
 		@FieldResult(name = "dependencia", column = "dependencia"),
 		@FieldResult(name = "dependencia_id", column = "dependencia_id"),
+		@FieldResult(name = "dependencia_transferencia", column = "dependencia_transferencia"),
+		@FieldResult(name = "dependencia_id_transferencia", column = "dependencia_id_transferencia"),
 		@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
 		@FieldResult(name = "tipo_movimiento_id", column = "tipo_movimiento_id"), @FieldResult(name = "orden", column = "orden"),
 		@FieldResult(name = "ci", column = "ci"), @FieldResult(name = "fecha_registro", column = "fecha_registro"),
 		@FieldResult(name = "usuario_id", column = "usuario_id"),
 		@FieldResult(name = "servidor_publico", column = "servidor_publico"),
 		@FieldResult(name = "usuario_id", column = "usuario_id"),
+		@FieldResult(name = "dependenciaFuncionario", column = "dependencia_funcionario"),
+		@FieldResult(name = "unidadFuncionario", column = "unidad_funcionario"),
 		@FieldResult(name = "nivel_autorizacion", column = "nivel_autorizacion"),
 		@FieldResult(name = "nivel_autorizacion_id", column = "nivel_autorizacion_id"), 
 		@FieldResult(name = "unidadOrganizacional", column = "unidad_organizacional"),
@@ -28,6 +32,11 @@ public class TipoAutorizacionModel {
 	private String id_tipo_autorizacion;
 	private String dependencia;
 	private short dependencia_id;
+	private String dependencia_transferencia;
+	private short dependencia_id_transferencia;
+	
+	private String depedenciaFuncionario;
+	private String unidadFuncionario;
 	
 	
 	private String tipo_movimiento;
@@ -185,7 +194,53 @@ public class TipoAutorizacionModel {
 	public void setUnidadOrganizacionalId(short unidadOrganizacionalId) {
 		this.unidadOrganizacionalId = unidadOrganizacionalId;
 	}
-	
-	
-	
+
+
+
+	public String getDependencia_transferencia() {
+		return dependencia_transferencia;
+	}
+
+
+
+	public void setDependencia_transferencia(String dependencia_transferencia) {
+		this.dependencia_transferencia = dependencia_transferencia;
+	}
+
+
+
+	public short getDependencia_id_transferencia() {
+		return dependencia_id_transferencia;
+	}
+
+
+
+	public void setDependencia_id_transferencia(short dependencia_id_transferencia) {
+		this.dependencia_id_transferencia = dependencia_id_transferencia;
+	}
+
+
+
+	public String getUnidadFuncionario() {
+		return unidadFuncionario;
+	}
+
+
+
+	public void setUnidadFuncionario(String unidadFuncionario) {
+		this.unidadFuncionario = unidadFuncionario;
+	}
+
+
+
+	public String getDepedenciaFuncionario() {
+		return depedenciaFuncionario;
+	}
+
+
+
+	public void setDepedenciaFuncionario(String depedenciaFuncionario) {
+		this.depedenciaFuncionario = depedenciaFuncionario;
+	}
+
 }

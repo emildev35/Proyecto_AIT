@@ -100,7 +100,9 @@ public class VAutorizadoR extends VerticalLayout implements View, ClickListener 
 		int r = 0;
 		for (TipoAutorizacionModel tipoAutorizacionModel : autorizaciones) {
 			String[] row = { tipoAutorizacionModel.getDependencia(), tipoAutorizacionModel.getTipo_movimiento(),
-					tipoAutorizacionModel.getUnidadOrganizacional(), String.valueOf(tipoAutorizacionModel.getOrden()),
+					tipoAutorizacionModel.getUnidadOrganizacional(), 
+					tipoAutorizacionModel.getDependencia_transferencia(),
+					String.valueOf(tipoAutorizacionModel.getOrden()),
 					tipoAutorizacionModel.getServidor_publico(), tipoAutorizacionModel.getNivel_autorizacion() };
 			result[r] = row;
 			r++;
@@ -138,7 +140,6 @@ public class VAutorizadoR extends VerticalLayout implements View, ClickListener 
 				subWindow.setHeight("90%");
 				subWindow.center();
 				
-				// Open it in the UI
 				getUI().addWindow(subWindow);
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -87,15 +87,17 @@ import ait.sistemas.proyecto.activos.data.model.Tipos_Movimiento;
 			return result;
 		}
 
-		public int getNivelAutorizacion(short dependencia, short unidad, short tipo_movimiento){
+		public int getNivelAutorizacion(short dependencia, short unidad, short dependencia_trasferencia, short tipo_movimiento){
 			String str_query = "EXEC Act_GetNivelAutorizacion_Q "
 					+ "@Id_Dependencia=?1,"
-					+ "@Id_Unidad_Organizacional=?2,"
-					+ "@Tipo_Movimiento=?3";
+					+ "@Id_Dependencia_Transferencia=?2,"
+					+ "@Id_Unidad_Organizacional=?3,"
+					+ "@Tipo_Movimiento=?4";
 			Query query = this.em.createNativeQuery(str_query);
-			query.setParameter(1, dependencia)
-			.setParameter(2, unidad)
-			.setParameter(3, tipo_movimiento);
+			query.setParameter(1, dependencia);
+			query.setParameter(2, dependencia_trasferencia)
+			.setParameter(3, unidad)
+			.setParameter(4, tipo_movimiento);
 			return (Integer)query.getSingleResult();
 		}
 	}

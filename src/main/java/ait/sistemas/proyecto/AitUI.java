@@ -84,11 +84,11 @@ public class AitUI extends UI {
 				@Override
 				public SystemMessages getSystemMessages(SystemMessagesInfo systemMessagesInfo) {
 					CustomizedSystemMessages messages = new CustomizedSystemMessages();
-					messages.setCommunicationErrorCaption("Comm Err");
+					messages.setCommunicationErrorCaption("Session Caducada");
 					messages.setSessionExpiredMessage(Messages.TIMEOUT_SESSION);
-					messages.setCommunicationErrorMessage("This is bad.");
+					messages.setCommunicationErrorMessage("Expiracion de la Session");
 					messages.setCommunicationErrorNotificationEnabled(true);
-					messages.setCommunicationErrorURL("http://vaadin.com/");
+					messages.setCommunicationErrorURL("http://192.168.97.98");
 					return messages;
 				}
 			});
