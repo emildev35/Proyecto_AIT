@@ -16,6 +16,7 @@ import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.MovimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -27,6 +28,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.data.validator.NullValidator;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
@@ -46,7 +48,7 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	public ComboBox cb_auxiliar_contable = new ComboBox("Auxiliar Contable");
 	
 	public TextField txt_observaciones = new TextField("Motivo de La Solicitud");
-	
+	private TextField txtFuncionario = new TextField("Funcionario Solicitante");
 	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	private PropertysetItem pitm_solicitud = new PropertysetItem();
@@ -58,10 +60,11 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
 	
 	private GridSoltransferencia grid_solicitud = new GridSoltransferencia();
+	private final SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 	
 	public FormSoltransferencia() {
 		
-		super(7, 4);
+		super(6, 4);
 		setSpacing(true);
 		setWidth("100%");
 		
@@ -111,7 +114,10 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 		cb_grupo_contable.setWidth("90%");
 		cb_auxiliar_contable.setWidth("90%");
 		txt_observaciones.setWidth("90%");
+		txtFuncionario.setWidth("100%");
+		txtFuncionario.setEnabled(false);
 		
+		this.txtFuncionario.setValue(session.getFull_name());
 		fillcbDependencia();
 		fillcbGrupoContable();
 		buildContent();
@@ -133,13 +139,14 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 		}
 	}
 	private void fillcbGrupoContable() {
-		cb_auxiliar_contable.setNullSelectionAllowed(false);
+		cb_grupo_contable.setNullSelectionAllowed(false);
 		for (GruposContablesModel grupo_contable : grupoimpl.getalls()) {
 			cb_grupo_contable.addItem(grupo_contable);
 			cb_grupo_contable.setItemCaption(grupo_contable, grupo_contable.getGRC_Nombre_Grupo_Contable());
 		}
 	}
 	private void fillcbAuxiliarContable(String id_grupo) {
+		cb_auxiliar_contable.removeAllItems();
 		cb_auxiliar_contable.setNullSelectionAllowed(false);
 		for (AuxiliaresContablesModel auxiliar_contable : auxiliarimpl.getreporte(id_grupo)) {
 			cb_auxiliar_contable.addItem(auxiliar_contable);
@@ -150,16 +157,21 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	private void buildContent() {
 		
 		Panel pn_solicitud = new Panel("Solicitud de Movimiento de Activos");
+		pn_solicitud.setIcon(FontAwesome.SAVE);
+		pn_solicitud.setStyleName(AitTheme.PANEL_FORM);
 		Panel pn_activos = new Panel("Seleccione la Dependencia, El Grupo y el Auxiliar Contable");
+		pn_activos.setIcon(FontAwesome.SAVE);
+		pn_activos.setStyleName(AitTheme.PANEL_FORM);
 		
-		GridLayout gridl_solicitud = new GridLayout(2, 1);
+		GridLayout gridl_solicitud = new GridLayout(6, 1);
 		gridl_solicitud.setSizeFull();
-		// gridl_solicitud.setMargin(true);
-		gridl_solicitud.addComponent(this.txt_id_solicitud, 0, 0);
-		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 1, 0);
+		 gridl_solicitud.setMargin(true);
+		gridl_solicitud.addComponent(this.txt_id_solicitud, 4, 0);
+		gridl_solicitud.addComponent(this.dtf_fecha_soliciud, 5, 0);
+		gridl_solicitud.addComponent(this.txtFuncionario, 0, 0, 2, 0);
 		pn_solicitud.setContent(gridl_solicitud);
 		
-		this.addComponent(pn_solicitud, 4, 0, 5, 0);
+		this.addComponent(pn_solicitud, 0, 0, 5, 0);
 		
 		GridLayout gridl_activos = new GridLayout(3, 1);
 		gridl_activos.setSizeFull();
@@ -176,6 +188,7 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	
 	public void update() {
 		binder_solicitud.clear();
+		buildId();
 	}
 	
 	public List<BarMessage> getMensajes() {
@@ -230,12 +243,13 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	}
 	
 	public Movimiento getData() {
+		Dependencia dependencia = (Dependencia) cb_dependnecia.getValue();
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
 		
-		result.setId_dependencia((short)this.cb_dependnecia.getValue());
-		result.setId_dependencia_destino(usuario.getId_dependecia());
+		result.setId_dependencia(usuario.getId_dependecia());
+		result.setId_dependencia_destino(dependencia.getDEP_Dependencia());// dependencia origen
 		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 		result.setFecha_movimiento(fecha_registro);
@@ -249,7 +263,7 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
 			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
-			detalle.setId_dependencia((short)this.cb_dependnecia.getValue());
+			detalle.setId_dependencia(dependencia.getDEP_Dependencia());
 			detalle.setObservacion(txt_observaciones.getValue());
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 			detalle.setFecha_registro(fecha_registro);
@@ -285,8 +299,8 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	public void clear() {
 	
 		this.binder_solicitud.clear();
-		this.grid_solicitud = new GridSoltransferencia();
 		buildId();
-		
+		this.grid_solicitud = new GridSoltransferencia();
+//		this.grid_solicitud.update((short)0,"", "");
 	}
 }

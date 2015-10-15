@@ -21,6 +21,7 @@ public class PDFPersonalGenerator {
 	private PDDocument doc;
 	
 	private int intNumberPages = 5;
+	private int r = 0;
 	
 	// Generates document from Table object
 	public boolean generatePDF(Table table, String savePath) throws IOException {
@@ -52,8 +53,8 @@ public class PDFPersonalGenerator {
 			PDPage page = generatePage(doc, table);
 			PDPageContentStream contentStream = generateContentStream(doc, page, table);
 			String[][] currentPageContent;
+			r=0;
 			currentPageContent = getContentForCurrentPage(table, rowsPerPage, pageCount);
-			
 			drawCurrentPage(table, currentPageContent, contentStream, pageCount);
 		}
 	}
@@ -66,7 +67,7 @@ public class PDFPersonalGenerator {
 		tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize().getHeight()
 				- table.getMargin();
 		
-		if (pageCount == 0) {
+		if (r == 0) {
 			tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin()
 					- (table.getRowHeight() * table.getHeaderSize()) : table.getPageSize().getHeight() - table.getMargin()
 					- table.getRowHeight() - (table.getRowHeight() * table.getHeaderSize());
@@ -82,7 +83,13 @@ public class PDFPersonalGenerator {
 		float nextTextY = tableTopY - (table.getRowHeight() / 2)
 				- ((table.getTextFont().getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * table.getFontSize()) / 4);
 //		drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Unidad Organizacion/Apellido Paterno)" }, contentStream, tableTopY);
+//		tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin()
+//				- (table.getRowHeight() * table.getHeaderSize()) : table.getPageSize().getHeight() - table.getMargin()
+//				- table.getRowHeight() - (table.getRowHeight() * table.getHeaderSize());
+//				drawTableGrid(table, currentPageContent, contentStream, tableTopY);
+//		writeHeader(contentStream, nextTextX, nextTextY, table);
 		
+		nextTextX = table.getMargin() + table.getCellMargin();
 		// Write column headers
 		contentStream.beginText();
 		contentStream.moveTextPositionByAmount(nextTextX*8, nextTextY+15);
@@ -96,13 +103,15 @@ public class PDFPersonalGenerator {
 		
 		// Write content
 		for (int i = 0; i < currentPageContent.length; i++) {
+			
 			writeContentLine(currentPageContent[i], contentStream, nextTextX, nextTextY, table);
 			nextTextY -= table.getRowHeight();
 			nextTextX = table.getMargin() + table.getCellMargin();
 		}
 		
-		if (pageCount == 0) {
+		if (r == 0) {
 			writeHeader(contentStream, nextTextX, nextTextY, table);
+			r+=1;
 		}
 		// Se dibuja el footer
 		writeFooter(contentStream, nextTextX, nextTextY, table, pageCount);
@@ -156,12 +165,12 @@ public class PDFPersonalGenerator {
 		startRange = pageCount * rowsPerPage;
 		int endRange = (pageCount * rowsPerPage) + rowsPerPage;
 		
-		if (pageCount == 0) {
+//		if (pageCount == 0) {
 			endRange = (pageCount * rowsPerPage) - table.getHeaderSize() + rowsPerPage;
-		} else {
-			startRange -= table.getHeaderSize();
-			endRange -= table.getHeaderSize();
-		}
+//		} else {
+//			startRange -= table.getHeaderSize();
+//			endRange -= table.getHeaderSize();
+//		}
 		if (endRange > table.getNumberOfRows()) {
 			endRange = table.getNumberOfRows();
 		}
