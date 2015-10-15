@@ -25,7 +25,7 @@ public class GridDetalleActivo extends Grid {
 		setHeightByRows(3);
 		setHeightMode(HeightMode.ROW);
 		removeColumn("id_dependencia");
-		removeColumn("id_unidad_organizacional_origen");
+		removeColumn("id_unidad_organizacional");
 		removeColumn("motivo_baja");
 		removeColumn("observacion");
 		removeColumn("tipo_movimiento");
@@ -50,7 +50,7 @@ public class GridDetalleActivo extends Grid {
 		setContainerDataSource(bean_detalles);
 		setSelectionMode(SelectionMode.NONE);
 		removeColumn("id_dependencia");
-		removeColumn("id_unidad_organizacional_origen");
+		removeColumn("id_unidad_organizacional");
 		removeColumn("motivo_baja");
 		removeColumn("observacion");
 		removeColumn("tipo_movimiento");

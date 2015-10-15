@@ -10,6 +10,7 @@ import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.theme.AitTheme;
 import ait.sistemas.proyecto.common.view.AitView;
+import ait.sistemas.proyecto.common.view.HomeView;
 import ait.sistemas.proyecto.seguridad.component.model.SessionModel;
 import ait.sistemas.proyecto.seguridad.data.model.Arbol_menus;
 
@@ -130,7 +131,6 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
-		
 		for (BarMessage barMessage : mensages) {
 			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
@@ -164,7 +164,9 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 					
 					if (autorizacionimpl.add(autorizacion) > 0) {
 						this.frm_autorizacion.clear();
-						this.grid_documentos = new GridDocumentosPendientes(session.getId());
+						this.frm_documento.clear();
+						this.grid_documentos.update(session.getId());
+						this.grid_detalle_activo.update((short)0, (short)0, (short)0);
 						Notification.show(Messages.SUCCESS_MESSAGE);
 					} else {
 						Notification.show(Messages.NOT_SUCCESS_MESSAGE, Type.ERROR_MESSAGE);
@@ -181,7 +183,7 @@ public class VAutorizacionA extends VerticalLayout implements View, ClickListene
 			this.frm_autorizacion.clearMessages();
 		}
 		if (event.getButton() == this.btn_salir) {
-			frm_autorizacion.validate();
+			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
 		}
 	}
 	

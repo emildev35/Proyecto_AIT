@@ -1,7 +1,9 @@
 package ait.sistemas.proyecto.activos.view.reva.actualiza.reporte;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.Cierre_Gestion;
@@ -68,7 +70,7 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 		
 		this.cb_Dependencia.addValidator(new NullValidator("", false));
 		this.txt_ufvi.setEnabled(false);
-		this.dtf_fecha_ultima_depre.setEnabled(false);
+//		this.dtf_fecha_ultima_depre.setEnabled(false);
 		
 		setData((Cierre_Gestion) cierre_gestion_impl.getall());
 		fillcbGrupo();
@@ -148,8 +150,11 @@ public class FormReporte extends GridLayout implements ValueChangeListener{
 		return this.mensajes;
 	}
 	public void setData(Cierre_Gestion data) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTimeInMillis(data.getCGE_Fecha_Cierre_Gestion().getTime());
+		calendar.add(Calendar.YEAR,1);
 		this.txt_ufvi.setValue(String.valueOf(data.getCGE_Tipo_Cambio_UFV()));
-		this.dtf_fecha_ultima_depre.setValue(data.getCGE_Fecha_Cierre_Gestion());
+		this.dtf_fecha_ultima_depre.setValue(calendar.getTime());
 
 	}
 	@Override

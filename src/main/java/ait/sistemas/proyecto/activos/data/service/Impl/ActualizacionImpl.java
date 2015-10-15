@@ -1,5 +1,6 @@
 package ait.sistemas.proyecto.activos.data.service.Impl;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -12,11 +13,12 @@ import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.component.model.Actualizacion;
+import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
-
 
 /**
  * Clase de Implementacion de Activos
+ * 
  * @author franzemil
  *
  */
@@ -30,16 +32,25 @@ public class ActualizacionImpl {
 	}
 	
 	public int add_Actualizacion(Actualizacion table) {
-		String strQuery = String.format("EXEC Reva_Actualizacion_I " + "@Fecha_Actual=?1");
-		Query query = this.em.createNativeQuery(strQuery);
-		query.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").format(table.getFecha()) + "T00:00:00");
-		
+		ConnecctionActivos conn = new ConnecctionActivos();
 		try {
-			int result = (Integer) query.getSingleResult();
-			return result;
-		} catch (Exception e) {
+			return conn.callproc("EXEC Reva_Actualizacion_I " + "@Fecha_Actual='" + new SimpleDateFormat("yyyy-MM-dd").format(table.getFecha()) +"T00:00:00'" );
+		} catch (SQLException e1) {
+			System.out.println(e1.getMessage());
 			return 0;
 		}
+		
+//		String strQuery = String.format("EXEC Reva_Actualizacion_I " + "@Fecha_Actual=?1");
+//		Query query = this.em.createNativeQuery(strQuery);
+//		
+//		query.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").format(table.getFecha()) + "T00:00:00");
+//		
+//		try {
+//			int result = (Integer) query.getSingleResult();
+//			return result;
+//		} catch (Exception e) {
+//			return 0;
+//		}
 		
 	}
 	
@@ -55,8 +66,9 @@ public class ActualizacionImpl {
 	}
 	
 	/**
-	 * Retorna la Lista de Resumen de Activos Actualizados
-	 * organizados y ordenados por la Dependencia
+	 * Retorna la Lista de Resumen de Activos Actualizados organizados y
+	 * ordenados por la Dependencia
+	 * 
 	 * @param id_dependencia
 	 * @param fechaElaboracion
 	 * @return

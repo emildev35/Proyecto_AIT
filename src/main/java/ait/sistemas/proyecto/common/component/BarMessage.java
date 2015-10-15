@@ -6,8 +6,6 @@ import javax.persistence.FieldResult;
 import javax.persistence.Id;
 import javax.persistence.SqlResultSetMapping;
 
-import ait.sistemas.proyecto.activos.data.model.ActivosModel;
-
 /**
  * Clase encargada de almacenar los mensajes de Error, Succes de las Pantallas
  * 

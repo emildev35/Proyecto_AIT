@@ -10,7 +10,7 @@ public class Mantenimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private short id_dependencia;
-	private short id_unidad_organizacional_origen;
+	private short id_unidad_organizacional;
 	private long nro_documento;
 	private String id_usuario;
 	private short tipo_movimiento;
@@ -24,32 +24,12 @@ public class Mantenimiento implements Serializable {
 	public Mantenimiento() {
 		this.detalles = new ArrayList<Detalle>();
 	}
-	public Mantenimiento(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento, String id_usuario,
-			short tipo_movimiento, String nro_documento_referencia, Date fecha_nro_referencia, Date fecha_registro,
-			Date fecha_movimiento, List<Detalle> detalles, String observacion) {
-		this.id_dependencia = id_dependencia;
-		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
-		this.nro_documento = nro_documento;
-		this.id_usuario = id_usuario;
-		this.tipo_movimiento = tipo_movimiento;
-		this.nro_documento_referencia = nro_documento_referencia;
-		this.fecha_nro_referencia = fecha_nro_referencia;
-		this.fecha_registro = fecha_registro;
-		this.fecha_movimiento = fecha_movimiento;
-		this.detalles = detalles;
-		this.observacion = observacion;
-	}
+	
 	public short getId_dependencia() {
 		return id_dependencia;
 	}
 	public void setId_dependencia(short id_dependencia) {
 		this.id_dependencia = id_dependencia;
-	}
-	public short getId_unidad_organizacional_origen() {
-		return id_unidad_organizacional_origen;
-	}
-	public void setId_unidad_organizacional_origen(short id_unidad_organizacional_origen) {
-		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
 	}
 	public long getNro_documento() {
 		return nro_documento;
@@ -109,5 +89,14 @@ public class Mantenimiento implements Serializable {
 		this.detalles.add(detalle);
 		
 	}
+
+	public short getId_unidad_organizacional() {
+		return id_unidad_organizacional;
+	}
+
+	public void setId_unidad_organizacional(short id_unidad_organizacional) {
+		this.id_unidad_organizacional = id_unidad_organizacional;
+	}
+	
 	
 }

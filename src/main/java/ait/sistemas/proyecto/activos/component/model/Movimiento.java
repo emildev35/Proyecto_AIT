@@ -1,6 +1,7 @@
 package ait.sistemas.proyecto.activos.component.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,12 @@ import javax.persistence.SqlResultSetMapping;
  *
  */
 @SqlResultSetMapping(name = "cmovimiento", entities = { @EntityResult(entityClass = Movimiento.class, fields = {
-	@FieldResult(name = "id_cmovimiento", column = "id_cmovimiento"),
+@FieldResult(name = "id_cmovimiento", column = "id_cmovimiento"),
 	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
 	@FieldResult(name = "dependencia", column = "dependencia"),
+	@FieldResult(name = "idUnidadOrganizacional", column = "id_unidad_organizacional"),
+	@FieldResult(name = "unidadOrganizacional", column = "unidad_organizacional"),
+	@FieldResult(name = "ciUsuario", column = "ci_usuario"),
 	@FieldResult(name = "id_dependencia_destino", column = "id_dependencia_destino"),
 	@FieldResult(name = "dependencia_destino", column = "dependencia_destino"),
 	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
@@ -44,8 +48,13 @@ public class Movimiento {
 	private String id_cmovimiento;
 	private short id_dependencia;
 	private String dependencia;
+	private short idUnidadOrganizacional;
+	private String unidadOrganizacional;
+	private String ciUsuario;
+	
 	private short id_dependencia_destino;
 	private String dependencia_destino;
+	
 	private short id_unidad_organizacional_origen;
 	private long nro_documento;
 	private String id_usuario;
@@ -54,8 +63,8 @@ public class Movimiento {
 	private String nro_documento_referencia;
 	private short tipo_movimiento_referencia;
 	private Date fecha_nro_referencia;
-	private Date fecha_registro;
-	private Date fecha_movimiento;	
+	private Timestamp fecha_registro;
+	private Timestamp fecha_movimiento;	
 	private List<Detalle> detalles;
 	private String observacion;
 	private String solicitante;
@@ -85,15 +94,6 @@ public class Movimiento {
 		this.detalles = new ArrayList<Detalle>();
 	}
 
-	public Movimiento(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
-			Date fecha_registro, Date fecha_movimiento, List<Detalle> detalles) {
-		this.id_dependencia = id_dependencia;
-		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
-		this.nro_documento = nro_documento;
-		this.fecha_registro = fecha_registro;
-		this.fecha_movimiento = fecha_movimiento;
-		this.detalles = detalles;
-	}
 
 	public short getId_dependencia() {
 		return id_dependencia;
@@ -143,19 +143,19 @@ public class Movimiento {
 		this.nro_documento = nro_documento;
 	}
 
-	public Date getFecha_registro() {
+	public Timestamp getFecha_registro() {
 		return fecha_registro;
 	}
 
-	public void setFecha_registro(Date fecha_registro) {
+	public void setFecha_registro(Timestamp fecha_registro) {
 		this.fecha_registro = fecha_registro;
 	}
 
-	public Date getFecha_movimiento() {
+	public Timestamp getFecha_movimiento() {
 		return fecha_movimiento;
 	}
 
-	public void setFecha_movimiento(Date fecha_movimiento) {
+	public void setFecha_movimiento(Timestamp fecha_movimiento) {
 		this.fecha_movimiento = fecha_movimiento;
 	}
 
@@ -256,4 +256,38 @@ public class Movimiento {
 		this.tipo_movimiento_nuevo = tipo_movimiento_nuevo;
 	}
 
+	public short getIdUnidadOrganizacional() {
+		return idUnidadOrganizacional;
+	}
+
+	public void setIdUnidadOrganizacional(short idUnidadOrganizacional) {
+		this.idUnidadOrganizacional = idUnidadOrganizacional;
+	}
+
+	public String getUnidadOrganizacional() {
+		return unidadOrganizacional;
+	}
+
+	public void setUnidadOrganizacional(String unidadOrganizacional) {
+		this.unidadOrganizacional = unidadOrganizacional;
+	}
+
+	public String getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(String id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
+	public String getCiUsuario() {
+		return ciUsuario;
+	}
+
+	public void setCiUsuario(String ciUsuario) {
+		this.ciUsuario = ciUsuario;
+	}
+	
+
+	
 }

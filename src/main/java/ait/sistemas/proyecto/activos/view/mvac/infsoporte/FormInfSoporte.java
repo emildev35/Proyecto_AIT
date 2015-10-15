@@ -226,8 +226,8 @@ public class FormInfSoporte extends GridLayout implements SelectionListener {
 		resul.setTipo_movimiento((short) 12);
 		resul.setObservacion(this.tarea_descripcion.getValue().toString());
 		resul.setId_estado_soporte(((EstadoSoporte) cb_estado_soporte.getValue()).getId());
-		resul.setFecha_movimiento(new java.sql.Date(new Date().getTime()));
-		resul.setFecha_registro(new java.sql.Date(new Date().getTime()));
+		resul.setFecha_movimiento(new java.sql.Timestamp(new Date().getTime()));
+		resul.setFecha_registro(new java.sql.Timestamp(new Date().getTime()));
 		resul.setNro_documento_referencia(String.valueOf(this.sol_soporte.getNro_documento()));
 		resul.setTipo_movimiento_referencia(sol_soporte.getTipo_movimiento());
 		resul.setFecha_nro_referencia(sol_soporte.getFecha());

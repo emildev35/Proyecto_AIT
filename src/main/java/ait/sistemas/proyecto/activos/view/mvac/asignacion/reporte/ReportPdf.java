@@ -44,7 +44,7 @@ public class ReportPdf {
 	/**
 	 * Font for footer report
 	 */
-	public static String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
+	public String SAVE_PATH = PathValues.PATH_REPORTS + String.valueOf(new java.util.Date().getTime()) + ".pdf";
 
 
 

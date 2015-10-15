@@ -35,7 +35,7 @@ public class MovimientoImpl {
 		Query query = this.em.createNativeQuery(str_id);
 		query.setParameter(1, tipo_mov);
 		return (Long) query.getSingleResult();
-		//return result;
+		// return result;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -56,11 +56,11 @@ public class MovimientoImpl {
 				+ "@Tipo_Movimiento=?7," + "@Observaciones=?8";
 		Query query_cabezera = emdos.createNativeQuery(str_cabezera);
 		query_cabezera.setParameter(1, data.getId_dependencia());
-		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(2, data.getIdUnidadOrganizacional());
 		query_cabezera.setParameter(3, data.getNro_documento());
 		query_cabezera.setParameter(4, data.getFecha_registro());
 		query_cabezera.setParameter(5, data.getFecha_movimiento());
-		query_cabezera.setParameter(6, data.getUsuario());
+		query_cabezera.setParameter(6, data.getCiUsuario());
 		query_cabezera.setParameter(7, data.getTipo_movimiento());
 		query_cabezera.setParameter(8, data.getObservacion());
 		int result_cabezera = (Integer) query_cabezera.getSingleResult();
@@ -73,7 +73,7 @@ public class MovimientoImpl {
 						+ "@Observaciones=?7";
 				Query query_detalle = emdos.createNativeQuery(str_detalle);
 				query_detalle.setParameter(1, detalle.getId_dependencia());
-				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+				query_detalle.setParameter(2, detalle.getId_unidad_organizacional());
 				query_detalle.setParameter(3, detalle.getNro_documento());
 				query_detalle.setParameter(4, detalle.getFecha_registro());
 				query_detalle.setParameter(5, detalle.getTipo_movimiento());
@@ -93,37 +93,30 @@ public class MovimientoImpl {
 			return 0;
 		}
 	}
-	public int addMovimientoReva(Movimiento data) throws SQLException {
-ConnecctionActivos conn = new ConnecctionActivos();
-		
-		String Sql = String.format("exec [dbo].[Mvac_CMovimientoBaja_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
-				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s'," + "@No_Documento_referencia='%s'," + "@Fecha_Documento_Referencia='%s',"+ "@Tipo_Movimiento=%d,"
-				+ "@Observaciones='%s'",
-				data.getId_dependencia(), 
-				data.getId_unidad_organizacional_origen(),
-				data.getNro_documento(), 
-				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_registro()),
-				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_movimiento()), 
-				data.getUsuario(), 
-				data.getNro_documento_referencia(),
-				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_nro_referencia()),
-				data.getTipo_movimiento(),
-				data.getObservacion());
-		int resultado_cabecera = conn.callproc(Sql);
 	
+	public int addMovimientoReva(Movimiento data) throws SQLException {
+		ConnecctionActivos conn = new ConnecctionActivos();
+		
+		String Sql = String.format("exec [dbo].[Mvac_CMovimientoBaja_I] " + "@Dependencia_Id=%d,"
+				+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s',"
+				+ "@CI_Usuario='%s'," + "@No_Documento_referencia='%s'," + "@Fecha_Documento_Referencia='%s',"
+				+ "@Tipo_Movimiento=%d," + "@Observaciones='%s'", data.getId_dependencia(), data.getIdUnidadOrganizacional(),
+				data.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_registro()),
+				new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_movimiento()), data.getUsuario(),
+				data.getNro_documento_referencia(), new SimpleDateFormat("yyyy-dd-MM").format(data.getFecha_nro_referencia()),
+				data.getTipo_movimiento(), data.getObservacion());
+		int resultado_cabecera = conn.callproc(Sql);
+		
 		int result_detalle = 0;
 		if (resultado_cabecera > 0) {
 			for (Detalle detalle : data.getDetalles()) {
 				String str_detalle = String.format("EXEC Mvac_DMovimientoReva_I " + "@Dependencia_Id=%d,"
 						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
-						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," +"@Nuevo_valor='%s',"+"@Nueva_vida_util=%d,"+ "@Observaciones='%s'", 
-						detalle.getId_dependencia(), 
-						detalle.getId_unidad_organizacional_origen(), 
-						detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(detalle.getFecha_registro()), 
-						detalle.getTipo_movimiento(), detalle.getId_activo(), 
-						detalle.getNuevo_valor().toString(),
-						detalle.getNueva_vida_util(),
-						detalle.getObservacion());
+						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Nuevo_valor='%s'," + "@Nueva_vida_util=%d,"
+						+ "@Observaciones='%s'", detalle.getId_dependencia(), detalle.getId_unidad_organizacional(),
+						detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM").format(detalle.getFecha_registro()),
+						detalle.getTipo_movimiento(), detalle.getId_activo(), detalle.getNuevo_valor().toString(),
+						detalle.getNueva_vida_util(), detalle.getObservacion());
 				System.out.print(str_detalle);
 				result_detalle += conn.callproc(str_detalle);
 				
@@ -140,6 +133,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 			return 0;
 		}
 	}
+	
 	public int addMovimientoTransferencia(Movimiento data) {
 		this.emf = null;
 		this.em = null;
@@ -151,7 +145,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 						+ "@ID_Dependencia_Origen=?9 ";
 		Query query_cabezera = emdos.createNativeQuery(str_cabezera);
 		query_cabezera.setParameter(1, data.getId_dependencia());
-		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(2, data.getIdUnidadOrganizacional());
 		query_cabezera.setParameter(3, data.getNro_documento());
 		query_cabezera.setParameter(4, data.getFecha_registro());
 		query_cabezera.setParameter(5, data.getFecha_movimiento());
@@ -169,7 +163,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 						+ "@Observaciones=?7";
 				Query query_detalle = emdos.createNativeQuery(str_detalle);
 				query_detalle.setParameter(1, detalle.getId_dependencia());
-				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+				query_detalle.setParameter(2, detalle.getId_unidad_organizacional());
 				query_detalle.setParameter(3, detalle.getNro_documento());
 				query_detalle.setParameter(4, detalle.getFecha_registro());
 				query_detalle.setParameter(5, detalle.getTipo_movimiento());
@@ -198,7 +192,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 				+ "@Observaciones=?10 ";
 		Query query_cabezera = this.em.createNativeQuery(str_cabezera);
 		query_cabezera.setParameter(1, data.getId_dependencia());
-		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(2, data.getIdUnidadOrganizacional());
 		query_cabezera.setParameter(3, data.getNro_documento());
 		query_cabezera.setParameter(4, data.getFecha_registro());
 		query_cabezera.setParameter(5, data.getFecha_movimiento());
@@ -217,7 +211,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 						+ "@Motivo_Baja=?7," + "@Observaciones=?8 ";
 				Query query_detalle = this.em.createNativeQuery(str_detalle);
 				query_detalle.setParameter(1, detalle.getId_dependencia());
-				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+				query_detalle.setParameter(2, detalle.getId_unidad_organizacional());
 				query_detalle.setParameter(3, detalle.getNro_documento());
 				query_detalle.setParameter(4, detalle.getFecha_registro());
 				query_detalle.setParameter(5, detalle.getTipo_movimiento());
@@ -248,7 +242,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 			
 			Query query_detalle = this.em.createNativeQuery(str_detalle);
 			query_detalle.setParameter(1, detalle.getId_dependencia());
-			query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+			query_detalle.setParameter(2, detalle.getId_unidad_organizacional());
 			query_detalle.setParameter(3, detalle.getNro_documento());
 			query_detalle.setParameter(4, detalle.getTipo_movimiento());
 			query_detalle.setParameter(5, detalle.getId_activo());
@@ -259,7 +253,7 @@ ConnecctionActivos conn = new ConnecctionActivos();
 				+ "@Numero_Documento=?3," + "@Tipo_Movimiento=?4";
 		Query query_cabezera = this.em.createNativeQuery(str_cabezera);
 		query_cabezera.setParameter(1, data.getId_dependencia());
-		query_cabezera.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_cabezera.setParameter(2, data.getIdUnidadOrganizacional());
 		query_cabezera.setParameter(3, data.getNro_documento());
 		query_cabezera.setParameter(4, data.getTipo_movimiento());
 		result_cabezera = (Integer) query_cabezera.getSingleResult();
@@ -299,9 +293,8 @@ ConnecctionActivos conn = new ConnecctionActivos();
 	@SuppressWarnings("unused")
 	public int update(CmovimientoDocumento table) {
 		String strQuery = String.format("EXEC Mvac_ActaBaja_I " + "@id_dependencia=?1, " + "@nro_documento_referencia=?2, "
-				+ "@nombre_documento=?3, " + "@direccion_documento=?4, " + "@fecha_resolucion=?5, "
-						+ "@tipo_movimiento=?6, "
-						+ "@no_documento=?7 ");
+				+ "@nombre_documento=?3, " + "@direccion_documento=?4, " + "@fecha_resolucion=?5, " + "@tipo_movimiento=?6, "
+				+ "@no_documento=?7 ");
 		Query query = this.em.createNativeQuery(strQuery);
 		query.setParameter(1, table.getId_dependencia());
 		query.setParameter(2, table.getNro_documento_referencia());
@@ -310,21 +303,20 @@ ConnecctionActivos conn = new ConnecctionActivos();
 		query.setParameter(5, table.getFecha_nro_referencia());
 		query.setParameter(6, table.getTipo_movimiento());
 		query.setParameter(7, table.getNo_documento());
-		int result = (Integer)query.getSingleResult();
+		int result = (Integer) query.getSingleResult();
 		return 1;
 	}
-	public boolean addMovimientos (Movimiento movimiento) throws SQLException {
+	
+	public boolean addMovimientos(Movimiento movimiento) throws SQLException {
 		ConnecctionActivos conn = new ConnecctionActivos();
 		
 		String Sql = String.format("exec [dbo].[Mvac_CMovimiento_I] " + "@Dependencia_Id=%d," + "@Unidad_Organizacional_Id=%d,"
-				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s'," + "@Tipo_Movimiento=%d," + "@Observaciones='%s'",
-				movimiento.getId_dependencia(), 
-				movimiento.getId_unidad_organizacional_origen(),
-				movimiento.getNro_documento(), 
-				new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_registro()),
-				new SimpleDateFormat("yyyy-dd-MM").format(movimiento.getFecha_movimiento()), 
-				movimiento.getUsuario(), movimiento.getTipo_movimiento(), 
-				movimiento.getObservacion());
+				+ "@Numero_Documento=%d," + "@Fecha_Registro='%s'," + "@Fecha_Movimiento='%s'," + "@CI_Usuario='%s',"
+				+ "@Tipo_Movimiento=%d," + "@Observaciones='%s'", movimiento.getId_dependencia(),
+				movimiento.getIdUnidadOrganizacional(), movimiento.getNro_documento(),
+				new SimpleDateFormat("yyyy-MM-dd").format(movimiento.getFecha_registro()) + "T00:00:00", new SimpleDateFormat(
+						"yyyy-MM-dd").format(movimiento.getFecha_movimiento()) + "T00:00:00", movimiento.getCiUsuario(),
+				movimiento.getTipo_movimiento(), movimiento.getObservacion());
 		int resultado_cabecera = conn.callproc(Sql);
 		int result_detalle = 0;
 		if (resultado_cabecera > 0) {
@@ -332,10 +324,10 @@ ConnecctionActivos conn = new ConnecctionActivos();
 				
 				String str_detalle = String.format("EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=%d,"
 						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
-						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'", detalle.getId_dependencia(), detalle
-						.getId_unidad_organizacional_origen(), detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM")
-						.format(detalle.getFecha_registro()), detalle.getTipo_movimiento(), detalle.getId_activo(), detalle
-						.getObservacion());
+						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'", detalle.getId_dependencia(),
+						detalle.getId_unidad_organizacional(), detalle.getNro_documento(),
+						new SimpleDateFormat("yyyy-MM-dd").format(detalle.getFecha_registro()) + "T00:00:00",
+						detalle.getTipo_movimiento(), detalle.getId_activo(), detalle.getObservacion());
 				result_detalle += conn.callproc(str_detalle);
 			}
 			if (result_detalle == movimiento.getDetalles().size()) {
@@ -350,37 +342,36 @@ ConnecctionActivos conn = new ConnecctionActivos();
 		}
 		
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Movimiento> getActaEbyFuncionario(String ci_funcionario, short Tipo_Movimento) {
 		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
-		Query query = em.createNativeQuery("exec Mvac_ActabyFuncionarioTipo "
-				+ "@CMV_Funcionario_Destino=?1, "
-				+ "@Tipo_Movimiento=?2 ", "cmovimiento")
-		.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		Query query = em.createNativeQuery(
+				"exec Mvac_ActabyFuncionarioTipo " + "@CMV_Funcionario_Destino=?1, " + "@Tipo_Movimiento=?2 ", "cmovimiento")
+				.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, ci_funcionario);
 		query.setParameter(2, Tipo_Movimento);
 		List<Movimiento> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Movimiento> getActaDbyFuncionario(String ci_funcionario, short Tipo_Movimento) {
 		this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
-		Query query = em.createNativeQuery("exec Mvac_ActaDbyFuncionarioTipo "
-				+ "@CMV_Funcionario_Destino=?1, "
-				+ "@Tipo_Movimiento=?2 ", "cmovimiento")
+		Query query = em.createNativeQuery(
+				"exec Mvac_ActaDbyFuncionarioTipo " + "@CMV_Funcionario_Destino=?1, " + "@Tipo_Movimiento=?2 ", "cmovimiento")
 				.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, ci_funcionario);
 		query.setParameter(2, Tipo_Movimento);
 		List<Movimiento> resultlist = query.getResultList();
 		return resultlist;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<MovimientoReporte> getMovimientobyActivo(long cod_Activo, Date fecha) {
 		this.em.getEntityManagerFactory().getCache().evict(MovimientoReporte.class);
-		Query query = em.createNativeQuery("exec Mvac_MovimientobyActivo_Q "
-				+ "@Codigo_Activo=?1, "
-				+ "@Fecha=?2 ", "reporte-movimiento")
-				.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		Query query = em.createNativeQuery("exec Mvac_MovimientobyActivo_Q " + "@Codigo_Activo=?1, " + "@Fecha=?2 ",
+				"reporte-movimiento").setHint(QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, cod_Activo);
 		query.setParameter(2, fecha);
 		List<MovimientoReporte> resultlist = query.getResultList();

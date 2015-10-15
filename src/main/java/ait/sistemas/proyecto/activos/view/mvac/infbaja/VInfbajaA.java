@@ -148,7 +148,7 @@ public class VInfbajaA extends VerticalLayout implements View, ClickListener {
 						detalle.setId_motivo_baja(submodal.getMotivo(i));
 						detalle.setFecha_registro(baja.getFecha_registro());
 						detalle.setObservacion(submodal.getObservacion(i));
-						detalle.setId_unidad_organizacional_origen(baja.getId_unidad_organizacional_origen());
+						detalle.setId_unidad_organizacional(baja.getId_unidad_organizacional_origen());
 						detalle.setNro_documento(baja.getNro_documento());
 						detalle.setId_dependencia(baja.getId_dependencia());
 						baja.addDetalle(detalle);

@@ -28,7 +28,7 @@ public class GridAutorizado extends Grid {
 				this.tipo_autorizacion_impl.getallGrid());
 		setContainerDataSource(bean_tipo_autorizacion);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(15);
+		setHeightByRows(10);
 		
 		removeColumn("dependencia_id");
 		removeColumn("ci");

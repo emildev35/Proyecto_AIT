@@ -23,6 +23,7 @@ public class GridSolmantenimiento extends Grid{
 		id_activo.setHeaderCaption("Codigo");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
+		setColumnOrder("id_activo", "nombre", "serie");
 		
 	}
 	public void update(String ci_usuario){
@@ -34,5 +35,6 @@ public class GridSolmantenimiento extends Grid{
 		id_activo.setHeaderCaption("Codigo");
 		Column nombre_activo = getColumn("nombre").setExpandRatio(5);
 		nombre_activo.setHeaderCaption("Nombre Activo");
+		setColumnOrder("id_activo", "nombre", "serie");
 	}
 }

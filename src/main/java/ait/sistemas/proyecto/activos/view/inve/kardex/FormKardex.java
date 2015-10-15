@@ -260,4 +260,8 @@ public class FormKardex extends GridLayout implements ValueChangeListener, Click
 		}
 		
 	}
+
+	public void clearMessages() {
+		this.mensajes.clear();
+	}
 }

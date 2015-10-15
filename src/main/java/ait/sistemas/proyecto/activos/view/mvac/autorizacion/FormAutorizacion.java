@@ -75,7 +75,6 @@ public class FormAutorizacion extends GridLayout {
 			}catch(EmptyValueException eve){
 				this.mensajes.add(new BarMessage(tarea_motivo.getCaption(), Messages.EMPTY_MESSAGE));
 			}
-			this.mensajes.add(new BarMessage("Fomulario", Messages.NOT_SUCCESS_MESSAGE));
 			return false;
 		}
 	}
