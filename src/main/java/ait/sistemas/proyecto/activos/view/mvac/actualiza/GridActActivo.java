@@ -4,7 +4,11 @@ import ait.sistemas.proyecto.activos.data.model.ActivosModel;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.TextField;
 
 /*
  * Grid de Activos que cuenta con las Columnas 
@@ -85,6 +89,32 @@ public class GridActActivo extends Grid {
 		removeColumn("ACT_Grupo_Contable");
 		removeColumn("ACT_Auxiliar_Contable");
 		builGrid("0", "0");
+		
+		HeaderRow filterRow = this.appendHeaderRow();
+		
+		// Set up a filter for all columns
+		for (final Object pid : this.getContainerDataSource().getContainerPropertyIds()) {
+			HeaderCell cell = filterRow.getCell(pid);
+			TextField filterField = new TextField();
+			filterField.setSizeFull();
+			try {
+				cell.setComponent(filterField);
+				filterField.addTextChangeListener(new TextChangeListener() {
+					
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					public void textChange(TextChangeEvent event) {
+						bean_activos.removeContainerFilters(pid);
+						
+						if (!event.getText().isEmpty())
+							bean_activos.addContainerFilter(new SimpleStringFilter(pid, event.getText(), true, false));
+					}
+				});
+			} catch (Exception ex) {
+			}
+		}
+		
 	}
 	
 	/**
@@ -96,12 +126,14 @@ public class GridActActivo extends Grid {
 	}
 	
 	/**
-	 * Modifica los objetos del Grid tomando como parametro
-	 * el codigo del auxliar contable
+	 * Modifica los objetos del Grid tomando como parametro el codigo del
+	 * auxliar contable
+	 * 
 	 * @param auxiliar
 	 */
 	public void builGrid(String auxiliar, String grupoContable) {
-		this.bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class, activoimpl.activos_by_auxiliar(auxiliar, grupoContable));
+		this.bean_activos = new BeanItemContainer<ActivosModel>(ActivosModel.class, activoimpl.activos_by_auxiliar(auxiliar,
+				grupoContable));
 		
 		setContainerDataSource(bean_activos);
 		
@@ -109,6 +141,8 @@ public class GridActActivo extends Grid {
 		getColumn("ACT_Nombre_Activo").setHeaderCaption("NOMBRE ACTIVO").setExpandRatio(7);
 		
 		setColumnOrder("ACT_Codigo_Activo", "ACT_Nombre_Activo");
+		// Create a header row to hold column filters
+		
 	}
 	
 }
