@@ -227,7 +227,7 @@ public class FormSolsoporte extends GridLayout {
 		resul.setNro_documento(Long.parseLong(txt_nro_solicitud.getValue()));
 		resul.setTipo_soporte(((TipoSoporte) cb_tipo_soporte.getValue()).getId());
 		resul.setId_dependencia(session.getId_dependecia());
-		resul.setId_unidad_organizacional_origen(session.getId_unidad_organizacional());
+		resul.setIdUnidadOrganizacional(session.getId_unidad_organizacional());
 		resul.setUsuario(session.getCi());
 		resul.setTipo_movimiento((short) 11);
 		resul.setId_estado_soporte((short)1);
@@ -235,8 +235,8 @@ public class FormSolsoporte extends GridLayout {
 		if (cb_nombre_sistema.getValue() != null) {
 			resul.setId_subsistema(((Arbol_menus) cb_nombre_sistema.getValue()).getAME_Id_Identificador());
 		}
-		resul.setFecha_movimiento(new java.sql.Date(new Date().getTime()));
-		resul.setFecha_registro(new java.sql.Date(new Date().getTime()));
+		resul.setFecha_movimiento(new java.sql.Timestamp(new Date().getTime()));
+		resul.setFecha_registro(new java.sql.Timestamp(new Date().getTime()));
 		for (Object row : grid_activos_asignados.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
 			Detalle detalle = new Detalle();
@@ -244,7 +244,7 @@ public class FormSolsoporte extends GridLayout {
 			detalle.setId_activo(activo.getId_activo());
 			detalle.setFecha_registro(resul.getFecha_registro());
 			detalle.setId_dependencia(resul.getId_dependencia());
-			detalle.setId_unidad_organizacional_origen(resul.getId_unidad_organizacional_origen());
+			detalle.setId_unidad_organizacional(resul.getId_unidad_organizacional_origen());
 			detalle.setTipo_movimiento(resul.getTipo_movimiento());
 			resul.addDetalle(detalle);
 		}

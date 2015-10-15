@@ -232,11 +232,11 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
+		java.sql.Timestamp fecha_registro =new java.sql.Timestamp(new Date().getTime());
 		
 		result.setId_dependencia((short)this.cb_dependnecia.getValue());
 		result.setId_dependencia_destino(usuario.getId_dependecia());
-		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+		result.setIdUnidadOrganizacional(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
@@ -248,7 +248,7 @@ public class FormSoltransferencia extends GridLayout implements ValueChangeListe
 			
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
-			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+			detalle.setId_unidad_organizacional(usuario.getId_unidad_organizacional());
 			detalle.setId_dependencia((short)this.cb_dependnecia.getValue());
 			detalle.setObservacion(txt_observaciones.getValue());
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));

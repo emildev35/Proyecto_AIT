@@ -135,7 +135,7 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	
 	private void buildContent() {
 		
-		Panel pn_solicitud = new Panel("Solicitud de Movimiento de Activos");
+		Panel pn_solicitud = new Panel("SOLICITUD DE ASIGNACION DE ACTIVOS");
 		Panel pn_activos = new Panel("Seleccione un Grupo y Auxiliar Contable");
 		pn_solicitud.setStyleName(AitTheme.PANEL_FORM);
 		pn_solicitud.setIcon(FontAwesome.EDIT);
@@ -205,20 +205,20 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
+		java.sql.Timestamp fecha_registro = new java.sql.Timestamp(new Date().getTime());
 		
 		result.setId_dependencia(usuario.getId_dependecia());
-		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+		result.setIdUnidadOrganizacional(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
-		result.setUsuario(usuario.getCi());
+		result.setCiUsuario(usuario.getCi());
 		result.setObservacion("");
 		result.setTipo_movimiento((short) 1);
 		for (ActivoGrid activo : this.activosSolicitados) {
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
-			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+			detalle.setId_unidad_organizacional(usuario.getId_unidad_organizacional());
 			detalle.setId_dependencia(usuario.getId_dependecia());
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
@@ -267,7 +267,9 @@ public class FormSolactivos extends GridLayout implements ValueChangeListener {
 		
 		for (Object row : grid_solicitud.getSelectedRows()) {
 			ActivoGrid activo = (ActivoGrid) row;
-			this.activosSolicitados.add(activo);
+			if(!activosSolicitados.contains(activo)){
+				this.activosSolicitados.add(activo);
+			}
 		}
 		this.grid_solicitados.update(this.activosSolicitados);
 	}

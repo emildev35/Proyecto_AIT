@@ -7,6 +7,7 @@ import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.data.service.Impl.MantenimientoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
+import ait.sistemas.proyecto.common.theme.AitTheme;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -48,11 +49,11 @@ public class VSolmantenimientoA extends VerticalLayout implements View, ClickLis
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		this.btn_generar_solicitud.setStyleName("ait-buttons-btn");
+		this.btn_generar_solicitud.setStyleName(AitTheme.BTN_SUBMIT);
 		buttonContent.addComponent(this.btn_generar_solicitud);
-		this.btn_imprimir.setStyleName("ait-buttons-btn");
+		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
 		buttonContent.addComponent(this.btn_imprimir);
-		this.btn_salir.setStyleName("ait-buttons-btn");
+		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_salir);
 		return buttonContent;

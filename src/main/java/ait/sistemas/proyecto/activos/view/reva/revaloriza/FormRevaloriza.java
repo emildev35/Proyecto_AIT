@@ -329,9 +329,9 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 		r=0;
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
+		java.sql.Timestamp fecha_registro = new java.sql.Timestamp(new Date().getTime());
 		result.setId_dependencia(usuario.getId_dependecia());
-		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+		result.setIdUnidadOrganizacional(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_no_doc.getValue()));
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
@@ -344,7 +344,7 @@ public class FormRevaloriza extends GridLayout implements TextChangeListener {
 
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(row.getCodigo_activo());
-			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+			detalle.setId_unidad_organizacional(usuario.getId_unidad_organizacional());
 			detalle.setId_dependencia(usuario.getId_dependecia());
 			detalle.setObservacion("");
 			detalle.setNuevo_valor(row.getNuevo_valor());

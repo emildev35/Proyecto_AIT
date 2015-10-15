@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ait.sistemas.proyecto.activos.data.model.ActivosModel;
@@ -47,6 +48,8 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 	private final ActivoImpl activo_impl = new ActivoImpl();
 	private CssLayout hl_errores = new CssLayout();
 	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
+	
+	private List<BarMessage> mensajes = new ArrayList<BarMessage>();
 	
 	public VKardexR() {
 		
@@ -180,7 +183,8 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 			kardex_elements[r][3][4] = new KardexElement();
 			kardex_elements[r][3][4].setAncho(65);
 			kardex_elements[r][3][4].setTitulo("F. Incorporacion");
-			kardex_elements[r][3][4].setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos.getACT_Fecha_Incorporacion()));
+			kardex_elements[r][3][4]
+					.setContenido(new SimpleDateFormat("dd-MM-yyyy").format(activos.getACT_Fecha_Incorporacion()));
 			
 			kardex_elements[r][3][5] = new KardexElement();
 			kardex_elements[r][3][5].setAncho(70);
@@ -298,23 +302,29 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void buttonClick(ClickEvent event) {
+		this.mensajes.clear();
 		if (this.frmReporte.validate()) {
 			ReportPdf reporte = new ReportPdf();
 			try {
 				SessionModel session = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
 				String a = "ALL";
 				if (frmReporte.getActivo().equals(a)) {
-					List<ActivosModel> data = activo_impl.activos_by_auxiliar(
-							frmReporte.cb_Auxiliar.getValue().toString(),
-							frmReporte.cb_Grupo.getValue().toString()
-							);
+					List<ActivosModel> data = activo_impl.activos_by_auxiliar(frmReporte.cb_Auxiliar.getValue().toString(),
+							frmReporte.cb_Grupo.getValue().toString());
 					reporte.getPdfKardexGeneratorMulti(getData(data), frmReporte.cb_Activos.getValue(),
 							session.getId_dependecia(),
-							new SimpleDateFormat("dd-MM-yyy").format(frmReporte.dtf_fechaElaboracion.getValue()));
+							new SimpleDateFormat("dd-MM-yyyy").format(frmReporte.dtf_fechaElaboracion.getValue()));
 				} else {
 					List<ActivosModel> data = activo_impl.getall(Long.parseLong(frmReporte.getActivo()));
-					reporte.getPdf(getData(data)[0], frmReporte.cb_Activos.getValue(), session.getId_dependecia(),
-							new SimpleDateFormat("dd-MM-yyy").format(frmReporte.dtf_fechaElaboracion.getValue()));
+					if (data.size() == 0) {
+						this.mensajes.add(new BarMessage("Base de Datos", Messages.ACTIVO_NO_ENCONTRADO_DB));
+						buildMessages(this.mensajes);
+						return;
+					} else {
+						reporte.getPdf(getData(data)[0], frmReporte.cb_Activos.getValue(), session.getId_dependecia(),
+								new SimpleDateFormat("dd-MM-yyy").format(frmReporte.dtf_fechaElaboracion.getValue()));
+						
+					}
 				}
 				File pdfFile = new File(reporte.SAVE_PATH);
 				
@@ -345,6 +355,8 @@ public class VKardexR extends VerticalLayout implements View, ClickListener {
 			}
 		}
 		buildMessages(this.frmReporte.getMessage());
+		this.frmReporte.clearMessages();
+		
 	}
 	
 }

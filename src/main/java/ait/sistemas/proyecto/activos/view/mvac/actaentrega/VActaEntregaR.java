@@ -131,7 +131,7 @@ public class VActaEntregaR extends VerticalLayout implements View, ClickListener
 			} catch (NumberFormatException | IOException e) {
 				e.printStackTrace();
 			}
-			File pdfFile = new File(ReportPdf.SAVE_PATH);
+			File pdfFile = new File(reporte.SAVE_PATH);
 
 			VerticalLayout vl_pdf = new VerticalLayout();
 			Embedded pdf = new Embedded("", new FileResource(pdfFile));

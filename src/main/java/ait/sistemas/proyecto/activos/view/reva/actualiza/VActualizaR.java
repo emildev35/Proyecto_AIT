@@ -233,7 +233,7 @@ public class VActualizaR extends VerticalLayout implements View, ClickListener {
 					ReportPdf reporte = new ReportPdf();
 					try {
 						reporte.getPdf(getDatos(),
-								new SimpleDateFormat("yyyy-MM-dd").format(this.frmReporte.dtf_fecha_ultima_depre.getValue()));
+								new SimpleDateFormat("dd-MM-yyyy").format(this.frmReporte.dtf_fecha_ultima_depre.getValue()));
 						File pdfFile = new File(ReportPdf.SAVE_PATH);
 						
 						VerticalLayout vl_pdf = new VerticalLayout();

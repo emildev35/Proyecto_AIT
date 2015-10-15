@@ -224,8 +224,8 @@ public class VResumenActR extends VerticalLayout implements View, ClickListener 
 				ReportPdf reporte = new ReportPdf();
 				try {
 					reporte.getPdf(
-							getDatos((short) frmReporte.cb_Dependencia.getValue(), frmReporte.dtf_fecha_ultima_depre.getValue()
-									.toString() + "T00:00:00"),
+							getDatos((short) frmReporte.cb_Dependencia.getValue(), 
+									new SimpleDateFormat("yyyy-MM-dd").format(frmReporte.dtf_fecha_ultima_depre.getValue())+ "T00:00:00"),
 							new SimpleDateFormat("dd-MM-yyyy").format(frmReporte.dtf_fecha_ultima_depre.getValue()));
 					File pdfFile = new File(ReportPdf.SAVE_PATH);
 					

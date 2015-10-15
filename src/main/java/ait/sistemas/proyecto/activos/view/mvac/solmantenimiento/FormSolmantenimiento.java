@@ -65,7 +65,6 @@ public class FormSolmantenimiento extends GridLayout {
 		this.dtf_fecha_soliciud.setEnabled(false);
 		this.dtf_fecha_soliciud.addValidator(new NullValidator("No Nulo", false));
 		
-		
 		txt_id_solicitud.setWidth("90%");
 		dtf_fecha_soliciud.setWidth("90%");
 
@@ -132,10 +131,10 @@ public class FormSolmantenimiento extends GridLayout {
 	public Movimiento getData() {
 		Movimiento result = new Movimiento();
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro = new java.sql.Date(new Date().getTime());
+		java.sql.Timestamp fecha_registro = new java.sql.Timestamp(new Date().getTime());
 		
 		result.setId_dependencia(usuario.getId_dependecia());
-		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+		result.setIdUnidadOrganizacional(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);
@@ -147,7 +146,7 @@ public class FormSolmantenimiento extends GridLayout {
 			
 			Detalle detalle = new Detalle();
 			detalle.setId_activo(activo.getId_activo());
-			detalle.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+			detalle.setId_unidad_organizacional(usuario.getId_unidad_organizacional());
 			detalle.setId_dependencia(usuario.getId_dependecia());
 			detalle.setObservacion("");
 			detalle.setNro_documento(Long.parseLong(this.txt_id_solicitud.getValue()));

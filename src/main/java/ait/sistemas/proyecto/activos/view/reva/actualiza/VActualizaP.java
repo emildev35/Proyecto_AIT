@@ -2,6 +2,7 @@ package ait.sistemas.proyecto.activos.view.reva.actualiza;
 
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.Actualizacion;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActualizacionImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
@@ -36,9 +37,9 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 	private CssLayout hl_errores;
 	private Button btn_agregar;
 	private Button btn_salir = new Button("Salir");
-	private final ActualizacionImpl actualiza_impl = new ActualizacionImpl();
 	
-	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
+	private final ActualizacionImpl actualiza_impl = new ActualizacionImpl();
+	private final Arbol_menus menu = (Arbol_menus) UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VActualizaP() {
 		frm_Actualiza = new FormActualiza();
@@ -106,7 +107,7 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_agregar) {
 			if (this.frm_Actualiza.validate()) {
-				this.actualiza_impl.add_Actualizacion(this.frm_Actualiza.getData());
+				actualiza_impl.add_Actualizacion(frm_Actualiza.getData());
 				this.frm_Actualiza.update();
 				Notification.show(Messages.SUCCESS_MESSAGE);
 			} else {
@@ -114,8 +115,23 @@ public class VActualizaP extends VerticalLayout implements View, ClickListener {
 			}
 			buildMessages(this.frm_Actualiza.getMensajes());
 			this.frm_Actualiza.clearMessages();
-		}else{
+		} else {
 			UI.getCurrent().getNavigator().navigateTo(HomeView.URL);
+		}
+	}
+	
+	public class DepreciacionWorker extends Thread {
+	
+		Actualizacion actualizacion;
+		volatile double current = 0.0;
+		
+		public DepreciacionWorker(Actualizacion actu) {
+			this.actualizacion = actu;
+		}
+		
+		@Override
+		public void run() {
+			actualiza_impl.add_Actualizacion(actualizacion);
 		}
 	}
 	

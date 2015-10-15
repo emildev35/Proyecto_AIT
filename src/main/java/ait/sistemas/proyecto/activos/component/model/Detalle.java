@@ -3,6 +3,7 @@ package ait.sistemas.proyecto.activos.component.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
@@ -18,7 +19,7 @@ import javax.persistence.SqlResultSetMapping;
 @SqlResultSetMapping(name = "detalle-movimiento", entities = { @EntityResult(entityClass = Detalle.class, fields = {
 	@FieldResult(name = "id_detalle", column = "id_detalle"),
 	@FieldResult(name = "id_dependencia", column = "id_dependencia"),
-	@FieldResult(name = "id_unidad_organizacional_origen", column = "id_unidad_organizacional_origen"),
+	@FieldResult(name = "id_unidad_organizacional", column = "id_unidad_organizacional"),
 	@FieldResult(name = "nro_documento", column = "nro_documento"),
 	@FieldResult(name = "id_activo", column = "id_activo"),
 	@FieldResult(name = "tipo_movimiento", column = "tipo_movimiento"),
@@ -43,13 +44,13 @@ public class Detalle implements Serializable{
 	@Id
 	private String id_detalle;
 	private short id_dependencia;
-	private short id_unidad_organizacional_origen;
+	private short id_unidad_organizacional;
 	private long nro_documento;
 	private long id_activo;
 	private short tipo_movimiento;
 	private short id_motivo_baja;
 	private String observacion;
-	private Date fecha_registro;
+	private Timestamp fecha_registro;
 	private String nombre_activo;
 	private String motivo_baja;
 	private String nro_seguro;
@@ -60,16 +61,6 @@ public class Detalle implements Serializable{
 	private BigDecimal nuevo_valor;
 	private int nueva_vida_util;
 	public Detalle() {
-	}
-	public Detalle(short id_dependencia, short id_unidad_organizacional_origen, long nro_documento,
-			long id_activo, short id_motivo_baja, String observacion, Date fecha_registro) {
-		this.id_dependencia = id_dependencia;
-		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
-		this.nro_documento = nro_documento;
-		this.id_activo = id_activo;
-		this.id_motivo_baja = id_motivo_baja;
-		this.observacion = observacion;
-		this.fecha_registro = fecha_registro;
 	}
 	
 	public short getTipo_movimiento() {
@@ -84,11 +75,11 @@ public class Detalle implements Serializable{
 	public void setId_dependencia(short id_dependencia) {
 		this.id_dependencia = id_dependencia;
 	}
-	public short getId_unidad_organizacional_origen() {
-		return id_unidad_organizacional_origen;
+	public short getId_unidad_organizacional() {
+		return id_unidad_organizacional;
 	}
-	public void setId_unidad_organizacional_origen(short id_unidad_organizacional_origen) {
-		this.id_unidad_organizacional_origen = id_unidad_organizacional_origen;
+	public void setId_unidad_organizacional(short id_unidad_organizacional) {
+		this.id_unidad_organizacional= id_unidad_organizacional;
 	}
 
 	public long getNro_documento() {
@@ -115,10 +106,10 @@ public class Detalle implements Serializable{
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
-	public Date getFecha_registro() {
+	public Timestamp getFecha_registro() {
 		return fecha_registro;
 	}
-	public void setFecha_registro(Date fecha_registro) {
+	public void setFecha_registro(Timestamp fecha_registro) {
 		this.fecha_registro = fecha_registro;
 	}
 	public String getNombre_activo() {

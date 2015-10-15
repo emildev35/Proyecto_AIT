@@ -28,7 +28,6 @@ public class PinForm extends VerticalLayout {
 		setComponentAlignment(lb, Alignment.MIDDLE_CENTER);
 		addComponent(lb2);
 		setComponentAlignment(lb2, Alignment.MIDDLE_CENTER);
-		updatePin();
 	}
 	
 	public void updatePin() {

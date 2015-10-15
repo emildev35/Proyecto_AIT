@@ -18,14 +18,12 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -82,19 +80,13 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 	
 	private Component buildButtonBar() {
 		CssLayout buttonContent = new CssLayout();
-		GridLayout btn_grid = new GridLayout(2, 1);
-		btn_grid.setResponsive(true);
-		btn_grid.setSizeFull();
 		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
-		btn_grid.addComponent(this.btn_guardar);
-		btn_grid.setComponentAlignment(btn_guardar, Alignment.TOP_CENTER);
+		buttonContent.addComponent(this.btn_guardar);
 		btn_guardar.setIcon(FontAwesome.SAVE);
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
-		buttonContent.addStyleName("ait-buttons");
-		btn_grid.addComponent(this.btn_salir);
+		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
+		buttonContent.addComponent(this.btn_salir);
 		btn_salir.setIcon(FontAwesome.UNDO);
-		btn_grid.setComponentAlignment(btn_salir, Alignment.TOP_LEFT);
-		buttonContent.addComponent(btn_grid);
 		return buttonContent;
 	}
 	
@@ -113,7 +105,7 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 	
 	public String[][] getDatos(List<InventarioGrupo> activos) {
 		
-		List<InventarioGrupo> general = inventarioimpl.getReport();
+		List<InventarioGrupo> general = inventarioimpl.getReport(frm_reporte.getFecha());
 		
 		String[][] result = new String[(activos.size() + general.size())][5];
 		
@@ -141,7 +133,7 @@ public class VInvxgrupoR extends VerticalLayout implements View, ClickListener {
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_guardar) {
 			if (this.frm_reporte.validate()) {
-				List<InventarioGrupo> inventario = inventarioimpl.getReport(frm_reporte.getDependencia());
+				List<InventarioGrupo> inventario = inventarioimpl.getReport(frm_reporte.getDependencia(), frm_reporte.getFecha());
 				PdfReport reporte = new PdfReport();
 				try {
 					reporte.getPdf(getDatos(inventario));

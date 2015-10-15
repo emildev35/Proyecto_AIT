@@ -250,14 +250,14 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 		Movimiento resul = new Movimiento();
 		resul.setNro_documento(Long.parseLong(txt_nro_documento.getValue().replace(".", "")));
 		resul.setId_dependencia(session.getId_dependecia());
-		resul.setId_unidad_organizacional_origen(session.getId_unidad_organizacional());
+		resul.setIdUnidadOrganizacional(session.getId_unidad_organizacional());
 		resul.setTipo_movimiento((short) 13);
 		resul.setObservacion("");
 		resul.setNro_documento_referencia(txt_nro_documento_ref.getValue());
 		resul.setFecha_nro_referencia(new java.sql.Date(dtf_fecha_ref.getValue().getTime()));
-		resul.setFecha_movimiento(new java.sql.Date(new Date().getTime()));
+		resul.setFecha_movimiento(new java.sql.Timestamp(new Date().getTime()));
 		resul.setUsuario(txt_ci_usuario.getValue());
-		resul.setFecha_registro(new java.sql.Date(new Date().getTime()));
+		resul.setFecha_registro(new java.sql.Timestamp(new Date().getTime()));
 		
 		for (ActivoInventario activoInventario : activos_invetariados) {
 			Detalle detalle = new Detalle();
@@ -265,7 +265,7 @@ public class FormTomaInv extends GridLayout implements TextChangeListener, Click
 			detalle.setNro_documento(resul.getNro_documento());
 			detalle.setFecha_registro(resul.getFecha_registro());
 			detalle.setId_dependencia(resul.getId_dependencia());
-			detalle.setId_unidad_organizacional_origen(resul.getId_unidad_organizacional_origen());
+			detalle.setId_unidad_organizacional(resul.getId_unidad_organizacional_origen());
 			detalle.setNombre_activo(activoInventario.getNombre_activo());
 			detalle.setTipo_movimiento(resul.getTipo_movimiento());
 			detalle.setObservacion(activoInventario.getObservacion());

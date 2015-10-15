@@ -208,10 +208,10 @@ public class FormInfbaja extends GridLayout implements ValueChangeListener {
 		Movimiento result = new Movimiento();
 		
 		SessionModel usuario = (SessionModel) UI.getCurrent().getSession().getAttribute("user");
-		java.sql.Date fecha_registro =new java.sql.Date(new Date().getTime());
+		java.sql.Timestamp fecha_registro =new java.sql.Timestamp(new Date().getTime());
 		
 		result.setId_dependencia(usuario.getId_dependecia());
-		result.setId_unidad_organizacional_origen(usuario.getId_unidad_organizacional());
+		result.setIdUnidadOrganizacional(usuario.getId_unidad_organizacional());
 		result.setNro_documento(Long.parseLong(this.txt_num_inf_baja.getValue()));
 		result.setFecha_movimiento(fecha_registro);
 		result.setFecha_registro(fecha_registro);

@@ -34,7 +34,7 @@ public class MantenimientoImpl {
 				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6";
 		Query query_mantenimiento = this.em.createNativeQuery(str_mantenimiento);
 		query_mantenimiento.setParameter(1, data.getId_dependencia());
-		query_mantenimiento.setParameter(2, data.getId_unidad_organizacional_origen());
+		query_mantenimiento.setParameter(2, data.getId_unidad_organizacional());
 		query_mantenimiento.setParameter(3, data.getNro_documento());
 		query_mantenimiento.setParameter(4, data.getFecha_registro());
 		query_mantenimiento.setParameter(5, data.getFecha_movimiento());
@@ -49,7 +49,7 @@ public class MantenimientoImpl {
 						+ "@Observaciones=?7";
 				Query query_detalle = this.em.createNativeQuery(str_detalle);
 				query_detalle.setParameter(1, detalle.getId_dependencia());
-				query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+				query_detalle.setParameter(2, detalle.getId_unidad_organizacional());
 				query_detalle.setParameter(3, detalle.getNro_documento());
 				query_detalle.setParameter(4, detalle.getFecha_registro());
 				query_detalle.setParameter(5, detalle.getTipo_movimiento());
@@ -87,7 +87,7 @@ public class MantenimientoImpl {
 				String str_detalle = String.format("EXEC Mvac_DMovimiento_I " + "@Dependencia_Id=%d,"
 						+ "@Unidad_Organizacional_Id=%d," + "@Numero_Documento=%d," + "@Fecha_Registro='%s',"
 						+ "@Tipo_Movimiento=%d," + "@Activo_Id=%d," + "@Observaciones='%s'", detalle.getId_dependencia(), detalle
-						.getId_unidad_organizacional_origen(), detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM")
+						.getId_unidad_organizacional(), detalle.getNro_documento(), new SimpleDateFormat("yyyy-dd-MM")
 						.format(detalle.getFecha_registro()), detalle.getTipo_movimiento(), detalle.getId_activo(), detalle
 						.getObservacion());
 				result_detalle += conn.callproc(str_detalle);
@@ -112,7 +112,7 @@ public class MantenimientoImpl {
 					+ "@Numero_Documento=?3," + "@Tipo_Movimiento=?4," + "@Activo_Id=?4";
 			Query query_detalle = this.em.createNativeQuery(str_detalle);
 			query_detalle.setParameter(1, detalle.getId_dependencia());
-			query_detalle.setParameter(2, detalle.getId_unidad_organizacional_origen());
+			query_detalle.setParameter(2, detalle.getId_unidad_organizacional());
 			query_detalle.setParameter(3, detalle.getNro_documento());
 			query_detalle.setParameter(4, detalle.getTipo_movimiento());
 			query_detalle.setParameter(5, detalle.getId_activo());

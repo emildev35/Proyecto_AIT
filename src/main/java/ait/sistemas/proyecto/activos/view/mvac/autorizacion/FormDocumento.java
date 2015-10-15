@@ -45,4 +45,11 @@ public class FormDocumento extends GridLayout {
 		this.dtf_fecha.setValue(documento_seleccionado.getFecha_movimiento());
 		this.txt_solicitante.setValue(documento_seleccionado.getNombre_solicitante());
 	}
+
+	public void clear() {
+		this.txt_nro_documento.clear();
+		this.txt_nro_documento.clear();
+		this.dtf_fecha.clear();
+		this.txt_solicitante.clear();
+	}
 }

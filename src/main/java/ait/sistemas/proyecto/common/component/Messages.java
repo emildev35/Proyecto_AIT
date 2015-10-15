@@ -132,7 +132,7 @@ public class Messages {
 	public static final String PRESS_PRINT_BTN = "Presione el boton imprimir para Visualizar el Reporte";
 	public static final String PRESS_BUTTON_UPDATE = "Presione e boton de modificar para actualizar el Registro";
 	public static final String PRESS_BUTTON_DELETE = "Presione e boton de Eliminar para actualizar el Registro";
-	public static final String TIPO_CAMBIO = "Tipo de Cambio no Existente Añada de Manera Manual";
+	public static final String TIPO_CAMBIO = "Tipo de Cambio No Existe a ala Fecha";
 	
 	public static String FILL_FIRST(String caption) {
 		return String.format("El campo de %s debe ser llenavo con anterioridad", caption);
@@ -165,4 +165,8 @@ public class Messages {
 	 * Activo no Seleccionado
 	 */
 	public static final String ACTIVO_NO_ENCONTRADO = "Activo no Seleccionado";
+	/**
+	 * Codigo de Activo no existente
+	 */
+	public static final String ACTIVO_NO_ENCONTRADO_DB = "CODIGO DE ACTIVO NO EXISTENTE, INTRODUZCA UN CODIGO DE ACTIVO VALIDO";
 }

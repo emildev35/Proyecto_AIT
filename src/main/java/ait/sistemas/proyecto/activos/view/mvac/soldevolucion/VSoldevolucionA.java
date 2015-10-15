@@ -35,7 +35,6 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 	
 	private FormSoldevolucion frm_mantenimiento = new FormSoldevolucion();
 	Button btn_generar_solicitud = new Button("Generar Solicitud");
-	Button btn_imprimir = new Button("Imprimir");
 	Button btn_salir = new Button("Salir");
 	CssLayout hl_errores = new CssLayout();
 	private  MovimientoImpl movimiento_impl = new MovimientoImpl();
@@ -44,7 +43,6 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 	private Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 	
 	public VSoldevolucionA() {
-		this.btn_imprimir.addClickListener(this);
 		this.btn_generar_solicitud.addClickListener(this);
 		this.btn_salir.addClickListener(this);
 		
@@ -59,9 +57,6 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 		this.btn_generar_solicitud.setStyleName(AitTheme.BTN_SUBMIT);
 		this.btn_generar_solicitud.setIcon(FontAwesome.SAVE);
 		buttonContent.addComponent(this.btn_generar_solicitud);
-		this.btn_imprimir.setStyleName(AitTheme.BTN_PRINT);
-		this.btn_imprimir.setIcon(FontAwesome.PRINT);
-		buttonContent.addComponent(this.btn_imprimir);
 		this.btn_salir.setStyleName(AitTheme.BTN_EXIT);
 		this.btn_salir.setIcon(FontAwesome.UNDO);
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
@@ -112,9 +107,6 @@ public class VSoldevolucionA extends VerticalLayout implements View, ClickListen
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if (event.getButton() == this.btn_imprimir) {
-			frm_mantenimiento.update();
-		}
 		if (event.getButton() == this.btn_generar_solicitud) {
 			if (this.frm_mantenimiento.validate()) {
 				 Movimiento data = this.frm_mantenimiento.getData();
