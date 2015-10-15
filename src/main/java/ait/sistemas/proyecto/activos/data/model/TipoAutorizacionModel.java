@@ -35,7 +35,7 @@ public class TipoAutorizacionModel {
 	private String dependencia_transferencia;
 	private short dependencia_id_transferencia;
 	
-	private String depedenciaFuncionario;
+	private String dependenciaFuncionario;
 	private String unidadFuncionario;
 	
 	
@@ -233,14 +233,17 @@ public class TipoAutorizacionModel {
 
 
 
-	public String getDepedenciaFuncionario() {
-		return depedenciaFuncionario;
+	public String getDependenciaFuncionario() {
+		return dependenciaFuncionario;
 	}
 
 
 
-	public void setDepedenciaFuncionario(String depedenciaFuncionario) {
-		this.depedenciaFuncionario = depedenciaFuncionario;
+	public void setDependenciaFuncionario(String dependenciaFuncionario) {
+		this.dependenciaFuncionario = dependenciaFuncionario;
 	}
+
+
+	
 
 }

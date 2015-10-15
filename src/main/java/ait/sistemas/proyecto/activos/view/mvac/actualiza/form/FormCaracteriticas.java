@@ -87,6 +87,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	VActualizaTabM father;
 	
+	private CaracteristicasActivo caracteristicaActivo;
+	
 	public FormCaracteriticas(VActualizaTabM father) {
 		super(7, 8);
 		setWidth("100%");
@@ -229,7 +231,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			this.txt_codigo_activo.setValue(String.valueOf(sessionactivo.getCodigo()));
 			this.txt_nombre_activo.setValue(String.valueOf(sessionactivo.getNombre_activo()));
 			
-			CaracteristicasActivo caracteristicaActivo = activoimpl.getCaracteristicas(sessionactivo.getCodigo());
+			caracteristicaActivo = activoimpl.getCaracteristicas(sessionactivo.getCodigo());
 			this.txt_numero_serie.setValue(caracteristicaActivo.getNumero_serie() == null ? "" : caracteristicaActivo
 					.getNumero_serie());
 			this.txt_numero_ruat.setValue(caracteristicaActivo.getNumero_ruat() == null ? "" : caracteristicaActivo
@@ -247,7 +249,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			this.dtf_vencimiento_garantia.setValue(caracteristicaActivo.getVencimiento_garantia());
 			this.dtf_vencimiento_seguro.setValue(caracteristicaActivo.getVencimiento_seguro());
 			this.dtfVctoLicencia.setValue(caracteristicaActivo.getVencimientoLicencia());
-			this.cb_proveedor.setValue(proveedorimpl.get(caracteristicaActivo.getNit_proveedor()));
+			this.cb_proveedor.setValue(caracteristicaActivo.getNit_proveedor());
+			UI.getCurrent().getSession().setAttribute("proveedor", proveedorimpl.get(caracteristicaActivo.getNit_proveedor()));
 			if (caracteristicaActivo.getUbicacion_imagen() != null) {
 				this.frm_imagen.setImage(caracteristicaActivo.getUbicacion_imagen());
 			}
@@ -269,8 +272,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		this.cb_proveedor.setInputPrompt("Seleccion un Proveedor");
 		this.cb_proveedor.setNullSelectionAllowed(false);
 		for (ProveedoresModel proveedor : proveedorimpl.getByDependencia(session.getId_dependecia())) {
-			this.cb_proveedor.addItem(proveedor);
-			this.cb_proveedor.setItemCaption(proveedor, proveedor.getPRV_Nombre());
+			this.cb_proveedor.addItem(proveedor.getPRV_NIT());
+			this.cb_proveedor.setItemCaption(proveedor.getPRV_NIT(), proveedor.getPRV_Nombre());
 		}
 	}
 	
@@ -345,6 +348,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
 		}
 		if (event.getButton() == this.btn_seleccion) {
+
 			UI.getCurrent().getNavigator().navigateTo(VActualizaM.URL);
 		}
 	}
@@ -354,7 +358,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		caracteristicas.setCodigo(this.txt_codigo_activo.getValue());
 		caracteristicas.setDependencia(this.sessionactivo.getDependencia());
 		caracteristicas.setMarca(this.txt_marca.getValue());
-		caracteristicas.setNit_proveedor(((ProveedoresModel) this.cb_proveedor.getValue()).getPRV_NIT());
+		caracteristicas.setNit_proveedor(this.cb_proveedor.getValue().toString());
 		caracteristicas.setNumero_contrato_mantenimiento(this.txt_numero_contrato_mantenimiento.getValue());
 		caracteristicas.setNumero_folio_real(this.txt_numero_folio_real.getValue());
 		caracteristicas.setNumero_garantia(txt_numero_garantia.getValue());
@@ -387,8 +391,6 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
-		buildcbProveedor();
-		fillActivo();
-		this.father.buildMessages(new ArrayList<BarMessage>());
+		this.cb_proveedor.setValue((ProveedoresModel) UI.getCurrent().getSession().getAttribute("proveedor"));
 	}
 }

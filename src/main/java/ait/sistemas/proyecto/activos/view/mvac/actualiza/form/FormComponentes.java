@@ -100,6 +100,11 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		this.txt_nombre_activo.setWidth("100%");
 		this.txt_nombre_componente.setWidth("90%");
 		this.txt_caracteristica_componente.setWidth("90%");
+		
+		
+		grid_componente.setHeightMode(HeightMode.ROW);
+		grid_componente.setHeightByRows(10);
+		
 		buildForm();
 		buildGrid();
 		this.father = father;

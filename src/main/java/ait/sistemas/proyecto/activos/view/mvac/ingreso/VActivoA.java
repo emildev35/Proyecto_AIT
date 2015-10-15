@@ -27,6 +27,8 @@ import com.vaadin.ui.VerticalLayout;
 public class VActivoA extends VerticalLayout implements View{
 
 	private static final long serialVersionUID = 1L;
+
+	public static final String URL = "/activos/mvac/ingreso/VActivoA";
 	
 	private FormDatosGenerales frm_datos_generales = new FormDatosGenerales(this);
 	private FormCaracteriticas frm_caracteristicas = new FormCaracteriticas(this);

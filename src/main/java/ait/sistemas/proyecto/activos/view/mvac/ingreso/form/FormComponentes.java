@@ -206,7 +206,7 @@ public class FormComponentes extends GridLayout implements ClickListener, Select
 		BeanItemContainer<Componente> bean_componentes = new BeanItemContainer<Componente>(Componente.class, this.componentes);
 		grid_componente.setContainerDataSource(bean_componentes);
 		grid_componente.setHeightMode(HeightMode.ROW);
-		grid_componente.setHeightByRows(7);
+		grid_componente.setHeightByRows(10);
 		grid_componente.setWidth("100%");
 		grid_componente.setSelectionMode(SelectionMode.MULTI);
 		

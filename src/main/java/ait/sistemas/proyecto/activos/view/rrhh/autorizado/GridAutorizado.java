@@ -38,6 +38,7 @@ public class GridAutorizado extends Grid {
 		removeColumn("usuario_id");
 		removeColumn("fecha_registro");
 		removeColumn("unidadOrganizacionalId");
+		removeColumn("nivel_autorizacion");
 		
 		setWidth("100%");
 		
@@ -47,31 +48,33 @@ public class GridAutorizado extends Grid {
 				"tipo_movimiento",
 				"orden",
 				"servidor_publico",
+				"unidadFuncionario",
+				"dependenciaFuncionario",
 				"dependencia_transferencia"
 				);
 		
 		getColumn("tipo_movimiento").setHeaderCaption("Tipos de Movimiento").setExpandRatio(5);
-		getColumn("nivel_autorizacion").setHeaderCaption("Nivel de Autorizacion").setExpandRatio(4);
 		getColumn("dependencia").setHeaderCaption("Dependencia").setExpandRatio(1);
 		getColumn("orden").setHeaderCaption("Orden").setExpandRatio(1);
 		getColumn("servidor_publico").setHeaderCaption("Servidor Publico").setExpandRatio(10);
 		getColumn("dependencia_transferencia").setHeaderCaption("Dependencia Transferencia").setExpandRatio(1);
+		getColumn("dependenciaFuncionario").setHeaderCaption("Dependencia").setExpandRatio(1);
+		getColumn("unidadFuncionario").setHeaderCaption("Unidad Organizacional").setExpandRatio(1);
 		
 
 		HeaderRow groupRender = this.prependHeaderRow();
+		groupRender.join(
+				groupRender.getCell("servidor_publico"),
+				groupRender.getCell("unidadFuncionario"),
+				groupRender.getCell("dependenciaFuncionario")
+		).setHtml("<b>DATOS FUNCIONARIO PUBLICO QUE AUTORIZA</b>");
 		HeaderCell datosMovimiento = groupRender.join(
 				groupRender.getCell("dependencia"),
 				groupRender.getCell("unidadOrganizacional"),
 				groupRender.getCell("tipo_movimiento")
 
 		);
-		HeaderCell datosAutoriza = groupRender.join(
-				groupRender.getCell("servidor_publico"),
-				groupRender.getCell("unidadFuncionario"),
-				groupRender.getCell("dependenciaFuncionario")
-		);
 		datosMovimiento.setText("ORIGEN DEL MOVIMIENTO");
-		datosAutoriza.setText("DATOS DEL SERVIDOR PUBLICO QUE AUTORIZA");
 				
 
 		Responsive.makeResponsive(this);

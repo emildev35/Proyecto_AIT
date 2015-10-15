@@ -108,6 +108,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		this.cb_dependencia_movimiento.addValueChangeListener(this);
 		this.cb_tipo_movimiento.addValueChangeListener(this);
 		this.cb_unidad_movimiento.addValueChangeListener(this);
+		this.cb_dependencia_transferencia.addValueChangeListener(this);
 		
 		txt_orden.setWidth("100%");
 		cb_dependencia.setWidth("100%");
@@ -147,14 +148,13 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		gridlMovimiento.setSpacing(true);
 		gridlMovimiento.setWidth("100%");
 		
-		gridlMovimiento.setColumnExpandRatio(0, 1);
-		gridlMovimiento.setColumnExpandRatio(1, 0.5f);
+		gridlMovimiento.setColumnExpandRatio(0, 0.5f);
+		gridlMovimiento.setColumnExpandRatio(1, 1);
 		gridlMovimiento.setColumnExpandRatio(2, 1);
-		gridlMovimiento.setColumnExpandRatio(3, 1);
 		
-		gridlMovimiento.addComponent(this.cb_tipo_movimiento, 0, 0);
-		gridlMovimiento.addComponent(this.cb_dependencia_movimiento, 1, 0);
-		gridlMovimiento.addComponent(this.cb_unidad_movimiento, 2, 0);
+		gridlMovimiento.addComponent(this.cb_dependencia_movimiento, 0, 0);
+		gridlMovimiento.addComponent(this.cb_unidad_movimiento, 1, 0);
+		gridlMovimiento.addComponent(this.cb_tipo_movimiento, 2, 0);
 		
 		GridLayout gridlTransferencia = new GridLayout();
 		gridlTransferencia.setMargin(true);
@@ -302,9 +302,10 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 			buildCbUnidadMovimiento(dependencia);
 			cb_dependencia_transferencia.setValue(event.getProperty().getValue());
 		}
-		if (event.getProperty() == cb_unidad_movimiento && cb_unidad_movimiento.getValue() != null
-				&& cb_tipo_movimiento.getValue() != null || event.getProperty() == cb_tipo_movimiento
-				&& cb_tipo_movimiento.getValue() != null && cb_dependencia_movimiento.getValue() != null) {
+			if (cb_unidad_movimiento.getValue() != null
+				&& cb_dependencia_transferencia.getValue() != null 
+				&& cb_tipo_movimiento.getValue() != null 
+				&& cb_dependencia_movimiento.getValue() != null) {
 			Dependencia dependencia = (Dependencia) cb_dependencia_movimiento.getValue();
 			Dependencia dependenciaTransferencia = (Dependencia) cb_dependencia_transferencia.getValue();
 			Unidades_Organizacionale unidad = (Unidades_Organizacionale) cb_unidad_movimiento.getValue();

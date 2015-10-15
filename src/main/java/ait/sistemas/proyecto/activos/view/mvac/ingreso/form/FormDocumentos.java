@@ -44,7 +44,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 	
 	private Button btn_salir = new Button("Salir");
 	private Button btn_guardar = new Button("Guardar Documentos");
-	private Button btn_agregar = new Button("Agregar Componente");
+	private Button btn_agregar = new Button("Agregar Documento");
 	private Button btn_eliminar = new Button("Eliminar Componente");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
@@ -148,7 +148,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		this.btn_agregar.setIcon(FontAwesome.SAVE);
 		buttonContent.addStyleName("ait-buttons");
 		buttonContent.addComponent(this.btn_agregar);
-		this.btn_eliminar.setStyleName(AitTheme.BTN_EXIT);
+		this.btn_eliminar.setStyleName(AitTheme.BTN_DELETE);
 		this.btn_eliminar.setIcon(FontAwesome.TRASH_O);
 		buttonContent.addComponent(this.btn_eliminar);
 		this.btn_guardar.setStyleName(AitTheme.BTN_SUBMIT);
@@ -214,7 +214,7 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		BeanItemContainer<Documento> bean_documentos = new BeanItemContainer<Documento>(Documento.class, this.documentos);
 		grid_documentos.setContainerDataSource(bean_documentos);
 		grid_documentos.setHeightMode(HeightMode.ROW);
-		grid_documentos.setHeightByRows(7);
+		grid_documentos.setHeightByRows(10);
 		grid_documentos.setWidth("100%");
 		grid_documentos.setSelectionMode(SelectionMode.MULTI);
 		

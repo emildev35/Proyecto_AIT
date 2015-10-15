@@ -102,6 +102,10 @@ public class FormDocumentos extends GridLayout implements ClickListener, Selecte
 		this.btn_guardar.addClickListener(this);
 		this.btn_eliminar.addClickListener(this);
 		this.btn_seleccion.addClickListener(this);
+		
+		
+		grid_documentos.setHeightMode(HeightMode.ROW);
+		grid_documentos.setHeightByRows(10);
 		buildForm();
 		buildGrid();
 		this.father = father;

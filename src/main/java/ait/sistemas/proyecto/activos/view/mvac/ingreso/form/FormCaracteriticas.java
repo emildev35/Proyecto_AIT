@@ -43,7 +43,7 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 	private static final long serialVersionUID = 1L;
 	
 	private Button btn_guardar_caracteristicas = new Button("Guardar Caracteristicas");
-	private Button btn_guardar = new Button("Guardar Componentes");
+	private Button btn_guardar = new Button("Guardar y Añadir Otro");
 	private Button btn_salir = new Button("Salir");
 	
 	public TextField txt_codigo_activo = new TextField("Codigo");
@@ -284,7 +284,8 @@ public class FormCaracteriticas extends GridLayout implements ClickListener, Sel
 		if (event.getButton() == this.btn_guardar) {
 			if (validate()) {
 				save();
-				clean();
+				UI.getCurrent().getSession().setAttribute("activo", null);
+				UI.getCurrent().getNavigator().navigateTo(VActivoA.URL);
 			} else {
 				father.buildMessages(this.mensajes);
 			}
