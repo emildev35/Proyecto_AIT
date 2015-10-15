@@ -49,6 +49,10 @@ public class SolicitudGrid {
 	private Timestamp fecha_registro;
 
 	private String solicitante;
+	
+	private short id_dependencia;
+	
+	private short tipo_movimiento;
 
 	public long getNro_documento() {
 		return nro_documento;
@@ -73,6 +77,21 @@ public class SolicitudGrid {
 	public void setSolicitante(String solicitante) {
 		this.solicitante = solicitante;
 	}
-	
+
+	public short getId_dependencia() {
+		return id_dependencia;
+	}
+
+	public void setId_dependencia(short id_dependencia) {
+		this.id_dependencia = id_dependencia;
+	}
+
+	public short getTipo_movimiento() {
+		return tipo_movimiento;
+	}
+
+	public void setTipo_movimiento(short tipo_movimiento) {
+		this.tipo_movimiento = tipo_movimiento;
+	}
 	
 }

@@ -5,16 +5,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
+import ait.sistemas.proyecto.activos.component.model.SolicitudGrid;
 import ait.sistemas.proyecto.activos.data.service.Impl.ActasImpl;
-import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
-import ait.sistemas.proyecto.common.report.pdf.movimiento.Firma;
 import ait.sistemas.proyecto.activos.view.mvac.asignacion.reporte.ReportPdf;
-import ait.sistemas.proyecto.common.report.pdf.movimiento.TablaActivos;
 import ait.sistemas.proyecto.common.component.BarMessage;
 import ait.sistemas.proyecto.common.component.Messages;
 import ait.sistemas.proyecto.common.report.Column;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.Acta;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.Firma;
+import ait.sistemas.proyecto.common.report.pdf.movimiento.TablaActivos;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -48,7 +48,7 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	private GridSolasignacion grid_asignacion;
 	private GridDetalle grid_Detalle = new GridDetalle();
 	private ActasImpl acta_impl = new ActasImpl();
-	private Movimiento data;
+	private SolicitudGrid data;
 	// private MovimientoReporte data_reporte;
 	int r = 0;
 
@@ -135,10 +135,10 @@ public class VAsignacionA extends VerticalLayout implements View, ClickListener,
 	@Override
 	public void select(SelectionEvent event) {
 
-		if ((Movimiento) this.grid_asignacion.getSelectedRow() != null) {
-			this.frm_asignacion.setData((Movimiento) this.grid_asignacion.getSelectedRow());
+		if ((SolicitudGrid) this.grid_asignacion.getSelectedRow() != null) {
+			this.frm_asignacion.setData((SolicitudGrid) this.grid_asignacion.getSelectedRow());
 
-			data = (Movimiento) this.grid_asignacion.getSelectedRow();
+			data = (SolicitudGrid) this.grid_asignacion.getSelectedRow();
 			grid_Detalle.update(data.getNro_documento(), data.getId_dependencia(), data.getTipo_movimiento());
 		}
 	}

@@ -87,7 +87,7 @@ import com.vaadin.ui.Grid;
 
 //			removeColumn("id_detalle");
 			removeColumn("id_dependencia");
-			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("id_unidad_organizacional");
 			removeColumn("nro_documento");
 			removeColumn("tipo_movimiento");
 			removeColumn("fecha_registro");
