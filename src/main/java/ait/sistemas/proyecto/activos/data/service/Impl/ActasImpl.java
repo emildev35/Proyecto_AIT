@@ -14,6 +14,7 @@ import org.eclipse.persistence.config.QueryHints;
 
 import ait.sistemas.proyecto.activos.component.model.Movimiento;
 import ait.sistemas.proyecto.activos.component.model.MovimientoReporte;
+import ait.sistemas.proyecto.activos.component.model.SolicitudGrid;
 import ait.sistemas.proyecto.activos.data.ConnecctionActivos;
 
 public class ActasImpl {
@@ -27,11 +28,11 @@ public class ActasImpl {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Movimiento> getSolicitudAsignacion(Movimiento table) {
+	public List<SolicitudGrid> getSolicitudAsignacion(int tipo_movimiento) {
 		// this.em.getEntityManagerFactory().getCache().evict(Movimiento.class);
-		Query query = this.em.createNativeQuery("EXEC Mvac_SolAsignacion_Q " + "@tipo_movimiento=?1 ", "cmovimiento");
-		query.setParameter(1, table.getTipo_movimiento());
-		List<Movimiento> resultlist = query.getResultList();
+		Query query = this.em.createNativeQuery("EXEC Mvac_SolAsignacion_Q " + "@tipo_movimiento=?1 ", "grid_cmovimiento");
+		query.setParameter(1, tipo_movimiento);
+		List<SolicitudGrid> resultlist = query.getResultList();
 		return resultlist;
 	}
 

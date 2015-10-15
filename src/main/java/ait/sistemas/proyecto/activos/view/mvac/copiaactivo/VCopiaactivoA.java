@@ -45,7 +45,7 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 	private ActivoImpl activo_impl = new ActivoImpl();
 	private final Arbol_menus menu = (Arbol_menus)UI.getCurrent().getSession().getAttribute("nav");
 	private List<BarMessage> msg = new ArrayList<BarMessage>();
-	
+	int r=0;
 	private ActivoGrid activo;
 	public VCopiaactivoA() {
 		this.btn_copias.addClickListener(this);
@@ -58,6 +58,7 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 		Responsive.makeResponsive(this);
 		msg.add(new BarMessage("Formulario", "Llenar los campos de criterio de seleccion por Activo o por Grupo y Auxiliar Contable"));
 		buildMessages(msg);
+		r=0;
 	}
 	private void buildGrid() {
 	}
@@ -115,22 +116,28 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 	public void enter(ViewChangeEvent event) {
 	}
 	
-	private void buildMessages(List<BarMessage> mensages) {
+	public void buildMessages(List<BarMessage> mensages) {
 		this.hl_errores.removeAllComponents();
 		hl_errores.addStyleName("ait-error-bar");
 		this.addComponent(this.hl_errores);
 		
 		for (BarMessage barMessage : mensages) {
+			//iff con un r y solo muestre 2
+			if (r < 2){
 			Label lbError = new Label(new Label(barMessage.getComponetName() + ":" + barMessage.getErrorName()));
 			lbError.setStyleName(barMessage.getType());
 			this.hl_errores.addComponent(lbError);
+			r+=1;
+			}
 		}
 	}
 	
 	@Override
 	public void buttonClick(ClickEvent event) {
 		if (event.getButton() == this.btn_copias) {
+			r=0;
 			if (this.frm_copia.validate()) {
+				Notification.show("entra");
 				if (activo_impl.addCopiaActivo(new BigDecimal(this.activo.getId_activo()),Integer.parseInt(frm_copia.txt_no_copias.getValue()))>0) {
 					this.frm_copia.clear();
 					Notification.show(Messages.SUCCESS_MESSAGE);
@@ -155,5 +162,4 @@ public class VCopiaactivoA extends VerticalLayout implements View, ClickListener
 			this.activo  = (ActivoGrid)this.frm_copia.grid_activos.getSelectedRow();
 		}
 	}
-	
 }

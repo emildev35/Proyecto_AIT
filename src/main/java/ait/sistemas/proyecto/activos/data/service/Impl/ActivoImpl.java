@@ -480,6 +480,18 @@ public class ActivoImpl {
 		}
 		return resultlist;
 	}
+	public ActivoGrid getActivoOne(long id_activo) {
+		Query query = em.createNativeQuery("exec Mvac_ActivobyCodigo_Q @Codigo_Activo=?1", "activo-simple").setHint(
+				QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_activo);
+		ActivoGrid resultlist;
+		try {
+			resultlist = (ActivoGrid) query.getSingleResult();
+		} catch (Exception ex) {
+			return null;
+		}
+		return resultlist;
+	}
 	
 	/**
 	 * actualiza los campos revalorizados en la tabla Activos

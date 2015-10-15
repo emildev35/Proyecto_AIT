@@ -3,8 +3,10 @@ package ait.sistemas.proyecto.activos.view.mvac.copiaactivo;
 import java.util.ArrayList;
 import java.util.List;
 
+import ait.sistemas.proyecto.activos.component.model.ActivoGrid;
 import ait.sistemas.proyecto.activos.data.model.AuxiliaresContablesModel;
 import ait.sistemas.proyecto.activos.data.model.GruposContablesModel;
+import ait.sistemas.proyecto.activos.data.service.Impl.ActivoImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.AuxiliarImpl;
 import ait.sistemas.proyecto.activos.data.service.Impl.GrupoImpl;
 import ait.sistemas.proyecto.common.component.BarMessage;
@@ -27,8 +29,10 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Notification.Type;
 
 public class FormCopiaActivo extends GridLayout implements ValueChangeListener, TextChangeListener,ClickListener {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +50,7 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener, 
 	
 	private final GrupoImpl grupoimpl = new GrupoImpl();
 	private final AuxiliarImpl auxiliarimpl = new AuxiliarImpl();
+	private final ActivoImpl activo_impl=new ActivoImpl();
 	
 	public GridActivos grid_activos = new GridActivos();
 	Panel pn_activos;
@@ -71,16 +76,17 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener, 
 		binder_copia.clear();
 		
 		this.txt_codigo.addTextChangeListener(this);
+//		this.txt_codigo.addValidator(new NullValidator("No Nulo", false));
 		this.txt_no_copias.setRequired(true);
-		this.txt_no_copias.addValidator(new NullValidator("No Nulo", false));
+		this.txt_no_copias.addValidator(new NullValidator("", false));
 		
 //		this.cb_grupo_contable.setRequired(true);
-//		this.cb_grupo_contable.addValidator(new NullValidator("No Nulo", false));
+		this.cb_grupo_contable.addValidator(new NullValidator("", false));
 		cb_grupo_contable.setInputPrompt("Seleccione un Grupo Contable");
 		cb_grupo_contable.addValueChangeListener(this);
 //		this.cb_auxiliar_contable.setRequired(true);
 		cb_auxiliar_contable.addValueChangeListener(this);
-//		this.cb_auxiliar_contable.addValidator(new NullValidator("No Nulo", false));
+		this.cb_auxiliar_contable.addValidator(new NullValidator("", false));
 		cb_auxiliar_contable.setInputPrompt("Seleccione un Auxiliar Contable");
 		
 		txt_codigo.setWidth("60%");
@@ -156,8 +162,14 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener, 
 	
 	public boolean validate() {
 		
-		if (txt_codigo.getValue() != null) {
-			return true;
+		if (txt_codigo.getValue() != null && !txt_codigo.getValue().equals("")) {
+			try {
+				this.txt_no_copias.validate();
+				return true;
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.txt_no_copias.getCaption(), Messages.EMPTY_MESSAGE));
+			}
+			return false;
 		}
 		try {
 			this.binder_copia.commit();
@@ -173,6 +185,11 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener, 
 				this.cb_auxiliar_contable.validate();
 			} catch (Exception ex) {
 				this.mensajes.add(new BarMessage(this.cb_auxiliar_contable.getCaption(), Messages.EMPTY_MESSAGE));
+			}
+			try {
+				this.txt_no_copias.validate();
+			} catch (Exception ex) {
+				this.mensajes.add(new BarMessage(this.txt_no_copias.getCaption(), Messages.EMPTY_MESSAGE));
 			}
 			return false;
 		}
@@ -218,9 +235,20 @@ public class FormCopiaActivo extends GridLayout implements ValueChangeListener, 
 
 			if (event.getComponent().toString().length() > 0) {
 				try {
-					this.grid_activos.updateActivo(event.getText());
+					ActivoGrid activo= activo_impl.getActivoOne(Long.valueOf(event.getText()));
+					if ( activo != null )
+						{
+						this.grid_activos.updateActivo(event.getText());
+						}
+					else{
+						Notification.show(Messages.ACTIVO_NO_ENCONTRADO_DB, Type.ERROR_MESSAGE);
+						clearMessages();
+//						this.grid_activos =new GridActivos();
+//						this.mensajes.add(new BarMessage(this.txt_codigo.getCaption(), Messages.ACTIVO_NO_ENCONTRADO_DB));
+					}
 					
 				} catch (NumberFormatException ex) {
+					
 				}
 			}
 		}
