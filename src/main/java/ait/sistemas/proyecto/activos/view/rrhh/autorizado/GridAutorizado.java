@@ -31,6 +31,7 @@ public class GridAutorizado extends Grid {
 		setHeightByRows(10);
 		
 		removeColumn("dependencia_id");
+		removeColumn("dependencia_id_transferencia");
 		removeColumn("ci");
 		removeColumn("nivel_autorizacion_id");
 		removeColumn("tipo_movimiento_id");
@@ -40,15 +41,39 @@ public class GridAutorizado extends Grid {
 		
 		setWidth("100%");
 		
-		setColumnOrder("tipo_movimiento", "dependencia", "unidadOrganizacional", "orden", "nivel_autorizacion",
-				"servidor_publico");
+		setColumnOrder(
+				"dependencia",
+				"unidadOrganizacional",
+				"tipo_movimiento",
+				"orden",
+				"servidor_publico",
+				"dependencia_transferencia"
+				);
 		
 		getColumn("tipo_movimiento").setHeaderCaption("Tipos de Movimiento").setExpandRatio(5);
-		getColumn("orden").setHeaderCaption("Orden").setExpandRatio(1);
 		getColumn("nivel_autorizacion").setHeaderCaption("Nivel de Autorizacion").setExpandRatio(4);
 		getColumn("dependencia").setHeaderCaption("Dependencia").setExpandRatio(1);
+		getColumn("orden").setHeaderCaption("Orden").setExpandRatio(1);
 		getColumn("servidor_publico").setHeaderCaption("Servidor Publico").setExpandRatio(10);
+		getColumn("dependencia_transferencia").setHeaderCaption("Dependencia Transferencia").setExpandRatio(1);
 		
+
+		HeaderRow groupRender = this.prependHeaderRow();
+		HeaderCell datosMovimiento = groupRender.join(
+				groupRender.getCell("dependencia"),
+				groupRender.getCell("unidadOrganizacional"),
+				groupRender.getCell("tipo_movimiento")
+
+		);
+		HeaderCell datosAutoriza = groupRender.join(
+				groupRender.getCell("servidor_publico"),
+				groupRender.getCell("unidadFuncionario"),
+				groupRender.getCell("dependenciaFuncionario")
+		);
+		datosMovimiento.setText("ORIGEN DEL MOVIMIENTO");
+		datosAutoriza.setText("DATOS DEL SERVIDOR PUBLICO QUE AUTORIZA");
+				
+
 		Responsive.makeResponsive(this);
 	}
 }

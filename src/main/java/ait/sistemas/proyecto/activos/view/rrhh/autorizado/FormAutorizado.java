@@ -40,6 +40,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	private TextField txt_orden = new TextField("Orden");
 	public ComboBox cb_dependencia = new ComboBox("Dependencia");
 	public ComboBox cb_dependencia_movimiento = new ComboBox("Dependencia");
+	public ComboBox cb_dependencia_transferencia = new ComboBox("Dependencia Transferencia");
 	public ComboBox cb_unidad_movimiento = new ComboBox("Unidad Organizacional");
 	
 	public ComboBox cb_unidad = new ComboBox("Unidad Organizacional");
@@ -56,15 +57,14 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	private FieldGroup binder_autorizacion;
 	
 	public FormAutorizado() {
-		
-		super.setColumns(4);
-		super.setRows(2);
+		super(4, 2);
 		setSpacing(true);
 		setMargin(true);
 		setWidth("100%");
 		
 		pitm_autorizacion.addItemProperty("tipo_movimiento", new ObjectProperty<Tipos_Movimiento>(new Tipos_Movimiento()));
 		pitm_autorizacion.addItemProperty("dependencia", new ObjectProperty<Dependencia>(new Dependencia()));
+		pitm_autorizacion.addItemProperty("dependencia_transferencia", new ObjectProperty<Dependencia>(new Dependencia()));
 		pitm_autorizacion.addItemProperty("unidad", new ObjectProperty<Unidades_Organizacionale>(new Unidades_Organizacionale()));
 		pitm_autorizacion.addItemProperty("servidor_publico", new ObjectProperty<PersonalModel>(new PersonalModel()));
 		pitm_autorizacion.addItemProperty("nivel_autorizacion", new ObjectProperty<Integer>(0));
@@ -74,6 +74,7 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		
 		binder_autorizacion.bind(this.cb_nivel_autorizacion, "nivel_autorizacion");
 		binder_autorizacion.bind(this.cb_dependencia_movimiento, "dependencia");
+		binder_autorizacion.bind(this.cb_dependencia_transferencia, "dependencia_transferencia");
 		binder_autorizacion.bind(this.cb_unidad_movimiento, "unidad");
 		binder_autorizacion.bind(this.cb_tipo_movimiento, "tipo_movimiento");
 		binder_autorizacion.bind(this.cb_servidor_publico, "servidor_publico");
@@ -84,6 +85,9 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		
 		this.cb_dependencia_movimiento.setRequired(true);
 		this.cb_dependencia_movimiento.addValidator(new NullValidator("No Nulo", false));
+		
+		this.cb_dependencia_transferencia.setRequired(true);
+		this.cb_dependencia_transferencia.addValidator(new NullValidator("No Nulo", false));
 		
 		this.cb_unidad_movimiento.setRequired(true);
 		this.cb_unidad_movimiento.addValidator(new NullValidator("No Nulo", false));
@@ -105,14 +109,15 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		this.cb_tipo_movimiento.addValueChangeListener(this);
 		this.cb_unidad_movimiento.addValueChangeListener(this);
 		
-		txt_orden.setWidth("30%");
-		cb_dependencia.setWidth("90%");
-		cb_dependencia_movimiento.setWidth("90%");
-		cb_unidad.setWidth("90%");
-		cb_servidor_publico.setWidth("90%");
-		cb_nivel_autorizacion.setWidth("90%");
-		cb_tipo_movimiento.setWidth("90%");
-		cb_unidad_movimiento.setWidth("90%");
+		txt_orden.setWidth("100%");
+		cb_dependencia.setWidth("100%");
+		cb_dependencia_movimiento.setWidth("100%");
+		cb_dependencia_transferencia.setWidth("100%");
+		cb_unidad.setWidth("100%");
+		cb_servidor_publico.setWidth("100%");
+		cb_nivel_autorizacion.setWidth("100%");
+		cb_tipo_movimiento.setWidth("100%");
+		cb_unidad_movimiento.setWidth("100%");
 		
 		this.txt_orden.setEnabled(false);
 		
@@ -122,9 +127,14 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		buildCbNivelAutorizacion();
 		Responsive.makeResponsive(this);
 		
-		cb_unidad.setInputPrompt("Seleccione un aUnidad Organizacional");
-		cb_unidad_movimiento.setInputPrompt("Seleccione un aUnidad Organizacional");
+		cb_unidad.setInputPrompt("Seleccione una Unidad Organizacional");
+		cb_unidad_movimiento.setInputPrompt("Seleccione una Unidad Organizacional");
 		cb_servidor_publico.setInputPrompt("Seleccion un Servidor Publico");
+		
+		setColumnExpandRatio(0, 1);
+		setColumnExpandRatio(1, 1);
+		setColumnExpandRatio(2, 1);
+		setColumnExpandRatio(3, 0.5f);
 		
 	}
 	
@@ -132,36 +142,47 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		this.binder_autorizacion.clear();
 		this.txt_orden.setValue("0");
 		
-		GridLayout gridlMovimiento = new GridLayout(4, 1);
+		GridLayout gridlMovimiento = new GridLayout(3, 1);
 		gridlMovimiento.setMargin(true);
 		gridlMovimiento.setSpacing(true);
 		gridlMovimiento.setWidth("100%");
 		
 		gridlMovimiento.setColumnExpandRatio(0, 1);
-		gridlMovimiento.setColumnExpandRatio(1, 0.3f);
+		gridlMovimiento.setColumnExpandRatio(1, 0.5f);
 		gridlMovimiento.setColumnExpandRatio(2, 1);
 		gridlMovimiento.setColumnExpandRatio(3, 1);
 		
 		gridlMovimiento.addComponent(this.cb_tipo_movimiento, 0, 0);
 		gridlMovimiento.addComponent(this.cb_dependencia_movimiento, 1, 0);
 		gridlMovimiento.addComponent(this.cb_unidad_movimiento, 2, 0);
-		gridlMovimiento.addComponent(this.txt_orden, 3, 0);
 		
-		GridLayout gridlFuncionario = new GridLayout(4, 1);
+		GridLayout gridlTransferencia = new GridLayout();
+		gridlTransferencia.setMargin(true);
+		gridlTransferencia.setSpacing(true);
+		gridlTransferencia.setWidth("100%");
+		gridlTransferencia.addComponent(this.cb_dependencia_transferencia);
+		Panel pnTransferencia = new Panel("DEPENDENCIA DE LA TRANSFERENCIA");
+		pnTransferencia.setStyleName(AitTheme.PANEL_FORM);
+		pnTransferencia.setIcon(FontAwesome.EDIT);
+		pnTransferencia.setContent(gridlTransferencia);
+		
+		GridLayout gridlFuncionario = new GridLayout(5, 1);
 		gridlFuncionario.setMargin(true);
 		gridlFuncionario.setSpacing(true);
 		gridlFuncionario.setWidth("100%");
-		gridlFuncionario.setColumnExpandRatio(0, 0.3f);
-		gridlFuncionario.setColumnExpandRatio(1, 1);
+		gridlFuncionario.setColumnExpandRatio(0, 0.1f);
+		gridlFuncionario.setColumnExpandRatio(1, 0.3f);
 		gridlFuncionario.setColumnExpandRatio(2, 1);
 		gridlFuncionario.setColumnExpandRatio(3, 1);
+		gridlFuncionario.setColumnExpandRatio(4, 1);
 		
-		gridlFuncionario.addComponent(this.cb_dependencia, 0, 0);
-		gridlFuncionario.addComponent(this.cb_unidad, 1, 0);
-		gridlFuncionario.addComponent(this.cb_servidor_publico, 2, 0);
-		gridlFuncionario.addComponent(this.cb_nivel_autorizacion, 3, 0);
+		gridlFuncionario.addComponent(this.txt_orden, 0, 0);
+		gridlFuncionario.addComponent(this.cb_dependencia, 1, 0);
+		gridlFuncionario.addComponent(this.cb_unidad, 2, 0);
+		gridlFuncionario.addComponent(this.cb_servidor_publico, 3, 0);
+		gridlFuncionario.addComponent(this.cb_nivel_autorizacion, 4, 0);
 		
-		Panel pnMovimiento = new Panel("SELECCION DEL TIPO MOVIMIENTO POR DEPENDENCIA");
+		Panel pnMovimiento = new Panel("DEPENDENCIA EN CASO DE TRANSFERENCIA");
 		pnMovimiento.setContent(gridlMovimiento);
 		pnMovimiento.setStyleName(AitTheme.PANEL_FORM);
 		pnMovimiento.setIcon(FontAwesome.EDIT);
@@ -170,7 +191,8 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		pnFuncionario.setStyleName(AitTheme.PANEL_FORM);
 		pnFuncionario.setIcon(FontAwesome.EDIT);
 		
-		addComponent(pnMovimiento, 0, 0, 3, 0);
+		addComponent(pnMovimiento, 0, 0, 2, 0);
+		addComponent(pnTransferencia, 3, 0);
 		addComponent(pnFuncionario, 0, 1, 3, 1);
 	}
 	
@@ -192,7 +214,9 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 	
 	public void buildCbDependencia() {
 		cb_dependencia.setInputPrompt("Seleccione una Dependencia");
+		cb_dependencia_transferencia.setInputPrompt("Seleccione una Dependencia");
 		cb_dependencia.setNullSelectionAllowed(false);
+		cb_dependencia_transferencia.setNullSelectionAllowed(false);
 		cb_dependencia_movimiento.setInputPrompt("Seleccione una Dependencia");
 		cb_dependencia_movimiento.setNullSelectionAllowed(false);
 		for (Dependencia dependencia : dependencia_impl.getall()) {
@@ -201,6 +225,9 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 			
 			this.cb_dependencia_movimiento.addItem(dependencia);
 			this.cb_dependencia_movimiento.setItemCaption(dependencia, dependencia.getDEP_Sigla());
+			
+			this.cb_dependencia_transferencia.addItem(dependencia);
+			this.cb_dependencia_transferencia.setItemCaption(dependencia, dependencia.getDEP_Sigla());
 		}
 	}
 	
@@ -273,15 +300,17 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		if (event.getProperty() == cb_dependencia_movimiento && cb_dependencia_movimiento.getValue() != null) {
 			Dependencia dependencia = (Dependencia) cb_dependencia_movimiento.getValue();
 			buildCbUnidadMovimiento(dependencia);
+			cb_dependencia_transferencia.setValue(event.getProperty().getValue());
 		}
 		if (event.getProperty() == cb_unidad_movimiento && cb_unidad_movimiento.getValue() != null
 				&& cb_tipo_movimiento.getValue() != null || event.getProperty() == cb_tipo_movimiento
 				&& cb_tipo_movimiento.getValue() != null && cb_dependencia_movimiento.getValue() != null) {
 			Dependencia dependencia = (Dependencia) cb_dependencia_movimiento.getValue();
+			Dependencia dependenciaTransferencia = (Dependencia) cb_dependencia_transferencia.getValue();
 			Unidades_Organizacionale unidad = (Unidades_Organizacionale) cb_unidad_movimiento.getValue();
 			Tipos_Movimiento tipo_movimiento = (Tipos_Movimiento) cb_tipo_movimiento.getValue();
 			buildNivelAutorizacion(dependencia.getDEP_Dependencia(), unidad.getUNO_Unidad_Organizacional(),
-					tipo_movimiento.getTMV_Tipo_Movimiento());
+					dependenciaTransferencia.getDEP_Dependencia(), tipo_movimiento.getTMV_Tipo_Movimiento());
 		}
 		
 	}
@@ -319,14 +348,16 @@ public class FormAutorizado extends GridLayout implements ValueChangeListener {
 		}
 	}
 	
-	private void buildNivelAutorizacion(short dependencia, short unidad, short tipo_movimiento) {
-		this.txt_orden.setValue(String.valueOf(tipomov_impl.getNivelAutorizacion(dependencia, unidad, tipo_movimiento)));
+	private void buildNivelAutorizacion(short dependencia, short unidad, short dependencia_transferencia, short tipo_movimiento) {
+		this.txt_orden.setValue(String.valueOf(tipomov_impl.getNivelAutorizacion(dependencia, unidad, dependencia_transferencia,
+				tipo_movimiento)));
 	}
 	
 	public TipoAutorizacionModel getData() {
 		TipoAutorizacionModel resul = new TipoAutorizacionModel();
 		resul.setDependencia_id(((Dependencia) cb_dependencia_movimiento.getValue()).getDEP_Dependencia());
 		resul.setTipo_movimiento_id(((Tipos_Movimiento) cb_tipo_movimiento.getValue()).getTMV_Tipo_Movimiento());
+		resul.setDependencia_id_transferencia(((Dependencia) cb_dependencia_transferencia.getValue()).getDEP_Dependencia());
 		resul.setOrden(Short.valueOf(txt_orden.getValue()));
 		resul.setNivel_autorizacion_id(Short.parseShort(cb_nivel_autorizacion.getValue().toString()));
 		resul.setCi(((PersonalModel) cb_servidor_publico.getValue()).getPER_CI_Empleado());

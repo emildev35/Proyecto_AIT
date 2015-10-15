@@ -76,6 +76,7 @@ public class ReportPdf {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column("Tipo Movimiento",  180));
 		columns.add(new Column("Unidad Organizacional", 250));
+		columns.add(new Column("Dependencia Transferencia", 100));
 		columns.add(new Column("Orden", 75));
 		columns.add(new Column("Servidor Publico", 180));
 		columns.add(new Column("Nivel Autorizacion", 100));

@@ -5,12 +5,5 @@
 	<inherits name="com.vaadin.DefaultWidgetSet" />
 	<inherits
 		name="ait.sistemas.proyecto.common.widget.aitclock.AitClockWidgetset" />
-
     <inherits name="ait.sistemas.proyecto.AitWidgetset" />
-
-    
-
-    
-
-    
 </module>

@@ -51,8 +51,6 @@ public class ReportGenerator {
 		tableTopY -= table.getRowHeight() * table.getHeaderSize();
 		
 		dependencia = table.getContent()[i][0];
-		// drawTableGridDependencia(table, new String[] {
-		// "Dependencia ", dependencia }, contentStream, tableTopY);
 		writeHeader(contentStream, tableTopY, table);
 		drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
 		drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
@@ -81,8 +79,6 @@ public class ReportGenerator {
 		
 		for (int i = 0; i < table.getContent().length; i++) {
 			if (r >= rowsPerPage || r == table.getHeaderSize()) {
-				// r += saltopag(r, rowsPerPage, table, contentStream,
-				// tableTopY, doc, dependencia, i);
 				if (contentStream != null) {
 					contentStream.close();
 				}
@@ -94,8 +90,6 @@ public class ReportGenerator {
 				tableTopY -= table.getRowHeight() * table.getHeaderSize();
 				
 				dependencia = table.getContent()[i][0];
-				// drawTableGridDependencia(table, new String[] {
-				// "Dependencia ", dependencia }, contentStream, tableTopY);
 				writeHeader(contentStream, tableTopY, table);
 				drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
 				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
@@ -109,20 +103,12 @@ public class ReportGenerator {
 				r += 3;
 			}
 			
-			// Cambio de Dependencia
 			if (!table.getContent()[i][0].equals(dependencia)) {
 				dependencia = table.getContent()[i][0];
-				// drawTableGridDependencia(table, new String[] {
-				// "Dependencia ", dependencia }, contentStream, tableTopY);
-				
-				// calculo suma por Dependencia
 				
 				tableTopY -= table.getRowHeight();
 				contentStream.drawLine(table.getMargin() * 21, tableTopY, table.getMargin() * 31, tableTopY);
 				
-				/**
-				 * Suma de Dependencias
-				 */
 				if (contentStream != null) {
 					contentStream.close();
 				}
@@ -139,58 +125,21 @@ public class ReportGenerator {
 				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
 						contentStream, tableTopY);
 				tableTopY -= table.getRowHeight() * 1.1;
-				// tableTopY -= table.getRowHeight();
 				
 				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
 				tableTopY -= table.getRowHeight();
 				r += 3;
-				
 				r++;
 				
 			}
-			
-			if (r >= rowsPerPage || r == table.getHeaderSize()) {
-				if (contentStream != null) {
-					contentStream.close();
-				}
-				page = generatePage(doc, table);
-				contentStream = generateContentStream(doc, page, table);
-				r = table.getHeaderSize();
-				tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize()
-						.getHeight() - table.getMargin();
-				tableTopY -= table.getRowHeight() * table.getHeaderSize();
-				
-				dependencia = table.getContent()[i][0];
-				// drawTableGridDependencia(table, new String[] {
-				// "Dependencia ", dependencia }, contentStream, tableTopY);
-				writeHeader(contentStream, tableTopY, table);
-				drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
-				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
-						contentStream, tableTopY);
-				r++;
-				tableTopY -= table.getRowHeight();
-				
-				if (!table.getContent()[i][0].equals(dependencia)) {
-					
-				}
-				
-				drawTableGrid(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-				drawCurrentPageHeader(table, table.getColumnsNamesAsArray(), contentStream, tableTopY);
-				tableTopY -= table.getRowHeight();
-				r += 3;
-				
-			}
-			
 			String[] current = Arrays.copyOfRange(table.getContent()[i], 1, table.getContent()[i].length);
 			/**
 			 * Suma de los Auxiliares Contables
 			 */
-			
 			tableTopY -= table.getRowHeight();
 			r++;
 			drawCurrentPage(table, current, contentStream, tableTopY);
-			r++;
 			if (r >= rowsPerPage || r == table.getHeaderSize()) {
 				if (contentStream != null) {
 					contentStream.close();
@@ -202,9 +151,13 @@ public class ReportGenerator {
 						.getHeight() - table.getMargin();
 				tableTopY -= table.getHeaderSize() * table.getRowHeight();
 				
-				writeHeader(contentStream, tableTopY, table);
-				tableTopY -= table.getRowHeight();
 				
+				writeHeader(contentStream, tableTopY, table);
+				drawCurrentPageDependencia(table, new String[] { "Dependencia :", dependencia }, contentStream, tableTopY);
+				drawCurrentPageOrden(table, new String[] { "(Orden:/Dependencia/Tipo Movimiento/Unidad Organizacional/Orden)" },
+						contentStream, tableTopY);
+				r++;
+				tableTopY -= table.getRowHeight();
 				r++;
 			}
 		}
