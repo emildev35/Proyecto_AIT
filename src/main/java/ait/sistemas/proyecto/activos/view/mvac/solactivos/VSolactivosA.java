@@ -66,7 +66,7 @@ public class VSolactivosA extends VerticalLayout implements View, ClickListener 
 		this.btnSolicitar.setStyleName(AitTheme.BTN_SUBMIT);
 		this.btnSolicitar.setIcon(FontAwesome.SAVE);
 		this.btn_limpiar.setStyleName(AitTheme.BTN_EXIT);
-		this.btn_limpiar.setIcon(FontAwesome.TRASH_O);
+		this.btn_limpiar.setIcon(FontAwesome.UNDO);
 
 		buttonContent.addStyleName(AitTheme.BUTTONS_BAR);
 		

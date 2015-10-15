@@ -435,7 +435,7 @@ public class ActivoImpl {
 	
 	@SuppressWarnings("unchecked")
 	public List<ActivoGrid> getActivosDisponibles(short dependencia, String grupo_contable, String auxiliar_contable) {
-		String str_query_act_disponibles = "EXEC Mvact_Activos_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2,@Dependencia_Id=?3";
+		String str_query_act_disponibles = "EXEC Mvac_Activos_Disponibles @Grupo_Contable_Id=?1,@Auxiliar_Contable_Id=?2,@Dependencia_Id=?3";
 		Query query = this.em.createNativeQuery(str_query_act_disponibles, "activo-simple").setParameter(1, grupo_contable)
 				.setParameter(2, auxiliar_contable).setParameter(3, dependencia);
 		List<ActivoGrid> result = (List<ActivoGrid>) query.getResultList();
@@ -470,6 +470,18 @@ public class ActivoImpl {
 	
 	public ActivoGrid getone(long id_activo, long id_dependencia) {
 		Query query = em.createNativeQuery("exec Mvac_ActivosGetOne_Q @Id_Activo=?1 ", "activo-simple").setHint(
+				QueryHints.REFRESH, HintValues.TRUE);
+		query.setParameter(1, id_activo);
+		ActivoGrid resultlist;
+		try {
+			resultlist = (ActivoGrid) query.getSingleResult();
+		} catch (Exception ex) {
+			return null;
+		}
+		return resultlist;
+	}
+	public ActivoGrid getActivoOne(long id_activo) {
+		Query query = em.createNativeQuery("exec Mvac_ActivobyCodigo_Q @Codigo_Activo=?1", "activo-simple").setHint(
 				QueryHints.REFRESH, HintValues.TRUE);
 		query.setParameter(1, id_activo);
 		ActivoGrid resultlist;

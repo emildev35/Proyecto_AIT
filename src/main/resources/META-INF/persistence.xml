@@ -27,6 +27,7 @@
 		<class>ait.sistemas.proyecto.activos.data.model.Tipos_Movimiento</class>
 		<class>ait.sistemas.proyecto.activos.component.model.ActivoInventario</class>
 		<class>ait.sistemas.proyecto.activos.component.model.ActivoGrid</class>
+		<class>ait.sistemas.proyecto.activos.component.model.SolicitudGrid</class>
 		<class>ait.sistemas.proyecto.activos.component.model.Actualizacion</class>
 		<class>ait.sistemas.proyecto.activos.data.model.TipoAutorizacionModel</class>
 		<class>ait.sistemas.proyecto.activos.component.model.DocumentoPendiente</class>

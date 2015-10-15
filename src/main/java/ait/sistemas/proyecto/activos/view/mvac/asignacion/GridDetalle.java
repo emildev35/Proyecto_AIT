@@ -20,7 +20,7 @@ import com.vaadin.ui.Grid;
 			setHeightMode(HeightMode.ROW);
 			setWidth("100%");
 			removeColumn("id_dependencia");
-			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("id_unidad_organizacional");
 			removeColumn("nro_documento");
 			removeColumn("tipo_movimiento");
 			removeColumn("fecha_registro");
@@ -31,8 +31,10 @@ import com.vaadin.ui.Grid;
 			removeColumn("nro_seguro");
 			removeColumn("vto_garantia");
 			removeColumn("vto_seguro");
+			removeColumn("nuevo_valor");
+			removeColumn("nueva_vida_util");
 			
-			setColumnOrder("id_activo", "nombre_activo");
+			setColumnOrder("id_activo","serie", "nombre_activo");
 			 	
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
 			Grid.Column nombre_activoColumn = this.getColumn("nombre_activo");
@@ -66,7 +68,9 @@ import com.vaadin.ui.Grid;
 			removeColumn("nro_seguro");
 			removeColumn("vto_garantia");
 			removeColumn("vto_seguro");
-			setColumnOrder("id_activo", "nombre_activo");
+			removeColumn("nuevo_valor");
+			removeColumn("nueva_vida_util");
+			setColumnOrder("id_activo","serie", "nombre_activo");
 			 	
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
 			Grid.Column nombre_activoColumn = this.getColumn("nombre_activo");
@@ -83,7 +87,7 @@ import com.vaadin.ui.Grid;
 
 //			removeColumn("id_detalle");
 			removeColumn("id_dependencia");
-			removeColumn("id_unidad_organizacional_origen");
+			removeColumn("id_unidad_organizacional");
 			removeColumn("nro_documento");
 			removeColumn("tipo_movimiento");
 			removeColumn("fecha_registro");
@@ -94,8 +98,10 @@ import com.vaadin.ui.Grid;
 			removeColumn("nro_seguro");
 			removeColumn("vto_garantia");
 			removeColumn("vto_seguro");
+			removeColumn("nuevo_valor");
+			removeColumn("nueva_vida_util");
 
-			setColumnOrder("id_activo", "nombre_activo");
+			setColumnOrder("id_activo","serie", "nombre_activo");
 			
 			Grid.Column id_activoColumn = this.getColumn("id_activo");
 			Grid.Column nombre_activoColumn = this.getColumn("nombre_activo");

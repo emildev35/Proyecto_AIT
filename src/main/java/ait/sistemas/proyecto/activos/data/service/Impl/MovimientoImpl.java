@@ -141,7 +141,8 @@ public class MovimientoImpl {
 		EntityManager emdos = emfdos.createEntityManager();
 		String str_cabezera = "EXEC Mvac_CMovimiento_Transferencia_I " + "@Dependencia_Id=?1," + "@Unidad_Organizacional_Id=?2,"
 				+ "@Numero_Documento=?3," + "@Fecha_Registro=?4," + "@Fecha_Movimiento=?5," + "@CI_Usuario=?6,"
-				+ "@Tipo_Movimiento=?7," + "@Observaciones=?8," + "@id_Dependencia_Destino=?9 ";
+				+ "@Tipo_Movimiento=?7," + "@Observaciones=?8,"
+						+ "@ID_Dependencia_Origen=?9 ";
 		Query query_cabezera = emdos.createNativeQuery(str_cabezera);
 		query_cabezera.setParameter(1, data.getId_dependencia());
 		query_cabezera.setParameter(2, data.getIdUnidadOrganizacional());
@@ -151,7 +152,7 @@ public class MovimientoImpl {
 		query_cabezera.setParameter(6, data.getUsuario());
 		query_cabezera.setParameter(7, data.getTipo_movimiento());
 		query_cabezera.setParameter(8, data.getObservacion());
-		query_cabezera.setParameter(9, data.getId_dependencia_destino());
+		query_cabezera.setParameter(9, data.getId_dependencia_destino());//Dependencia Origen
 		int result_cabezera = (Integer) query_cabezera.getSingleResult();
 		int result_detalle = 0;
 		if (result_cabezera > 0) {

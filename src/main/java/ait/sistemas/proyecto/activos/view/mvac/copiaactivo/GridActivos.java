@@ -24,7 +24,7 @@ public class GridActivos extends Grid{
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class);
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(11);
+		setHeightByRows(10);
 		setWidth("100%");
 		
 		setColumnOrder("id_activo","serie", "nombre");
@@ -41,7 +41,7 @@ public class GridActivos extends Grid{
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getActivosbyACyGC(grupo_contable, auxiliar_contable));
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(11);
+		setHeightByRows(10);
 		setWidth("100%");
 		
 //		setSelectionMode(SelectionMode.MULTI);
@@ -60,7 +60,7 @@ public class GridActivos extends Grid{
 		this.bean_activos = new BeanItemContainer<ActivoGrid>(ActivoGrid.class, activoimpl.getActivoGrid(Long.parseLong(cod_Activo)));
 		setContainerDataSource(bean_activos);
 		setHeightMode(HeightMode.ROW);
-		setHeightByRows(11);
+		setHeightByRows(10);
 		setWidth("100%");
 		
 //		setSelectionMode(SelectionMode.MULTI);
